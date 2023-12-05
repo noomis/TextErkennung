@@ -1,3 +1,5 @@
+let urlValue = [];
+let urlProbability = [];
 document.getElementById("button").addEventListener("click", function () {
     let text = document.getElementById("text").value;
     console.log(text);
@@ -23,6 +25,7 @@ function checkW3W() {
 function checkUrl() {
     
 }
+
 function checkMail(){
 
 }
