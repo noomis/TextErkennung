@@ -15,9 +15,6 @@ document.getElementById("button").addEventListener("click", function () {
 
 });
 
-
-
-
 words.array.forEach(element => {
 
     checkW3W(element);
@@ -25,9 +22,6 @@ words.array.forEach(element => {
     checkMail(element);
 
 });
-
-
-
 
 function checkW3W(inputLine) {
     
