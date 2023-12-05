@@ -1,8 +1,7 @@
+let urlValue = [];
+let urlProbability = [];
 let mailValue = [];
 let mailProbability = [];
-
-
-
 document.getElementById("button").addEventListener("click", function () {
     let text = document.getElementById("text").value;
     console.log(text);
