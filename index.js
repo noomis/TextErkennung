@@ -7,3 +7,11 @@ document.getElementById("button").addEventListener("click", function () {
 
 
 });
+
+words.array.forEach(element => {
+    
+    checkW3W(element);
+    checkURL(element);
+    checkMail(element);
+
+});
