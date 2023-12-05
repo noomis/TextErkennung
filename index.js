@@ -19,3 +19,6 @@ words.array.forEach(element => {
 function checkUrl() {
     
 }
+function checkMail(){
+
+}
