@@ -1,3 +1,6 @@
+let w3wValue = [];
+let w3wProb = [];
+
 document.getElementById("button").addEventListener("click", function () {
     let text = document.getElementById("text").value;
     console.log(text);
