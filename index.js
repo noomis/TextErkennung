@@ -12,10 +12,10 @@ document.getElementById("button").addEventListener("click", function () {
     let words = text.split("\n");
     console.log(words);
 
-    words.array.forEach(element => {
+    words.forEach(element => {
 
         checkW3W(element);
-        checkURL(element);
+        checkUrl(element);
         checkMail(element);
     
     });
