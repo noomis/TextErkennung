@@ -5,8 +5,6 @@ let mailProbability = [];
 let w3wValue = [];
 let w3wProbability = [];
 
-let words = [];
-
 document.getElementById("button").addEventListener("click", function () {
     let text = document.getElementById("text").value;
     console.log(text);
