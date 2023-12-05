@@ -3,7 +3,7 @@ let urlProbability = [];
 let mailValue = [];
 let mailProbability = [];
 let w3wValue = [];
-let w3wProb = [];
+let w3wProbability = [];
 
 document.getElementById("button").addEventListener("click", function () {
     let text = document.getElementById("text").value;
