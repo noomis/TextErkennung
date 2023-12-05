@@ -24,7 +24,11 @@ document.getElementById("button").addEventListener("click", function () {
 
 
 function checkW3W(inputLine) {
-    
+    let words = inputLine.split(" ");
+
+    words.forEach(words => {
+        console.log();
+    });
 }
 
 function checkUrl(inputLine) {
