@@ -1,5 +1,5 @@
-let MailValue;
-let mailProbability;
+let mailValue = [];
+let mailProbability = [];
 
 
 
