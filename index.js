@@ -16,6 +16,10 @@ words.array.forEach(element => {
 
 });
 
+function checkW3W() {
+    
+}
+
 function checkUrl() {
     
 }
