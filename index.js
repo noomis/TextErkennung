@@ -29,14 +29,14 @@ words.array.forEach(element => {
 
 
 
-function checkW3W() {
+function checkW3W(inputLine) {
     
 }
 
-function checkUrl() {
+function checkUrl(inputLine) {
     
 }
 
-function checkMail(){
+function checkMail(inputLine){
  
 }
