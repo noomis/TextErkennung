@@ -17,7 +17,7 @@ document.getElementById("button").addEventListener("click", function () {
         checkW3W(element);
         checkUrl(element);
         checkMail(element);
-    
+
     });
 });
 
@@ -32,14 +32,26 @@ function checkW3W(inputLine) {
 }
 
 function checkUrl(inputLine) {
-    
+
 }
 
-function checkMail(inputLine){
- 
-    if (inputLine.match("@")) {
-        console.log("treffer");
-    } else {
+function checkMail(inputLine) {
+    inputLine = inputLine.toLowerCase();
+    let atHit = [];
+
+
+    let lineChars = inputLine.split("");
+    console.log(lineChars);
+
+    for (let index = 0; index < lineChars.length; index++) {
+        const element = lineChars[index];
+
+        if (element === "@") {
+            console.log(index);
+            atHit.push(element);
+        }
         
     }
+
+    console.log(atHit);
 }
