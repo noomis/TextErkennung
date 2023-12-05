@@ -1,3 +1,7 @@
+let urlValue = [];
+let urlProbability = [];
+let mailValue = [];
+let mailProbability = [];
 let w3wValue = [];
 let w3wProb = [];
 
@@ -11,6 +15,9 @@ document.getElementById("button").addEventListener("click", function () {
 
 });
 
+
+
+
 words.array.forEach(element => {
 
     checkW3W(element);
@@ -19,6 +26,9 @@ words.array.forEach(element => {
 
 });
 
+
+
+
 function checkW3W() {
     
 }
@@ -26,6 +36,7 @@ function checkW3W() {
 function checkUrl() {
     
 }
-function checkMail(){
 
+function checkMail(){
+ 
 }
