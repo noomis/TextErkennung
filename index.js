@@ -7,17 +7,15 @@ let w3wProbability = [];
 
 document.getElementById("button").addEventListener("click", function () {
     let text = document.getElementById("text").value;
-    console.log(text);
 
     let words = text.split("\n");
-    console.log(words);
 
     words.forEach(element => {
 
-        checkW3W(element);
-        checkUrl(element);
-        checkMail(element);
-        checkCompanyName(element);
+        checkW3W(element); //Luke
+        checkUrl(element); //Lars
+        checkMail(element); //Simon
+        checkCompanyName(element); 
         checkName(element);
         checkFax(element);
         checkPhone(element);
@@ -38,84 +36,89 @@ function checkW3W(inputLine) {
 }
 
 function checkUrl(inputLine) {
+    //alle wörter klein und in neuen array
     inputLine = inputLine.toLowerCase();
     let words = inputLine.split(" ");
-    const knownTLD = ["com", "net", "org", "de", "eu", "at", "ch", "nl", "pl", "fr", "es", "info", "name", "email"];
+    const knownTLD = ["com", "net", "org", "de", "eu", "at", "ch", "nl", "pl", "fr", "es", "info", "name", "biz"];
 
     for (let i = 0; i < words.length; i++) {
         const element = words[i];
         let allHits = [];
         let prob = 0;
         for (const tld of knownTLD) {
-            if (element.includes("." + tld)) {
-                allHits.push("tld")
+            if (element.endsWith("." + tld)) {
+                allHits.push("tld");
             }
         }
 
-        if (element.includes("http")) {
-            allHits.push("http")
+        if (element.startsWith("http")) {
+            allHits.push("http");
         }
 
         if (element.includes("://") == true) {
-            allHits.push("://")
+            allHits.push("://");
         }
 
         if (element.includes("www.") == true) {
-            allHits.push("www.")
+            allHits.push("www.");
         }
 
         if (element.includes("ö") == true) {
-            allHits.push("negativ")
+            allHits.push("negativ");
         }
 
         if (element.includes("ä") == true) {
-            allHits.push("negativ")
+            allHits.push("negativ");
         }
 
         if (element.includes("ü") == true) {
-            allHits.push("negativ")
+            allHits.push("negativ");
         }
 
         if (element.includes("ß") == true) {
-            allHits.push("negativ")
+            allHits.push("negativ");
         }
 
         if (element.includes("@") == true) {
-            allHits.push("negativ")
+            allHits.push("negativ");
         }
 
         if (allHits.includes("negativ") == true) {
             prob = -150;
         }
+
         if (allHits.includes("tld") == true) {
-            prob += 30;
+            prob += 20;
         }
+
         if (allHits.includes("www.") == true) {
             prob += 70;
         }
+
         if (allHits.includes("://") == true) {
             prob += 10;
         }
+
         if (allHits.includes("http") == true) {
-            prob += 40;
+            prob += 30;
         }
 
         if (prob > 100) {
-            prob = 100
+            prob = 100;
         }
 
         if (prob < 0) {
-            prob = 0
+            prob = 0;
         }
 
         urlValue.push(element);
         urlProbability.push(prob);
 
-        if (prob > 0) {
-            let indexes = urlValue.indexOf(element)
+        if (prob > 80) {
+            let indexes = urlValue.indexOf(element);
             let newUrlObject = document.createElement("p");
             newUrlObject.innerHTML ='"' + element +'"' + " zu " + urlProbability[indexes] + "% eine URL";
-            document.body.appendChild(newUrlObject)
+            document.body.appendChild(newUrlObject);
         }
     }
 }
@@ -135,7 +138,6 @@ function checkMail(inputLine) {
             console.log(index);
             atHit.push(element);
         }
-
     }
 
     console.log(atHit);
@@ -162,5 +164,6 @@ function checkStreet(inputLine) {
 }
 
 function checkCity(inputLine) {
-    
+    inputLine = inputLine.toLowerCase();
+    let words = inputLine.split(" ");
 }
