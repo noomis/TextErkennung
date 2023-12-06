@@ -5,12 +5,13 @@ let mailProbability = [];
 let w3wValue = [];
 let w3wProbability = [];
 
+const knownTLD = ["com", "net", "org", "de", "eu", "at", "ch", "nl", "pl", "fr", "es", "info", "name", "email"];
+
+
 document.getElementById("button").addEventListener("click", function () {
     let text = document.getElementById("text").value;
-    console.log(text);
 
     let words = text.split("\n");
-    console.log(words);
 
     words.forEach(element => {
 
@@ -40,7 +41,6 @@ function checkW3W(inputLine) {
 function checkUrl(inputLine) {
     inputLine = inputLine.toLowerCase();
     let words = inputLine.split(" ");
-    const knownTLD = ["com", "net", "org", "de", "eu", "at", "ch", "nl", "pl", "fr", "es", "info", "name", "email"];
 
     for (let i = 0; i < words.length; i++) {
         const element = words[i];
@@ -107,22 +107,23 @@ function checkUrl(inputLine) {
         if (prob < 0) {
             prob = 0
         }
-
         urlValue.push(element);
         urlProbability.push(prob);
 
         if (prob > 0) {
             let indexes = urlValue.indexOf(element)
             let newUrlObject = document.createElement("p");
-            newUrlObject.innerHTML ='"' + element +'"' + " zu " + urlProbability[indexes] + "% eine URL";
+            newUrlObject.innerHTML ='"' + element +'"' + " ist zu " + urlProbability[indexes] + "% eine URL";
             document.body.appendChild(newUrlObject)
         }
+        
     }
 }
 
 function checkMail(inputLine) {
     inputLine = inputLine.toLowerCase();
     let atHit = [];
+    let dotHit = [];
 
 
     let lineChars = inputLine.split("");
@@ -132,17 +133,29 @@ function checkMail(inputLine) {
         const element = lineChars[index];
 
         if (element === "@") {
-            console.log(index);
             atHit.push(element);
         }
 
+        if (element === ".") {
+            dotHit.push(element);
+        }
+
     }
+
+    if (atHit.length > 1) {
+        return;
+    }
+
+    if (dotHit.length == 0) {
+        return;
+    }
+    console.log("Wahrscheinlich eine Mail");
 
     console.log(atHit);
 }
 
 function checkCompanyName(inputLine) {
-
+// Simon
 }
 
 function checkName(inputLine) {
