@@ -18,12 +18,12 @@ document.getElementById("button").addEventListener("click", function () {
         checkW3W(element); //Luke
         checkUrl(element); //Lars
         checkMail(element); //Simon
-        checkCompanyName(element); 
-        checkName(element);
-        checkFax(element);
-        checkPhone(element);
-        checkStreet(element);
-        checkCity(element);
+        checkCompanyName(element); //Simon
+        checkName(element); //Lars
+        checkFax(element); //Luke
+        checkPhone(element); //Simon
+        checkStreet(element); //Luke
+        checkCity(element); //Lars
 
     });
 });
@@ -70,8 +70,10 @@ function checkUrl(inputLine) {
     //alle wörter klein und in neuen array
     inputLine = inputLine.toLowerCase();
     let words = inputLine.split(" ");
+    //alle bekannten TLDs
     const knownTLD = ["com", "net", "org", "de", "eu", "at", "ch", "nl", "pl", "fr", "es", "info", "name", "biz"];
 
+    //for-Schleife die alle Worte vom Input durchläuft
     for (let i = 0; i < words.length; i++) {
         const element = words[i];
         let allHits = [];
@@ -81,7 +83,7 @@ function checkUrl(inputLine) {
                 allHits.push("tld");
             }
         }
-
+    //überprüfung ob gewisse Kriterien erfüllt sind
         if (element.startsWith("http")) {
             allHits.push("http");
         }
@@ -113,7 +115,7 @@ function checkUrl(inputLine) {
         if (element.includes("@") == true) {
             allHits.push("negativ");
         }
-
+    //Punktevergabe
         if (allHits.includes("negativ") == true) {
             prob = -150;
         }
@@ -141,9 +143,10 @@ function checkUrl(inputLine) {
         if (prob < 0) {
             prob = 0;
         }
+    //push in globalen Array
         urlValue.push(element);
         urlProbability.push(prob);
-
+    //output
         if (prob > 80) {
             let indexes = urlValue.indexOf(element);
             let newUrlObject = document.createElement("p");
@@ -193,19 +196,19 @@ function checkCompanyName(inputLine) {
 }
 
 function checkName(inputLine) {
-
+//Lars
 }
 
 function checkFax(inputLine) {
-
+//Luke
 }
 
 function checkPhone(inputLine) {
-
+//Simon
 }
 
 function checkStreet(inputLine) {
-
+//Luke
 }
 
 function checkCity(inputLine) {
