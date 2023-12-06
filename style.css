@@ -86,3 +86,24 @@ a:active {
 .placeholder{
   height: 20dvh;
 }
+@media (max-width: 870px) {
+  form {
+    width: 350px;
+    text-align: center;
+    padding: 30px;
+    box-shadow: rgba(255, 255, 255, 0.2) 0px 7px 29px 0px;
+    background-color: rgb(127, 127, 127);
+  }
+
+  .btn {
+    width: 350px;
+    background: rgb(56, 169, 255);
+    font-weight: bold;
+    color: white;
+    border: 0 none;
+    border-radius: 25px;
+    cursor: pointer;
+    padding: 10px 5px;
+    margin: 10px 5px;
+  }
+}
