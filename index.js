@@ -31,10 +31,38 @@ document.getElementById("button").addEventListener("click", function () {
 
 function checkW3W(inputLine) {
     let words = inputLine.split(" ");
+    inputLine = inputLine.toLowerCase();
+    let dotHit = [];
+    let prob = 0;
 
     words.forEach(words => {
         // split nach Buchstaben und length == 2
+
+        let countDot = 0;
+        console.log(words);
+
+        let lineChars = words.split("");
+        console.log(lineChars);
+
+        lineChars.forEach(element => {
+            if (element == ".") {
+                countDot++;
+            }
+        });
+
+        // TODO nach dot splitten und lenght variable wörter checken 
+
+        // überprüfen ob 2 Punkte
+
+        if (countDot == 2) {
+            prob += 40;
+        }
+
     });
+
+
+
+    console.log(dotHit);
 }
 
 function checkUrl(inputLine) {
@@ -114,7 +142,7 @@ function checkUrl(inputLine) {
         if (prob > 0) {
             let indexes = urlValue.indexOf(element)
             let newUrlObject = document.createElement("p");
-            newUrlObject.innerHTML ='"' + element +'"' + " zu " + urlProbability[indexes] + "% eine URL";
+            newUrlObject.innerHTML = '"' + element + '"' + " zu " + urlProbability[indexes] + "% eine URL";
             document.body.appendChild(newUrlObject)
         }
     }
@@ -146,21 +174,21 @@ function checkCompanyName(inputLine) {
 }
 
 function checkName(inputLine) {
-    
+
 }
 
 function checkFax(inputLine) {
-    
+
 }
 
 function checkPhone(inputLine) {
-    
+
 }
 
 function checkStreet(inputLine) {
-    
+
 }
 
 function checkCity(inputLine) {
-    
+
 }
