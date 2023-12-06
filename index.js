@@ -120,17 +120,17 @@ function checkMail(inputLine) {
 
 
     let lineChars = inputLine.split("");
-    // console.log(lineChars);
+    console.log(lineChars);
 
     for (let index = 0; index < lineChars.length; index++) {
         const element = lineChars[index];
 
         if (element === "@") {
-            // console.log(index);
+            console.log(index);
             atHit.push(element);
         }
 
     }
 
-    // console.log(atHit);
+    console.log(atHit);
 }
