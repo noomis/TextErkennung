@@ -5,6 +5,9 @@ let mailProbability = [];
 let w3wValue = [];
 let w3wProbability = [];
 
+const knownTLD = ["com", "net", "org", "de", "eu", "at", "ch", "nl", "pl", "fr", "es", "info", "name", "email"];
+
+
 document.getElementById("button").addEventListener("click", function () {
     let text = document.getElementById("text").value;
 
@@ -29,10 +32,38 @@ document.getElementById("button").addEventListener("click", function () {
 
 function checkW3W(inputLine) {
     let words = inputLine.split(" ");
+    inputLine = inputLine.toLowerCase();
+    let dotHit = [];
+    let prob = 0;
 
     words.forEach(words => {
         // split nach Buchstaben und length == 2
+
+        let countDot = 0;
+        // console.log(words);
+
+        let lineChars = words.split("");
+        // console.log(lineChars);
+
+        lineChars.forEach(element => {
+            if (element == ".") {
+                countDot++;
+            }
+        });
+
+        // TODO nach dot splitten und lenght variable wörter checken 
+
+        // überprüfen ob 2 Punkte
+
+        if (countDot == 2) {
+            prob += 40;
+        }
+
     });
+
+
+
+    console.log(dotHit);
 }
 
 function checkUrl(inputLine) {
@@ -110,7 +141,6 @@ function checkUrl(inputLine) {
         if (prob < 0) {
             prob = 0;
         }
-
         urlValue.push(element);
         urlProbability.push(prob);
 
@@ -120,12 +150,14 @@ function checkUrl(inputLine) {
             newUrlObject.innerHTML ='"' + element +'"' + " zu " + urlProbability[indexes] + "% eine URL";
             document.body.appendChild(newUrlObject);
         }
+        
     }
 }
 
 function checkMail(inputLine) {
     inputLine = inputLine.toLowerCase();
     let atHit = [];
+    let dotHit = [];
 
 
     let lineChars = inputLine.split("");
@@ -135,35 +167,49 @@ function checkMail(inputLine) {
         const element = lineChars[index];
 
         if (element === "@") {
-            console.log(index);
             atHit.push(element);
         }
+
+        if (element === ".") {
+            dotHit.push(element);
+        }
+
     }
+
+    if (atHit.length > 1) {
+        return;
+    }
+
+    if (dotHit.length == 0) {
+        return;
+    }
+    console.log("Wahrscheinlich eine Mail");
 
     console.log(atHit);
 }
 
 function checkCompanyName(inputLine) {
-
+// Simon
 }
 
 function checkName(inputLine) {
-    
+
 }
 
 function checkFax(inputLine) {
-    
+
 }
 
 function checkPhone(inputLine) {
-    
+
 }
 
 function checkStreet(inputLine) {
-    
+
 }
 
 function checkCity(inputLine) {
     inputLine = inputLine.toLowerCase();
     let words = inputLine.split(" ");
+
 }
