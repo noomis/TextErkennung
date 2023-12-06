@@ -34,7 +34,6 @@ function checkW3W(inputLine) {
 function checkUrl(inputLine) {
     inputLine = inputLine.toLowerCase();
     let words = inputLine.split(" ");
-    
     const knownTLD = ["com", "net", "org", "de", "eu", "at", "ch", "nl", "pl", "fr", "es", "info", "name", "email"];
 
     for (let i = 0; i < words.length; i++) {
@@ -83,13 +82,13 @@ function checkUrl(inputLine) {
             prob = -150;
         }
         if (allHits.includes("tld") == true) {
-            prob += 20;
+            prob += 30;
         }
         if (allHits.includes("www.") == true) {
-            prob += 80;
+            prob += 70;
         }
         if (allHits.includes("://") == true) {
-            prob += 30;
+            prob += 10;
         }
         if (allHits.includes("http") == true) {
             prob += 40;
@@ -106,8 +105,13 @@ function checkUrl(inputLine) {
         urlValue.push(element);
         urlProbability.push(prob);
 
+        if (prob > 0) {
+            let indexes = urlValue.indexOf(element)
+            let newUrlObject = document.createElement("p");
+            newUrlObject.innerHTML ='"' + element +'"' + " zu " + urlProbability[indexes] + "% eine URL";
+            document.body.appendChild(newUrlObject)
+        }
     }
-    
 }
 
 function checkMail(inputLine) {
