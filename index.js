@@ -103,13 +103,9 @@ function checkUrl(inputLine) {
             prob = 0
         }
 
-        console.log(element); 
-
         urlValue.push(element);
         urlProbability.push(prob);
 
-        console.log(urlValue);
-        console.log(urlProbability);
     }
     
 }
