@@ -17,6 +17,12 @@ document.getElementById("button").addEventListener("click", function () {
         checkW3W(element);
         checkUrl(element);
         checkMail(element);
+        checkCompanyName(element);
+        checkName(element);
+        checkFax(element);
+        checkPhone(element);
+        checkStreet(element);
+        checkCity(element);
 
     });
 });
@@ -133,4 +139,28 @@ function checkMail(inputLine) {
     }
 
     console.log(atHit);
+}
+
+function checkCompanyName(inputLine) {
+
+}
+
+function checkName(inputLine) {
+    
+}
+
+function checkFax(inputLine) {
+    
+}
+
+function checkPhone(inputLine) {
+    
+}
+
+function checkStreet(inputLine) {
+    
+}
+
+function checkCity(inputLine) {
+    
 }
