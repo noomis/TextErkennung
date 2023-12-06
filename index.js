@@ -40,10 +40,10 @@ function checkW3W(inputLine) {
         // split nach Buchstaben und length == 2
 
         let countDot = 0;
-        console.log(words);
+        // console.log(words);
 
         let lineChars = words.split("");
-        console.log(lineChars);
+        // console.log(lineChars);
 
         lineChars.forEach(element => {
             if (element == ".") {
