@@ -93,7 +93,7 @@ function checkW3W(inputLine) {
         if (countDot == 2) {
             prob += 40;
         }
-        console.log(element + ": ist mit " + prob + "% Wahrscheinlichkeit eine w3w Adrsse");
+        console.log(element + ": ist mit " + prob + "% Wahrscheinlichkeit eine w3w Adresse");
     }
 }
 
