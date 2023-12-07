@@ -181,17 +181,24 @@ function checkMail(inputLine) {
         const element = lineWords[index];
         let wordChars = element.split("");
 
-        knownTLD.forEach(tld => {
-            if (element.endsWith("." + tld)) {
+        knownTLD.forEach(tld => {           
+            if (element.endsWith("." + tld)) {  // Checkt ob TLD vorhanden ist
                 hasTLD = true;
             }
         });
 
-        if (element.startsWith('@')) {
+        if (element.startsWith('@')) { // Checkt String mit @ beginnt
             continue wordLoop;
           }
           else {
             wordProb += 5;
+        }
+
+        if (element.length < 6) {   // Checkt ob mindestens 6 Zeichen vorhanden sind
+            continue wordLoop;
+          }
+          else {
+            wordProb += 10;
         }
 
         charLoop: for (let i = 0; i < wordChars.length; i++) {
@@ -206,6 +213,7 @@ function checkMail(inputLine) {
                 dotHit.push(i);
             }
         }
+
         if (atHit.length !== 1) {   // checkt ob genau ein @ vorhanden ist.
             continue wordLoop;
         }
@@ -219,12 +227,23 @@ function checkMail(inputLine) {
         else {
             wordProb += 5;
         }
-        if (dotHit[dotHit.length] - atHit[0] <= 1) {    // checkt ob (x@y.de) y mindestens 1 character lang ist. 
-            continue wordLoop;
+
+        console.log(dotHit.length);
+        if (dotHit.length > 1) {
+            if (dotHit[dotHit.length] - atHit[0] < 2) { 
+                continue wordLoop;
+            }
+            else{
+                wordProb += 10;
+            }
         }
-        else {
+        else if (dotHit.length == 1) {
+            if (dotHit[0] - atHit[0] < 2){
+                continue wordLoop;
+            }
             wordProb += 10;
         }
+        
         if (hasTLD === false) {         // checkt ob eine TLD vorhanden ist.
             continue wordLoop;
         }
@@ -232,8 +251,8 @@ function checkMail(inputLine) {
             wordProb += 20;
         }
         if (index !== 0) {
-            let wordBefore = lineWords[index - 1].toLowerCase();
-            if (wordBefore.includes("mail")) {  // Checkt ob vor der Mail z.B. Mail: steht.
+            let wordBefore = lineWords[index - 1].toLowerCase(); // Checkt ob vor der Mail z.B. Mail: steht.
+            if (wordBefore.includes("mail")) {  
                 wordProb += 20;
             }
         }
