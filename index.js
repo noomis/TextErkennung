@@ -103,7 +103,6 @@ function checkUrl(inputLine) {
     //alle wörter klein und in neuen array
     inputLine = inputLine.toLowerCase();
     let words = inputLine.split(" ");
-    //alle bekannten TLDs
 
     //for-Schleife die alle Worte vom Input durchläuft
     for (let i = 0; i < words.length; i++) {
@@ -111,30 +110,29 @@ function checkUrl(inputLine) {
         let allHits = [];
         let prob = 0;
         for (const tld of knownTLD) {
-            if (element.endsWith("." + tld)) {
-                allHits.push("tld");
+            if (element.endsWith("." + tld || element.endsWith("." + tld + "/"))) {
+                prob += 20;
             }
         }
         //überprüfung ob gewisse Kriterien erfüllt sind
         if (element.startsWith("http")) {
-            allHits.push("http");
+            prob += 30;
         }
 
         if (element.includes("://") == true) {
-            allHits.push("://");
+            prob += 10;
         }
 
         if (element.includes("www.") == true) {
-            allHits.push("www.");
+            prob += 80;
         }
 
         if (element.includes("ö") == true) {
             allHits.push("negativ");
         }
 
-        // negativ mit return ersetzen (LUKE)
         if (element.includes("ä") == true) {
-            allHits.push("negativ");
+            return;
         }
 
         if (element.includes("ü") == true) {
@@ -149,29 +147,7 @@ function checkUrl(inputLine) {
             allHits.push("negativ");
         }
 
-        //Punktevergabe
-
-        // Wieso fügst du die Punkte nicht direkt oben hinzu, dann würdest du dir fast alle folgenden IF Abfragen sparen :) - Simon
-
-        if (allHits.includes("negativ") == true) {
-            prob = -150;
-        }
-
-        if (allHits.includes("tld") == true) {
-            prob += 20;
-        }
-
-        if (allHits.includes("www.") == true) {
-            prob += 70;
-        }
-
-        if (allHits.includes("://") == true) {
-            prob += 10;
-        }
-
-        if (allHits.includes("http") == true) {
-            prob += 30;
-        }
+        //Runden
 
         if (prob > 100) {
             prob = 100;
@@ -184,11 +160,9 @@ function checkUrl(inputLine) {
         urlValue.push(element);
         urlProbability.push(prob);
         //output
-        if (prob > 80) {
+        if (prob > 0) {
             let indexes = urlValue.indexOf(element);
-            let newUrlObject = document.createElement("p");
-            newUrlObject.innerHTML = '"' + element + '"' + " zu " + urlProbability[indexes] + "% eine URL";
-            document.body.appendChild(newUrlObject);
+           console.log( '"' + element + '"' + " zu " + urlProbability[indexes] + "% eine URL");
         }
 
     }
