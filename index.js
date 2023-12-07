@@ -80,7 +80,7 @@ function checkW3W(inputLine) {
         }
 
         if (i !== 0) {
-            let wordBefore = words[i - 1].toLowerCase;
+            let wordBefore = words[i - 1].toLowerCase();
             // Checkt ob vor der w3w z.B. w3w steht.
             if (wordBefore.includes("w3w") || wordBefore.includes("what 3 words") || wordBefore.includes("what3words") ||
                 wordBefore.includes("position") || wordBefore.includes("///")) {
