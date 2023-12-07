@@ -71,7 +71,6 @@ function checkUrl(inputLine) {
     inputLine = inputLine.toLowerCase();
     let words = inputLine.split(" ");
     //alle bekannten TLDs
-    const knownTLD = ["com", "net", "org", "de", "eu", "at", "ch", "nl", "pl", "fr", "es", "info", "name", "biz"];
 
     //for-Schleife die alle Worte vom Input durchläuft
     for (let i = 0; i < words.length; i++) {
@@ -158,6 +157,7 @@ function checkUrl(inputLine) {
 }
 
 function checkMail(inputLine) {
+    debugger;
     inputLine = inputLine.toLowerCase();
 
 
@@ -165,12 +165,23 @@ function checkMail(inputLine) {
     console.log(lineWords);
 
     wordLoop: for (let index = 0; index < lineWords.length; index++) {
-        let wordProb;
+        let wordProb = 0;
         let atHit = [];
         let dotHit = [];
+        let hasTLD = false;
 
         const element = lineWords[index];
         let wordChars = element.split("");
+
+            knownTLD.forEach(tld => {
+                if (element.endsWith("." + tld)) {
+                    console.log(element);   
+                    hasTLD = true;
+                }
+            });
+           
+ 
+        
 
         charLoop: for (let i = 0; i < wordChars.length; i++) {
             const element = wordChars[i];
@@ -185,18 +196,37 @@ function checkMail(inputLine) {
             }
 
 
+ 
+
+
+
+
         }
 
         if (atHit.length !== 1) {
             break wordLoop;
+        }
+        else{
+            wordProb+=20;
         }
 
 
         if (dotHit.length == 0) {
             break wordLoop;
         }
+        else{
+            wordProb+=5;
+        }
 
-        console.log(element + ": ist wahrscheinlich eine Mail");
+        if (hasTLD === false) {
+            break wordLoop;
+        }
+        else{
+            wordProb+=10;
+        }
+
+
+        console.log(element + ": ist mit "+ wordProb +"% eine Mail");
         mailValue.push(element);
         mailProbability.push(wordProb);
     }
