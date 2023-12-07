@@ -213,6 +213,5 @@ function checkStreet(inputLine) {
 
 function checkCity(inputLine) {
     inputLine = inputLine.toLowerCase();
-    let words = inputLine.split(" ");
-
+    let words = inputLine.split(" "); 
 }
