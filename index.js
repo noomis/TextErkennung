@@ -38,14 +38,14 @@ function checkW3W(inputLine) {
     let prob = 0;
     const blacklist = ['!', '@', '#', '$', '%', '^', '&', '*', '(', ')', '_', '-', '+', '=', '{', '}', '[', ']', '|', ';', ':', "'", '"', '<', '>', ',', '?', '`', '~', '0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'ä', 'ü', 'ö'];
 
-    for (let i = 0; i < words.length; i++) {
+    words: for (let i = 0; i < words.length; i++) {
         const element = words[i];
         let countDot = 0;
         let lineChars = words[i].split("");
 
         for (let b = 0; b < blacklist.length; b++) {
             if (words[i].includes(blacklist[b])) {
-                continue;
+                continue words;
             }
         }
 
@@ -79,7 +79,23 @@ function checkW3W(inputLine) {
         if (countDot == 2) {
             prob += 30;
         }
+
+        if (i !== 0) {
+            let wordBefore = words[i - 1].toLowerCase();
+            // Checkt ob vor der w3w z.B. w3w steht.
+            if (wordBefore.includes("w3w") || wordBefore.includes("what 3 words") || wordBefore.includes("what3words") || 
+            wordBefore.includes("position") || wordBefore.includes("///")) {
+                prob += 5;
+            }
+        }
+
+        if (words[i].startsWith("///")) {
+            prob += 5;
+        }
+
         console.log(element + ": ist mit " + prob + "% Wahrscheinlichkeit eine w3w Adresse");
+        w3wValue.push(element);
+        w3wProbability.push(prob);
     }
 }
 
@@ -299,6 +315,5 @@ function checkStreet(inputLine) {
 
 function checkCity(inputLine) {
     inputLine = inputLine.toLowerCase();
-    let words = inputLine.split(" ");
-
+    let words = inputLine.split(" "); 
 }
