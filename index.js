@@ -59,14 +59,14 @@ function checkW3W(inputLine) {
             let wordLength = words[i].split(".");
 
             for (let t = 0; t < wordLength.length; t++) {
-                if (words[t].length < 2) {
+                if (wordLength[t].length < 2) {
                     return;
-                } else if (words[t].length <= 44) { // TODO w3w max wort länge
+                } else if (wordLength[t].length <= 44) { // TODO w3w max wort länge
                     prob += 20;
                 }
 
                 // test Url
-                let wordChars = words[t].split("");
+                let wordChars = wordLength[t].split("");
                 let countW = 0;
                 for (let index = 0; index < 3; index++) {
                     if (wordChars[index] == "w") {
