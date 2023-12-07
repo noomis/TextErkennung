@@ -187,40 +187,51 @@ function checkUrl(inputLine) {
 }
 
 function checkMail(inputLine) {
-
     inputLine = inputLine.toLowerCase();
 
-    let atHit = [];
-    let dotHit = [];
 
     let lineWords = inputLine.split(" ");
     console.log(lineWords);
-    let lineChars = inputLine.split("");
-    console.log(lineChars);
 
-    for (let index = 0; index < lineChars.length; index++) {
-        const element = lineChars[index];
+    wordLoop: for (let index = 0; index < lineWords.length; index++) {
+        let wordProb;
+        let atHit = [];
+        let dotHit = [];
 
-        if (element === "@") {
-            atHit.push(element);
+        const element = lineWords[index];
+        let wordChars = element.split("");
+
+        charLoop: for (let i = 0; i < wordChars.length; i++) {
+            const element = wordChars[i];
+
+
+            if (element === "@") {
+                atHit.push(element);
+            }
+
+            if (element === ".") {
+                dotHit.push(element);
+            }
+
+
         }
 
-        if (element === ".") {
-            dotHit.push(element);
+        if (atHit.length !== 1) {
+            break wordLoop;
         }
 
+
+        if (dotHit.length == 0) {
+            break wordLoop;
+        }
+
+        console.log(element + ": ist wahrscheinlich eine Mail");
+        mailValue.push(element);
+        mailProbability.push(wordProb);
     }
 
-    if (atHit.length > 1) {
-        return;
-    }
 
-    if (dotHit.length == 0) {
-        return;
-    }
-    console.log("Wahrscheinlich eine Mail");
 
-    console.log(atHit);
 }
 
 function checkCompanyName(inputLine) {
