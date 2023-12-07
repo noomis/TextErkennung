@@ -35,15 +35,19 @@ function checkW3W(inputLine) {
     inputLine = inputLine.toLowerCase();
     let allHits = [];
     let prob = 0;
+    const blacklist = ['!', '@', '#', '$', '%', '^', '&', '*', '(', ')', '_', '+', '=', '{', '}', '[', ']', '|', ';', ':', "'", '"', '<', '>', ',', '/', '?', '`', '~', '0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'ä', 'ü', 'ö'];
 
     for (let i = 0; i < words.length; i++) {
         // split nach Buchstaben und length == 2
-
         let countDot = 0;
-        console.log(words[i]);
-
         let lineChars = words[i].split("");
-        console.log(lineChars);
+
+        for (let b = 0; b < blacklist.length; b++) {
+            if (words[i].includes(blacklist[b])) {
+                return;
+            }
+        }
+       
 
         lineChars.forEach(element => {
             if (element == ".") {
@@ -51,39 +55,32 @@ function checkW3W(inputLine) {
             }
         });
 
-        console.log(countDot);
         if (countDot == 2) {
             let wordLength = words[i].split(".");
-            console.log(wordLength);
 
-            wordLength.forEach(words => {
-                console.log(words.length);
-
-                if (words.length < 2) {
+            for (let t = 0; t < wordLength.length; t++) {
+                if (words[t].length < 2) {
                     return;
-                } else if (words.length <= 44) { // TODO w3w max wort länge
+                } else if (words[t].length <= 44) { // TODO w3w max wort länge
                     prob += 20;
                 }
 
-                let wordChars = words.split("");
+                // test Url
+                let wordChars = words[t].split("");
                 let countW = 0;
-                console.log(wordChars);
                 for (let index = 0; index < 3; index++) {
                     if (wordChars[index] == "w") {
                         countW++;
                     }
                 }
 
-                // test if Url
                 if (countW == 3) {
-                    return
+                    return;
                 }
-            });
+            }
         } else {
             return;
         }
-
-
 
         // überprüfen ob 2 Punkte
         if (countDot == 2) {
