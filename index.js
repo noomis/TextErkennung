@@ -48,6 +48,10 @@ function checkW3W(inputLine) {
             }
         }
 
+        if (words[i].includes("http") || words[i].includes("https")) {
+            return;
+        }
+
 
         lineChars.forEach(element => {
             if (element == ".") {
@@ -125,6 +129,7 @@ function checkUrl(inputLine) {
             allHits.push("negativ");
         }
 
+        // negativ mit return ersetzen
         if (element.includes("ä") == true) {
             allHits.push("negativ");
         }
