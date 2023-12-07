@@ -32,12 +32,11 @@ document.getElementById("button").addEventListener("click", function () {
 
 function checkW3W(inputLine) {
     // Test
-
     let words = inputLine.split(" ");
     inputLine = inputLine.toLowerCase();
     let allHits = [];
     let prob = 0;
-    const blacklist = ['!', '@', '#', '$', '%', '^', '&', '*', '(', ')', '_', '-', '+', '=', '{', '}', '[', ']', '|', ';', ':', "'", '"', '<', '>', ',', '/', '?', '`', '~', '0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'ä', 'ü', 'ö'];
+    const blacklist = ['!', '@', '#', '$', '%', '^', '&', '*', '(', ')', '_', '-', '+', '=', '{', '}', '[', ']', '|', ';', ':', "'", '"', '<', '>', ',', '?', '`', '~', '0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'ä', 'ü', 'ö'];
 
     for (let i = 0; i < words.length; i++) {
         const element = words[i];
@@ -46,18 +45,18 @@ function checkW3W(inputLine) {
 
         for (let b = 0; b < blacklist.length; b++) {
             if (words[i].includes(blacklist[b])) {
-                return;
+                continue;
             }
         }
 
         // Url ausschließen
-        if (words[i].includes("http") || words[i].includes("https") || words.includes("www")) {
-            return;
+        if (words[i].includes("http") || words[i].includes("https") || words[i].includes("www")) {
+            continue;
         }
 
 
-        lineChars.forEach(element => {
-            if (element == ".") {
+        lineChars.forEach(e => {
+            if (e == ".") {
                 countDot++;
             }
         });
@@ -71,27 +70,14 @@ function checkW3W(inputLine) {
                 } else if (wordLength[t].length <= 44) { // TODO w3w max wort länge
                     prob += 20;
                 }
-
-                // test www am anfang
-                // let wordChars = wordLength[t].split("");
-                // let countW = 0;
-                // for (let index = 0; index < 3; index++) {
-                //     if (wordChars[index] == "w") {
-                //         countW++;
-                //     }
-                // }
-
-                // if (countW == 3) {
-                //     return;
-                // }
             }
         } else {
-            return;
+            continue;
         }
 
         // überprüfen ob 2 Punkte
         if (countDot == 2) {
-            prob += 40;
+            prob += 30;
         }
         console.log(element + ": ist mit " + prob + "% Wahrscheinlichkeit eine w3w Adresse");
     }
@@ -279,6 +265,9 @@ function checkName(inputLine) {
 
 function checkFax(inputLine) {
     //Luke
+
+    let words = inputLine.split(" ");
+    inputLine = inputLine.toLowerCase();
 }
 
 function checkPhone(inputLine) {
