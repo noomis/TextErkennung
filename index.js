@@ -83,8 +83,8 @@ function checkW3W(inputLine) {
         if (i !== 0) {
             let wordBefore = words[i - 1].toLowerCase();
             // Checkt ob vor der w3w z.B. w3w steht.
-            if (wordBefore.includes("w3w") || wordBefore.includes("what 3 words") || wordBefore.includes("what3words") || 
-            wordBefore.includes("position") || wordBefore.includes("///")) {
+            if (wordBefore.includes("w3w") || wordBefore.includes("what 3 words") || wordBefore.includes("what3words") ||
+                wordBefore.includes("position") || wordBefore.includes("///")) {
                 prob += 5;
             }
         }
@@ -207,7 +207,7 @@ function checkMail(inputLine) {
         const element = lineWords[index];
         let wordChars = element.split("");
 
-        knownTLD.forEach(tld => {           
+        knownTLD.forEach(tld => {
             if (element.endsWith("." + tld)) {  // Checkt ob TLD vorhanden ist
                 hasTLD = true;
             }
@@ -215,15 +215,15 @@ function checkMail(inputLine) {
 
         if (element.startsWith('@')) { // Checkt String mit @ beginnt
             continue wordLoop;
-          }
-          else {
+        }
+        else {
             wordProb += 5;
         }
 
         if (element.length < 6) {   // Checkt ob mindestens 6 Zeichen vorhanden sind
             continue wordLoop;
-          }
-          else {
+        }
+        else {
             wordProb += 10;
         }
 
@@ -246,7 +246,7 @@ function checkMail(inputLine) {
         else {
             wordProb += 25;
         }
-    
+
         if (dotHit.length == 0) {   // checkt ob mindestens ein Punkt vorhanden ist.
             continue wordLoop;
         }
@@ -254,22 +254,21 @@ function checkMail(inputLine) {
             wordProb += 5;
         }
 
-        console.log(dotHit.length);
-        if (dotHit.length > 1) {
-            if (dotHit[dotHit.length] - atHit[0] < 2) { 
+        if (dotHit.length > 1) {    // Checkt ob die local domain mindestens 2 Zeichen lang ist.
+            if (dotHit[dotHit.length - 1] - atHit[0] < 3) {
                 continue wordLoop;
             }
-            else{
+            else {
                 wordProb += 10;
             }
         }
         else if (dotHit.length == 1) {
-            if (dotHit[0] - atHit[0] < 2){
+            if (dotHit[0] - atHit[0] < 3) {
                 continue wordLoop;
             }
             wordProb += 10;
         }
-        
+
         if (hasTLD === false) {         // checkt ob eine TLD vorhanden ist.
             continue wordLoop;
         }
@@ -278,7 +277,7 @@ function checkMail(inputLine) {
         }
         if (index !== 0) {
             let wordBefore = lineWords[index - 1].toLowerCase(); // Checkt ob vor der Mail z.B. Mail: steht.
-            if (wordBefore.includes("mail")) {  
+            if (wordBefore.includes("mail")) {
                 wordProb += 20;
             }
         }
@@ -287,7 +286,7 @@ function checkMail(inputLine) {
         mailValue.push(element);
         mailProbability.push(wordProb);
     }
-    
+
 }
 
 function checkCompanyName(inputLine) {
@@ -315,5 +314,5 @@ function checkStreet(inputLine) {
 
 function checkCity(inputLine) {
     inputLine = inputLine.toLowerCase();
-    let words = inputLine.split(" "); 
+    let words = inputLine.split(" ");
 }
