@@ -34,7 +34,6 @@ function checkW3W(inputLine) {
     // Test
     let words = inputLine.split(" ");
     inputLine = inputLine.toLowerCase();
-    let allHits = [];
     let prob = 0;
     const blacklist = ['!', '@', '#', '$', '%', '^', '&', '*', '(', ')', '_', '-', '+', '=', '{', '}', '[', ']', '|', ';', ':', "'", '"', '<', '>', ',', '?', '`', '~', '0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'ä', 'ü', 'ö'];
 
@@ -81,7 +80,7 @@ function checkW3W(inputLine) {
         }
 
         if (i !== 0) {
-            let wordBefore = words[i - 1];
+            let wordBefore = words[i - 1].toLowerCase;
             // Checkt ob vor der w3w z.B. w3w steht.
             if (wordBefore.includes("w3w") || wordBefore.includes("what 3 words") || wordBefore.includes("what3words") ||
                 wordBefore.includes("position") || wordBefore.includes("///")) {
@@ -275,7 +274,9 @@ function checkName(inputLine) {
 }
 
 function checkFax(inputLine) {
-    let words = inputLine.split(" ")
+    let words = inputLine.split(" ");
+    inputLine = inputLine.toLowerCase();
+    let prob = 0;
 }
 
 function checkPhone(inputLine) {
