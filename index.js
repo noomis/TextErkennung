@@ -240,7 +240,7 @@ function checkMail(inputLine) {
             wordProb+=5;
         }
 
-        if (dotHit[0]-atHit[0]<=1) {    // checkt ob (x@y.de) y mindestens 1 character lang ist. 
+        if (dotHit[dotHit.length]-atHit[0]<=1) {    // checkt ob (x@y.de) y mindestens 1 character lang ist. 
             break wordLoop;
         }
         else{
