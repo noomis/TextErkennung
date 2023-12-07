@@ -10,6 +10,7 @@ const knownTLD = ["com", "net", "org", "de", "eu", "at", "ch", "nl", "pl", "fr",
 
 document.getElementById("button").addEventListener("click", function () {
     let text = document.getElementById("text").value;
+    text = text.replace(/  +/g, ' ');
 
     let lines = text.split("\n");
 
@@ -145,7 +146,7 @@ function checkUrl(inputLine) {
         //output
         if (prob > 0) {
             let indexes = urlValue.indexOf(element);
-           console.log( '"' + element + '"' + " ist zu " + urlProbability[indexes] + "% eine URL");
+            console.log('"' + element + '"' + " ist zu " + urlProbability[indexes] + "% eine URL");
         }
 
     }
@@ -204,7 +205,7 @@ function checkMail(inputLine) { // todo: checken ob @ index - erster punkt index
             if (element === ".") {  // countet .
                 dotHit.push(i);
 
-                if (wordChars[i+1]  === ".") {  // verhindert aufeinander folgende Punkte.
+                if (wordChars[i + 1] === ".") {  // verhindert aufeinander folgende Punkte.
                     continue wordLoop;
                 }
             }
@@ -228,9 +229,9 @@ function checkMail(inputLine) { // todo: checken ob @ index - erster punkt index
 
         if (dotHit.length > 1) {    // Checkt ob die local domain mindestens 2 Zeichen lang ist.
             if (dotHit[dotHit.length - 1] - atHit[0] < 3) {
-            console.log('dotHit[dotHit.length - 1]: ', dotHit[dotHit.length - 1]);
+                console.log('dotHit[dotHit.length - 1]: ', dotHit[dotHit.length - 1]);
                 continue wordLoop;
-               
+
             }
             else {
                 wordProb += 10;
