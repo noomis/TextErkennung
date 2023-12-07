@@ -194,7 +194,6 @@ function checkMail(inputLine) {
 
 
     let lineWords = inputLine.split(" ");
-    console.log(lineWords);
 
     wordLoop: for (let index = 0; index < lineWords.length; index++) {
         let wordProb = 0;
@@ -207,7 +206,6 @@ function checkMail(inputLine) {
 
             knownTLD.forEach(tld => {
                 if (element.endsWith("." + tld)) {
-                    console.log(element);   
                     hasTLD = true;
                 }
             });
@@ -224,8 +222,7 @@ function checkMail(inputLine) {
                 dotHit.push(i);
             }
 
-            console.log(atHit[0]);
-            console.log(dotHit[0]); 
+
 
         }
 
@@ -249,16 +246,19 @@ function checkMail(inputLine) {
         if (dotHit[0]-atHit[0]<=1) {    // checkt ob (x@y.de) y mindestens 1 character lang ist. 
             break wordLoop;
         }
+        else{
+            wordProb+=5;
+        }
 
         if (hasTLD === false) {         // checkt ob eine TLD vorhanden ist.
             break wordLoop;
         }
         else{
-            wordProb+=10;
+            wordProb+=15;
         }
 
 
-        console.log(element + ": ist mit "+ wordProb +"% eine Mail");
+        console.log(element + ": ist mit "+ wordProb +"% Wahrscheinlichkeit eine Mail");
         mailValue.push(element);
         mailProbability.push(wordProb);
     }
