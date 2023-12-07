@@ -187,7 +187,16 @@ function checkMail(inputLine) {
             }
         });
 
+
+
         if (element.startsWith('@')) { // Checkt String mit @ beginnt
+            continue wordLoop;
+        }
+        else {
+            wordProb += 5;
+        }
+
+        if (element.startsWith('.')) { // Checkt String mit @ beginnt
             continue wordLoop;
         }
         else {
