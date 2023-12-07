@@ -146,24 +146,24 @@ function checkUrl(inputLine) {
         //output
         if (prob > 0) {
             let indexes = urlValue.indexOf(element);
-           console.log( '"' + element + '"' + " zu " + urlProbability[indexes] + "% eine URL");
+           console.log( '"' + element + '"' + " ist zu " + urlProbability[indexes] + "% eine URL");
         }
 
     }
 }
-
-function checkMail(inputLine) {
+// sdfsdfsdfsfsfs
+function checkMail(inputLine) { // todo: checken ob @ index - erster punkt index = negativ --> sprich ob das @ vor dem ersten punkt kommt <-- MÜLL --> stattdessen gucken ob @ index min 3 ist das mindestens 2 Zeichen vor dem @ stehen
     inputLine = inputLine.toLowerCase();
     let lineWords = inputLine.split(" ");
 
     wordLoop: for (let index = 0; index < lineWords.length; index++) {
-        let wordProb = 0;
-        let atHit = [];
-        let dotHit = [];
-        let hasTLD = false;
+        let wordProb = 0; // Treffer Wahrscheinlichkeit
+        let atHit = []; // Anzahl von @ im String
+        let dotHit = []; //  Anzahl von . im String
+        let hasTLD = false; //  hat TLD Domain
 
         const element = lineWords[index];
-        let wordChars = element.split("");
+        let wordChars = element.split("");  //Splittet jedes Wort in einzelne Chars
 
         knownTLD.forEach(tld => {
             if (element.endsWith("." + tld)) {  // Checkt ob TLD vorhanden ist
@@ -198,13 +198,19 @@ function checkMail(inputLine) {
             const element = wordChars[i];
 
 
-            if (element === "@") {
+            if (element === "@") {  // countet @
                 atHit.push(i);
             }
 
-            if (element === ".") {
+            if (element === ".") {  // countet .
                 dotHit.push(i);
+
+                if (wordChars[i+1]  === ".") {  // verhindert aufeinander folgende Punkte.
+                    continue wordLoop;
+                }
             }
+
+
         }
 
         if (atHit.length !== 1) {   // checkt ob genau ein @ vorhanden ist.
@@ -223,17 +229,21 @@ function checkMail(inputLine) {
 
         if (dotHit.length > 1) {    // Checkt ob die local domain mindestens 2 Zeichen lang ist.
             if (dotHit[dotHit.length - 1] - atHit[0] < 3) {
+            console.log('dotHit[dotHit.length - 1]: ', dotHit[dotHit.length - 1]);
                 continue wordLoop;
+               
             }
             else {
                 wordProb += 10;
             }
         }
-        else if (dotHit.length == 1) {
+        else if (dotHit.length == 1) {  // Checkt ob die local domain mindestens 2 Zeichen lang ist.
             if (dotHit[0] - atHit[0] < 3) {
                 continue wordLoop;
             }
-            wordProb += 10;
+            else {
+                wordProb += 10;
+            }
         }
 
         if (hasTLD === false) {         // checkt ob eine TLD vorhanden ist.
