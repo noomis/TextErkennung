@@ -127,24 +127,8 @@ function checkUrl(inputLine) {
             prob += 80;
         }
 
-        if (element.includes("ö") == true) {
-            allHits.push("negativ");
-        }
-
-        if (element.includes("ä") == true) {
-            return;
-        }
-
-        if (element.includes("ü") == true) {
-            allHits.push("negativ");
-        }
-
-        if (element.includes("ß") == true) {
-            allHits.push("negativ");
-        }
-
-        if (element.includes("@") == true) {
-            allHits.push("negativ");
+        if (element.includes("ö") == true || element.includes("ü") == true || element.includes("ß") == true || element.includes("ä") == true || element.includes("@") == true) {
+            return
         }
 
         //Runden
