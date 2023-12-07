@@ -37,7 +37,7 @@ function checkW3W(inputLine) {
     inputLine = inputLine.toLowerCase();
     let allHits = [];
     let prob = 0;
-    const blacklist = ['!', '@', '#', '$', '%', '^', '&', '*', '(', ')', '_', '-', '+', '=', '{', '}', '[', ']', '|', ';', ':', "'", '"', '<', '>', ',', '/', '?', '`', '~', '0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'ä', 'ü', 'ö'];
+    const blacklist = ['!', '@', '#', '$', '%', '^', '&', '*', '(', ')', '_', '-', '+', '=', '{', '}', '[', ']', '|', ';', ':', "'", '"', '<', '>', ',', '?', '`', '~', '0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'ä', 'ü', 'ö'];
 
     for (let i = 0; i < words.length; i++) {
         const element = words[i];
@@ -56,8 +56,8 @@ function checkW3W(inputLine) {
         }
 
 
-        lineChars.forEach(element => {
-            if (element == ".") {
+        lineChars.forEach(e => {
+            if (e == ".") {
                 countDot++;
             }
         });
@@ -281,6 +281,9 @@ function checkName(inputLine) {
 
 function checkFax(inputLine) {
     //Luke
+
+    let words = inputLine.split(" ");
+    inputLine = inputLine.toLowerCase();
 }
 
 function checkPhone(inputLine) {
