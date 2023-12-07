@@ -83,7 +83,7 @@ function checkUrl(inputLine) {
                 allHits.push("tld");
             }
         }
-    //überprüfung ob gewisse Kriterien erfüllt sind
+        //überprüfung ob gewisse Kriterien erfüllt sind
         if (element.startsWith("http")) {
             allHits.push("http");
         }
@@ -115,7 +115,7 @@ function checkUrl(inputLine) {
         if (element.includes("@") == true) {
             allHits.push("negativ");
         }
-    //Punktevergabe
+        //Punktevergabe
         if (allHits.includes("negativ") == true) {
             prob = -150;
         }
@@ -143,75 +143,86 @@ function checkUrl(inputLine) {
         if (prob < 0) {
             prob = 0;
         }
-    //push in globalen Array
+        //push in globalen Array
         urlValue.push(element);
         urlProbability.push(prob);
-    //output
+        //output
         if (prob > 80) {
             let indexes = urlValue.indexOf(element);
             let newUrlObject = document.createElement("p");
-            newUrlObject.innerHTML ='"' + element +'"' + " zu " + urlProbability[indexes] + "% eine URL";
+            newUrlObject.innerHTML = '"' + element + '"' + " zu " + urlProbability[indexes] + "% eine URL";
             document.body.appendChild(newUrlObject);
         }
-        
+
     }
 }
 
 function checkMail(inputLine) {
-
     inputLine = inputLine.toLowerCase();
 
-    let atHit = [];
-    let dotHit = [];
 
     let lineWords = inputLine.split(" ");
     console.log(lineWords);
-    let lineChars = inputLine.split("");
-    console.log(lineChars);
 
-    for (let index = 0; index < lineChars.length; index++) {
-        const element = lineChars[index];
+    wordLoop: for (let index = 0; index < lineWords.length; index++) {
+        let wordProb;
+        let atHit = [];
+        let dotHit = [];
 
-        if (element === "@") {
-            atHit.push(element);
+        const element = lineWords[index];
+        let wordChars = element.split("");
+
+        charLoop: for (let i = 0; i < wordChars.length; i++) {
+            const element = wordChars[i];
+
+
+            if (element === "@") {
+                atHit.push(element);
+            }
+
+            if (element === ".") {
+                dotHit.push(element);
+            }
+
+
         }
 
-        if (element === ".") {
-            dotHit.push(element);
+        if (atHit.length !== 1) {
+            break wordLoop;
         }
 
+
+        if (dotHit.length == 0) {
+            break wordLoop;
+        }
+
+        console.log(element + ": ist wahrscheinlich eine Mail");
+        mailValue.push(element);
+        mailProbability.push(wordProb);
     }
 
-    if (atHit.length > 1) {
-        return;
-    }
 
-    if (dotHit.length == 0) {
-        return;
-    }
-    console.log("Wahrscheinlich eine Mail");
 
-    console.log(atHit);
 }
 
 function checkCompanyName(inputLine) {
-// Simon
+    // Simon
 }
 
 function checkName(inputLine) {
-//Lars
+    //Lars
 }
 
 function checkFax(inputLine) {
-//Luke
+    //Luke
 }
 
 function checkPhone(inputLine) {
-//Simon
+    //Simon
 }
 
 function checkStreet(inputLine) {
-//Luke
+    //Luke
 }
 
 function checkCity(inputLine) {

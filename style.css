@@ -21,11 +21,11 @@
   
   button {
     width: 100px;
-    background: #ee0979;
+    background: rgb(127, 127, 127);
+    border: 3px solid white;
+    border-radius: 16px;
     font-weight: bold;
     color: white;
-    border: 0 none;
-    border-radius: 25px;
     cursor: pointer;
     padding: 10px 5px;
     margin: 10px 5px;
