@@ -81,7 +81,7 @@ function checkW3W(inputLine) {
         }
 
         if (i !== 0) {
-            let wordBefore = words[i - 1].toLowerCase();
+            let wordBefore = words[i - 1];
             // Checkt ob vor der w3w z.B. w3w steht.
             if (wordBefore.includes("w3w") || wordBefore.includes("what 3 words") || wordBefore.includes("what3words") ||
                 wordBefore.includes("position") || wordBefore.includes("///")) {
@@ -277,8 +277,6 @@ function checkName(inputLine) {
 function checkFax(inputLine) {
     //Luke
 
-    let words = inputLine.split(" ");
-    inputLine = inputLine.toLowerCase();
 }
 
 function checkPhone(inputLine) {
