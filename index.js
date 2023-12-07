@@ -130,7 +130,7 @@ function checkUrl(inputLine) {
             allHits.push("negativ");
         }
 
-        // negativ mit return ersetzen
+        // negativ mit return ersetzen (LUKE)
         if (element.includes("ä") == true) {
             allHits.push("negativ");
         }
@@ -266,9 +266,7 @@ function checkMail(inputLine) {
         mailValue.push(element);
         mailProbability.push(wordProb);
     }
-
-
-
+    
 }
 
 function checkCompanyName(inputLine) {
