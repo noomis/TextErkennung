@@ -265,8 +265,7 @@ function checkName(inputLine) {
 }
 
 function checkFax(inputLine) {
-    //Luke
-
+    let words = inputLine.split(" ")
 }
 
 function checkPhone(inputLine) {
