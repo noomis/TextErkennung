@@ -190,7 +190,6 @@ function checkUrl(inputLine) {
 }
 
 function checkMail(inputLine) {
-    debugger;
     inputLine = inputLine.toLowerCase();
 
 
@@ -218,16 +217,21 @@ function checkMail(inputLine) {
 
 
             if (element === "@") {
-                atHit.push(element);
+                atHit.push(i);
             }
 
             if (element === ".") {
-                dotHit.push(element);
+                dotHit.push(i);
             }
+
+            console.log(atHit[0]);
+            console.log(dotHit[0]); 
 
         }
 
-        if (atHit.length !== 1) {
+      
+
+        if (atHit.length !== 1) {   // checkt ob genau ein @ vorhanden ist.
             break wordLoop;
         }
         else{
@@ -235,14 +239,18 @@ function checkMail(inputLine) {
         }
 
 
-        if (dotHit.length == 0) {
+        if (dotHit.length == 0) {   // checkt ob mindestens ein Punkt vorhanden ist.
             break wordLoop;
         }
         else{
             wordProb+=5;
         }
 
-        if (hasTLD === false) {
+        if (dotHit[0]-atHit[0]<=1) {    // checkt ob (x@y.de) y mindestens 1 character lang ist. 
+            break wordLoop;
+        }
+
+        if (hasTLD === false) {         // checkt ob eine TLD vorhanden ist.
             break wordLoop;
         }
         else{
