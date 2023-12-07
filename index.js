@@ -108,7 +108,7 @@ function checkUrl(inputLine) {
         let prob = 0;
         for (const tld of knownTLD) {
             if (element.endsWith("." + tld)) {
-                allHits.push("tld");
+                allHits.push("tld"); 
             }
         }
         //überprüfung ob gewisse Kriterien erfüllt sind
@@ -143,9 +143,13 @@ function checkUrl(inputLine) {
         if (element.includes("@") == true) {
             allHits.push("negativ");
         }
+
         //Punktevergabe
+
+        // Wieso fügst du die Punkte nicht direkt oben hinzu, dann würdest du dir fast alle folgenden IF Abfragen sparen :)
+
         if (allHits.includes("negativ") == true) {
-            prob = -150;
+            prob = -150;    
         }
 
         if (allHits.includes("tld") == true) {
@@ -209,9 +213,6 @@ function checkMail(inputLine) {
                 }
             });
            
- 
-        
-
         charLoop: for (let i = 0; i < wordChars.length; i++) {
             const element = wordChars[i];
 
@@ -223,12 +224,6 @@ function checkMail(inputLine) {
             if (element === ".") {
                 dotHit.push(element);
             }
-
-
- 
-
-
-
 
         }
 
