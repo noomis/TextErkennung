@@ -33,17 +33,17 @@ document.getElementById("button").addEventListener("click", function () {
 function checkW3W(inputLine) {
     let words = inputLine.split(" ");
     inputLine = inputLine.toLowerCase();
-    let dotHit = [];
+    let allHits = [];
     let prob = 0;
 
-    words.forEach(words => {
+    for (let i = 0; i < words.length; i++) {
         // split nach Buchstaben und length == 2
 
         let countDot = 0;
-        // console.log(words);
+        console.log(words[i]);
 
-        let lineChars = words.split("");
-        // console.log(lineChars);
+        let lineChars = words[i].split("");
+        console.log(lineChars);
 
         lineChars.forEach(element => {
             if (element == ".") {
@@ -51,19 +51,48 @@ function checkW3W(inputLine) {
             }
         });
 
-        // TODO nach dot splitten und lenght variable wörter checken 
+        console.log(countDot);
+        if (countDot == 2) {
+            let wordLength = words[i].split(".");
+            console.log(wordLength);
+
+            wordLength.forEach(words => {
+                console.log(words.length);
+
+                if (words.length < 2) {
+                    return;
+                } else if (words.length <= 44) { // TODO w3w max wort länge
+                    prob += 20;
+                }
+
+                let wordChars = words.split("");
+                let countW = 0;
+                console.log(wordChars);
+                for (let index = 0; index < 3; index++) {
+                    if (wordChars[index] == "w") {
+                        countW++;
+                    }
+                }
+
+                // test if Url
+                if (countW == 3) {
+                    return
+                }
+            });
+        } else {
+            return;
+        }
+
+
 
         // überprüfen ob 2 Punkte
-
         if (countDot == 2) {
             prob += 40;
         }
 
-    });
+    }
 
-
-
-    console.log(dotHit);
+    console.log(prob + "%");
 }
 
 function checkUrl(inputLine) {
@@ -83,7 +112,7 @@ function checkUrl(inputLine) {
                 allHits.push("tld");
             }
         }
-    //überprüfung ob gewisse Kriterien erfüllt sind
+        //überprüfung ob gewisse Kriterien erfüllt sind
         if (element.startsWith("http")) {
             allHits.push("http");
         }
@@ -115,7 +144,7 @@ function checkUrl(inputLine) {
         if (element.includes("@") == true) {
             allHits.push("negativ");
         }
-    //Punktevergabe
+        //Punktevergabe
         if (allHits.includes("negativ") == true) {
             prob = -150;
         }
@@ -143,17 +172,17 @@ function checkUrl(inputLine) {
         if (prob < 0) {
             prob = 0;
         }
-    //push in globalen Array
+        //push in globalen Array
         urlValue.push(element);
         urlProbability.push(prob);
-    //output
+        //output
         if (prob > 80) {
             let indexes = urlValue.indexOf(element);
             let newUrlObject = document.createElement("p");
-            newUrlObject.innerHTML ='"' + element +'"' + " zu " + urlProbability[indexes] + "% eine URL";
+            newUrlObject.innerHTML = '"' + element + '"' + " zu " + urlProbability[indexes] + "% eine URL";
             document.body.appendChild(newUrlObject);
         }
-        
+
     }
 }
 
@@ -195,23 +224,23 @@ function checkMail(inputLine) {
 }
 
 function checkCompanyName(inputLine) {
-// Simon
+    // Simon
 }
 
 function checkName(inputLine) {
-//Lars
+    //Lars
 }
 
 function checkFax(inputLine) {
-//Luke
+    //Luke
 }
 
 function checkPhone(inputLine) {
-//Simon
+    //Simon
 }
 
 function checkStreet(inputLine) {
-//Luke
+    //Luke
 }
 
 function checkCity(inputLine) {
