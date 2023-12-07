@@ -97,7 +97,6 @@ function checkUrl(inputLine) {
     inputLine = inputLine.toLowerCase();
     let words = inputLine.split(" ");
     //alle bekannten TLDs
-    const knownTLD = ["com", "net", "org", "de", "eu", "at", "ch", "nl", "pl", "fr", "es", "info", "name", "biz"];
 
     //for-Schleife die alle Worte vom Input durchläuft
     for (let i = 0; i < words.length; i++) {
@@ -106,7 +105,7 @@ function checkUrl(inputLine) {
         let prob = 0;
         for (const tld of knownTLD) {
             if (element.endsWith("." + tld)) {
-                allHits.push("tld");
+                allHits.push("tld"); 
             }
         }
         //überprüfung ob gewisse Kriterien erfüllt sind
@@ -141,9 +140,13 @@ function checkUrl(inputLine) {
         if (element.includes("@") == true) {
             allHits.push("negativ");
         }
+
         //Punktevergabe
+
+        // Wieso fügst du die Punkte nicht direkt oben hinzu, dann würdest du dir fast alle folgenden IF Abfragen sparen :)
+
         if (allHits.includes("negativ") == true) {
-            prob = -150;
+            prob = -150;    
         }
 
         if (allHits.includes("tld") == true) {
@@ -188,41 +191,71 @@ function checkMail(inputLine) {
 
 
     let lineWords = inputLine.split(" ");
-    console.log(lineWords);
 
     wordLoop: for (let index = 0; index < lineWords.length; index++) {
-        let wordProb;
+        let wordProb = 0;
         let atHit = [];
         let dotHit = [];
+        let hasTLD = false;
 
         const element = lineWords[index];
         let wordChars = element.split("");
 
+            knownTLD.forEach(tld => {
+                if (element.endsWith("." + tld)) {
+                    hasTLD = true;
+                }
+            });
+           
         charLoop: for (let i = 0; i < wordChars.length; i++) {
             const element = wordChars[i];
 
 
             if (element === "@") {
-                atHit.push(element);
+                atHit.push(i);
             }
 
             if (element === ".") {
-                dotHit.push(element);
+                dotHit.push(i);
             }
 
 
+
         }
 
-        if (atHit.length !== 1) {
+      
+
+        if (atHit.length !== 1) {   // checkt ob genau ein @ vorhanden ist.
             break wordLoop;
         }
-
-
-        if (dotHit.length == 0) {
-            break wordLoop;
+        else{
+            wordProb+=20;
         }
 
-        console.log(element + ": ist wahrscheinlich eine Mail");
+
+        if (dotHit.length == 0) {   // checkt ob mindestens ein Punkt vorhanden ist.
+            break wordLoop;
+        }
+        else{
+            wordProb+=5;
+        }
+
+        if (dotHit[0]-atHit[0]<=1) {    // checkt ob (x@y.de) y mindestens 1 character lang ist. 
+            break wordLoop;
+        }
+        else{
+            wordProb+=5;
+        }
+
+        if (hasTLD === false) {         // checkt ob eine TLD vorhanden ist.
+            break wordLoop;
+        }
+        else{
+            wordProb+=15;
+        }
+
+
+        console.log(element + ": ist mit "+ wordProb +"% Wahrscheinlichkeit eine Mail");
         mailValue.push(element);
         mailProbability.push(wordProb);
     }
