@@ -33,17 +33,17 @@ document.getElementById("button").addEventListener("click", function () {
 function checkW3W(inputLine) {
     let words = inputLine.split(" ");
     inputLine = inputLine.toLowerCase();
-    let dotHit = [];
+    let allHits = [];
     let prob = 0;
 
-    words.forEach(words => {
+    for (let i = 0; i < words.length; i++) {
         // split nach Buchstaben und length == 2
 
         let countDot = 0;
-        // console.log(words);
+        console.log(words[i]);
 
-        let lineChars = words.split("");
-        // console.log(lineChars);
+        let lineChars = words[i].split("");
+        console.log(lineChars);
 
         lineChars.forEach(element => {
             if (element == ".") {
@@ -51,19 +51,48 @@ function checkW3W(inputLine) {
             }
         });
 
-        // TODO nach dot splitten und lenght variable wörter checken 
+        console.log(countDot);
+        if (countDot == 2) {
+            let wordLength = words[i].split(".");
+            console.log(wordLength);
+
+            wordLength.forEach(words => {
+                console.log(words.length);
+
+                if (words.length < 2) {
+                    return;
+                } else if (words.length <= 44) { // TODO w3w max wort länge
+                    prob += 20;
+                }
+
+                let wordChars = words.split("");
+                let countW = 0;
+                console.log(wordChars);
+                for (let index = 0; index < 3; index++) {
+                    if (wordChars[index] == "w") {
+                        countW++;
+                    }
+                }
+
+                // test if Url
+                if (countW == 3) {
+                    return
+                }
+            });
+        } else {
+            return;
+        }
+
+
 
         // überprüfen ob 2 Punkte
-
         if (countDot == 2) {
             prob += 40;
         }
 
-    });
+    }
 
-
-
-    console.log(dotHit);
+    console.log(prob + "%");
 }
 
 function checkUrl(inputLine) {
