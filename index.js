@@ -40,7 +40,7 @@ function checkW3W(inputLine) {
     const blacklist = ['!', '@', '#', '$', '%', '^', '&', '*', '(', ')', '_', '-', '+', '=', '{', '}', '[', ']', '|', ';', ':', "'", '"', '<', '>', ',', '/', '?', '`', '~', '0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'ä', 'ü', 'ö'];
 
     for (let i = 0; i < words.length; i++) {
-        // split nach Buchstaben und length == 2
+        const element = words[i];
         let countDot = 0;
         let lineChars = words[i].split("");
 
@@ -50,7 +50,8 @@ function checkW3W(inputLine) {
             }
         }
 
-        if (words[i].includes("http") || words[i].includes("https")) {
+        // Url ausschließen
+        if (words[i].includes("http") || words[i].includes("https") || words.includes("www")) {
             return;
         }
 
@@ -71,18 +72,18 @@ function checkW3W(inputLine) {
                     prob += 20;
                 }
 
-                // test Url
-                let wordChars = wordLength[t].split("");
-                let countW = 0;
-                for (let index = 0; index < 3; index++) {
-                    if (wordChars[index] == "w") {
-                        countW++;
-                    }
-                }
+                // test www am anfang
+                // let wordChars = wordLength[t].split("");
+                // let countW = 0;
+                // for (let index = 0; index < 3; index++) {
+                //     if (wordChars[index] == "w") {
+                //         countW++;
+                //     }
+                // }
 
-                if (countW == 3) {
-                    return;
-                }
+                // if (countW == 3) {
+                //     return;
+                // }
             }
         } else {
             return;
@@ -92,10 +93,8 @@ function checkW3W(inputLine) {
         if (countDot == 2) {
             prob += 40;
         }
-
+        console.log(element + ": ist mit " + prob + "% Wahrscheinlichkeit eine w3w Adrsse");
     }
-
-    console.log(prob + "%");
 }
 
 function checkUrl(inputLine) {
