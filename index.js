@@ -146,7 +146,7 @@ function checkUrl(inputLine) {
         //output
         if (prob > 0) {
             let indexes = urlValue.indexOf(element);
-           console.log( '"' + element + '"' + " zu " + urlProbability[indexes] + "% eine URL");
+           console.log( '"' + element + '"' + " ist zu " + urlProbability[indexes] + "% eine URL");
         }
 
     }
