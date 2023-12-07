@@ -47,7 +47,7 @@ function checkW3W(inputLine) {
                 return;
             }
         }
-       
+
 
         lineChars.forEach(element => {
             if (element == ".") {
@@ -105,7 +105,7 @@ function checkUrl(inputLine) {
         let prob = 0;
         for (const tld of knownTLD) {
             if (element.endsWith("." + tld)) {
-                allHits.push("tld"); 
+                allHits.push("tld");
             }
         }
         //überprüfung ob gewisse Kriterien erfüllt sind
@@ -146,7 +146,7 @@ function checkUrl(inputLine) {
         // Wieso fügst du die Punkte nicht direkt oben hinzu, dann würdest du dir fast alle folgenden IF Abfragen sparen :)
 
         if (allHits.includes("negativ") == true) {
-            prob = -150;    
+            prob = -150;
         }
 
         if (allHits.includes("tld") == true) {
@@ -201,12 +201,12 @@ function checkMail(inputLine) {
         const element = lineWords[index];
         let wordChars = element.split("");
 
-            knownTLD.forEach(tld => {
-                if (element.endsWith("." + tld)) {
-                    hasTLD = true;
-                }
-            });
-           
+        knownTLD.forEach(tld => {
+            if (element.endsWith("." + tld)) {
+                hasTLD = true;
+            }
+        });
+
         charLoop: for (let i = 0; i < wordChars.length; i++) {
             const element = wordChars[i];
 
@@ -223,39 +223,47 @@ function checkMail(inputLine) {
 
         }
 
-      
+
 
         if (atHit.length !== 1) {   // checkt ob genau ein @ vorhanden ist.
-            break wordLoop;
+            continue wordLoop;
         }
-        else{
-            wordProb+=20;
+        else {
+            wordProb += 20;
         }
 
 
         if (dotHit.length == 0) {   // checkt ob mindestens ein Punkt vorhanden ist.
-            break wordLoop;
+            continue wordLoop;
         }
-        else{
-            wordProb+=5;
+        else {
+            wordProb += 5;
         }
 
-        if (dotHit[0]-atHit[0]<=1) {    // checkt ob (x@y.de) y mindestens 1 character lang ist. 
-            break wordLoop;
+        if (dotHit[dotHit.length] - atHit[0] <= 1) {    // checkt ob (x@y.de) y mindestens 1 character lang ist. 
+            continue wordLoop;
         }
-        else{
-            wordProb+=5;
+        else {
+            wordProb += 5;
         }
 
         if (hasTLD === false) {         // checkt ob eine TLD vorhanden ist.
-            break wordLoop;
+            continue wordLoop;
         }
-        else{
-            wordProb+=15;
+        else {
+            wordProb += 15;
+        }
+
+        if (index !== 0) {
+            let wordBefore = lineWords[index - 1].toLowerCase();
+            if (wordBefore.includes("mail")) {  // Checkt ob vor der Mail z.B. Mail: steht
+                wordProb += 15;
+            }
         }
 
 
-        console.log(element + ": ist mit "+ wordProb +"% Wahrscheinlichkeit eine Mail");
+
+        console.log(element + ": ist mit " + wordProb + "% Wahrscheinlichkeit eine Mail");
         mailValue.push(element);
         mailProbability.push(wordProb);
     }
