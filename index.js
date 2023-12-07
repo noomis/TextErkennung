@@ -32,7 +32,6 @@ document.getElementById("button").addEventListener("click", function () {
 
 function checkW3W(inputLine) {
     // Test
-
     let words = inputLine.split(" ");
     inputLine = inputLine.toLowerCase();
     let allHits = [];
@@ -46,13 +45,13 @@ function checkW3W(inputLine) {
 
         for (let b = 0; b < blacklist.length; b++) {
             if (words[i].includes(blacklist[b])) {
-                return;
+                continue;
             }
         }
 
         // Url ausschließen
-        if (words[i].includes("http") || words[i].includes("https") || words.includes("www")) {
-            return;
+        if (words[i].includes("http") || words[i].includes("https") || words[i].includes("www")) {
+            continue;
         }
 
 
@@ -71,27 +70,14 @@ function checkW3W(inputLine) {
                 } else if (wordLength[t].length <= 44) { // TODO w3w max wort länge
                     prob += 20;
                 }
-
-                // test www am anfang
-                // let wordChars = wordLength[t].split("");
-                // let countW = 0;
-                // for (let index = 0; index < 3; index++) {
-                //     if (wordChars[index] == "w") {
-                //         countW++;
-                //     }
-                // }
-
-                // if (countW == 3) {
-                //     return;
-                // }
             }
         } else {
-            return;
+            continue;
         }
 
         // überprüfen ob 2 Punkte
         if (countDot == 2) {
-            prob += 40;
+            prob += 30;
         }
         console.log(element + ": ist mit " + prob + "% Wahrscheinlichkeit eine w3w Adresse");
     }
