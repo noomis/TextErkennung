@@ -237,12 +237,23 @@ function checkMail(inputLine) {
         else {
             wordProb += 5;
         }
-        if (dotHit[dotHit.length] - atHit[0] <= 1) {    // checkt ob y in (x@y.de) mindestens 1 character lang ist. 
-            continue wordLoop;
+
+        console.log(dotHit.length);
+        if (dotHit.length > 1) {
+            if (dotHit[dotHit.length] - atHit[0] < 2) { 
+                continue wordLoop;
+            }
+            else{
+                wordProb += 10;
+            }
         }
-        else {
+        else if (dotHit.length == 1) {
+            if (dotHit[0] - atHit[0] < 2){
+                continue wordLoop;
+            }
             wordProb += 10;
         }
+        
         if (hasTLD === false) {         // checkt ob eine TLD vorhanden ist.
             continue wordLoop;
         }
