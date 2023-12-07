@@ -31,6 +31,8 @@ document.getElementById("button").addEventListener("click", function () {
 
 
 function checkW3W(inputLine) {
+    // Test
+
     let words = inputLine.split(" ");
     inputLine = inputLine.toLowerCase();
     let allHits = [];
