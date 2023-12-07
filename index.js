@@ -143,7 +143,7 @@ function checkUrl(inputLine) {
 
         //Punktevergabe
 
-        // Wieso fügst du die Punkte nicht direkt oben hinzu, dann würdest du dir fast alle folgenden IF Abfragen sparen :)
+        // Wieso fügst du die Punkte nicht direkt oben hinzu, dann würdest du dir fast alle folgenden IF Abfragen sparen :) - Simon
 
         if (allHits.includes("negativ") == true) {
             prob = -150;
@@ -207,6 +207,13 @@ function checkMail(inputLine) {
             }
         });
 
+        if (element.startsWith('@')) {
+            continue wordLoop;
+          }
+          else {
+            wordProb += 5;
+        }
+
         charLoop: for (let i = 0; i < wordChars.length; i++) {
             const element = wordChars[i];
 
@@ -231,6 +238,7 @@ function checkMail(inputLine) {
         else {
             wordProb += 20;
         }
+        
 
 
         if (dotHit.length == 0) {   // checkt ob mindestens ein Punkt vorhanden ist.
