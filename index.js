@@ -11,9 +11,9 @@ const knownTLD = ["com", "net", "org", "de", "eu", "at", "ch", "nl", "pl", "fr",
 document.getElementById("button").addEventListener("click", function () {
     let text = document.getElementById("text").value;
 
-    let words = text.split("\n");
+    let lines = text.split("\n");
 
-    words.forEach(element => {
+    lines.forEach(element => {
 
         checkW3W(element);
         checkUrl(element);
@@ -121,11 +121,14 @@ function checkUrl(inputLine) {
 }
 
 function checkMail(inputLine) {
+
     inputLine = inputLine.toLowerCase();
+
     let atHit = [];
     let dotHit = [];
 
-
+    let lineWords = inputLine.split(" ");
+    console.log(lineWords);
     let lineChars = inputLine.split("");
     console.log(lineChars);
 
