@@ -195,8 +195,6 @@ function checkUrl(inputLine) {
 
 function checkMail(inputLine) {
     inputLine = inputLine.toLowerCase();
-
-
     let lineWords = inputLine.split(" ");
 
     wordLoop: for (let index = 0; index < lineWords.length; index++) {
@@ -232,51 +230,38 @@ function checkMail(inputLine) {
             if (element === ".") {
                 dotHit.push(i);
             }
-
-
-
         }
-
-
-
         if (atHit.length !== 1) {   // checkt ob genau ein @ vorhanden ist.
             continue wordLoop;
         }
         else {
-            wordProb += 20;
+            wordProb += 25;
         }
-        
-
-
+    
         if (dotHit.length == 0) {   // checkt ob mindestens ein Punkt vorhanden ist.
             continue wordLoop;
         }
         else {
             wordProb += 5;
         }
-
         if (dotHit[dotHit.length] - atHit[0] <= 1) {    // checkt ob (x@y.de) y mindestens 1 character lang ist. 
             continue wordLoop;
         }
         else {
-            wordProb += 5;
+            wordProb += 10;
         }
-
         if (hasTLD === false) {         // checkt ob eine TLD vorhanden ist.
             continue wordLoop;
         }
         else {
-            wordProb += 15;
+            wordProb += 20;
         }
-
         if (index !== 0) {
             let wordBefore = lineWords[index - 1].toLowerCase();
-            if (wordBefore.includes("mail")) {  // Checkt ob vor der Mail z.B. Mail: steht
-                wordProb += 15;
+            if (wordBefore.includes("mail")) {  // Checkt ob vor der Mail z.B. Mail: steht.
+                wordProb += 20;
             }
         }
-
-
 
         console.log(element + ": ist mit " + wordProb + "% Wahrscheinlichkeit eine Mail");
         mailValue.push(element);
