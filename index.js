@@ -151,7 +151,7 @@ function checkUrl(inputLine) {
 
     }
 }
-// sdfsdfsdfsfsfs
+
 function checkMail(inputLine) { // todo: checken ob @ index - erster punkt index = negativ --> sprich ob das @ vor dem ersten punkt kommt <-- MÜLL --> stattdessen gucken ob @ index min 3 ist das mindestens 2 Zeichen vor dem @ stehen
     inputLine = inputLine.toLowerCase();
     let lineWords = inputLine.split(" ");
