@@ -328,6 +328,26 @@ function checkFax(inputLine) {
     let words = inputLine.split(" ");
     inputLine = inputLine.toLowerCase();
     let prob = 0;
+    let stringBlacklist = "abcdefghijklmnopqrstuvwxyzäöü@#$!%^&*_={}[]|;:<>,?";
+    const blacklist = stringBlacklist.split("");
+
+    words: for (let i = 0; i < words.length; i++) {
+        const element = words[i];
+        let lineChars = words[i].split("");
+        let sonderZ = 0;
+
+        for (let b = 0; b < blacklist.length; b++) {
+            if (words[i].includes(blacklist[b])) {
+                continue words;
+                sonderZ++;
+            }
+        }
+
+        if (sonderZ == 0) {
+            console.log("num");
+            // vorher nach fax schauen und dannach nach weiteren ziffern ohne max length zu überschreiten
+        }
+    }
 }
 
 function checkPhone(inputLine) {
