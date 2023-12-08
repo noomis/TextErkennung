@@ -2,6 +2,8 @@ let urlValue = [];
 let urlProbability = [];
 let mailValue = [];
 let mailProbability = [];
+let companyValue = [];
+let companyProbability = [];
 let w3wValue = [];
 let w3wProbability = [];
 
@@ -298,7 +300,6 @@ function checkCompanyName(inputLine) { // Simon
 
         unternehmensformen.forEach(unternehmensform => {
             if (element == unternehmensform) {
-            console.log('element: ', unternehmensform);
                 wordProb += 50;
             }
         });
@@ -318,6 +319,8 @@ function checkCompanyName(inputLine) { // Simon
 
     if (wordProb >= 50) {
         console.log(inputLine + " ist mit " + wordProb + "% Wahrscheinlichkeit ein Firmenname");
+        companyValue.push(inputLine);
+        companyProbability.push(wordProb);
     }
 
 
