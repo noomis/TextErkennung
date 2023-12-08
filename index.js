@@ -388,7 +388,9 @@ function checkFax(inputLine) {
                     }
                 }
 
-                if (words[i].length > 5 && words[i].length < 34) {
+                let wordNums = words[i].replaceAll("+", "").replaceAll("/", "").replaceAll("-", "");
+                console.log(wordNums);
+                if (wordNums.length > 5 && wordNums.length < 33) {
                     prob += 30;
                 }
             }
