@@ -312,15 +312,6 @@ function checkCompanyName(inputLine) { // Simon
 
 }
 
-
-
-
-
-
-
-
-
-
 function checkName(inputLine) {
     //Lars
 }
