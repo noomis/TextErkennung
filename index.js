@@ -322,50 +322,64 @@ function checkFax(inputLine) {
     let prob = 0;
     let stringBlacklist = "abcdefghijklmnopqrstuvwxyzäöü@#$!%^&*_={}[]|;:<>,?";
     const blacklist = stringBlacklist.split("");
+    let countNumsAfterCurr = 0;
+    let lastNum = 0;
 
     words: for (let i = 0; i < words.length; i++) {
-        const element = words[i];
+
+        let element = words[i];
         let lineChars = words[i].split("");
         let sonderZ = 0;
 
-        for (let b = 0; b < blacklist.length; b++) {
-            if (words[i].includes(blacklist[b])) {
-                continue words;
-                sonderZ++;
-            }
-        }
-
-        if (sonderZ == 0) {
-            // vorher nach fax schauen und dannach nach weiteren ziffern ohne max length zu überschreiten
-
-            debugger;
-            if (i !== 0) {
-                let wordBefore = words[i - 1].toLowerCase();
-                // Checkt ob vor der nummer z.B. fax steht.
-
-                if (wordBefore.includes("fax")) {
-                    prob += 15;
-                } else if (wordBefore.includes("tel")) {
-                    return;
+        // wenn vorherige nummer nicht über mehrer leerzeichen ging
+        if (i > lastNum + countNumsAfterCurr || i == 0) {
+            for (let b = 0; b < blacklist.length; b++) {
+                if (words[i].includes(blacklist[b])) {
+                    continue words;
+                    sonderZ++;
                 }
             }
 
-            if (i + 1 < words.length) {
-                let wordAfter = words[i + 1].toLowerCase();
-                // Checkt ob vor der nummer z.B. fax steht.
+            if (sonderZ == 0) {
+                // vorher nach fax schauen und dannach nach weiteren ziffern ohne max length zu überschreiten
 
-                for (let b = 0; b < blacklist.length; b++) {
-                    if (wordAfter[i].includes(blacklist[b])) {
-                        break;
-                    } else if (words[i].length + wordAfter.length < 20) {
-                        console.log(words[i]);
-                        // words[i] = words[i].push(wordAfter);
-                        console.log(words[i]);
+                if (i !== 0) {
+                    let wordBefore = words[i - 1].toLowerCase();
+                    // Checkt ob vor der nummer z.B. fax steht
+
+                    if (wordBefore.includes("fax")) {
+                        prob += 70;
+                    } else if (wordBefore.includes("tel")) {
+                        return;
                     }
                 }
+
+                if (i + 1 < words.length) {
+                    let wordAfter = words[i + 1].toLowerCase();
+                    let wordAfterSZ = 0;
+                    // Checkt ob nach der nummer noch eine Nummer steht
+
+                    for (let b = 0; b < blacklist.length; b++) {
+                        if (wordAfter[i].includes(blacklist[b])) {
+                            wordAfterSZ++;
+                            break;
+                        }
+                    }
+
+                    if (wordAfterSZ == 0 && words[i].length + wordAfter.length < 20) {
+                        words[i] = "" + words[i] + "" + wordAfter;
+                        element = words[i];
+                        countNumsAfterCurr++;
+                        lastNum = i;
+                    }
+                }
+
+                if (words[i].length > 5 && words[i].length < 34) {
+                    prob += 30;
+                }
             }
+            console.log(element + ": ist mit " + prob + "% Wahrscheinlichkeit eine fax Nummer");
         }
-        console.log(element + ": ist mit " + prob + "% Wahrscheinlichkeit eine fax Nummer");
     }
 }
 
