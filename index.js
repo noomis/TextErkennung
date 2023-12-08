@@ -359,7 +359,7 @@ function checkFax(inputLine) {
                         break;
                     } else if (words[i].length + wordAfter.length < 20) {
                         console.log(words[i]);
-                        words[i] = words[i].push(wordAfter);
+                        // words[i] = words[i].push(wordAfter);
                         console.log(words[i]);
                     }
                 }
