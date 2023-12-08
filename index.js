@@ -32,7 +32,6 @@ document.getElementById("button").addEventListener("click", function () {
 
 
 function checkW3W(inputLine) {
-    // Test
     let words = inputLine.split(" ");
     inputLine = inputLine.toLowerCase();
     let prob = 0;
@@ -43,6 +42,7 @@ function checkW3W(inputLine) {
         let countDot = 0;
         let lineChars = words[i].split("");
 
+        // Wörter mit SonderZ überspringen
         for (let b = 0; b < blacklist.length; b++) {
             if (words[i].includes(blacklist[b])) {
                 continue words;
@@ -61,6 +61,7 @@ function checkW3W(inputLine) {
             }
         });
 
+        // bei genau zwei Punkten die Zeile dannach aufteilen und die länge der einezelenen Wörter überprüfen
         if (countDot == 2) {
             let wordLength = words[i].split(".");
 
@@ -77,7 +78,7 @@ function checkW3W(inputLine) {
 
         // überprüfen ob 2 Punkte
         if (countDot == 2) {
-            prob += 30;
+            prob += 20;
         }
 
         if (i !== 0) {
@@ -85,7 +86,7 @@ function checkW3W(inputLine) {
             // Checkt ob vor der w3w z.B. w3w steht.
             if (wordBefore.includes("w3w") || wordBefore.includes("what 3 words") || wordBefore.includes("what3words") ||
                 wordBefore.includes("position") || wordBefore.includes("///")) {
-                prob += 5;
+                prob += 15;
             }
         }
 
@@ -294,9 +295,36 @@ function checkFax(inputLine) {
         }
 
         if (sonderZ == 0) {
-            console.log("num");
             // vorher nach fax schauen und dannach nach weiteren ziffern ohne max length zu überschreiten
+
+            debugger;
+            if (i !== 0) {
+                let wordBefore = words[i - 1].toLowerCase();
+                // Checkt ob vor der nummer z.B. fax steht.
+
+                if (wordBefore.includes("fax")) {
+                    prob += 15;
+                } else if (wordBefore.includes("tel")) {
+                    return;
+                }
+            }
+            
+            if (i+1 < words.length) {
+                let wordAfter = words[i + 1].toLowerCase();
+                // Checkt ob vor der nummer z.B. fax steht.
+
+                for (let b = 0; b < blacklist.length; b++) {
+                    if (wordAfter[i].includes(blacklist[b])) {
+                        break;
+                    } else if (words[i].length + wordAfter.length < 20) {
+                        console.log(words[i]);
+                        words[i] = words[i].push(wordAfter);
+                        console.log(words[i]);
+                    }
+                }
+            }
         }
+        console.log(element + ": ist mit " + prob + "% Wahrscheinlichkeit eine fax Nummer");
     }
 }
 
