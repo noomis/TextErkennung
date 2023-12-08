@@ -291,15 +291,26 @@ function checkCompanyName(inputLine) { // Simon
 
     inputLine = inputLine.toLowerCase();
 
-    unternehmensformen.forEach(element => {
-        if (inputLine.includes(element)) {
-            wordProb += 50;
-        }
-    });
+    let lineWords = inputLine.split(" ");
+
+    wordLoop: for (let index = 0; index < lineWords.length; index++) {
+        const element = lineWords[index];
+
+        unternehmensformen.forEach(unternehmensform => {
+            if (element == unternehmensform) {
+            console.log('element: ', unternehmensform);
+                wordProb += 50;
+            }
+        });
+    }
+
+
 
     firmenTitel.forEach(element => {
         if (inputLine.includes(element)) {
+        console.log('element: ', element);
             wordProb += 50;
+
 
         }
     });
@@ -317,56 +328,56 @@ function checkName(inputLine) {
 }
 
 function checkFax(inputLine) {
-    let words = inputLine.split(" ");
-    inputLine = inputLine.toLowerCase();
-    let prob = 0;
-    let stringBlacklist = "abcdefghijklmnopqrstuvwxyzäöü@#$!%^&*_={}[]|;:<>,?";
-    const blacklist = stringBlacklist.split("");
+//     let words = inputLine.split(" ");
+//     inputLine = inputLine.toLowerCase();
+//     let prob = 0;
+//     let stringBlacklist = "abcdefghijklmnopqrstuvwxyzäöü@#$!%^&*_={}[]|;:<>,?";
+//     const blacklist = stringBlacklist.split("");
 
-    words: for (let i = 0; i < words.length; i++) {
-        const element = words[i];
-        let lineChars = words[i].split("");
-        let sonderZ = 0;
+//     words: for (let i = 0; i < words.length; i++) {
+//         const element = words[i];
+//         let lineChars = words[i].split("");
+//         let sonderZ = 0;
 
-        for (let b = 0; b < blacklist.length; b++) {
-            if (words[i].includes(blacklist[b])) {
-                continue words;
-                sonderZ++;
-            }
-        }
+//         for (let b = 0; b < blacklist.length; b++) {
+//             if (words[i].includes(blacklist[b])) {
+//                 continue words;
+//                 sonderZ++;
+//             }
+//         }
 
-        if (sonderZ == 0) {
-            // vorher nach fax schauen und dannach nach weiteren ziffern ohne max length zu überschreiten
+//         if (sonderZ == 0) {
+//             // vorher nach fax schauen und dannach nach weiteren ziffern ohne max length zu überschreiten
 
-            debugger;
-            if (i !== 0) {
-                let wordBefore = words[i - 1].toLowerCase();
-                // Checkt ob vor der nummer z.B. fax steht.
+//             debugger;
+//             if (i !== 0) {
+//                 let wordBefore = words[i - 1].toLowerCase();
+//                 // Checkt ob vor der nummer z.B. fax steht.
 
-                if (wordBefore.includes("fax")) {
-                    prob += 15;
-                } else if (wordBefore.includes("tel")) {
-                    return;
-                }
-            }
+//                 if (wordBefore.includes("fax")) {
+//                     prob += 15;
+//                 } else if (wordBefore.includes("tel")) {
+//                     return;
+//                 }
+//             }
 
-            if (i + 1 < words.length) {
-                let wordAfter = words[i + 1].toLowerCase();
-                // Checkt ob vor der nummer z.B. fax steht.
+//             if (i + 1 < words.length) {
+//                 let wordAfter = words[i + 1].toLowerCase();
+//                 // Checkt ob vor der nummer z.B. fax steht.
 
-                for (let b = 0; b < blacklist.length; b++) {
-                    if (wordAfter[i].includes(blacklist[b])) {
-                        break;
-                    } else if (words[i].length + wordAfter.length < 20) {
-                        console.log(words[i]);
-                        // words[i] = words[i].push(wordAfter);
-                        console.log(words[i]);
-                    }
-                }
-            }
-        }
-        console.log(element + ": ist mit " + prob + "% Wahrscheinlichkeit eine fax Nummer");
-    }
+//                 for (let b = 0; b < blacklist.length; b++) {
+//                     if (wordAfter[i].includes(blacklist[b])) {
+//                         break;
+//                     } else if (words[i].length + wordAfter.length < 20) {
+//                         console.log(words[i]);
+//                         // words[i] = words[i].push(wordAfter);
+//                         console.log(words[i]);
+//                     }
+//                 }
+//             }
+//         }
+//         console.log(element + ": ist mit " + prob + "% Wahrscheinlichkeit eine fax Nummer");
+//     }
 }
 
 function checkPhone(inputLine) {
