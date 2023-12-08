@@ -339,7 +339,7 @@ function checkFax(inputLine) {
     const blacklist = stringBlacklist.split("");
 
     words: for (let i = 0; i < words.length; i++) {
-        // wenn vorherige nummer nicht über mehrer leerzeichen ging
+        // Checkt ob vor der nummer z.B. fax steht
         for (let b = 0; b < blacklist.length; b++) {
             if (words[i].includes(blacklist[b])) {
                 console.log(fullNumber + ": ist mit " + prob + "% Wahrscheinlichkeit eine fax Nummer");
@@ -350,8 +350,6 @@ function checkFax(inputLine) {
         // vorher nach fax schauen und dannach nach weiteren ziffern ohne max length zu überschreiten
         if (i !== 0) {
             let wordBefore = words[i - 1].toLowerCase();
-            // Checkt ob vor der nummer z.B. fax steht
-
             if (wordBefore.includes("fax")) {
                 prob += 70;
             } else if (wordBefore.includes("tel")) {
@@ -362,8 +360,9 @@ function checkFax(inputLine) {
         if (words[i].length + fullNumber.length < 20) {
             fullNumber += words[i];
         }
-        fullNumber = fullNumber.replaceAll("+", "").replaceAll("/", "").replaceAll("-", "");
-        if (fullNumber.length > 5 && fullNumber.length < 33) {
+        let tmpFullNum
+        tmpFullNum = tmpFullNum.replaceAll("+", "").replaceAll("/", "").replaceAll("-", "").replaceAll(".", "");
+        if (tmpFullNum.length > 5 && tmpFullNum.length < 33) {
             prob += 30;
         }
     }
