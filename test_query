@@ -1,0 +1,5 @@
+
+// Gibt 100 random Fax_Nummern zurück
+
+SELECT fax_number FROM crm_geocapture.address where length(fax_number) > 5 ORDER BY RAND() LIMIT 100; 
+
