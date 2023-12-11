@@ -8,6 +8,8 @@ let w3wValue = [];
 let w3wProbability = [];
 let cityValue = [];
 let cityProbability = [];
+let nameValue = [];
+let nameProbability = [];
 
 const knownTLD = ["com", "net", "org", "de", "eu", "at", "ch", "nl", "pl", "fr", "es", "info", "name", "email"];
 
@@ -328,7 +330,44 @@ function checkCompanyName(inputLine) { // Simon
 }
 
 function checkName(inputLine) {
-    //Lars
+    const vornamen = ["Ben", "Paul", "Leon", "Finn", "Fynn", "Elias", "Jonas", "Noah", "Luis", "Louis", "Maximilian", "Felix", "Luca", "Luka", "Tim", "Emil", "Oskar", "Oscar", "Henry", "Moritz", "Theo", "Theodor", "Anton", "David", "Niklas", "Nicolas", "Philipp", "Samuel", "Fabian", "Leo", "Jonathan", "Carl/Karl", "Alexander", "Jakob", "Vincent", "Simon", "Aaron", "Emiliano", "Julius", "Matteo", "Raphael", "Valentin", "Johann", "Finnian", "Daniel", "Gabriel", "Richard", "Max", "Adrian", "Sebastian", "Tobias", "Liam", "Joshua", "Justin", "Jonah", "Yannick", "Bruno", "Milan", "Rafael", "Leonhard", "Timon", "Adam", "Fabio", "Leonard", "Henryk", "Erik", "Silas", "Jannik", "Jasper", "Nico", "Lenny", "Colin", "Tom", "Bastian", "Damian", "Jasper", "Silas", "Lennard", "Finnegan", "Malte", "Aaron", "Jannis", "Elias", "Paul", "Samuel", "Victor", "Jonathan", "Nick", "Alexander", "Malte", "Florian", "Noah", "Eric", "Oliver", "Matteo", "Theodor", "Niklas", "Gustav", "Marius", "Arne", "Frederik", "Julius", "Emil", "Theo", "Elias", "Jasper", "Luis", "Gustav", "Florian", "Lias", "Aaron", "Tilo", "Mathis", "Janosch", "Lennert", "Jeremy", "Leopold", "Marius", "Valentin", "Julius", "Julian", "Melvin", "Laurin", "Nils", "Oliver", "Jaron", "Laurin", "Leif", "Florian", "Jaron", "Leonard", "Silvan", "Levin", "Ole", "Henri", "Johann", "Lars", "Luke", "Lukas", "Lucas", "Friedhelm", "Ludwig", "Valentin", "Mattis", "Justus", "Constantin", "Maxim", "Leonard", "Friedrich", "Theodor", "Maximilian", "Leander", "Lias", "Christian", "Elias", "Colin", "Thilo", "Emma", "Mia", "Hannah", "Hanna", "Emilia", "Sophia", "Sofia", "Lina", "Marie", "Mila", "Ella", "Lea", "Clara", "Klara", "Lena", "Leni", "Luisa", "Louisa", "Anna", "Laura", "Lara", "Maja", "Maya", "Amelie", "Johanna", "Nele", "Charlotte", "Jana", "Mara", "Frieda", "Mira", "Paula", "Alina", "Lotta", "Greta", "Nina", "Matilda", "Mathilda", "Rosa", "Fiona", "Sarah", "Sara", "Emelie", "Zoe", "Isabella", "Melina", "Ida", "Frida", "Julia", "Eva", "Amelia", "Tilda", "Anni", "Liv", "Ava", "Victoria", "Lucy", "Helen", "Helena", "Elif", "Aaliyah", "Elsa", "Julie", "Stella", "Leona", "Juna", "Mina", "Jara", "Elina", "Nela", "Nora", "Emma", "Zara", "Elena", "Malia", "Aria", "Mira", "Elisa", "Aurora", "Enna", "Ronja", "Nora", "Elin", "Emmy", "Ivy", "Ella", "Anastasia", "Josephine", "Jasmin", "Amira", "Emmi", "Merle", "Joline", "Carolin", "Estelle", "Leila", "Kiara", "Romy", "Elif", "Tara", "Joana", "Klara", "Lotte", "Marlene", "Magdalena", "Lia", "Annika", "Liana", "Liselotte", "Katharina", "Rosalie", "Enya", "Selma", "Hedda", "Luise", "Louise", "Pia", "Elisabeth", "Malin", "Leana", "Yara", "Alma", "Carlotta", "Jolina", "Elsa", "Cara", "Lavinia", "Milla", "Josephina", "Marla", "Malou", "Johanna", "Luisa", "Louisa", "Juliana", "Malia", "Paulina", "Carla", "Alessia", "Valentina", "Nova", "Mila", "Alexandra", "Antonia", "Anita", "Joleen", "Jara", "Annabelle", "Kira", "Liana", "Svenja", "Melissa", "Delia", "Elif", "Luana", "Anni", "Tessa", "Rosie", "Esma", "Leticia", "Eleni", "Carolina", "Anya", "Louna", "Kim", "Livia", "Fenja", "Thea", "Juna", "Selina", "Celine", "Alessa", "Rosa", "Evelyn", "Alissa", "Hanna", "Mara", "Cassandra", "Viola", "Elena", "Valeria", "Kiana", "Helena", "Sofie", "Lana", "Nina", "Alessandra", "Eveline", "Anika", "Luna", "Anouk", "Paulina", "Felicitas", "Rieke", "Lotte", "Yuna", "Jette", "Antonia", "Jolene", "Felina", "Miley", "Anisa", "Martha", "Ava", "Philippa", "Edda", "Karolina", "Linda", "Greta", "Ella", "Larissa", "Vanessa", "Esther", "Elena", "Nola", "Lucia", "Elaine", "Flora", "Lola", "Rosalie", "Lena", "Alia", "Elina", "Mina", "Luisa/Louisa", "Carolina", "Tamara", "Annabelle", "Elisa", "Nina", "Johanna", "Leonie", "Jolie", "Rieke", "Anastasia", "Lotte", "Lynn", "Josefine", "Lotta", "Leona", "Johanna", "Lorena", "Marie", "Pia", "Leni", "Paulina", "Lotte", "Maja/Maya", "Larissa", "Nora", "Amalia", "Mira", "Alexandra", "Louisa", "Lara", "Greta", "Ella", "Marlene", "Mila", "Elif", "Kiara", "Mina", "Lucia", "Maya", "Zara", "Liv", "Aurora", "Nela", "Sophie", "Emilia", "Tara", "Helena", "Leonie", "Lina", "Jasmin", "Lieselotte", "Stella", "Yara", "Mira", "Mina", "Nina"];
+    const nachnamen = ["Müller", "Schmidt", "Schneider", "Fischer", "Meyer", "Wagner", "Becker", "Schulz", "Hoffmann", "Schäfer", "Koch", "Bauer", "Richter", "Klein", "Wolf", "Braun", "Schmid", "Hartmann", "Zimmermann", "Krüger", "Schmitz", "Lange", "Werner", "Schulte", "Köhler", "Lehmann", "Maier", "Scholz", "Albrecht", "Vogel", "Pohl", "Huber", "Roth", "Arnold", "König", "Friedrich", "Beyer", "Seidel", "Sommer", "Haas", "Graf", "Heinrich", "Schreiber", "Schiller", "Günther", "Krämer", "Zimmer", "Jäger", "Ludwig", "Ritter", "Winkler", "Ziegler", "Frank", "Schwarz", "Neumann", "Herrmann", "Kühn", "Walter", "Peters", "Möller", "Martin", "Schubert", "Dietrich", "Ullrich", "Fuchs", "Voigt", "Simon", "Kunz", "Marx", "Sauer", "Hauser", "Böhm", "Dreher", "Schuster", "Stahl", "Hein", "Hess", "Berger", "Bock", "Busch", "Menzel", "Weiß", "Engels", "Sander", "Geiger", "Lorenz", "Rommel", "Hahn", "Schütz", "Keller", "Petersen", "Thiel", "Böttcher", "Dahl", "Heinze", "Trautmann", "Zimmerer", "Vogt", "Otto", "Voß", "Janßen", "Dahlke", "Stein", "Hesse", "Röder", "Rieger", "Wendt", "Kühne", "Seeger", "Brinkmann", "Franke", "Ackermann", "Drechsler", "Wenzel", "Hagen", "Reuter", "Döring", "Groß", "Böhme", "Kellermann", "Ebert", "Renner", "Pfeiffer", "Eichhorn", "Blum", "Stoll", "Rupp", "Vetter", "Breuer", "Hildebrand", "Wendel", "Grote", "Rosenberger", "Rößler", "Adam", "Weiß", "Ostermann", "Wiegand", "Wirth", "Bode", "Brügge", "Kolb", "Geyer", "Kling", "Heßler", "Ritz", "Lambrecht", "Essing"];
+    let prob = 0;
+    inputLine = inputLine.toLowerCase();
+    let words = inputLine.split(" ");
+    for (let a = 0; a < vornamen.length; a++) {
+        const element = vornamen[a];
+        vornamen[a] = element.toLowerCase();
+    }
+    for (let a = 0; a < nachnamen.length; a++) {
+        const element = nachnamen[a];
+        nachnamen[a] = element.toLowerCase();
+    }
+    for (let i = 0; i < words.length; i++) {
+        const element = words[i];
+        prob = 0
+        if (vornamen.includes(element)) {
+            prob += 40;
+        }
+        let wordAfter = words[i + 1];
+        if (nachnamen.includes(wordAfter)) {
+            prob += 40;
+        }
+        if (i !== 0) {
+            let wordBefore = words[i - 1];
+            if (wordBefore.includes("name") || wordBefore.includes("geschäftsführer") || wordBefore.includes("ansprechpartner")) {
+                prob += 50;
+            } else if (wordBefore.includes("Firmname")) {
+                return;
+            }
+        }
+        if (prob > 100) {
+            prob = 100;
+        }
+        if (prob > 0) {
+            console.log(element + " " + wordAfter + " ist zu " + prob + "% ein Name");
+        }
+    }
 }
 
 function checkFax(inputLine) {
@@ -343,7 +382,7 @@ function checkFax(inputLine) {
         // Checkt ob vor der nummer z.B. fax steht
         for (let b = 0; b < blacklist.length; b++) {
             if (words[i].includes(blacklist[b])) {
-                console.log(fullNumber + ": ist mit " + prob + "% Wahrscheinlichkeit eine fax Nummer");
+                // console.log(fullNumber + ": ist mit " + prob + "% Wahrscheinlichkeit eine fax Nummer");
                 fullNumber = "";
                 continue words;
             }
@@ -367,7 +406,7 @@ function checkFax(inputLine) {
             prob += 30;
         }
     }
-    console.log(fullNumber + ": ist mit " + prob + "% Wahrscheinlichkeit eine fax Nummer");
+    // console.log(fullNumber + ": ist mit " + prob + "% Wahrscheinlichkeit eine fax Nummer");
 }
 
 
@@ -383,12 +422,12 @@ function checkStreet(inputLine) {
 function checkCity(inputLine) {
     inputLine = inputLine.toLowerCase();
     let words = inputLine.split(" ");
-   for (let a = 0; a < words.length; a++) {
-    const element = words[a];
-       if(element.startsWith("d-")) {
-        words[a] = element.replace("d-", "");
-       }
-   }
+    for (let a = 0; a < words.length; a++) {
+        const element = words[a];
+        if (element.startsWith("d-")) {
+            words[a] = element.replace("d-", "");
+        }
+    }
     const nurZahlen = words.filter(element => !isNaN(element));
     const allZipCodes = [];
     const allCityNames = [];
@@ -407,26 +446,27 @@ function checkCity(inputLine) {
                 if (element.length === 5) {
                     if (allZipCodes.includes(element)) {
                         prob += 60;
-                         city = allZipCodes.indexOf(element);
-                         cityName = allCityNames[city];
-                        if(words[i+1] !== "null") {
-                            let wordAfter = words[i + 1]; 
+                        city = allZipCodes.indexOf(element);
+                        cityName = allCityNames[city];
+                        if (words[i + 1] !== "null") {
+                            let wordAfter = words[i + 1];
                             if (wordAfter.includes(cityName.toLowerCase())) {
                                 prob = 100;
-                            }}
+                            }
                         }
                     }
-                    else {
-                        continue zipLoop;
-                    }
-                    if (prob > 0) {
+                }
+                else {
+                    continue zipLoop;
+                }
+                if (prob > 0) {
                     cityValue.push(element);
                     cityProbability.push(prob);
                     console.log(element + " " + cityName + " ist zu " + prob + "% eine Postleitzahl mit Ort/Stadt");
-                    }
                 }
+            }
 
-            })
+        })
         .catch(error => {
             console.error('Fehler beim Laden der JSON-Datei:', error);
         });
