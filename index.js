@@ -112,7 +112,6 @@ function checkUrl(inputLine) {
     //for-Schleife die alle Worte vom Input durchläuft
     for (let i = 0; i < words.length; i++) {
         const element = words[i];
-        let allHits = [];
         let prob = 0;
         for (const tld of knownTLD) {
             if (element.endsWith("." + tld || element.endsWith("." + tld + "/"))) {
@@ -384,6 +383,12 @@ function checkStreet(inputLine) {
 function checkCity(inputLine) {
     inputLine = inputLine.toLowerCase();
     let words = inputLine.split(" ");
+   for (let a = 0; a < words.length; a++) {
+    const element = words[a];
+       if(element.startsWith("d-")) {
+        words[a] = element.replace("d-", "");
+       }
+   }
     const nurZahlen = words.filter(element => !isNaN(element));
     const allZipCodes = [];
     const allCityNames = [];
