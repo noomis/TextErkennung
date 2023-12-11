@@ -6,6 +6,8 @@ let companyValue = [];
 let companyProbability = [];
 let w3wValue = [];
 let w3wProbability = [];
+let cityValue = [];
+let cityProbability = [];
 
 const knownTLD = ["com", "net", "org", "de", "eu", "at", "ch", "nl", "pl", "fr", "es", "info", "name", "email"];
 
@@ -382,4 +384,45 @@ function checkStreet(inputLine) {
 function checkCity(inputLine) {
     inputLine = inputLine.toLowerCase();
     let words = inputLine.split(" ");
+    const nurZahlen = words.filter(element => !isNaN(element));
+    const allZipCodes = [];
+    const allCityNames = [];
+    let city = 0;
+    let cityName = 0;
+    let prob = 0;
+    fetch('georef-germany-postleitzahl.json')
+        .then(response => response.json())
+        .then(data => {
+            data.forEach(datensatz => {
+                allZipCodes.push(('PLZ:', datensatz.name));
+                allCityNames.push(('Stadt:', datensatz.plz_name));
+            });
+            zipLoop: for (let i = 0; i < nurZahlen.length; i++) {
+                const element = nurZahlen[i];
+                if (element.length === 5) {
+                    if (allZipCodes.includes(element)) {
+                        prob += 60;
+                         city = allZipCodes.indexOf(element);
+                         cityName = allCityNames[city];
+                        if(words[i+1] !== "null") {
+                            let wordAfter = words[i + 1]; 
+                            if (wordAfter.includes(cityName.toLowerCase())) {
+                                prob = 100;
+                            }}
+                        }
+                    }
+                    else {
+                        continue zipLoop;
+                    }
+                    if (prob > 0) {
+                    cityValue.push(element);
+                    cityProbability.push(prob);
+                    console.log(element + " " + cityName + " ist zu " + prob + "% eine Postleitzahl mit Ort/Stadt");
+                    }
+                }
+
+            })
+        .catch(error => {
+            console.error('Fehler beim Laden der JSON-Datei:', error);
+        });
 }
