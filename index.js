@@ -426,7 +426,6 @@ function checkFax(inputLine) {
         }
     }
 
-    console.log(fullNumber);
     if (fullNumber.trim().length != 0) {
     console.log(fullNumber + ": ist mit " + prob + "% Wahrscheinlichkeit eine fax Nummer");
     }
