@@ -399,7 +399,7 @@ function checkFax(inputLine) {
         // Checkt ob das Wort Buchstaben usw. enthält
         for (let b = 0; b < blacklist.length; b++) {
             if (words[i].includes(blacklist[b])) {
-                if (fullNumber.trim().length != 0) {
+                if (fullNumber.trim().length != 0 && prob != 0) {
                     console.log(fullNumber + ": ist mit " + prob + "% Wahrscheinlichkeit eine fax Nummer");
                 }
                 fullNumber = "";
@@ -426,7 +426,7 @@ function checkFax(inputLine) {
         prob += 30;
     }
 
-    if (fullNumber.trim().length != 0) {
+    if (fullNumber.trim().length != 0 && prob != 0) {
         console.log(fullNumber + ": ist mit " + prob + "% Wahrscheinlichkeit eine fax Nummer");
     }
 }
