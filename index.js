@@ -491,7 +491,7 @@ function checkStreet(inputLine) {
     inputLine = inputLine.toLowerCase();
     let words = inputLine.split(" ")
     let prob = 0;
-    let streetNames = ["str", "weg", "allee", "gasse", "ring", "platz", "promenade", "chaussee", "boulevard", "querstraße", "dorfstraße", "landstraße", "alee", "stieg", "pfad", "fahrweg", "anliegerstraße", "hochstraße", "bergstraße", "talstraße"];
+    let streetNames = ["str", "weg", "allee", "gasse", "ring", "platz", "promenade", "chaussee", "boulevard", "stieg", "pfad"];
 
     words: for (let i = 0; i < words.length; i++) {
         
