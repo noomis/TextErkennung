@@ -419,15 +419,15 @@ function checkFax(inputLine) {
         if (words[i].length + fullNumber.length < 20) {
             fullNumber += words[i];
         }
-        let tmpFullNum = fullNumber
-        tmpFullNum = tmpFullNum.replaceAll("+", "").replaceAll("/", "").replaceAll("-", "").replaceAll(".", "");
-        if (tmpFullNum.length > 5 && tmpFullNum.length < 33) {
-            prob += 30;
-        }
+    }
+    let tmpFullNum = fullNumber
+    tmpFullNum = tmpFullNum.replaceAll("+", "").replaceAll("/", "").replaceAll("-", "").replaceAll(".", "");
+    if (tmpFullNum.length > 5 && tmpFullNum.length < 33) {
+        prob += 30;
     }
 
     if (fullNumber.trim().length != 0) {
-    console.log(fullNumber + ": ist mit " + prob + "% Wahrscheinlichkeit eine fax Nummer");
+        console.log(fullNumber + ": ist mit " + prob + "% Wahrscheinlichkeit eine fax Nummer");
     }
 }
 
