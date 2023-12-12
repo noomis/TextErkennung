@@ -446,6 +446,12 @@ function checkPhone(inputLine) {
 
 function checkStreet(inputLine) {
     inputLine = inputLine.toLowerCase();
+    let words = inputLine.split(" ")
+    let prob = 0;
+
+    words: for (let i = 0; i < words.length; i++) {
+        
+    }
 }
 
    const allZipCodes = [];
