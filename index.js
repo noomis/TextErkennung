@@ -339,15 +339,17 @@ function checkFax(inputLine) {
     const blacklist = stringBlacklist.split("");
 
     words: for (let i = 0; i < words.length; i++) {
-        // Checkt ob vor der nummer z.B. fax steht
+        // Checkt ob das Wort Buchstaben usw. enthält
         for (let b = 0; b < blacklist.length; b++) {
             if (words[i].includes(blacklist[b])) {
-                console.log(fullNumber + ": ist mit " + prob + "% Wahrscheinlichkeit eine fax Nummer");
-                fullNumber = "";
-                continue words;
+                if (fullNumber != fullNumber.trim()) {
+                    console.log(fullNumber + ": ist mit " + prob + "% Wahrscheinlichkeit eine fax Nummer");
+                    fullNumber = "";
+                    continue words;
+                }
             }
         }
-        // vorher nach fax schauen und dannach nach weiteren ziffern ohne max length zu überschreiten
+        // Checkt ob vor der nummer z.B. fax steht
         if (i !== 0) {
             let wordBefore = words[i - 1].toLowerCase();
             if (wordBefore.includes("fax")) {
@@ -356,17 +358,20 @@ function checkFax(inputLine) {
                 return;
             }
         }
-        // Checkt ob nach der nummer noch eine Nummer steht
+        // Checkt ob die gesamt länge der Nummer zu groß ist
         if (words[i].length + fullNumber.length < 20) {
             fullNumber += words[i];
         }
-        let tmpFullNum = fullNumber;
+        let tmpFullNum = fullNumber
         tmpFullNum = tmpFullNum.replaceAll("+", "").replaceAll("/", "").replaceAll("-", "").replaceAll(".", "");
         if (tmpFullNum.length > 5 && tmpFullNum.length < 33) {
             prob += 30;
         }
     }
-    console.log(fullNumber + ": ist mit " + prob + "% Wahrscheinlichkeit eine fax Nummer");
+
+    if (fullNumber != fullNumber.trim()) {
+        console.log(fullNumber + ": ist mit " + prob + "% Wahrscheinlichkeit eine fax Nummer");
+    }
 }
 
 
