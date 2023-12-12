@@ -11,30 +11,36 @@ let cityProbability = [];
 let nameValue = [];
 let nameProbability = [];
 
+let timeoutId;
+
 const knownTLD = ["com", "net", "org", "de", "eu", "at", "ch", "nl", "pl", "fr", "es", "info", "name", "email", "co"];
 
+document.getElementById("text").addEventListener("input", printResult);
 
-document.getElementById("button").addEventListener("click", function () {
-    let text = document.getElementById("text").value;
-    text = text.replace(/  +/g, ' ');
+function printResult() {
+    clearTimeout(timeoutId);
 
-    let lines = text.split("\n");
+    timeoutId = setTimeout(() => {
+        let text = document.getElementById("text").value;
+        text = text.replace(/  +/g, ' ');
 
-    lines.forEach(element => {
+        let lines = text.split("\n");
 
-        checkW3W(element); //Luke
-        checkUrl(element); //Lars
-        checkMail(element); //Simon
-        checkCompanyName(element); //Simon
-        checkName(element); //Lars
-        checkFax(element); //Luke
-        checkPhone(element); //Simon
-        checkStreet(element); //Luke
-        checkCity(element); //Lars
+        lines.forEach(element => {
 
-    });
-});
+            checkW3W(element); //Luke
+            checkUrl(element); //Lars
+            checkMail(element); //Simon
+            checkCompanyName(element); //Simon
+            checkName(element); //Lars
+            checkFax(element); //Luke
+            checkPhone(element); //Simon
+            checkStreet(element); //Luke
+            checkCity(element); //Lars
 
+        });
+    }, 1000);
+}
 
 
 function checkW3W(inputLine) {
@@ -59,7 +65,6 @@ function checkW3W(inputLine) {
         if (words[i].includes("http") || words[i].includes("https") || words[i].includes("www")) {
             continue;
         }
-
 
         lineChars.forEach(e => {
             if (e == ".") {
@@ -406,6 +411,7 @@ function checkFax(inputLine) {
                 continue words;
             }
         }
+
         // Checkt ob vor der nummer z.B. fax steht
         if (i !== 0) {
             let wordBefore = words[i - 1].toLowerCase();
@@ -420,6 +426,7 @@ function checkFax(inputLine) {
             fullNumber += words[i];
         }
     }
+
     let tmpFullNum = fullNumber
     tmpFullNum = tmpFullNum.replaceAll("+", "").replaceAll("/", "").replaceAll("-", "").replaceAll(".", "");
     if (tmpFullNum.length > 5 && tmpFullNum.length < 33) {
@@ -438,7 +445,7 @@ function checkPhone(inputLine) {
 }
 
 function checkStreet(inputLine) {
-    //Luke
+    inputLine = inputLine.toLowerCase();
 }
 
 function checkCity(inputLine) {
