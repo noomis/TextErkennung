@@ -14,6 +14,8 @@ let nameProbability = [];
 let timeoutId;
 
 const knownTLD = ["com", "net", "org", "de", "eu", "at", "ch", "nl", "pl", "fr", "es", "info", "name", "email", "co"];
+const allZipCodes = [];
+const allCityNames = [];
 
 document.getElementById("text").addEventListener("input", printResult);
 
@@ -37,7 +39,6 @@ function printResult() {
             checkPhone(element); //Simon
             checkStreet(element); //Luke
             checkCity(element); //Lars
-
         });
     }, 1000);
 }
@@ -454,8 +455,6 @@ function checkStreet(inputLine) {
     }
 }
 
-   const allZipCodes = [];
-    const allCityNames = [];
 function checkCity(inputLine) {
     inputLine = inputLine.toLowerCase();
     let words = inputLine.split(" ");
@@ -492,8 +491,8 @@ function checkCity(inputLine) {
             prob += 60;
             city = allZipCodes.indexOf(element);
             cityName = allCityNames[city];
-            //check ob Wort nach dem zip Code der Stadt entspricht die im json engetragen ist 
-            if (words[i + 1] !== "null") {
+            //check ob Wort nach dem zip Code der Stadt entspricht die im json engetragen ist
+            if (words[i + 1] !== undefined) {
                 let wordAfter = words[i + 1];
                 if (wordAfter.includes(cityName.toLowerCase())) {
                     prob = 100;
@@ -511,15 +510,15 @@ function checkCity(inputLine) {
         }
     }
 }
-    //arrays werden auf die Werte, die im json enthalten sind, gesetzt 
-    fetch('georef-germany-postleitzahl.json')
-        .then(response => response.json())
-        .then(data => {
-            data.forEach(datensatz => {
-                allZipCodes.push(('PLZ:', datensatz.name));
-                allCityNames.push(('Stadt:', datensatz.plz_name));
-            });
-        })
-        .catch(error => {
-            console.error('Fehler beim Laden der JSON-Datei:', error);
+//arrays werden auf die Werte, die im json enthalten sind, gesetzt 
+fetch('georef-germany-postleitzahl.json')
+    .then(response => response.json())
+    .then(data => {
+        data.forEach(datensatz => {
+            allZipCodes.push(('PLZ:', datensatz.name));
+            allCityNames.push(('Stadt:', datensatz.plz_name));
         });
+    })
+    .catch(error => {
+        console.error('Fehler beim Laden der JSON-Datei:', error);
+    });
