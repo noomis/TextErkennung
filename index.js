@@ -448,11 +448,11 @@ function checkStreet(inputLine) {
     inputLine = inputLine.toLowerCase();
 }
 
+   const allZipCodes = [];
+    const allCityNames = [];
 function checkCity(inputLine) {
     inputLine = inputLine.toLowerCase();
     let words = inputLine.split(" ");
-    const allZipCodes = [];
-    const allCityNames = [];
     let city = 0;
     let cityName = 0;
     let prob = 0;
@@ -479,6 +479,32 @@ function checkCity(inputLine) {
             nurZahlen.splice(a, 1);
         }
     }
+    //check ob elements im json enthalten sind und somit eine Stadt matchen
+    zipLoop: for (let i = 0; i < nurZahlen.length; i++) {
+        const element = nurZahlen[i];
+        if (allZipCodes.includes(element)) {
+            prob += 60;
+            city = allZipCodes.indexOf(element);
+            cityName = allCityNames[city];
+            //check ob Wort nach dem zip Code der Stadt entspricht die im json engetragen ist 
+            if (words[i + 1] !== "null") {
+                let wordAfter = words[i + 1];
+                if (wordAfter.includes(cityName.toLowerCase())) {
+                    prob = 100;
+                }
+            }
+        }
+        else {
+            continue zipLoop;
+        }
+        //output
+        if (prob > 0) {
+            cityValue.push(element);
+            cityProbability.push(prob);
+            console.log(element + " " + cityName + " ist mit " + prob + "% Wahrscheinlichkeit eine Postleitzahl mit Ort");
+        }
+    }
+}
     //arrays werden auf die Werte, die im json enthalten sind, gesetzt 
     fetch('georef-germany-postleitzahl.json')
         .then(response => response.json())
@@ -487,34 +513,7 @@ function checkCity(inputLine) {
                 allZipCodes.push(('PLZ:', datensatz.name));
                 allCityNames.push(('Stadt:', datensatz.plz_name));
             });
-            //check ob elements im json enthalten sind und somit eine Stadt matchen
-            zipLoop: for (let i = 0; i < nurZahlen.length; i++) {
-                const element = nurZahlen[i];
-                if (allZipCodes.includes(element)) {
-                    prob += 60;
-                    city = allZipCodes.indexOf(element);
-                    cityName = allCityNames[city];
-                    //check ob Wort nach dem zip Code der Stadt entspricht die im json engetragen ist 
-                    if (words[i + 1] !== "null") {
-                        let wordAfter = words[i + 1];
-                        if (wordAfter.includes(cityName.toLowerCase())) {
-                            prob = 100;
-                        }
-                    }
-                }
-                else {
-                    continue zipLoop;
-                }
-                //output
-                if (prob > 0) {
-                    cityValue.push(element);
-                    cityProbability.push(prob);
-                    console.log(element + " " + cityName + " ist mit " + prob + "% Wahrscheinlichkeit eine Postleitzahl mit Ort");
-                }
-            }
-
         })
         .catch(error => {
             console.error('Fehler beim Laden der JSON-Datei:', error);
         });
-}
