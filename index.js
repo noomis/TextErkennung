@@ -250,8 +250,7 @@ function checkUrl(inputLine) {
 
         //output
         if (prob > 0) {
-            let indexes = urlValue.indexOf(element);
-            console.log('"' + element + '"' + " ist mit " + urlProbability[indexes] + "% Wahrscheinlichkeit eine URL");
+            console.log('"' + element + '"' + " ist mit " + prob + "% Wahrscheinlichkeit eine URL");
             urlValue.push(element);
             urlProbability.push(prob);
         }
@@ -649,7 +648,7 @@ function checkStreet(inputLine) {
             }
         }
     }
-    console.log(fullStreetName + ": ist mit " + prob + "% Wahrscheinlichkeit eine Straße");
+    // console.log(fullStreetName + ": ist mit " + prob + "% Wahrscheinlichkeit eine Straße");
 }
 
 function checkCity(inputLine) {
