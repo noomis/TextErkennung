@@ -75,5 +75,23 @@ textarea::-webkit-input-placeholder {
     padding: 30px;
     box-shadow: rgba(255, 255, 255, 0.2) 0px 7px 29px 0px;
     background-color: rgb(127, 127, 127);
+  } 
+   input {
+    display: block;
+    border: 1px solid #ccc;
+    border-radius: 10px;
+    margin-bottom: 10px;
+    padding: 10px;
+    box-sizing: border-box;
+    color: #2c3e50;
+    font-size: 14px;
+    height: 35px;
+    width: 180px;
   }
+  .input-container {
+    display: block;
+    margin-right: 20px;
+    margin-left: 20px;
+  }
+
 }
