@@ -13,7 +13,7 @@
     box-sizing: border-box;
     color: #2c3e50;
     font-size: 14px;
-    height: 30px;
+    height: 35px;
     width: 250px;
   }
   
@@ -53,16 +53,13 @@ textarea::-webkit-input-placeholder {
 }
 
 .main-container {
-  display: inline-block;
+  display: flex;
   justify-content: center;
 }
 
 .input-container {
-  display: flex;
-}
-
-.city {
-  display: inline-block;
+  display: block;
+  margin: 40px;
 }
 
 @media (max-width: 870px) {
