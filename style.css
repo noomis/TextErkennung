@@ -6,14 +6,15 @@
   
   input {
     display: block;
-    padding: 15px;
     border: 1px solid #ccc;
     border-radius: 10px;
     margin-bottom: 10px;
+    padding: 10px;
     box-sizing: border-box;
-    font-family: montserrat;
     color: #2c3e50;
     font-size: 14px;
+    height: 30px;
+    width: 250px;
   }
   
   form {
@@ -50,6 +51,20 @@ textarea::-webkit-input-placeholder {
 .placeholder{
   height: 20dvh;
 }
+
+.main-container {
+  display: inline-block;
+  justify-content: center;
+}
+
+.input-container {
+  display: flex;
+}
+
+.city {
+  display: inline-block;
+}
+
 @media (max-width: 870px) {
   form {
     width: 350px;
