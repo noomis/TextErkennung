@@ -317,12 +317,18 @@ function checkCompanyName(inputLine) { // Simon
     wordLoop: for (let index = 0; index < lineWords.length; index++) {
         const element = lineWords[index];
 
+        if (element.includes('@')) { // Checkt String mit @ beginnt
+            return;
+        }
+
         unternehmensformen.forEach(unternehmensform => {
             if (element == unternehmensform) {
                 wordProb += 50;
             }
         });
     }
+
+
 
 
 
