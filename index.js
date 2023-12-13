@@ -576,15 +576,58 @@ function checkStreet(inputLine) {
     let words = inputLine.split(" ")
     let prob = 0;
     let streetNames = ["str", "weg", "allee", "gasse", "ring", "platz", "promenade", "chaussee", "boulevard", "stieg", "pfad"];
+    let stringBlacklist = "abcdefghijklmnopqrstuvwxyzäöü@#$!%^&*_={}[]|;:<>,?";
+    const blacklist = stringBlacklist.split("");
+    let num = 0;
+    let fullStreetName = "";
 
     words: for (let i = 0; i < words.length; i++) {
-
+        
+        // Wörter mit StreetNames Array vergleichen
         for (let sNames = 0; sNames < streetNames.length; sNames++) {
             if (words[i].includes(streetNames[sNames])) {
-                console.log("straße");
+                fullStreetName += " " + words[i];
+                prob += 40;
+
+                if (i + 1 < words.length) {
+                    let wordAfter = words[i + 1].toLowerCase();
+
+                    // prüfen ob nach der Straße eine Hausnummer kommt
+                    for (let b = 0; b < blacklist.length; b++) {
+                        if (words[i+1].includes(blacklist[b])) {
+                            num++;
+                        }
+                    }
+
+                    if (num == 0) {
+                        fullStreetName += " " + words[i+1];
+                        prob += 30;
+
+                        if (wordAfter.length > 0 && wordAfter.length < 3) {
+                            prob += 20;
+                        } else if (wordAfter.length < 5) {
+                            prob += 10;
+                        }
+                    }
+
+                    // überprüfen nach der Hausnummer ein Buchstaben Zusatz kommt
+                    if (i + 2 < words.length) {
+                        let word2After = words[i + 2].toLowerCase();
+
+                        if (word2After.length == 1) {
+                            for (let a = 0; a < 26; a++) {
+                                if (word2After == blacklist[a]) {
+                                    fullStreetName += " " + words[i+2];
+                                    prob += 10;
+                                }
+                            }
+                        }
+                    }
+                }
             }
         }
     }
+    console.log(fullStreetName + ": ist mit " + prob + "% Wahrscheinlichkeit eine Straße");
 }
 
 function checkCity(inputLine) {
