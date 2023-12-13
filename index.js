@@ -14,6 +14,8 @@ let telValue = [];
 let telProbability = [];
 let faxValue = [];
 let faxProbability = [];
+let cityValue = [];
+let cityProbability = [];
 
 let timeoutId;
 
@@ -115,6 +117,8 @@ function printResult() {
     telProbability = [];
     faxValue = [];
     faxProbability = [];
+    cityValue = [];
+    cityProbability = [];
 }
 
 
@@ -694,6 +698,8 @@ function checkCity(inputLine) {
         if (prob > 0) {
             zipValue.push(element);
             zipProbability.push(prob);
+            cityValue.push(cityName);
+            cityProbability.push(prob);
             console.log(element + " " + cityName + " ist mit " + prob + "% Wahrscheinlichkeit eine Postleitzahl mit Ort");
         }
     }
