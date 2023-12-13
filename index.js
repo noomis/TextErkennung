@@ -6,8 +6,8 @@ let companyValue = [];
 let companyProbability = [];
 let w3wValue = [];
 let w3wProbability = [];
-let cityValue = [];
-let cityProbability = [];
+let zipValue = [];
+let zipProbability = [];
 let nameValue = [];
 let nameProbability = [];
 let telValue = [];
@@ -24,9 +24,13 @@ const allCityNames = [];
 document.getElementById("text").addEventListener("input", printResult);
 
 function printResult() {
+
     clearTimeout(timeoutId);
 
     timeoutId = setTimeout(() => {
+
+
+
         let text = document.getElementById("text").value;
         text = text.replace(/  +/g, ' ');
 
@@ -43,8 +47,67 @@ function printResult() {
             checkPhone(element); //Simon
             checkStreet(element); //Luke
             checkCity(element); //Lars
+
+
+          
         });
+
+        let maxMailProb = findMaxIndex(mailProbability);
+        let maxMailValue = mailValue[maxMailProb];
+        console.log('maxMailValue: ', maxMailValue);
+
+        let maxW3WProb = findMaxIndex(w3wProbability);
+        let maxW3WValue = w3wValue[maxW3WProb];
+        console.log('maxW3WValue: ', maxW3WValue);
+
+        let maxUrlProb = findMaxIndex(urlProbability);
+        let maxUrlValue = urlValue[maxUrlProb];
+        console.log('maxUrlValue: ', maxUrlValue);
+
+        let maxCompanyProb = findMaxIndex(companyProbability);
+        let maxCompanyValue = companyValue[maxCompanyProb];
+        console.log('maxCompanyValue: ', maxCompanyValue);
+
+        let maxFaxProb = findMaxIndex(nameProbability);
+        let maxFaxValue = faxValue[maxFaxProb];
+        console.log('maxFaxValue: ', maxFaxValue);
+
+        let maxPhoneProb = findMaxIndex(telProbability);
+        let maxPhoneValue = telValue[maxPhoneProb];
+        console.log('maxPhoneValue: ', maxPhoneValue);
+
+        let maxCityProb = findMaxIndex(zipProbability);
+        let maxzipValue = zipValue[maxCityProb];
+        console.log('maxzipValue: ', maxzipValue);
+
+        $("#email").val(maxMailValue);
+        $("#companyname").val(maxCompanyValue);
+        $("#zipcode").val(maxzipValue);
+        $("#website").val(maxUrlValue);
+        $("#phone").val(maxPhoneValue);
+        $("#fax").val(maxFaxValue);
+
     }, 2000);
+
+
+
+
+    urlValue = [];
+    urlProbability = [];
+    mailValue = [];
+    mailProbability = [];
+    companyValue = [];
+    companyProbability = [];
+    w3wValue = [];
+    w3wProbability = [];
+    zipValue = [];
+    zipProbability = [];
+    nameValue = [];
+    nameProbability = [];
+    telValue = [];
+    telProbability = [];
+    faxValue = [];
+    faxProbability = [];
 }
 
 
@@ -164,11 +227,12 @@ function checkUrl(inputLine) {
         }
 
         if (prob < 0) {
-            prob = 0;
-        }
-        //push in globalen Array
+            prob = 0; 
         urlValue.push(element);
         urlProbability.push(prob);
+        }
+        //push in globalen Array
+      
         //output
         if (prob > 0) {
             let indexes = urlValue.indexOf(element);
@@ -570,8 +634,8 @@ function checkCity(inputLine) {
         }
         //output
         if (prob > 0) {
-            cityValue.push(element);
-            cityProbability.push(prob);
+            zipValue.push(element);
+            zipProbability.push(prob);
             console.log(element + " " + cityName + " ist mit " + prob + "% Wahrscheinlichkeit eine Postleitzahl mit Ort");
         }
     }
@@ -588,3 +652,22 @@ fetch('georef-germany-postleitzahl.json')
     .catch(error => {
         console.error('Fehler beim Laden der JSON-Datei:', error);
     });
+
+
+function findMaxIndex(arr) {
+    if (!arr || arr.length === 0) {
+        return null; // Gebe null für leere Arrays zurück
+    }
+
+    let maxIndex = 0;
+    let maxValue = arr[0];
+
+    for (let i = 1; i < arr.length; i++) {
+        if (arr[i] > maxValue) {
+            maxValue = arr[i];
+            maxIndex = i;
+        }
+    }
+
+    return maxIndex;
+}
