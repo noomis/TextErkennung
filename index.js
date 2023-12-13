@@ -228,8 +228,7 @@ function checkUrl(inputLine) {
 
         if (prob < 0) {
             prob = 0; 
-        urlValue.push(element);
-        urlProbability.push(prob);
+ 
         }
         //push in globalen Array
       
@@ -237,6 +236,8 @@ function checkUrl(inputLine) {
         if (prob > 0) {
             let indexes = urlValue.indexOf(element);
             console.log('"' + element + '"' + " ist mit " + urlProbability[indexes] + "% Wahrscheinlichkeit eine URL");
+            urlValue.push(element);
+            urlProbability.push(prob);
         }
 
     }
