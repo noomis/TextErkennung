@@ -49,7 +49,7 @@ textarea::-webkit-input-placeholder {
   color: #fff;
 }
 .placeholder{
-  height: 20dvh;
+  height: 10dvh;
 }
 
 .main-container {
@@ -59,7 +59,13 @@ textarea::-webkit-input-placeholder {
 
 .input-container {
   display: block;
-  margin: 40px;
+  margin-right: 40px;
+  margin-left: 40px;
+}
+
+.output {
+  font-size: 25px;
+  font-weight: bold;
 }
 
 @media (max-width: 870px) {
