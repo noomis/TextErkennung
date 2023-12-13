@@ -86,6 +86,7 @@ function printResult() {
         $("#website").val(maxUrlValue);
         $("#phone").val(maxPhoneValue);
         $("#fax").val(maxFaxValue);
+        $("#w3w").val(maxW3WValue);
 
     }, 2000);
 
