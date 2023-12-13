@@ -68,7 +68,7 @@ function printResult() {
         let maxCompanyValue = companyValue[maxCompanyProb];
         console.log('maxCompanyValue: ', maxCompanyValue);
 
-        let maxFaxProb = findMaxIndex(nameProbability);
+        let maxFaxProb = findMaxIndex(faxProbability);
         let maxFaxValue = faxValue[maxFaxProb];
         console.log('maxFaxValue: ', maxFaxValue);
 
@@ -80,6 +80,11 @@ function printResult() {
         let maxzipValue = zipValue[maxCityProb];
         console.log('maxzipValue: ', maxzipValue);
 
+        
+        let maxNameProb = findMaxIndex(nameProbability);
+        let maxNameValue = nameValue[maxNameProb];
+        console.log('maxNameValue: ', maxNameValue);
+
         $("#email").val(maxMailValue);
         $("#companyname").val(maxCompanyValue);
         $("#zipcode").val(maxzipValue);
@@ -87,6 +92,7 @@ function printResult() {
         $("#phone").val(maxPhoneValue);
         $("#fax").val(maxFaxValue);
         $("#w3w").val(maxW3WValue);
+        $("#name").val(maxNameValue);
 
     }, 2000);
 
