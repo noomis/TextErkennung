@@ -676,7 +676,7 @@ function checkStreet(inputLine) {
             }
         }
     }
-    if (fullStreetName.trim().length != 0 && prob != 0) {
+    if (fullStreetName.trim().length != 0 && prob > 30) {
         console.log(fullStreetName + ": ist mit " + prob + "% Wahrscheinlichkeit eine Straße");
         streetValue.push(fullStreetName);
         streetProbability.push(prob);
