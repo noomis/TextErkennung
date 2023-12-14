@@ -607,7 +607,16 @@ function checkStreet(inputLine) {
         for (let sNames = 0; sNames < streetNames.length; sNames++) {
             if (words[i].includes(streetNames[sNames])) {
                 fullStreetName += "" + words[i];
+                console.log(fullStreetName);
                 prob += 40;
+
+                if (fullStreetName == "str." || "straße" || "str") {
+                    console.log("dfg");
+                    if (i > 0) {
+                        fullStreetName = "" + words[i - 1] + " " + fullStreetName;
+                    }
+                }
+
                 if (i + 1 < words.length) {
                     let wordAfter = words[i + 1].toLowerCase();
                     // checkt ob nach der Straße eine Hausnummer kommt
