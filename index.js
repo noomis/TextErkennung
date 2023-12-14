@@ -551,7 +551,7 @@ function checkPhone(inputLine) {
         // Checkt ob vor der nummer z.B. fax steht
         if (i !== 0) {
             let wordBefore = words[i - 1].toLowerCase();
-            if (wordBefore.includes("fon")) {
+            if (wordBefore.includes("fon") || wordBefore.includes("tel")) {
                 prob += 70;
             } else if (wordBefore.includes("fax")) {
                 return;
