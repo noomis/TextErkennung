@@ -58,16 +58,16 @@ function printResult() {
 
         $(".main-container").show();
 
-        outputMaxValues(urlProbability,urlValue,"website",500);
-        outputMaxValues(companyProbability,companyValue,"companyname",500);
-        outputMaxValues(nameProbability,nameValue,"name",1000);
-        outputMaxValues(mailProbability,mailValue,"email",1000);
-        outputMaxValues(streetProbability,streetValue,"street",1500);
-        outputMaxValues(telProbability,telValue,"phone",1500);
-        outputMaxValues(zipProbability,zipValue,"zipcode",2000);
-        outputMaxValues(faxProbability,faxValue,"fax",2000);
-        outputMaxValues(w3wProbability,w3wValue,"w3w",2500);
-        outputMaxValues(cityProbability,cityValue,"city",2500);
+        outputMaxValues(urlProbability,urlValue,"website",50);
+        outputMaxValues(companyProbability,companyValue,"companyname",50);
+        outputMaxValues(nameProbability,nameValue,"name",100);
+        outputMaxValues(mailProbability,mailValue,"email",100);
+        outputMaxValues(streetProbability,streetValue,"street",150);
+        outputMaxValues(telProbability,telValue,"phone",150);
+        outputMaxValues(zipProbability,zipValue,"zipcode",200);
+        outputMaxValues(faxProbability,faxValue,"fax",200);
+        outputMaxValues(w3wProbability,w3wValue,"w3w",250);
+        outputMaxValues(cityProbability,cityValue,"city",250);
 
     },1000 );
 
@@ -391,14 +391,7 @@ function checkCompanyName(inputLine) { // Simon
 
 
 
-    firmenTitel.forEach(element => {
-        if (inputLine.includes(element)) {
-            // console.log('element: ', element);
-            wordProb += 50;
 
-
-        }
-    });
 
 
     if (wordProb >= 50) {
