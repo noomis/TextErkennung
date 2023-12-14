@@ -569,7 +569,7 @@ function checkStreet(inputLine) {
     inputLine = inputLine.toLowerCase();
     let words = inputLine.split(" ")
     let prob = 0;
-    let streetNames = ["str", "weg", "allee", "gasse", "ring", "platz", "promenade", "chaussee", "boulevard", "stieg", "pfad", "feld"];
+    let streetNames = ["str.", "stra", "weg", "allee", "gasse", "ring", "platz", "promenade", "chaussee", "boulevard", "stieg", "pfad", "feld"];
     let stringBlacklist = "abcdefghijklmnopqrstuvwxyzäöü@#$!%^&*_={}[]|;:<>,?";
     const blacklist = stringBlacklist.split("");
     let num = 0;
