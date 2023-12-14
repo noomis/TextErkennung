@@ -562,7 +562,6 @@ function checkPhone(inputLine) {
 }
 
 function checkStreet(inputLine) {
-    debugger;
     inputLine = inputLine.toLowerCase();
     let words = inputLine.split(" ")
     let prob = 0;
@@ -580,7 +579,6 @@ function checkStreet(inputLine) {
                 prob += 40;
 
                 if (fullStreetName == "str." || "straße" || "str") {
-                    debugger;
                     if (i > 0) {
                         fullStreetName = "" + words[i - 1] + " " + fullStreetName;
                     }
