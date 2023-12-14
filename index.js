@@ -94,6 +94,11 @@ function printResult() {
 function outputMaxValues(probArray,valueArray,html_id,fadeTime){
 
     let maxValue = valueArray[findMaxIndex(probArray)];
+    // wenn slider wert größer als Wkeit nicht ausgeben
+    // console.log($("#slider.value"));
+    // if (condition) {
+        
+    // }
     console.log(html_id +" hat folgenden Max Wert: "+ maxValue);
     $("#"+html_id).val(maxValue).hide().fadeIn(fadeTime);
 
