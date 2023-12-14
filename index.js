@@ -35,8 +35,6 @@ function printResult() {
 
     timeoutId = setTimeout(() => {
 
-
-
         let text = document.getElementById("text").value;
         text = text.replace(/  +/g, ' ');
 
@@ -100,8 +98,6 @@ function outputMaxValues(probArray,valueArray,html_id,fadeTime){
     $("#"+html_id).val(maxValue).hide().fadeIn(fadeTime);
 
 }
-
-
 function checkW3W(inputLine) {
     let words = inputLine.split(" ");
     inputLine = inputLine.toLowerCase();
@@ -391,7 +387,14 @@ function checkCompanyName(inputLine) { // Simon
 
 
 
+    firmenTitel.forEach(element => {
+        if (inputLine.includes(element)) {
+            // console.log('element: ', element);
+            wordProb += 50;
 
+
+        }
+    });
 
 
     if (wordProb >= 50) {
@@ -507,8 +510,6 @@ function checkFax(inputLine) {
         faxProbability.push(prob);
     }
 }
-
-
 
 function checkPhone(inputLine) {
     let fullNumber = "";
