@@ -95,7 +95,6 @@ function printResult() {
 
 function outputMaxValues(probArray,valueArray,html_id,fadeTime){
     $("#"+html_id).val("");
-    console.log($("#"+html_id).text());
 
     let maxValue = valueArray[findMaxIndex(probArray)];
 
