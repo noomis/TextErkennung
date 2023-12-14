@@ -14,7 +14,9 @@
     <div class="body">
         <textarea autofocus type="text" id="text" name="text" placeholder="Text zur automatischen Erkennung eingeben.."
             required style="height: 200px;" rows="25" cols="150"></textarea>
-        <div class="slider-box"> <input type="range" min="0" max="100" value="50" id="slider">
+        <div class="slider-box"> 
+            <h4>Treffer Wahrscheinlichkeit:</h4>
+            <input type="range" min="0" max="100" value="50" onChange="printResult()" id="slider">
         </div>
     </div>
     <div class="main-container">
