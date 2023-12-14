@@ -31,6 +31,27 @@ $(".main-container").hide();
 
 function printResult() {
 
+        urlValue = [];
+    urlProbability = [];
+    mailValue = [];
+    mailProbability = [];
+    companyValue = [];
+    companyProbability = [];
+    w3wValue = [];
+    w3wProbability = [];
+    zipValue = [];
+    zipProbability = [];
+    nameValue = [];
+    nameProbability = [];
+    telValue = [];
+    telProbability = [];
+    faxValue = [];
+    faxProbability = [];
+    cityValue = [];
+    cityProbability = [];
+    streetValue = [];
+    streetProbability = [];
+
     clearTimeout(timeoutId);
 
     timeoutId = setTimeout(() => {
@@ -69,29 +90,12 @@ function printResult() {
 
     },1000 );
 
-    urlValue = [];
-    urlProbability = [];
-    mailValue = [];
-    mailProbability = [];
-    companyValue = [];
-    companyProbability = [];
-    w3wValue = [];
-    w3wProbability = [];
-    zipValue = [];
-    zipProbability = [];
-    nameValue = [];
-    nameProbability = [];
-    telValue = [];
-    telProbability = [];
-    faxValue = [];
-    faxProbability = [];
-    cityValue = [];
-    cityProbability = [];
-    streetValue = [];
-    streetProbability = [];
+
 }
 
 function outputMaxValues(probArray,valueArray,html_id,fadeTime){
+    $("#"+html_id).val("");
+    console.log($("#"+html_id).text());
 
     let maxValue = valueArray[findMaxIndex(probArray)];
 
