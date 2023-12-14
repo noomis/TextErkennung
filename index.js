@@ -54,69 +54,22 @@ function printResult() {
             checkStreet(element); //Luke
             checkCity(element); //Lars
 
-
-
         });
 
-        let maxMailProb = findMaxIndex(mailProbability);
-        let maxMailValue = mailValue[maxMailProb];
-        console.log('maxMailValue: ', maxMailValue);
-
-        let maxW3WProb = findMaxIndex(w3wProbability);
-        let maxW3WValue = w3wValue[maxW3WProb];
-        console.log('maxW3WValue: ', maxW3WValue);
-
-        let maxUrlProb = findMaxIndex(urlProbability);
-        let maxUrlValue = urlValue[maxUrlProb];
-        console.log('maxUrlValue: ', maxUrlValue);
-
-        let maxCompanyProb = findMaxIndex(companyProbability);
-        let maxCompanyValue = companyValue[maxCompanyProb];
-        console.log('maxCompanyValue: ', maxCompanyValue);
-
-        let maxFaxProb = findMaxIndex(faxProbability);
-        let maxFaxValue = faxValue[maxFaxProb];
-        console.log('maxFaxValue: ', maxFaxValue);
-
-        let maxPhoneProb = findMaxIndex(telProbability);
-        let maxPhoneValue = telValue[maxPhoneProb];
-        console.log('maxPhoneValue: ', maxPhoneValue);
-
-        let maxZipProb = findMaxIndex(zipProbability);
-        let maxzipValue = zipValue[maxZipProb];
-        console.log('maxzipValue: ', maxzipValue);
-
-
-        let maxNameProb = findMaxIndex(nameProbability);
-        let maxNameValue = nameValue[maxNameProb];
-        console.log('maxNameValue: ', maxNameValue);
-
-        let maxCityProb = findMaxIndex(cityProbability);
-        let maxCityValue = cityValue[maxCityProb];
-        console.log('maxCityValue: ', maxCityValue);
-
-        let maxStreetProb = findMaxIndex(streetProbability);
-        let maxStreetValue = streetValue[maxStreetProb];
-        console.log('maxStreetValue: ', maxStreetValue);
-
         $(".main-container").show();
-        $("#website").val(maxUrlValue).hide().fadeIn(500);
-        $("#companyname").val(maxCompanyValue).hide().fadeIn(500);
-        $("#email").val(maxMailValue).hide().fadeIn(1000);
-        $("#name").val(maxNameValue).hide().fadeIn(1000);
-        $("#street").val(maxStreetValue).hide().fadeIn(1500);
-        $("#phone").val(maxPhoneValue).hide().fadeIn(1500);
-        $("#zipcode").val(maxzipValue).hide().fadeIn(2000);
-        $("#fax").val(maxFaxValue).hide().fadeIn(2000);
-        $("#w3w").val(maxW3WValue).hide().fadeIn(2500);
-        $("#city").val(maxCityValue).hide().fadeIn(2500);
+
+        outputMaxValues(urlProbability,urlValue,"website",500);
+        outputMaxValues(companyProbability,companyValue,"companyname",500);
+        outputMaxValues(nameProbability,nameValue,"name",1000);
+        outputMaxValues(mailProbability,mailValue,"email",1000);
+        outputMaxValues(streetProbability,streetValue,"street",1500);
+        outputMaxValues(telProbability,telValue,"phone",1500);
+        outputMaxValues(zipProbability,zipValue,"zipcode",2000);
+        outputMaxValues(faxProbability,faxValue,"fax",2000);
+        outputMaxValues(w3wProbability,w3wValue,"w3w",2500);
+        outputMaxValues(cityProbability,cityValue,"city",2500);
 
     },1000 );
-
-    
-
-
-
 
     urlValue = [];
     urlProbability = [];
@@ -138,6 +91,14 @@ function printResult() {
     cityProbability = [];
     streetValue = [];
     streetProbability = [];
+}
+
+function outputMaxValues(probArray,valueArray,html_id,fadeTime){
+
+    let maxValue = valueArray[findMaxIndex(probArray)];
+    console.log(html_id +" hat folgenden Max Wert: "+ maxValue);
+    $("#"+html_id).val(maxValue).hide().fadeIn(fadeTime);
+
 }
 
 
