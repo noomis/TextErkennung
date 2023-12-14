@@ -94,9 +94,14 @@ function printResult() {
 function outputMaxValues(probArray,valueArray,html_id,fadeTime){
 
     let maxValue = valueArray[findMaxIndex(probArray)];
-    console.log(html_id +" hat folgenden Max Wert: "+ maxValue);
-    $("#"+html_id).val(maxValue).hide().fadeIn(fadeTime);
 
+    // wenn slider wert größer als Wkeit nicht ausgeben
+    let outputPercentage = $("#slider")[0].value;
+    let percentage = probArray[findMaxIndex(probArray)];
+    if (outputPercentage <= percentage) {
+        console.log(html_id +" hat folgenden Max Wert: "+ maxValue);
+        $("#"+html_id).val(maxValue).hide().fadeIn(fadeTime);
+    }
 }
 
 function checkW3W(inputLine) {
