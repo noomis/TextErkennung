@@ -347,7 +347,7 @@ function checkMail(inputLine) { // Simon
 
 function checkCompanyName(inputLine) { // Simon
     let wordProb = 0; // Treffer Wahrscheinlichkeit
-    
+
     let unternehmensformen = [
         "einzelunternehmen",
         "gesellschaft mit beschränkter haftung",
@@ -559,10 +559,11 @@ function checkPhone(inputLine) {
 }
 
 function checkStreet(inputLine) {
+    debugger;
     inputLine = inputLine.toLowerCase();
     let words = inputLine.split(" ")
     let prob = 0;
-    let streetNames = ["str", "weg", "allee", "gasse", "ring", "platz", "promenade", "chaussee", "boulevard", "stieg", "pfad", "feld"];
+    let streetNames = ["str.", "stra", "weg", "allee", "gasse", "ring", "platz", "promenade", "chaussee", "boulevard", "stieg", "pfad", "feld"];
     let stringBlacklist = "abcdefghijklmnopqrstuvwxyzäöü@#$!%^&*_={}[]|;:<>,?";
     const blacklist = stringBlacklist.split("");
     let num = 0;
@@ -576,6 +577,7 @@ function checkStreet(inputLine) {
                 prob += 40;
 
                 if (fullStreetName == "str." || "straße" || "str") {
+                    debugger;
                     if (i > 0) {
                         fullStreetName = "" + words[i - 1] + " " + fullStreetName;
                     }
