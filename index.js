@@ -16,6 +16,8 @@ let faxValue = [];
 let faxProbability = [];
 let cityValue = [];
 let cityProbability = [];
+let streetValue = [];
+let streetProbability = [];
 
 let timeoutId;
 
@@ -91,6 +93,10 @@ function printResult() {
         let maxCityValue = cityValue[maxCityProb];
         console.log('maxCityValue: ', maxCityValue);
 
+        let maxStreetProb = findMaxIndex(streetProbability);
+        let maxStreetValue = streetValue[maxStreetProb];
+        console.log('maxCityValue: ', maxStreetValue);
+
         $("#email").val(maxMailValue);
         $("#companyname").val(maxCompanyValue);
         $("#zipcode").val(maxzipValue);
@@ -100,6 +106,7 @@ function printResult() {
         $("#w3w").val(maxW3WValue);
         $("#name").val(maxNameValue);
         $("#city").val(maxCityValue);
+        $("#street").val(maxStreetValue);
 
     }, 2000);
 
@@ -650,7 +657,6 @@ function checkStreet(inputLine) {
                             for (let b = 0; b < blacklist.length; b++) {
                                 // checkt, ob alle char Werte bis auf der letzte Nummer sind
                                 if (words[i + 1][z].includes(blacklist[b])) {
-                                    console.log("keine Hausnummer");
                                     houseNumber++;
                                 }
                             }
@@ -671,6 +677,8 @@ function checkStreet(inputLine) {
         }
     }
     console.log(fullStreetName + ": ist mit " + prob + "% Wahrscheinlichkeit eine Straße");
+    streetValue.push(fullStreetName);
+    streetProbability.push(prob);
 }
 
 function checkCity(inputLine) {
