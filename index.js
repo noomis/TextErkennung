@@ -49,7 +49,7 @@ function printResult() {
             checkCity(element); //Lars
 
 
-          
+
         });
 
         let maxMailProb = findMaxIndex(mailProbability);
@@ -228,11 +228,11 @@ function checkUrl(inputLine) {
         }
 
         if (prob < 0) {
-            prob = 0; 
- 
+            prob = 0;
+
         }
         //push in globalen Array
-      
+
         //output
         if (prob > 0) {
             let indexes = urlValue.indexOf(element);
@@ -580,27 +580,28 @@ function checkStreet(inputLine) {
     const blacklist = stringBlacklist.split("");
     let num = 0;
     let fullStreetName = "";
+    let houseNumber = 0;
 
     words: for (let i = 0; i < words.length; i++) {
-        
+
         // Wörter mit StreetNames Array vergleichen
         for (let sNames = 0; sNames < streetNames.length; sNames++) {
             if (words[i].includes(streetNames[sNames])) {
-                fullStreetName += " " + words[i];
+                fullStreetName += "" + words[i];
                 prob += 40;
 
                 if (i + 1 < words.length) {
                     let wordAfter = words[i + 1].toLowerCase();
 
-                    // prüfen ob nach der Straße eine Hausnummer kommt
+                    // checkt ob nach der Straße eine Hausnummer kommt
                     for (let b = 0; b < blacklist.length; b++) {
-                        if (words[i+1].includes(blacklist[b])) {
+                        if (words[i + 1].includes(blacklist[b])) {
                             num++;
                         }
                     }
 
                     if (num == 0) {
-                        fullStreetName += " " + words[i+1];
+                        fullStreetName += " " + words[i + 1];
                         prob += 30;
 
                         if (wordAfter.length > 0 && wordAfter.length < 3) {
@@ -608,17 +609,42 @@ function checkStreet(inputLine) {
                         } else if (wordAfter.length < 5) {
                             prob += 10;
                         }
+
+                        // checkt, ob nach der Hausnummer ein Buchstaben Zusatz kommt
+                        if (i + 2 < words.length) {
+                            let word2After = words[i + 2].toLowerCase();
+
+                            if (word2After.length == 1) {
+                                for (let a = 0; a < 26; a++) {
+                                    if (word2After == blacklist[a]) {
+                                        fullStreetName += " " + words[i + 2];
+                                        prob += 10;
+                                    }
+                                }
+                            }
+                        }
                     }
 
-                    // überprüfen nach der Hausnummer ein Buchstaben Zusatz kommt
-                    if (i + 2 < words.length) {
-                        let word2After = words[i + 2].toLowerCase();
+                    // checkt den Fall, wenn der Nr. Zusatz nicht mit einem Leerzeichen von der Nr. getrennt ist
+                    if (num == 1) {
+                        for (let z = 0; z < words[i + 1].length - 1; z++) {
+                            for (let b = 0; b < blacklist.length; b++) {
+                                // checkt, ob alle char Werte bis auf der letzte Nummer sind
+                                if (words[i + 1][z].includes(blacklist[b])) {
+                                    console.log("keine Hausnummer");
+                                    houseNumber++;
+                                }
+                            }
+                        }
 
-                        if (word2After.length == 1) {
-                            for (let a = 0; a < 26; a++) {
-                                if (word2After == blacklist[a]) {
-                                    fullStreetName += " " + words[i+2];
-                                    prob += 10;
+                        // checkt, ob der letzte char Wert ein Buchstabe ist
+                        if (houseNumber == 0) {
+                            fullStreetName += " " + words[i + 1];
+                            prob += 30;
+
+                            for (let alphabet = 0; alphabet < 26; alphabet++) {
+                                if (words[i + 1][(words[i + 1].length) - 1] == blacklist[alphabet]) {
+                                    prob += 30;
                                 }
                             }
                         }
