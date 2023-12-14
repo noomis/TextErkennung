@@ -676,9 +676,11 @@ function checkStreet(inputLine) {
             }
         }
     }
-    console.log(fullStreetName + ": ist mit " + prob + "% Wahrscheinlichkeit eine Straße");
-    streetValue.push(fullStreetName);
-    streetProbability.push(prob);
+    if (fullStreetName.trim().length != 0 && prob != 0) {
+        console.log(fullStreetName + ": ist mit " + prob + "% Wahrscheinlichkeit eine Straße");
+        streetValue.push(fullStreetName);
+        streetProbability.push(prob);
+    }
 }
 
 function checkCity(inputLine) {
