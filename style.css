@@ -1,55 +1,65 @@
 .body {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-  }
-  
-  input {
-    display: block;
-    border: 1px solid #ccc;
-    border-radius: 10px;
-    margin-bottom: 10px;
-    padding: 10px;
-    box-sizing: border-box;
-    color: #2c3e50;
-    font-size: 14px;
-    height: 35px;
-    width: 250px;
-  }
-  
-  form {
-    width: 800px;
-    text-align: center;
-    padding: 30px;
-    box-shadow: rgba(255, 255, 255, 0.2) 0px 7px 29px 0px;
-    background-color: rgb(127, 127, 127);
-  }
-  
-  textarea {
-    display: block;
-    padding: 15px;
-    border: 1px solid #ccc;
-    border-radius: 0px;
-    width: 100%;
-    box-sizing: border-box;
-    font-size: 20px;
-    cursor: default;
-  }
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+
+}
+
+input {
+  display: block;
+  border: 1px solid #ccc;
+  border-radius: 10px;
+  margin-bottom: 10px;
+  padding: 10px;
+  box-sizing: border-box;
+  color: #2c3e50;
+  font-size: 14px;
+  height: 35px;
+  width: 250px;
+}
+
+
+.body {
+  width: 800px;
+  text-align: center;
+  padding: 30px;
+  padding-bottom: 0;
+  border-radius: 15px;
+  box-shadow: rgba(255, 255, 255, 0.2) 0px 7px 29px 0px;
+  background-color: rgb(127, 127, 127);
+}
+
+textarea {
+  display: block;
+  padding: 15px;
+  border: 1px solid #ccc;
+  border-radius: 0px;
+  width: 100%;
+  box-sizing: border-box;
+  font-size: 20px;
+  cursor: default;
+}
 
 body {
   background-color: rgb(131, 131, 131);
   color: white;
   margin: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
 }
 
 textarea {
   background-color: rgb(127, 127, 127);
   color: white;
 }
+
 textarea::-webkit-input-placeholder {
   color: #fff;
 }
-.placeholder{
+
+.placeholder {
   height: 4.5dvh;
 }
 
@@ -70,14 +80,15 @@ textarea::-webkit-input-placeholder {
 }
 
 @media (max-width: 870px) {
-  form {
+  .body {
     width: 350px;
     text-align: center;
     padding: 30px;
     box-shadow: rgba(255, 255, 255, 0.2) 0px 7px 29px 0px;
     background-color: rgb(127, 127, 127);
-  } 
-   input {
+  }
+
+  input {
     display: block;
     border: 1px solid #ccc;
     border-radius: 10px;
@@ -89,10 +100,24 @@ textarea::-webkit-input-placeholder {
     height: 35px;
     width: 180px;
   }
+
   .input-container {
     display: block;
     margin-right: 20px;
     margin-left: 20px;
   }
 
+}
+
+
+#slider {
+  width: 200px;
+}
+
+.slider-box{
+  width: 100%;
+  justify-content: center;
+  display: flex;
+  align-items: center;
+  height: 100%;
 }
