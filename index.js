@@ -27,6 +27,8 @@ const allCityNames = [];
 
 document.getElementById("text").addEventListener("input", printResult);
 
+$(".main-container").hide();
+
 function printResult() {
 
     clearTimeout(timeoutId);
@@ -95,20 +97,23 @@ function printResult() {
 
         let maxStreetProb = findMaxIndex(streetProbability);
         let maxStreetValue = streetValue[maxStreetProb];
-        console.log('maxCityValue: ', maxStreetValue);
+        console.log('maxStreetValue: ', maxStreetValue);
 
-        $("#email").val(maxMailValue);
-        $("#companyname").val(maxCompanyValue);
-        $("#zipcode").val(maxzipValue);
-        $("#website").val(maxUrlValue);
-        $("#phone").val(maxPhoneValue);
-        $("#fax").val(maxFaxValue);
-        $("#w3w").val(maxW3WValue);
-        $("#name").val(maxNameValue);
-        $("#city").val(maxCityValue);
-        $("#street").val(maxStreetValue);
+        $(".main-container").show();
+        $("#website").val(maxUrlValue).hide().fadeIn(500);
+        $("#companyname").val(maxCompanyValue).hide().fadeIn(500);
+        $("#email").val(maxMailValue).hide().fadeIn(1000);
+        $("#name").val(maxNameValue).hide().fadeIn(1000);
+        $("#street").val(maxStreetValue).hide().fadeIn(1500);
+        $("#phone").val(maxPhoneValue).hide().fadeIn(1500);
+        $("#zipcode").val(maxzipValue).hide().fadeIn(2000);
+        $("#fax").val(maxFaxValue).hide().fadeIn(2000);
+        $("#w3w").val(maxW3WValue).hide().fadeIn(2500);
+        $("#city").val(maxCityValue).hide().fadeIn(2500);
 
-    }, 2000);
+    },1000 );
+
+    
 
 
 
@@ -131,6 +136,8 @@ function printResult() {
     faxProbability = [];
     cityValue = [];
     cityProbability = [];
+    streetValue = [];
+    streetProbability = [];
 }
 
 
