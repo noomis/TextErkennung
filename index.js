@@ -273,7 +273,7 @@ function checkMail(inputLine) { // Simon
             const element = wordChars[i];
 
 
-            if (element === "@") {  // countet @
+            if (element === "@" || (wordChars[i]=="(" && wordChars[i+1]=="a" && wordChars[i+2]=="t" && wordChars[i+3]==")")) {  // countet @
                 atHit.push(i);
             }
 
@@ -373,6 +373,10 @@ function checkCompanyName(inputLine) { // Simon
         const element = lineWords[index];
 
         if (element.includes('@')) { // Checkt String mit @ beginnt
+            return;
+        }
+
+        if (element.includes('(at)')) { // Checkt String mit @ beginnt
             return;
         }
 
