@@ -14,10 +14,17 @@
     <div class="body">
         <textarea autofocus type="text" id="text" name="text" placeholder="Text zur automatischen Erkennung eingeben.."
             required style="height: 200px;" rows="25" cols="150"></textarea>
-        <div class="slider-box"> 
-            <h4 id="probValue">Treffer Wahrscheinlichkeit: 50%</h4>
-            <input type="range" min="0" max="100" value="50" onChange="printResult()" id="slider">
-            <a id="exportJSON" onclick="exportJson(this);" class="btn"> <img width="40px" src="download.svg"></a>
+        <div class="slider-box">
+
+            <div class="left">
+                <h4 id="probValue">Treffer Wahrscheinlichkeit: 50%</h4>
+                <input type="range" min="0" max="100" value="50" onChange="printResult()" id="slider">
+
+            </div>
+
+            <div class="right">
+                <a id="exportJSON" onclick="exportJson(this);" class="btn"> <img width="40px" src="download.svg"></a>
+            </div>
 
         </div>
     </div>
