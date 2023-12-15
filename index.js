@@ -681,6 +681,10 @@ function checkCity(inputLine) {
             words[a] = element.replace("d-", "");
             prob += 10;
         }
+        if (element.startsWith("de-")) {
+            words[a] = element.replace("de-" ,"");
+            prob += 10;
+        }
         //Falls vor der 5-Stelligen Zahl ein verbotenes Keyword steht wird diese Zahl nicht angegeben 
         if (a !== 0) {
             let wordBefore = words[a - 1];
