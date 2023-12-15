@@ -765,3 +765,27 @@ function findMaxIndex(arr) {
 
     return maxIndex;
 }
+
+function test(valueArray,probArray,input_splitter){
+
+    // Combine arrays into an array of objects
+    let text = document.getElementById("text").value.toLowerCase();
+    let words = text.split(input_splitter);
+    let notDetectedWords = [];
+
+    const combinedArray = valueArray.map((item, index) => ({ Wert: item, Wahrscheinlichkeit: probArray[index] }));
+
+    words.forEach(element => {
+        if(!($.inArray(element, valueArray) > -1)){
+            notDetectedWords.push(element);
+        }
+    });
+
+    
+    // Display the combined array using console.table
+    
+    console.table(combinedArray);
+
+    console.table(notDetectedWords);
+    
+    }
