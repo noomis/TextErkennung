@@ -465,7 +465,7 @@ function checkName(inputLine) {
         if (words[i + 1] !== undefined) {
             wordAfter = words[i + 1];
             if (nachnamen.includes(wordAfter)) {
-                prob += 40;
+                prob += 50;
             }
         }
         else if (words[i + 1] == undefined) {
