@@ -99,7 +99,6 @@ function printResult() {
 
 function outputMaxValues(probArray,valueArray,html_id,fadeTime){
     $("#"+html_id).val("");
-    console.log($("#"+html_id).text());
 
     let maxValue = valueArray[findMaxIndex(probArray)];
 
@@ -438,30 +437,30 @@ function checkName(inputLine) {
     const nachnamen = ["Müller", "Schmidt", "Schneider", "Fischer", "Meyer", "Meier", "Mayer", "Maier", "Wagner", "Becker", "Schulz", "Hoffmann", "Schäfer", "Koch", "Bauer", "Richter", "Klein", "Wolf", "Braun", "Schmid", "Hartmann", "Zimmermann", "Krüger", "Schmitz", "Lange", "Werner", "Schulte", "Köhler", "Lehmann", "Maier", "Scholz", "Albrecht", "Vogel", "Pohl", "Huber", "Roth", "Arnold", "König", "Friedrich", "Beyer", "Bruegge", "Seidel", "Sommer", "Haas", "Graf", "Heinrich", "Schreiber", "Schiller", "Günther", "Krämer", "Zimmer", "Jäger", "Ludwig", "Ritter", "Winkler", "Ziegler", "Frank", "Schwarz", "Neumann", "Herrmann", "Kühn", "Walter", "Peters", "Möller", "Martin", "Schubert", "Dietrich", "Ullrich", "Fuchs", "Voigt", "Simon", "Kunz", "Marx", "Sauer", "Hauser", "Böhm", "Dreher", "Schuster", "Stahl", "Hein", "Hess", "Berger", "Bock", "Busch", "Menzel", "Weiß", "Engels", "Sander", "Geiger", "Lorenz", "Rommel", "Hahn", "Schütz", "Keller", "Petersen", "Thiel", "Böttcher", "Dahl", "Heinze", "Trautmann", "Zimmerer", "Vogt", "Otto", "Voß", "Janßen", "Dahlke", "Stein", "Hesse", "Röder", "Rieger", "Wendt", "Kühne", "Seeger", "Brinkmann", "Franke", "Ackermann", "Drechsler", "Wenzel", "Hagen", "Reuter", "Döring", "Groß", "Böhme", "Kellermann", "Ebert", "Renner", "Pfeiffer", "Eichhorn", "Blum", "Stoll", "Rupp", "Vetter", "Breuer", "Hildebrand", "Wendel", "Grote", "Rosenberger", "Rößler", "Adam", "Weiß", "Ostermann", "Wiegand", "Wirth", "Bode", "Brügge", "Kolb", "Geyer", "Kling", "Heßler", "Ritz", "Lambrecht", "Essing"];
     let prob = 0;
     let wordAfter;
-    // inputLine = inputLine.toLowerCase();
+    inputLine = inputLine.toLowerCase();
     let words = inputLine.split(" ");
     //Vor- und Nachname-Array to lower case
-    // for (let a = 0; a < vornamen.length; a++) {
-    //     const element = vornamen[a];
-    //     vornamen[a] = element.toLowerCase();
-    // }
-    // for (let a = 0; a < nachnamen.length; a++) {
-    //     const element = nachnamen[a];
-    //     nachnamen[a] = element.toLowerCase();
-    // }
+    for (let a = 0; a < vornamen.length; a++) {
+        const element = vornamen[a];
+        vornamen[a] = element.toLowerCase();
+    }
+    for (let a = 0; a < nachnamen.length; a++) {
+        const element = nachnamen[a];
+        nachnamen[a] = element.toLowerCase();
+    }
     //Schleife und check ob element im Vornamen-Array existiert
     for (let i = 0; i < words.length; i++) {
         const element = words[i];
         prob = 0;
         if (vornamen.includes(element)) {
-            prob += 40;
+            prob += 50;
         }
         //checken ob das Wort vor i, falls es existiert, mit gewisse Stichworte enthält 
         if (i !== 0) {
             let wordBefore = words[i - 1];
-            if (wordBefore.includes("Geschäftsführer") || wordBefore.includes("Ansprechpartner") || wordBefore.includes("Vorstand") || wordBefore.includes("Vorsitzender") || wordBefore.includes("Inhaber")) {
+            if (wordBefore.includes("geschäftsführer") || wordBefore.includes("ansprechpartner") || wordBefore.includes("vorstand") || wordBefore.includes("vorsitzender") || wordBefore.includes("inhaber")) {
                 prob += 50;
-            } else if (wordBefore.includes("Firmenname")) {
+            } else if (wordBefore.includes("firmenname")) {
                 return;
             }
         }
@@ -683,6 +682,10 @@ function checkCity(inputLine) {
         const element = words[a];
         if (element.startsWith("d-")) {
             words[a] = element.replace("d-", "");
+            prob += 10;
+        }
+        if (element.startsWith("de-")) {
+            words[a] = element.replace("de-" ,"");
             prob += 10;
         }
         //Falls vor der 5-Stelligen Zahl ein verbotenes Keyword steht wird diese Zahl nicht angegeben 
