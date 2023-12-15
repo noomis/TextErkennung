@@ -456,16 +456,17 @@ function checkName(inputLine) {
         prob = 0;
         if (vornamen.includes(element)) {
             prob += 50;
-        }
-        //checken ob das Wort vor i, falls es existiert, mit gewisse Stichworte enthält 
-        if (i !== 0) {
-            let wordBefore = words[i - 1];
-            if (wordBefore.includes("geschäftsführer") || wordBefore.includes("ansprechpartner") || wordBefore.includes("vorstand") || wordBefore.includes("vorsitzender") || wordBefore.includes("inhaber")) {
-                prob += 50;
-            } else if (wordBefore.includes("firmenname")) {
-                return;
+            //checken ob das Wort vor i, falls es existiert, mit gewisse Stichworte enthält 
+            if (i !== 0) {
+                let wordBefore = words[i - 1];
+                if (wordBefore.includes("geschäftsführer") || wordBefore.includes("ansprechpartner") || wordBefore.includes("vorstand") || wordBefore.includes("vorsitzender") || wordBefore.includes("inhaber")) {
+                    prob += 50;
+                } else if (wordBefore.includes("firmenname")) {
+                    return;
+                }
             }
         }
+
         //checken ob das Wort nach i mit dem Nachnamen Array matcht 
         if (words[i + 1] !== undefined) {
             wordAfter = words[i + 1];
@@ -734,19 +735,18 @@ function checkCity(inputLine) {
         }
     }
 }
-//arrays werden auf die Werte, die im json enthalten sind, gesetzt 
+//arrays werden auf die Germany-Werte, die im json enthalten sind, gesetzt 
 fetch('georef-germany-postleitzahl.json')
     .then(response => response.json())
     .then(data => {
         data.forEach(datensatz => {
-            allZipCodes.push(('PLZ:', datensatz.name));
-            allCityNames.push(('Stadt:', datensatz.plz_name));
+            allZipCodes.push(datensatz.name);
+            allCityNames.push(datensatz.plz_name);
         });
     })
     .catch(error => {
         console.error('Fehler beim Laden der JSON-Datei:', error);
     });
-
 
 function findMaxIndex(arr) {
     if (!arr || arr.length === 0) {
@@ -765,3 +765,27 @@ function findMaxIndex(arr) {
 
     return maxIndex;
 }
+
+function test(valueArray,probArray,input_splitter){
+
+    // Combine arrays into an array of objects
+    let text = document.getElementById("text").value.toLowerCase();
+    let words = text.split(input_splitter);
+    let notDetectedWords = [];
+
+    const combinedArray = valueArray.map((item, index) => ({ Wert: item, Wahrscheinlichkeit: probArray[index] }));
+
+    words.forEach(element => {
+        if(!($.inArray(element, valueArray) > -1)){
+            notDetectedWords.push(element);
+        }
+    });
+
+    
+    // Display the combined array using console.table
+    
+    console.table(combinedArray);
+
+    console.table(notDetectedWords);
+    
+    }

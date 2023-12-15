@@ -1,9 +1,3 @@
-.body {
-  justify-content: center;
-  align-items: center;
-  flex-direction: column;
-
-}
 
 input {
   display: block;
@@ -20,7 +14,10 @@ input {
 
 
 .body {
-  width: 800px;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  width: 60%;
   text-align: center;
   padding: 30px;
   padding-bottom: 0;
@@ -34,7 +31,7 @@ textarea {
   padding: 15px;
   border: 1px solid #ccc;
   border-radius: 0px;
-  width: 100%;
+  max-width: 100%;
   box-sizing: border-box;
   font-size: 20px;
   cursor: default;
