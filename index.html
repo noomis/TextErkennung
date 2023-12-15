@@ -15,9 +15,10 @@
         <textarea autofocus type="text" id="text" name="text" placeholder="Text zur automatischen Erkennung eingeben.."
             required style="height: 200px;" rows="25" cols="150"></textarea>
         <div class="slider-box"> 
-            <h4>Treffer Wahrscheinlichkeit:</h4>
-            <p id="probValue">50%</p>
+            <h4 id="probValue">Treffer Wahrscheinlichkeit: 50%</h4>
             <input type="range" min="0" max="100" value="50" onChange="printResult()" id="slider">
+            <a id="exportJSON" onclick="exportJson(this);" class="btn"> <img width="25px" src="download.svg" alt="">export json</a>
+
         </div>
     </div>
     <div class="main-container">

@@ -114,11 +114,18 @@ textarea::-webkit-input-placeholder {
 }
 
 .slider-box{
-  width: 65%;
+  width: 100%;
   justify-content: space-between;
   display: flex;
   align-items: center;
   text-align: center;
   height: 100%;
   font-family: Arial, Helvetica, sans-serif;
+}
+
+#exportJSON{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 3px;
 }

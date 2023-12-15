@@ -22,6 +22,20 @@ let streetProbability = [];
 let timeoutId;
 
 
+let jsonObject = {
+    Firmenname: "",
+    Homepage: "",
+    Name: "",
+    mail: "",
+    street: "",
+    phone: "",
+    fax: "",
+    zip: "",
+    city: "",
+    w3w: "",
+
+};
+
 
 const knownTLD = ["com", "net", "org", "de", "eu", "at", "ch", "nl", "pl", "fr", "es", "info", "name", "email", "co"];
 const allZipCodes = [];
@@ -33,7 +47,7 @@ $(".main-container").hide();
 
 function printResult() {
     let outputPercentage = $("#slider")[0].value;
-    $("#probValue").text(outputPercentage + "%");
+    $("#probValue").text("Treffer Wahrscheinlichkeit: " +outputPercentage + "%");
 
     urlValue = [];
     urlProbability = [];
@@ -98,9 +112,17 @@ function printResult() {
 }
 
 function outputMaxValues(probArray, valueArray, html_id, fadeTime) {
+    if (document.getElementById("text").value == "") {
+        return;
+    }
+
     $("#" + html_id).val("");
 
+
+
     let maxValue = valueArray[findMaxIndex(probArray)];
+
+
 
     // wenn slider wert größer als Wkeit nicht ausgeben
     let outputPercentage = $("#slider")[0].value;
@@ -110,6 +132,8 @@ function outputMaxValues(probArray, valueArray, html_id, fadeTime) {
         console.log(html_id + " hat folgenden Max Wert: " + maxValue);
         $("#" + html_id).val(maxValue).hide().fadeIn(fadeTime);
     }
+
+
 }
 
 function checkW3W(inputLine) {
@@ -788,4 +812,31 @@ function test(valueArray,probArray,input_splitter){
 
     console.table(notDetectedWords);
     
+    }
+
+
+
+
+
+
+    function exportJson(el) {
+
+        jsonObject.city = cityValue;
+        jsonObject.zip = zipValue;
+        jsonObject.w3w = w3wValue;
+        jsonObject.Firmenname = companyValue;
+        jsonObject.Homepage = urlValue;
+        jsonObject.Name = nameValue;
+        jsonObject.mail = mailValue;
+        jsonObject.street = streetValue;
+        jsonObject.phone = telValue;
+        jsonObject.fax = faxValue;
+
+       
+        var data = "text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(jsonObject));
+        // what to return in order to show download window?
+    
+        el.setAttribute("href", "data:"+data);
+        el.setAttribute("download", "data.json");
+        
     }
