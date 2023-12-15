@@ -21,6 +21,8 @@ let streetProbability = [];
 
 let timeoutId;
 
+
+
 const knownTLD = ["com", "net", "org", "de", "eu", "at", "ch", "nl", "pl", "fr", "es", "info", "name", "email", "co"];
 const allZipCodes = [];
 const allCityNames = [];
@@ -30,6 +32,8 @@ document.getElementById("text").addEventListener("input", printResult);
 $(".main-container").hide();
 
 function printResult() {
+    let outputPercentage = $("#slider")[0].value;
+    $("#probValue").text(outputPercentage  + "%");
 
         urlValue = [];
     urlProbability = [];
@@ -100,7 +104,6 @@ function outputMaxValues(probArray,valueArray,html_id,fadeTime){
     let maxValue = valueArray[findMaxIndex(probArray)];
 
     // wenn slider wert größer als Wkeit nicht ausgeben
-    let outputPercentage = $("#slider")[0].value;
     let percentage = probArray[findMaxIndex(probArray)];
     if (outputPercentage <= percentage) {
         console.log(html_id +" hat folgenden Max Wert: "+ maxValue);
