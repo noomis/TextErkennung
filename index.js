@@ -516,7 +516,7 @@ function checkFax(inputLine) {
         if (i !== 0) {
             let wordBefore = words[i - 1].toLowerCase();
             if (wordBefore.includes("fax")) {
-                prob += 70;
+                prob += 90;
             } else if (wordBefore.includes("tel") || wordBefore.includes("fon")) {
                 return;
             }
@@ -530,7 +530,7 @@ function checkFax(inputLine) {
     let tmpFullNum = fullNumber
     tmpFullNum = tmpFullNum.replaceAll("+", "").replaceAll("/", "").replaceAll("-", "").replaceAll(".", "");
     if (tmpFullNum.length > 5 && tmpFullNum.length < 33) {
-        prob += 30;
+        prob += 10;
     }
 
     if (fullNumber.trim().length != 0 && prob != 0) {
