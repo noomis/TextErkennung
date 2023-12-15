@@ -103,6 +103,8 @@ function outputMaxValues(probArray,valueArray,html_id,fadeTime){
     let maxValue = valueArray[findMaxIndex(probArray)];
 
     // wenn slider wert größer als Wkeit nicht ausgeben
+    let outputPercentage = $("#slider")[0].value;
+
     let percentage = probArray[findMaxIndex(probArray)];
     if (outputPercentage <= percentage) {
         console.log(html_id +" hat folgenden Max Wert: "+ maxValue);
