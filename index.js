@@ -647,6 +647,7 @@ function checkStreet(inputLine) {
     let prob = 0;
     let streetNames = ["str.", "stra", "weg", "allee", "gasse", "ring", "platz", "promenade", "chaussee", "boulevard", "stieg", "pfad", "feld", "kamp", "berg", "wiesen", "hof"];
     let stringBlacklist = "abcdefghijklmnopqrstuvwxyzäöü@#$!%^&*_={}[]|;:<>,?";
+    let stringStreetBeginnings = ["an der", "zu den", "in der", "in den", "im", "auf den", "auf der", "am"];
     const blacklist = stringBlacklist.split("");
     let num = 0;
     let fullStreetName = "";
@@ -715,6 +716,83 @@ function checkStreet(inputLine) {
             }
         }
     }
+
+    // überprüft Fälle, wenn die Adresse mit z.b. an der ... anfängt
+    for (let p = 0; p < stringStreetBeginnings.length; p++) {
+        if (inputLine.includes(stringStreetBeginnings[p])) {
+
+            fullStreetName = inputLine;
+            prob += 25;
+            let matchingWords = stringStreetBeginnings[p].split(" ");
+
+            words: for (let m = 0; m < words.length; m++) {
+
+                if (matchingWords.length == 1) {
+                    if (words[m] == matchingWords[0]) {
+                        // continue
+                    } else {
+                        continue words;
+                    }
+                } else {
+                    if (words[m] == matchingWords[1] && words[m - 1] == matchingWords[0]) {
+                        // continue
+                    } else {
+                        continue words;
+                    }
+                }
+
+                if (m + 2 < words.length) {
+                    let word2After = words[m + 2].toLowerCase();
+                    // checkt ob nach der Straße eine Hausnummer kommt
+                    for (let b = 0; b < blacklist.length; b++) {
+                        if (words[m + 2].includes(blacklist[b])) {
+                            num++;
+                        }
+                    }
+                    if (num == 0) {
+                        prob += 30;
+                        if (word2After.length > 0 && word2After.length < 3) {
+                            prob += 20;
+                        } else if (word2After.length < 5) {
+                            prob += 10;
+                        }
+                        // checkt, ob nach der Hausnummer ein Buchstaben Zusatz kommt
+                        if (m + 3 < words.length) {
+                            let word3After = words[m + 3].toLowerCase();
+                            if (word3After.length == 1) {
+                                for (let a = 0; a < 26; a++) {
+                                    if (word3After == blacklist[a]) {
+                                        prob += 10;
+                                    }
+                                }
+                            }
+                        }
+                    }
+                    // checkt den Fall, wenn der Nr. Zusatz nicht mit einem Leerzeichen von der Nr. getrennt ist
+                    if (num == 1) {
+                        for (let z = 0; z < words[m + 2].length - 1; z++) {
+                            for (let b = 0; b < blacklist.length; b++) {
+                                // checkt, ob alle char Werte bis auf der letzte Nummer sind
+                                if (words[m + 2][z].includes(blacklist[b])) {
+                                    houseNumber++;
+                                }
+                            }
+                        }
+                        // checkt, ob der letzte char Wert ein Buchstabe ist
+                        if (houseNumber == 0) {
+                            prob += 30;
+                            for (let alphabet = 0; alphabet < 26; alphabet++) {
+                                if (words[m + 2][(words[m + 2].length) - 1] == blacklist[alphabet]) {
+                                    prob += 30;
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+
     if (fullStreetName.trim().length != 0 && prob != 0) {
         console.log(fullStreetName + ": ist mit " + prob + "% Wahrscheinlichkeit eine Straße");
         streetValue.push(fullStreetName);
