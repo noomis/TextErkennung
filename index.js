@@ -762,7 +762,7 @@ function checkCity(inputLine) {
             zipProbability.push(prob);
             cityValue.push(wordAfter);
             cityProbability.push(prob);
-            console.log(element + " " + cityName + " ist mit " + prob + "% Wahrscheinlichkeit eine Postleitzahl mit Ort");
+            console.log(element + " " + wordAfter + " ist mit " + prob + "% Wahrscheinlichkeit eine Postleitzahl mit Ort");
         }
     }
 }
