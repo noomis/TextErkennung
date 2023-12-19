@@ -100,14 +100,7 @@ function printResult() {
         outputMaxValues(nameProbability, nameValue, "name", 100);
         outputMaxValues(mailProbability, mailValue, "email", 100);
         outputMaxValues(streetProbability, streetValue, "street", 150);
-
-        if (telProbability > 1) {
-            outputMaxValues(telProbability, telValue, "phone", 150);
-        }
-        else {
-            outputAllTelValues(telProbability, telValue, "phone", 150);
-        }
-    
+        outputAllTelValues(telProbability, telValue, "phone", 150);
         outputMaxValues(zipProbability, zipValue, "zipcode", 200);
         outputMaxValues(faxProbability, faxValue, "fax", 200);
         outputMaxValues(w3wProbability, w3wValue, "w3w", 250);
