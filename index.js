@@ -86,7 +86,19 @@ function printResult() {
         outputMaxValues(nameProbability, nameValue, "name", 100);
         outputMaxValues(mailProbability, mailValue, "email", 100);
         outputMaxValues(streetProbability, streetValue, "street", 150);
+
+        // console.log(telProbability, telValue);
         outputMaxValues(telProbability, telValue, "phone", 150);
+        // for (let tel = 0; tel < telValue.length; tel++) {
+        //     console.log(telValue[tel]);
+        //     console.log(telProbability[tel]);
+
+        //     if (tel == 0) {
+                
+        //     }
+        // }
+
+
         outputMaxValues(zipProbability, zipValue, "zipcode", 200);
         outputMaxValues(faxProbability, faxValue, "fax", 200);
         outputMaxValues(w3wProbability, w3wValue, "w3w", 250);
@@ -95,6 +107,21 @@ function printResult() {
     }, 1000);
 
 
+}
+
+function outputAllTelValues(probArray, valueArray, html_id, fadeTime) {
+    $("#" + html_id).val("");
+
+    let maxValue = valueArray[findMaxIndex(probArray)]; // del
+
+    // wenn slider wert größer als Wkeit nicht ausgeben
+    let outputPercentage = $("#slider")[0].value;
+
+    let percentage = probArray[findMaxIndex(probArray)]; // del
+    if (outputPercentage <= percentage) {
+        console.log(html_id + " hat folgenden Max Wert: " + maxValue);
+        $("#" + html_id).val(maxValue).hide().fadeIn(fadeTime);
+    }
 }
 
 function outputMaxValues(probArray, valueArray, html_id, fadeTime) {
