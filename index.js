@@ -22,6 +22,20 @@ let streetProbability = [];
 let timeoutId;
 
 
+let jsonObject = {
+    Firmenname: "",
+    Homepage: "",
+    Name: "",
+    mail: "",
+    street: "",
+    phone: "",
+    fax: "",
+    zip: "",
+    city: "",
+    w3w: "",
+
+};
+
 
 const knownTLD = ["com", "net", "org", "de", "eu", "at", "ch", "nl", "pl", "fr", "es", "info", "name", "email", "co"];
 const allZipCodes = [];
@@ -33,7 +47,7 @@ $(".main-container").hide();
 
 function printResult() {
     let outputPercentage = $("#slider")[0].value;
-    $("#probValue").text(outputPercentage + "%");
+    $("#probValue").text("Treffer Wahrscheinlichkeit: " + outputPercentage + "%");
 
     urlValue = [];
     urlProbability = [];
@@ -125,9 +139,17 @@ function outputAllTelValues(probArray, valueArray, html_id, fadeTime) {
 }
 
 function outputMaxValues(probArray, valueArray, html_id, fadeTime) {
+    if (document.getElementById("text").value == "") {
+        return;
+    }
+
     $("#" + html_id).val("");
 
+
+
     let maxValue = valueArray[findMaxIndex(probArray)];
+
+
 
     // wenn slider wert größer als Wkeit nicht ausgeben
     let outputPercentage = $("#slider")[0].value;
@@ -137,6 +159,8 @@ function outputMaxValues(probArray, valueArray, html_id, fadeTime) {
         console.log(html_id + " hat folgenden Max Wert: " + maxValue);
         $("#" + html_id).val(maxValue).hide().fadeIn(fadeTime);
     }
+
+
 }
 
 function checkW3W(inputLine) {
@@ -707,7 +731,8 @@ function checkCity(inputLine) {
     let city = 0;
     let cityName = 0;
     let prob = 0;
-    //wenn element mit d- startet wird diese entfernt
+    let wordAfter;
+    //wenn element mit d-/de- startet wird dieses entfernt
     for (let a = 0; a < words.length; a++) {
         const element = words[a];
         if (element.startsWith("d-")) {
@@ -741,11 +766,17 @@ function checkCity(inputLine) {
             prob += 60;
             city = allZipCodes.indexOf(element);
             cityName = allCityNames[city];
-            //check ob Wort nach dem zip Code der Stadt entspricht die im json engetragen ist
+            //check ob Wort nach dem zip Code der Stadt entspricht die im json eingetragen ist
             if (words[i + 1] !== undefined) {
-                let wordAfter = words[i + 1];
+                wordAfter = words[i + 1];
+                if (cityName.toLowerCase().includes(wordAfter) == false) {
+                    prob = 30;
+                }
+                if (cityName.toLowerCase().includes(wordAfter)) {
+                    prob += 30;
+                }
                 if (wordAfter.includes(cityName.toLowerCase())) {
-                    prob = 100;
+                    prob = 100
                 }
             }
         }
@@ -756,7 +787,7 @@ function checkCity(inputLine) {
         if (prob > 0) {
             zipValue.push(element);
             zipProbability.push(prob);
-            cityValue.push(cityName);
+            cityValue.push(wordAfter);
             cityProbability.push(prob);
             console.log(element + " " + cityName + " ist mit " + prob + "% Wahrscheinlichkeit eine Postleitzahl mit Ort");
         }
@@ -793,7 +824,7 @@ function findMaxIndex(arr) {
     return maxIndex;
 }
 
-function test(valueArray,probArray,input_splitter){
+function test(valueArray, probArray, input_splitter) {
 
     // Combine arrays into an array of objects
     let text = document.getElementById("text").value.toLowerCase();
@@ -803,16 +834,43 @@ function test(valueArray,probArray,input_splitter){
     const combinedArray = valueArray.map((item, index) => ({ Wert: item, Wahrscheinlichkeit: probArray[index] }));
 
     words.forEach(element => {
-        if(!($.inArray(element, valueArray) > -1)){
+        if (!($.inArray(element, valueArray) > -1)) {
             notDetectedWords.push(element);
         }
     });
 
-    
+
     // Display the combined array using console.table
-    
+
     console.table(combinedArray);
 
     console.table(notDetectedWords);
-    
-    }
+
+}
+
+
+
+
+
+
+function exportJson(el) {
+
+    jsonObject.city = cityValue;
+    jsonObject.zip = zipValue;
+    jsonObject.w3w = w3wValue;
+    jsonObject.Firmenname = companyValue;
+    jsonObject.Homepage = urlValue;
+    jsonObject.Name = nameValue;
+    jsonObject.mail = mailValue;
+    jsonObject.street = streetValue;
+    jsonObject.phone = telValue;
+    jsonObject.fax = faxValue;
+
+
+    var data = "text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(jsonObject));
+    // what to return in order to show download window?
+
+    el.setAttribute("href", "data:" + data);
+    el.setAttribute("download", "data.json");
+
+}
