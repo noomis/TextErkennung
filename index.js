@@ -741,7 +741,7 @@ function checkCity(inputLine) {
             //check ob Wort nach dem zip Code der Stadt entspricht die im json engetragen ist
             if (words[i + 1] !== undefined) {
                 let wordAfter = words[i + 1];
-                if (wordAfter.includes(cityName.toLowerCase())) {
+                if (cityName.toLowerCase().includes(wordAfter)) {
                     prob = 100;
                 }
             }
