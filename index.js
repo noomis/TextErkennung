@@ -723,7 +723,7 @@ function checkStreet(inputLine) {
         if (inputLine.includes(stringStreetBeginnings[p])) {
 
             fullStreetName = inputLine;
-            prob += 35;
+            prob += 25;
             let matchingWords = stringStreetBeginnings[p].split(" ");
 
             words: for (let m = 0; m < words.length; m++) {
