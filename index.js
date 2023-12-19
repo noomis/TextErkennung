@@ -704,7 +704,7 @@ function checkStreet(inputLine) {
         }
     }
 
-    // überprüft Fälle, wenn die Adresse mit z.b. an der ... anfängt
+    // überprüft den Fall, wenn die Adresse mit z.b. an der ... anfängt
     for (let p = 0; p < stringStreetBeginnings.length; p++) {
         if (inputLine.includes(stringStreetBeginnings[p])) {
 
