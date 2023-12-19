@@ -652,17 +652,17 @@ function checkStreet(inputLine) {
     let fullStreetName = "";
     let houseNumber = 0;
     words: for (let i = 0; i < words.length; i++) {
-        // Wörter mit StreetNames Array vergleichen
+        // Zeile nach Keywords durchsuchen
         for (let sNames = 0; sNames < streetNames.length; sNames++) {
             if (words[i].includes(streetNames[sNames])) {
-                fullStreetName += "" + words[i];
+                fullStreetName = inputLine;
                 prob += 40;
 
-                if (fullStreetName == "str." || "straße" || "str") {
-                    if (i > 0) {
-                        fullStreetName = "" + words[i - 1] + " " + fullStreetName;
-                    }
-                }
+                // if (fullStreetName == "str." || "straße" || "str") {
+                //     if (i > 0) {
+                //         fullStreetName = "" + words[i - 1] + " " + fullStreetName;
+                //     }
+                // }
 
                 if (i + 1 < words.length) {
                     let wordAfter = words[i + 1].toLowerCase();
@@ -673,7 +673,6 @@ function checkStreet(inputLine) {
                         }
                     }
                     if (num == 0) {
-                        fullStreetName += " " + words[i + 1];
                         prob += 30;
                         if (wordAfter.length > 0 && wordAfter.length < 3) {
                             prob += 20;
@@ -686,7 +685,6 @@ function checkStreet(inputLine) {
                             if (word2After.length == 1) {
                                 for (let a = 0; a < 26; a++) {
                                     if (word2After == blacklist[a]) {
-                                        fullStreetName += " " + words[i + 2];
                                         prob += 10;
                                     }
                                 }
@@ -705,7 +703,6 @@ function checkStreet(inputLine) {
                         }
                         // checkt, ob der letzte char Wert ein Buchstabe ist
                         if (houseNumber == 0) {
-                            fullStreetName += " " + words[i + 1];
                             prob += 30;
                             for (let alphabet = 0; alphabet < 26; alphabet++) {
                                 if (words[i + 1][(words[i + 1].length) - 1] == blacklist[alphabet]) {
