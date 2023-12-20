@@ -929,7 +929,7 @@ function exportJson(el) {
     jsonObject.fax = faxValue;
 
 
-    var data = "text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(jsonObject));
+    var data = "text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(jsonObject, null, 4));
     // what to return in order to show download window?
 
     el.setAttribute("href", "data:" + data);
