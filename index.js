@@ -647,7 +647,7 @@ function checkStreet(inputLine) {
     let prob = 0;
     let streetNames = ["str.", "stra", "weg", "allee", "gasse", "ring", "platz", "promenade", "chaussee", "boulevard", "stieg", "pfad", "feld", "kamp", "berg", "wiesen", "hof", "lanen", "pleinen", "grachten", "singels", "hoven"];
     let stringBlacklist = "abcdefghijklmnopqrstuvwxyzäöü@#$!%^&*_={}[]|;:<>,?";
-    let stringStreetBeginnings = ["an der", "zu den", "in der", "in den", "im", "auf den", "auf der", "am", "an den", "auf dem", "zur"];
+    let stringStreetBeginnings = ["an der", "zu den", "in der", "in den", "im ", "auf den", "auf der", "am ", "an den", "auf dem", "zur "];
     const blacklist = stringBlacklist.split("");
     let num = 0;
     let fullStreetName = "";
