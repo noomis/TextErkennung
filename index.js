@@ -614,7 +614,9 @@ function checkPhone(inputLine) {
             let wordBefore = words[i - 1].toLowerCase();
             if (wordBefore.includes("fon") || wordBefore.includes("tel") || wordBefore.includes("mobil") || wordBefore.includes("handy")) {
                 prob += 70;
-            } else if (wordBefore.includes("fax")) {
+            }
+
+            if (wordBefore.includes("fax")) {
                 return;
             }
         }
@@ -628,6 +630,8 @@ function checkPhone(inputLine) {
     tmpFullNum = tmpFullNum.replaceAll("+", "").replaceAll("/", "").replaceAll("-", "").replaceAll(".", "");
     if (tmpFullNum.length > 5 && tmpFullNum.length < 33) {
         prob += 30;
+    } else {
+        return;
     }
 
     if (fullNumber.trim().length != 0 && prob != 0) {
@@ -643,7 +647,7 @@ function checkStreet(inputLine) {
     let prob = 0;
     let streetNames = ["str.", "stra", "weg", "allee", "gasse", "ring", "platz", "promenade", "chaussee", "boulevard", "stieg", "pfad", "feld", "kamp", "berg", "wiesen", "hof", "lanen", "pleinen", "grachten", "singels", "hoven"];
     let stringBlacklist = "abcdefghijklmnopqrstuvwxyzäöü@#$!%^&*_={}[]|;:<>,?";
-    let stringStreetBeginnings = ["an der", "zu den", "in der", "in den", "im", "auf den", "auf der", "am"];
+    let stringStreetBeginnings = ["an der", "zu den", "in der", "in den", "im", "auf den", "auf der", "am", "an den", "auf dem", "zur"];
     const blacklist = stringBlacklist.split("");
     let num = 0;
     let fullStreetName = "";
