@@ -93,18 +93,21 @@ function printResult() {
 
         });
 
-        $(".main-container").show();
-        $(".delete").remove();
-        outputMaxValues(urlProbability, urlValue, "website", 50);
-        outputMaxValues(companyProbability, companyValue, "companyname", 50);
-        outputMaxValues(nameProbability, nameValue, "name", 100);
-        outputMaxValues(mailProbability, mailValue, "email", 100);
-        outputMaxValues(streetProbability, streetValue, "street", 150);
-        outputAllTelValues(telProbability, telValue, "phone", 150);
-        outputMaxValues(zipProbability, zipValue, "zipcode", 200);
-        outputMaxValues(faxProbability, faxValue, "fax", 200);
-        outputMaxValues(w3wProbability, w3wValue, "w3w", 250);
-        outputMaxValues(cityProbability, cityValue, "city", 250);
+        if (!(text == "")) {
+            $(".main-container").show();
+            $(".delete").remove();
+            outputMaxValues(urlProbability, urlValue, "website", 50);
+            outputMaxValues(companyProbability, companyValue, "companyname", 50);
+            outputMaxValues(nameProbability, nameValue, "name", 100);
+            outputMaxValues(mailProbability, mailValue, "email", 100);
+            outputMaxValues(streetProbability, streetValue, "street", 150);
+            outputAllTelValues(telProbability, telValue, "phone", 150);
+            outputMaxValues(zipProbability, zipValue, "zipcode", 200);
+            outputMaxValues(faxProbability, faxValue, "fax", 200);
+            outputMaxValues(w3wProbability, w3wValue, "w3w", 250);
+            outputMaxValues(cityProbability, cityValue, "city", 250);
+        }
+
     }, 1000);
 
 
