@@ -611,7 +611,9 @@ function checkPhone(inputLine) {
             let wordBefore = words[i - 1].toLowerCase();
             if (wordBefore.includes("fon") || wordBefore.includes("tel") || wordBefore.includes("mobil") || wordBefore.includes("handy")) {
                 prob += 70;
-            } else if (wordBefore.includes("fax")) {
+            }
+            
+            if (wordBefore.includes("fax")) {
                 return;
             }
         }
