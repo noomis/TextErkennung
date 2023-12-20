@@ -178,6 +178,8 @@ function checkW3W(inputLine) {
                         words[i] = w3wUrl[w3wUrl.length - 1];
                         element = words[i];
                         lineChars = words[i].split("");
+                    } else if (words[i].includes("https://") || words[i].includes("http://")) {
+                        continue words;
                     }
                 } else {
                     continue words;
@@ -787,7 +789,7 @@ function checkStreet(inputLine) {
         }
     }
 
-    if (fullStreetName.length < 15 && fullStreetName.length > 6) {
+    if (fullStreetName.length < 20 && fullStreetName.length > 10) {
         prob += 10;
     }
 
