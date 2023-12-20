@@ -126,7 +126,7 @@ function outputAllTelValues(probArray, valueArray, html_id, fadeTime) {
                 let newObject = document.createElement("input");
                 newObject.id = "id" + index;
                 newObject.classList.add("delete");
-                $("#right").append(newObject);
+                $("#tel").append(newObject);
                 $("#id" + index).val(valueArray[index]).hide().fadeIn(fadeTime);
             }
         }
