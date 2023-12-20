@@ -668,7 +668,7 @@ function checkStreet(inputLine) {
                         }
                     }
                     if (num == 0) {
-                        prob += 30;
+                        prob += 20;
                         if (wordAfter.length > 0 && wordAfter.length < 3) {
                             prob += 20;
                         } else if (wordAfter.length < 5) {
@@ -680,7 +680,7 @@ function checkStreet(inputLine) {
                             if (word2After.length == 1) {
                                 for (let a = 0; a < 26; a++) {
                                     if (word2After == blacklist[a]) {
-                                        prob += 10;
+                                        prob += 5;
                                     }
                                 }
                             }
@@ -688,6 +688,7 @@ function checkStreet(inputLine) {
                     }
                     // checkt den Fall, wenn der Nr. Zusatz nicht mit einem Leerzeichen von der Nr. getrennt ist
                     if (num == 1) {
+                        prob += 30;
                         for (let z = 0; z < words[i + 1].length - 1; z++) {
                             for (let b = 0; b < blacklist.length; b++) {
                                 // checkt, ob alle char Werte bis auf der letzte Nummer sind
@@ -698,10 +699,9 @@ function checkStreet(inputLine) {
                         }
                         // checkt, ob der letzte char Wert ein Buchstabe ist
                         if (houseNumber == 0) {
-                            prob += 30;
                             for (let alphabet = 0; alphabet < 26; alphabet++) {
                                 if (words[i + 1][(words[i + 1].length) - 1] == blacklist[alphabet]) {
-                                    prob += 30;
+                                    prob += 15;
                                 }
                             }
                         }
@@ -744,7 +744,7 @@ function checkStreet(inputLine) {
                         }
                     }
                     if (num == 0) {
-                        prob += 30;
+                        prob += 20;
                         if (word2After.length > 0 && word2After.length < 3) {
                             prob += 20;
                         } else if (word2After.length < 5) {
@@ -756,7 +756,7 @@ function checkStreet(inputLine) {
                             if (word3After.length == 1) {
                                 for (let a = 0; a < 26; a++) {
                                     if (word3After == blacklist[a]) {
-                                        prob += 10;
+                                        prob += 5;
                                     }
                                 }
                             }
@@ -764,6 +764,7 @@ function checkStreet(inputLine) {
                     }
                     // checkt den Fall, wenn der Nr. Zusatz nicht mit einem Leerzeichen von der Nr. getrennt ist
                     if (num == 1) {
+                        prob += 30;
                         for (let z = 0; z < words[m + 2].length - 1; z++) {
                             for (let b = 0; b < blacklist.length; b++) {
                                 // checkt, ob alle char Werte bis auf der letzte Nummer sind
@@ -774,17 +775,20 @@ function checkStreet(inputLine) {
                         }
                         // checkt, ob der letzte char Wert ein Buchstabe ist
                         if (houseNumber == 0) {
-                            prob += 30;
                             for (let alphabet = 0; alphabet < 26; alphabet++) {
                                 if (words[m + 2][(words[m + 2].length) - 1] == blacklist[alphabet]) {
-                                    prob += 30;
+                                    prob += 15;
                                 }
                             }
-                        }
+                        }3
                     }
                 }
             }
         }
+    }
+
+    if (fullStreetName.length < 15 && fullStreetName.length > 6) {
+        prob += 10;
     }
 
     if (fullStreetName.trim().length != 0 && prob != 0) {
