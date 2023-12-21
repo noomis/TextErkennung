@@ -21,7 +21,6 @@ let streetProbability = [];
 
 let timeoutId;
 
-
 let jsonObject = {
     Firmenname: "",
     Homepage: "",
@@ -35,7 +34,6 @@ let jsonObject = {
     w3w: "",
 
 };
-
 
 const knownTLD = ["com", "net", "org", "de", "eu", "at", "ch", "nl", "pl", "fr", "es", "info", "name", "email", "co"];
 const allZipCodes = [];
@@ -411,7 +409,6 @@ function checkMail(inputLine) { // Simon
         mailValue.push(element);
         mailProbability.push(wordProb);
     }
-
 }
 
 function checkCompanyName(inputLine) { // Simon
@@ -460,10 +457,6 @@ function checkCompanyName(inputLine) { // Simon
             }
         });
     }
-
-
-
-
 
     firmenTitel.forEach(element => {
         if (inputLine.includes(element)) {
@@ -516,7 +509,6 @@ function checkName(inputLine) {
                 return;
             }
         }
-
 
         //checken ob das Wort nach i mit dem Nachnamen Array matcht 
         if (words[i + 1] !== undefined) {
@@ -785,7 +777,7 @@ function checkStreet(inputLine) {
                                     prob += 15;
                                 }
                             }
-                        } 3
+                        }
                     }
                 }
             }
@@ -926,11 +918,6 @@ function test(valueArray, probArray, input_splitter) {
 
 }
 
-
-
-
-
-
 function exportJson(el) {
 
     jsonObject.city = cityValue;
@@ -943,7 +930,6 @@ function exportJson(el) {
     jsonObject.street = streetValue;
     jsonObject.phone = telValue;
     jsonObject.fax = faxValue;
-
 
     var data = "text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(jsonObject, null, 4));
     // what to return in order to show download window?
