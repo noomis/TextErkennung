@@ -114,15 +114,17 @@ function printResult() {
 }
 
 function outputAllTelValues(probArray, valueArray, html_id, fadeTime) {
-    $("#" + html_id).val("");
+    $("#" + html_id).val(""); //feld clearen
     for (let index = 0; index < probArray.length; index++) {
-        let outputPercentage = $("#slider")[0].value;
+        let outputPercentage = $("#slider")[0].value; //Prozentzahl vom Input des Schiebereglers 
+        //wenn Slider-WKeit kleiner oder gleich dem des Wertes im Array entspricht ausgeben
         if (outputPercentage <= probArray[index]) {
             console.log(html_id + " hat folgenden Max Wert: " + valueArray[index]);
             if (index == 0) {
-                $("#" + html_id).val(valueArray[index]).hide().fadeIn(fadeTime);
+                $("#" + html_id).val(valueArray[index]).hide().fadeIn(fadeTime); // setzen des ersten Wertes in vorhandenes Feld
             }
             else {
+                //Neuerstellung und Implementierung von Feldern bei mehreren Telefonnummern
                 let newObject = document.createElement("input");
                 newObject.id = "id" + index;
                 newObject.classList.add("delete");
