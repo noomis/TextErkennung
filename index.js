@@ -506,16 +506,17 @@ function checkName(inputLine) {
         prob = 0;
         if (vornamen.includes(element)) {
             prob += 50;
-            //checken ob das Wort vor i, falls es existiert, mit gewisse Stichworte enthält 
-            if (i !== 0) {
-                let wordBefore = words[i - 1];
-                if (wordBefore.includes("geschäftsführer") || wordBefore.includes("ansprechpartner") || wordBefore.includes("vorstand") || wordBefore.includes("vorsitzender") || wordBefore.includes("inhaber") || wordBefore.includes("dr") || wordBefore.includes("prof") || wordBefore.includes("med")) {
-                    prob += 50;
-                } else if (wordBefore.includes("firmenname")) {
-                    return;
-                }
+        }
+        //checken ob das Wort vor i, falls es existiert, mit gewisse Stichworte enthält 
+        if (i !== 0) {
+            let wordBefore = words[i - 1];
+            if (wordBefore.includes("geschäftsführer") || wordBefore.includes("ansprechpartner") || wordBefore.includes("vorstand") || wordBefore.includes("vorsitzender") || wordBefore.includes("inhaber") || wordBefore.includes("dr") || wordBefore.includes("prof") || wordBefore.includes("med") || wordBefore.includes("herr") || wordBefore.includes("frau") || wordBefore.includes("verantwortliche") || wordBefore.includes("vertreter")) {
+                prob += 50;
+            } else if (wordBefore.includes("firmenname")) {
+                return;
             }
         }
+
 
         //checken ob das Wort nach i mit dem Nachnamen Array matcht 
         if (words[i + 1] !== undefined) {
@@ -532,7 +533,7 @@ function checkName(inputLine) {
             prob = 100;
         }
         if (prob > 0) {
-            wordAfter = wordAfter.replaceAll(",", "");
+            wordAfter = wordAfter.replaceAll(",", "").replaceAll("_", "");
             let name = element + " " + wordAfter;
             nameValue.push(name);
             nameProbability.push(prob);
@@ -784,7 +785,7 @@ function checkStreet(inputLine) {
                                     prob += 15;
                                 }
                             }
-                        }3
+                        } 3
                     }
                 }
             }
