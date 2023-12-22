@@ -618,17 +618,19 @@ function checkPhone(inputLine) {
             }
         }
         // Checkt ob die gesamt länge der Nummer zu groß ist
-        if (words[i].length + fullNumber.length < 15) {
+        // if (words[i].length + fullNumber.length < 20) {
             fullNumber += words[i];
-        }
+        // }
     }
 
     let tmpFullNum = fullNumber
     tmpFullNum = tmpFullNum.replaceAll("+", "").replaceAll("/", "").replaceAll("-", "").replaceAll(".", "");
     if (tmpFullNum.length > 5 && tmpFullNum.length < 15) {
         prob += 30;
-    } else {
-        return;
+    } else if (tmpFullNum > 15) {
+        inputLine.replace("" + fullNumber, "");
+        console.log(inputLine);
+        checkPhone(inputLine);
     }
 
     if (fullNumber.trim().length != 0 && prob != 0) {
