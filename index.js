@@ -592,7 +592,6 @@ function checkPhone(inputLine) {
 
     let fullNumber = "";
     let fullUnformattedNumber = "";
-    let leftChars = "";
 
     inputLine = inputLine.toLowerCase();
     let words = inputLine.split(" ");
@@ -646,14 +645,14 @@ function checkPhone(inputLine) {
     }
     
 
-    if (tmpFullNum > 5) {
+
         fullUnformattedNumber = fullUnformattedNumber.trim();
         if (fullUnformattedNumber.length > 10) {
             
             checkPhone(fullUnformattedNumber);
         }
     }
-}
+
 
 function checkStreet(inputLine) {
     inputLine = inputLine.toLowerCase();
