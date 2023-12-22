@@ -21,7 +21,6 @@ let streetProbability = [];
 
 let timeoutId;
 
-
 let jsonObject = {
     Firmenname: "",
     Homepage: "",
@@ -35,7 +34,6 @@ let jsonObject = {
     w3w: "",
 
 };
-
 
 const knownTLD = ["com", "net", "org", "de", "eu", "at", "ch", "nl", "pl", "fr", "es", "info", "name", "email", "co"];
 const allZipCodes = [];
@@ -114,15 +112,17 @@ function printResult() {
 }
 
 function outputAllTelValues(probArray, valueArray, html_id, fadeTime) {
-    $("#" + html_id).val("");
+    $("#" + html_id).val(""); //feld clearen
     for (let index = 0; index < probArray.length; index++) {
-        let outputPercentage = $("#slider")[0].value;
+        let outputPercentage = $("#slider")[0].value; //Prozentzahl vom Input des Schiebereglers 
+        //wenn Slider-WKeit kleiner oder gleich dem des Wertes im Array entspricht ausgeben
         if (outputPercentage <= probArray[index]) {
             console.log(html_id + " hat folgenden Max Wert: " + valueArray[index]);
             if (index == 0) {
-                $("#" + html_id).val(valueArray[index]).hide().fadeIn(fadeTime);
+                $("#" + html_id).val(valueArray[index]).hide().fadeIn(fadeTime); // setzen des ersten Wertes in vorhandenes Feld
             }
             else {
+                //Neuerstellung und Implementierung von Feldern bei mehreren Telefonnummern
                 let newObject = document.createElement("input");
                 newObject.id = "id" + index;
                 newObject.classList.add("delete");
@@ -409,7 +409,6 @@ function checkMail(inputLine) { // Simon
         mailValue.push(element);
         mailProbability.push(wordProb);
     }
-
 }
 
 function checkCompanyName(inputLine) { // Simon
@@ -459,10 +458,6 @@ function checkCompanyName(inputLine) { // Simon
         });
     }
 
-
-
-
-
     firmenTitel.forEach(element => {
         if (inputLine.includes(element)) {
             // console.log('element: ', element);
@@ -504,14 +499,14 @@ function checkName(inputLine) {
         prob = 0;
         if (vornamen.includes(element)) {
             prob += 50;
-            //checken ob das Wort vor i, falls es existiert, mit gewisse Stichworte enthält 
-            if (i !== 0) {
-                let wordBefore = words[i - 1];
-                if (wordBefore.includes("geschäftsführer") || wordBefore.includes("ansprechpartner") || wordBefore.includes("vorstand") || wordBefore.includes("vorsitzender") || wordBefore.includes("inhaber") || wordBefore.includes("dr") || wordBefore.includes("prof") || wordBefore.includes("med")) {
-                    prob += 50;
-                } else if (wordBefore.includes("firmenname")) {
-                    return;
-                }
+        }
+        //checken ob das Wort vor i, falls es existiert, mit gewisse Stichworte enthält 
+        if (i !== 0) {
+            let wordBefore = words[i - 1];
+            if (wordBefore.includes("geschäftsführer") || wordBefore.includes("ansprechpartner") || wordBefore.includes("vorstand") || wordBefore.includes("vorsitzender") || wordBefore.includes("inhaber") || wordBefore.includes("dr") || wordBefore.includes("prof") || wordBefore.includes("med") || wordBefore.includes("herr") || wordBefore.includes("frau") || wordBefore.includes("verantwortliche") || wordBefore.includes("vertreter")) {
+                prob += 50;
+            } else if (wordBefore.includes("firmenname")) {
+                return;
             }
         }
 
@@ -530,7 +525,7 @@ function checkName(inputLine) {
             prob = 100;
         }
         if (prob > 0) {
-            wordAfter = wordAfter.replaceAll(",", "");
+            wordAfter = wordAfter.replaceAll(",", "").replaceAll("_", "");
             let name = element + " " + wordAfter;
             nameValue.push(name);
             nameProbability.push(prob);
@@ -782,7 +777,7 @@ function checkStreet(inputLine) {
                                     prob += 15;
                                 }
                             }
-                        }3
+                        }
                     }
                 }
             }
@@ -923,11 +918,6 @@ function test(valueArray, probArray, input_splitter) {
 
 }
 
-
-
-
-
-
 function exportJson(el) {
 
     jsonObject.city = cityValue;
@@ -940,7 +930,6 @@ function exportJson(el) {
     jsonObject.street = streetValue;
     jsonObject.phone = telValue;
     jsonObject.fax = faxValue;
-
 
     var data = "text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(jsonObject, null, 4));
     // what to return in order to show download window?
