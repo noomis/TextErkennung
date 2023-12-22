@@ -592,7 +592,6 @@ function checkPhone(inputLine) {
 
     let fullNumber = "";
     let fullUnformattedNumber = "";
-    let leftChars = "";
 
     inputLine = inputLine.toLowerCase();
     let words = inputLine.split(" ");
