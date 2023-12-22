@@ -84,7 +84,7 @@ function printResult() {
             checkMail(element); //Simon
             checkCompanyName(element); //Simon
             checkName(element); //Lars
-            // checkFax(element); //Luke
+            checkFax(element); //Luke
             checkPhone(element); //Simon
             checkStreet(element); //Luke
             checkCity(element); //Lars
