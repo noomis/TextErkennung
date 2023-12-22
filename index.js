@@ -504,7 +504,7 @@ function checkName(inputLine) {
         if (i !== 0) {
             let wordBefore = words[i - 1];
             if (wordBefore.includes("geschäftsführer") || wordBefore.includes("ansprechpartner") || wordBefore.includes("vorstand") || wordBefore.includes("vorsitzender") || wordBefore.includes("inhaber") || wordBefore.includes("dr") || wordBefore.includes("prof") || wordBefore.includes("med") || wordBefore.includes("herr") || wordBefore.includes("frau") || wordBefore.includes("verantwortliche") || wordBefore.includes("vertreter")) {
-                prob += 50;
+                prob += 40;
             } else if (wordBefore.includes("firmenname")) {
                 return;
             }
