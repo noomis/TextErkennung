@@ -585,7 +585,6 @@ function checkFax(inputLine) {
 }
 
 function checkPhone(inputLine) {
-    console.log(inputLine)
     if (inputLine.length<10) {
         return;
     }
