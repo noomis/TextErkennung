@@ -108,7 +108,6 @@ function printResult() {
 
     }, 1000);
 
-
 }
 
 function outputAllTelValues(probArray, valueArray, html_id, fadeTime) {
@@ -140,11 +139,7 @@ function outputMaxValues(probArray, valueArray, html_id, fadeTime) {
 
     $("#" + html_id).val("");
 
-
-
     let maxValue = valueArray[findMaxIndex(probArray)];
-
-
 
     // wenn slider wert größer als Wkeit nicht ausgeben
     let outputPercentage = $("#slider")[0].value;
@@ -154,7 +149,6 @@ function outputMaxValues(probArray, valueArray, html_id, fadeTime) {
         console.log(html_id + " hat folgenden Max Wert: " + maxValue);
         $("#" + html_id).val(maxValue).hide().fadeIn(fadeTime);
     }
-
 
 }
 
@@ -467,13 +461,11 @@ function checkCompanyName(inputLine) { // Simon
         }
     });
 
-
     if (wordProb >= 50) {
         console.log(inputLine + " ist mit " + wordProb + "% Wahrscheinlichkeit ein Firmenname");
         companyValue.push(inputLine);
         companyProbability.push(wordProb);
     }
-
 
 }
 
@@ -504,7 +496,7 @@ function checkName(inputLine) {
         if (i !== 0) {
             let wordBefore = words[i - 1];
             if (wordBefore.includes("geschäftsführer") || wordBefore.includes("ansprechpartner") || wordBefore.includes("vorstand") || wordBefore.includes("vorsitzender") || wordBefore.includes("inhaber") || wordBefore.includes("dr") || wordBefore.includes("prof") || wordBefore.includes("med") || wordBefore.includes("herr") || wordBefore.includes("frau") || wordBefore.includes("verantwortliche") || wordBefore.includes("vertreter")) {
-                prob += 50;
+                prob += 40;
             } else if (wordBefore.includes("firmenname")) {
                 return;
             }
@@ -585,7 +577,6 @@ function checkFax(inputLine) {
 }
 
 function checkPhone(inputLine) {
-    console.log(inputLine)
     if (inputLine.length<10) {
         return;
     }
@@ -644,7 +635,6 @@ function checkPhone(inputLine) {
         telProbability.push(prob);
     }
     
-
     if (tmpFullNum > 5) {
         fullUnformattedNumber = fullUnformattedNumber.trim();
         if (fullUnformattedNumber.length > 10) {
