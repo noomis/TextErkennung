@@ -618,7 +618,7 @@ function checkPhone(inputLine) {
             }
         }
         // Checkt ob die gesamt länge der Nummer zu groß ist
-        if (words[i].length + fullNumber.length < 15) {
+        if (words[i].length + fullNumber.length < 20) {
             fullNumber += words[i];
         }
     }
