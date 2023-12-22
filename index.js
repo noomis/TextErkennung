@@ -585,9 +585,18 @@ function checkFax(inputLine) {
 }
 
 function checkPhone(inputLine) {
+    console.log(inputLine)
+    if (inputLine.length<10) {
+        return;
+    }
+
     let fullNumber = "";
+    let fullUnformattedNumber = "";
+    let leftChars = "";
+
     inputLine = inputLine.toLowerCase();
     let words = inputLine.split(" ");
+    fullUnformattedNumber = inputLine;
     let prob = 0;
     let stringBlacklist = "abcdefghijklmnopqrstuvwxyzäöü@#$!%^&*_={}[]|;:<>,?";
     const blacklist = stringBlacklist.split("");
@@ -618,23 +627,31 @@ function checkPhone(inputLine) {
             }
         }
         // Checkt ob die gesamt länge der Nummer zu groß ist
-        if (words[i].length + fullNumber.length < 20) {
+         if (words[i].length + fullNumber.length < 17) {
             fullNumber += words[i];
+            fullUnformattedNumber = fullUnformattedNumber.replace(words[i],"")
         }
     }
 
-    let tmpFullNum = fullNumber
+    let tmpFullNum = fullNumber;
     tmpFullNum = tmpFullNum.replaceAll("+", "").replaceAll("/", "").replaceAll("-", "").replaceAll(".", "");
-    if (tmpFullNum.length > 5 && tmpFullNum.length < 15) {
+    if (tmpFullNum.length > 5 && tmpFullNum.length < 20) {
         prob += 30;
-    } else {
-        return;
-    }
+    } 
 
     if (fullNumber.trim().length != 0 && prob != 0) {
         console.log(fullNumber + ": ist mit " + prob + "% Wahrscheinlichkeit eine Telefonnummer");
         telValue.push(fullNumber);
         telProbability.push(prob);
+    }
+    
+
+    if (tmpFullNum > 5) {
+        fullUnformattedNumber = fullUnformattedNumber.trim();
+        if (fullUnformattedNumber.length > 10) {
+            
+            checkPhone(fullUnformattedNumber);
+        }
     }
 }
 
