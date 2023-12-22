@@ -627,7 +627,7 @@ function checkPhone(inputLine) {
             }
         }
         // Checkt ob die gesamt länge der Nummer zu groß ist
-         if (words[i].length + fullNumber.length < 20) {
+         if (words[i].length + fullNumber.length < 16) {
             fullNumber += words[i];
             fullUnformattedNumber = fullUnformattedNumber.replace(words[i],"")
         }
