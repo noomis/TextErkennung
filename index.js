@@ -95,7 +95,7 @@ function printResult() {
             $(".main-container").show();
             $(".delete").remove();
             outputMaxValues(urlProbability, urlValue, "website", 50);
-            outputMaxValues(companyProbability, companyValue, "companyname", 50, );
+            outputMaxValues(companyProbability, companyValue, "companyname", 50,);
             outputAllValues(nameProbability, nameValue, "name", 100, "nam");
             outputMaxValues(mailProbability, mailValue, "email", 100);
             outputMaxValues(streetProbability, streetValue, "street", 150);
@@ -269,7 +269,7 @@ function checkUrl(inputLine) {
             }
         }
 
-        if (element.includes("ö") || element.includes("ü") || element.includes("ß") || element.includes("ä") || element.includes("@")|| element.includes("(at)")) {
+        if (element.includes("ö") || element.includes("ü") || element.includes("ß") || element.includes("ä") || element.includes("@") || element.includes("(at)")) {
             return;
         }
 
@@ -472,6 +472,9 @@ function checkName(inputLine) {
     const nachnamen = ["Müller", "Schmidt", "Schneider", "Fischer", "Meyer", "Meier", "Mayer", "Maier", "Wagner", "Becker", "Schulz", "Hoffmann", "Schäfer", "Koch", "Bauer", "Richter", "Klein", "Wolf", "Braun", "Schmid", "Hartmann", "Zimmermann", "Krüger", "Schmitz", "Lange", "Werner", "Schulte", "Köhler", "Lehmann", "Maier", "Scholz", "Albrecht", "Vogel", "Pohl", "Huber", "Roth", "Arnold", "König", "Friedrich", "Beyer", "Bruegge", "Seidel", "Sommer", "Haas", "Graf", "Heinrich", "Schreiber", "Schiller", "Günther", "Krämer", "Zimmer", "Jäger", "Ludwig", "Ritter", "Winkler", "Ziegler", "Frank", "Schwarz", "Neumann", "Herrmann", "Kühn", "Walter", "Peters", "Möller", "Martin", "Schubert", "Dietrich", "Ullrich", "Fuchs", "Voigt", "Simon", "Kunz", "Marx", "Sauer", "Hauser", "Böhm", "Dreher", "Schuster", "Stahl", "Hein", "Hess", "Berger", "Bock", "Busch", "Menzel", "Weiß", "Engels", "Sander", "Geiger", "Lorenz", "Rommel", "Hahn", "Schütz", "Keller", "Petersen", "Thiel", "Böttcher", "Dahl", "Heinze", "Trautmann", "Zimmerer", "Vogt", "Otto", "Voß", "Janßen", "Dahlke", "Stein", "Hesse", "Röder", "Rieger", "Wendt", "Kühne", "Seeger", "Brinkmann", "Franke", "Ackermann", "Drechsler", "Wenzel", "Hagen", "Reuter", "Döring", "Groß", "Böhme", "Kellermann", "Ebert", "Renner", "Pfeiffer", "Eichhorn", "Blum", "Stoll", "Rupp", "Vetter", "Breuer", "Hildebrand", "Wendel", "Grote", "Rosenberger", "Rößler", "Adam", "Weiß", "Ostermann", "Wiegand", "Wirth", "Bode", "Brügge", "Kolb", "Geyer", "Kling", "Heßler", "Ritz", "Lambrecht", "Essing"];
     let prob = 0;
     let wordAfter;
+    let word2After;
+    let wordBefore;
+    let tripleName = "";
     inputLine = inputLine.toLowerCase();
     let words = inputLine.split(" ");
     //Vor- und Nachname-Array to lower case
@@ -492,34 +495,58 @@ function checkName(inputLine) {
         }
         //checken ob das Wort vor i, falls es existiert, mit gewisse Stichworte enthält 
         if (i !== 0) {
-            let wordBefore = words[i - 1];
+            wordBefore = words[i - 1];
             if (wordBefore.includes("geschäftsführer") || wordBefore.includes("ansprechpartner") || wordBefore.includes("vorstand") || wordBefore.includes("vorsitzender") || wordBefore.includes("inhaber") || wordBefore.includes("dr") || wordBefore.includes("prof") || wordBefore.includes("med") || wordBefore.includes("herr") || wordBefore.includes("frau") || wordBefore.includes("verantwortliche") || wordBefore.includes("vertreter")) {
                 prob += 40;
-            } else if (wordBefore.includes("firmenname")) {
+            }
+            else if (wordBefore.includes("firmenname")) {
                 return;
             }
         }
-
+        tripleName = "";
         //checken ob das Wort nach i mit dem Nachnamen Array matcht 
         if (words[i + 1] !== undefined) {
             wordAfter = words[i + 1];
             if (nachnamen.includes(wordAfter)) {
                 prob += 40;
             }
+            //checken ob es ein 3er-Name ist
+            else if (vornamen.includes(wordAfter) && vornamen.includes(element)) {
+                if (words[i + 2] !== undefined) {
+                    word2After = words[i + 2];
+                    tripleName = element + " " + wordAfter + " " + word2After;
+                }
+            }
         }
         else if (words[i + 1] == undefined) {
             wordAfter = "";
         }
-        //Wahrscheinlichkeitsrundung && output
+        //Wahrscheinlichkeitsrundung
         if (prob > 100) {
             prob = 100;
         }
         if (prob > 0) {
-            wordAfter = wordAfter.replaceAll(",", "").replaceAll("_", "");
-            let name = element + " " + wordAfter;
-            nameValue.push(name);
-            nameProbability.push(prob);
-            console.log(element + " " + wordAfter + " ist mit " + prob + "% Wahrscheinlichkeit ein Name");
+            //output wenn es ein "normaler" Name ist
+            if (tripleName == "") {
+                wordAfter = wordAfter.replaceAll(",", "").replaceAll("_", "");
+                let name = element + " " + wordAfter;
+                if (!nameValue.includes(name)) {
+                    if (!vornamen.includes(wordBefore)) {
+                        nameValue.push(name);
+                        nameProbability.push(prob);
+                        console.log(element + " " + wordAfter + " ist mit " + prob + "% Wahrscheinlichkeit ein Name");
+                    }
+                }
+            }
+            //output bei einem 3er-Namen 
+            else {
+                if (!nameValue.includes(tripleName)) {
+                    tripleName = tripleName.replaceAll(",", "").replaceAll("_", "");
+                    nameValue.push(tripleName);
+                    nameProbability.push(prob);
+                    console.log(element + " " + wordAfter + " ist mit " + prob + "% Wahrscheinlllichkeit ein Name");
+                }
+            }
         }
     }
 }
@@ -575,7 +602,7 @@ function checkFax(inputLine) {
 }
 
 function checkPhone(inputLine) {
-    if (inputLine.length<10) {
+    if (inputLine.length < 10) {
         return;
     }
 
@@ -615,9 +642,9 @@ function checkPhone(inputLine) {
             }
         }
         // Checkt ob die gesamt länge der Nummer zu groß ist
-         if (words[i].length + fullNumber.length < 17) {
+        if (words[i].length + fullNumber.length < 17) {
             fullNumber += words[i];
-            fullUnformattedNumber = fullUnformattedNumber.replace(words[i],"");
+            fullUnformattedNumber = fullUnformattedNumber.replace(words[i], "");
         }
     }
 
@@ -625,18 +652,18 @@ function checkPhone(inputLine) {
     tmpFullNum = tmpFullNum.replaceAll("+", "").replaceAll("/", "").replaceAll("-", "").replaceAll(".", "");
     if (tmpFullNum.length > 5 && tmpFullNum.length < 20) {
         prob += 30;
-    } 
+    }
 
     if (fullNumber.trim().length != 0 && prob != 0) {
         console.log(fullNumber + ": ist mit " + prob + "% Wahrscheinlichkeit eine Telefonnummer");
         telValue.push(fullNumber);
         telProbability.push(prob);
     }
-    
+
     if (tmpFullNum > 5) {
         fullUnformattedNumber = fullUnformattedNumber.trim();
         if (fullUnformattedNumber.length > 10) {
-            
+
             checkPhone(fullUnformattedNumber);
         }
     }
