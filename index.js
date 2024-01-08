@@ -547,7 +547,7 @@ function checkName(inputLine) {
                     tripleName = tripleName.replaceAll(",", "").replaceAll("_", "");
                     nameValue.push(tripleName);
                     nameProbability.push(prob);
-                    console.log(element + " " + wordAfter + " ist mit " + prob + "% Wahrscheinlllichkeit ein Name");
+                    console.log(element + " " + wordAfter + " ist mit " + prob + "% Wahrscheinlichkeit ein Name");
                 }
             }
         }
