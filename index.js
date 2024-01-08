@@ -269,7 +269,7 @@ function checkUrl(inputLine) {
             }
         }
 
-        if (element.includes("ö") || element.includes("ü") || element.includes("ß") || element.includes("ä") || element.includes("@")) {
+        if (element.includes("ö") || element.includes("ü") || element.includes("ß") || element.includes("ä") || element.includes("@")|| element.includes("(at)")) {
             return;
         }
 
