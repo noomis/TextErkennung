@@ -510,6 +510,9 @@ function checkName(inputLine) {
             if (nachnamen.includes(wordAfter)) {
                 prob += 40;
             }
+            if (wordAfter.includes("gmbh") || wordAfter.includes("ohg") || wordAfter.includes("e.v.")) {
+                return;
+            }
             //checken ob es ein 3er-Name ist
             else if (vornamen.includes(wordAfter) && vornamen.includes(element)) {
                 if (words[i + 2] !== undefined) {
