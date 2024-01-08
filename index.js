@@ -282,9 +282,7 @@ function checkUrl(inputLine) {
             prob = 0;
 
         }
-        //push in globalen Array
-
-        //output
+        //push in globalen Array & output
         if (prob > 0) {
             console.log('"' + element + '"' + " ist mit " + prob + "% Wahrscheinlichkeit eine URL");
             urlValue.push(element);
@@ -619,7 +617,7 @@ function checkPhone(inputLine) {
         // Checkt ob die gesamt länge der Nummer zu groß ist
          if (words[i].length + fullNumber.length < 17) {
             fullNumber += words[i];
-            fullUnformattedNumber = fullUnformattedNumber.replace(words[i],"")
+            fullUnformattedNumber = fullUnformattedNumber.replace(words[i],"");
         }
     }
 
@@ -646,7 +644,7 @@ function checkPhone(inputLine) {
 
 function checkStreet(inputLine) {
     inputLine = inputLine.toLowerCase();
-    let words = inputLine.split(" ")
+    let words = inputLine.split(" ");
     let prob = 0;
     let streetNames = ["str.", "stra", "weg", "allee", "gasse", "ring", "platz", "promenade", "chaussee", "boulevard", "stieg", "pfad", "feld", "kamp", "berg", "wiesen", "hof", "lanen", "pleinen", "grachten", "singels", "hoven"];
     let stringBlacklist = "abcdefghijklmnopqrstuvwxyzäöü@#$!%^&*_={}[]|;:<>,?";
@@ -852,7 +850,7 @@ function checkCity(inputLine) {
                     prob += 30;
                 }
                 if (wordAfter.includes(cityName.toLowerCase())) {
-                    prob = 100
+                    prob = 100;
                 }
             }
         }
