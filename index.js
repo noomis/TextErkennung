@@ -95,11 +95,11 @@ function printResult() {
             $(".main-container").show();
             $(".delete").remove();
             outputMaxValues(urlProbability, urlValue, "website", 50);
-            outputMaxValues(companyProbability, companyValue, "companyname", 50);
-            outputMaxValues(nameProbability, nameValue, "name", 100);
+            outputMaxValues(companyProbability, companyValue, "companyname", 50, );
+            outputAllValues(nameProbability, nameValue, "name", 100, "nam");
             outputMaxValues(mailProbability, mailValue, "email", 100);
             outputMaxValues(streetProbability, streetValue, "street", 150);
-            outputAllTelValues(telProbability, telValue, "phone", 150);
+            outputAllValues(telProbability, telValue, "phone", 150, "tel");
             outputMaxValues(zipProbability, zipValue, "zipcode", 200);
             outputMaxValues(faxProbability, faxValue, "fax", 200);
             outputMaxValues(w3wProbability, w3wValue, "w3w", 250);
@@ -110,7 +110,7 @@ function printResult() {
 
 }
 
-function outputAllTelValues(probArray, valueArray, html_id, fadeTime) {
+function outputAllValues(probArray, valueArray, html_id, fadeTime, new_id) {
     $("#" + html_id).val(""); //feld clearen
     for (let index = 0; index < probArray.length; index++) {
         let outputPercentage = $("#slider")[0].value; //Prozentzahl vom Input des Schiebereglers 
@@ -123,10 +123,10 @@ function outputAllTelValues(probArray, valueArray, html_id, fadeTime) {
             else {
                 //Neuerstellung und Implementierung von Feldern bei mehreren Telefonnummern
                 let newObject = document.createElement("input");
-                newObject.id = "id" + index;
+                newObject.id = "id" + index + new_id;
                 newObject.classList.add("delete");
-                $("#tel").after(newObject);
-                $("#id" + index).val(valueArray[index]).hide().fadeIn(fadeTime);
+                $("#" + new_id).after(newObject);
+                $("#id" + index + new_id).val(valueArray[index]).hide().fadeIn(fadeTime);
             }
         }
     }
