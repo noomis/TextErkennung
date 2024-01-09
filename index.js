@@ -110,7 +110,7 @@ function printResult() {
             outputMaxValues(urlProbability, urlValue, "website", 50);
             outputMaxValues(companyProbability, companyValue, "companyname", 50,);
             outputAllValues(nameProbability, nameValue, "name", 100, "nam");
-            outputMaxValues(mailProbability, mailValue, "email", 100);
+            outputAllValues(mailProbability, mailValue, "email", 100, "mail");
             outputMaxValues(streetProbability, streetValue, "street", 150);
             outputAllValues(telProbability, telValue, "phone", 150, "tel");
             outputMaxValues(zipProbability, zipValue, "zipcode", 200);
