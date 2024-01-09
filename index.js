@@ -513,7 +513,7 @@ function checkName(inputLine) {
             if (wordBefore.includes("geschäftsführer") || wordBefore.includes("ansprechpartner") || wordBefore.includes("vorstand") || wordBefore.includes("vorsitzender") || wordBefore.includes("inhaber") || wordBefore.includes("dr") || wordBefore.includes("prof") || wordBefore.includes("herr") || wordBefore.includes("frau") || wordBefore.includes("verantwortliche") || wordBefore.includes("vertreter")) {
                 prob += 40;
             }
-            else if (wordBefore.includes("firmenname")) {
+            else if (wordBefore.includes("firmenname") || wordBefore.includes("Umsatzsteuer-Identifikationsnummer")) {
                 return;
             }
         }
