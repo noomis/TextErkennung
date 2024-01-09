@@ -8,8 +8,8 @@ input {
   box-sizing: border-box;
   color: #2c3e50;
   font-size: 18px;
-  height: 35px;
-  width: 250px;
+  height: 38px;
+  width: 270px;
 }
 
 
@@ -63,6 +63,7 @@ textarea::-webkit-input-placeholder {
 .main-container {
   display: flex;
   justify-content: center;
+  font-size: 22px;
 }
 
 .input-container {
@@ -72,7 +73,7 @@ textarea::-webkit-input-placeholder {
 }
 
 .output {
-  font-size: 25px;
+  font-size: 33px;
   font-weight: bold;
 }
 
