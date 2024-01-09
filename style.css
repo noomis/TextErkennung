@@ -23,7 +23,7 @@ input {
   padding-bottom: 0;
   border-radius: 15px;
   box-shadow: rgba(255, 255, 255, 0.2) 0px 7px 29px 0px;
-  background-color: rgb(127, 127, 127);
+  background-color: rgb(66, 66, 66);
 }
 
 textarea {
@@ -38,7 +38,7 @@ textarea {
 }
 
 body {
-  background-color: rgb(131, 131, 131);
+  background-color: rgb(54, 54, 54);
   color: white;
   margin: 0;
   display: flex;
@@ -48,7 +48,7 @@ body {
 }
 
 textarea {
-  background-color: rgb(127, 127, 127);
+  background-color: rgb(66, 66, 66);
   color: white;
 }
 
