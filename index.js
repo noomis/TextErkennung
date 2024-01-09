@@ -92,15 +92,15 @@ function printResult() {
 
         lines.forEach(element => {
 
-            checkW3W(element); //Luke
-            checkUrl(element); //Lars
-            checkMail(element); //Simon
-            checkCompanyName(element); //Simon
-            checkName(element); //Lars
-            checkFax(element); //Luke
-            checkPhone(element); //Simon
-            checkStreet(element); //Luke
-            checkCity(element); //Lars
+            checkW3W(element);
+            checkUrl(element);
+            checkMail(element);
+            checkCompanyName(element);
+            checkName(element);
+            checkFax(element);
+            checkPhone(element);
+            checkStreet(element);
+            checkCity(element);
 
         });
 
