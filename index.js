@@ -305,7 +305,7 @@ function checkUrl(inputLine) {
     }
 }
 
-function checkMail(inputLine) { // Simon
+function checkMail(inputLine) {
     inputLine = inputLine.toLowerCase();
     let lineWords = inputLine.split(" ");
 
@@ -416,7 +416,7 @@ function checkMail(inputLine) { // Simon
     }
 }
 
-function checkCompanyName(inputLine) { // Simon
+function checkCompanyName(inputLine) {
     let wordProb = 0; // Treffer Wahrscheinlichkeit
 
     let unternehmensformen = [
