@@ -14,8 +14,9 @@
 
     <div class="placeholder"></div>
     <div class="body">
-        <textarea autofocus type="text"  id="text" name="text" onkeyup="adjustHeight(this)" placeholder="Text zur automatischen Erkennung eingeben.."
-            required style="height: 60px;" rows="25" cols="150"></textarea>
+        <textarea autofocus type="text" id="text" name="text" onkeyup="adjustHeight(this)"
+            placeholder="Text zur automatischen Erkennung eingeben.." required style="height: 60px;" rows="25"
+            cols="150"></textarea>
         <div class="slider-box">
 
 
@@ -27,7 +28,11 @@
             </div>
 
             <div class="right">
-                <input type="file" id="select" accept="image/png, image/gif, image/webp, image/jpeg">
+                <label for="select">
+                    <img id="file" src="upload file.svg" alt="upload file">
+                </label>
+                <input type="file" id="select" accept="image/png, image/gif, image/webp, image/jpeg"
+                    style="display:none;">
                 <a id="exportJSON" onclick="exportJson(this);" class="btn"> <img width="40px" src="download.svg"></a>
                 <a id="exportJSON" onclick="randomImpressum();" class="btn"> <img width="40px" src="dice.svg"></a>
             </div>
