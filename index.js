@@ -1009,3 +1009,26 @@ function randomImpressum(){
 console.log("rand");
 i++;
 }
+
+
+window.addEventListener("load", async () => {
+
+
+    // (A) GET HTML ELEMENTS
+    const hSel = document.getElementById("select"),
+          hRes = document.getElementById("text");
+  
+    // (B) CREATE ENGLISH TESSERACT WORKER
+    const worker = await Tesseract.createWorker();
+    await worker.loadLanguage("deu");
+    await worker.initialize("deu");
+  
+    // (C) ON FILE SELECT - IMAGE TO TEXT
+    hSel.onchange = async () => {
+
+      const res = await worker.recognize(hSel.files[0]);
+      hRes.value = res.data.text;
+      $("#text").trigger("onkeyup");    
+    printResult();
+    };
+  });
