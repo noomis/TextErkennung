@@ -976,7 +976,7 @@ function exportJson(el) {
 }
 
 function adjustHeight(el){
-    el.style.height = (el.scrollHeight) ? (el.scrollHeight)+"px" : "60px";
+    el.style.height = (el.scrollHeight) ? (el.scrollHeight)+"px" : "54px";
 }
 
 
