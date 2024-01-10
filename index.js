@@ -352,6 +352,9 @@ function checkMail(inputLine) { // Simon
             if (element === "@" || (wordChars[i] == "(" && wordChars[i + 1] == "a" && wordChars[i + 2] == "t" && wordChars[i + 3] == ")")) {  // countet @
                 atHit.push(i);
             }
+            if (element === "@" || (wordChars[i] == "[" && wordChars[i + 1] == "a" && wordChars[i + 2] == "t" && wordChars[i + 3] == "]")) {  // countet @
+                atHit.push(i);
+            }
 
             if (element === ".") {  // countet .
                 dotHit.push(i);
