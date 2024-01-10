@@ -125,11 +125,12 @@ function printResult() {
 
 function outputAllValues(probArray, valueArray, html_id, fadeTime, new_id) {
     $("#" + html_id).val(""); //feld clearen
+    let firsttel = 0;
     for (let index = 0; index < probArray.length; index++) {
         let outputPercentage = $("#slider")[0].value; //Prozentzahl vom Input des Schiebereglers 
         //wenn Slider-WKeit kleiner oder gleich dem des Wertes im Array entspricht ausgeben
         if (outputPercentage <= probArray[index]) {
-            if (index == 0) {
+            if (firsttel == 0) {
                 $("#" + html_id).val(valueArray[index]).hide().fadeIn(fadeTime); // setzen des ersten Wertes in vorhandenes Feld
             }
             else {
@@ -140,6 +141,7 @@ function outputAllValues(probArray, valueArray, html_id, fadeTime, new_id) {
                 $("#" + new_id).after(newObject);
                 $("#id" + index + new_id).val(valueArray[index]).hide().fadeIn(fadeTime);
             }
+            firsttel++;
         }
     }
 }
