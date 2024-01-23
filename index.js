@@ -880,6 +880,7 @@ function checkCity(inputLine) {
     //check ob elements im json enthalten sind und somit eine Stadt matchen
     zipLoop: for (let i = 0; i < nurZahlen.length; i++) {
         const element = nurZahlen[i];
+        prob += 10;
         if (allZipCodes.includes(element)) {
             prob += 60;
             city = allZipCodes.indexOf(element);
@@ -899,9 +900,11 @@ function checkCity(inputLine) {
             }
         }
         else {
-            continue zipLoop;
         }
         //output
+        if (prob > 100) {
+            prob = 100;
+        }
         if (prob > 0) {
             zipValue.push(element);
             zipProbability.push(prob);
