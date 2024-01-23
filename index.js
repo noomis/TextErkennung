@@ -899,8 +899,6 @@ function checkCity(inputLine) {
                 }
             }
         }
-        else {
-        }
         //output
         if (prob > 100) {
             prob = 100;
