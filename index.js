@@ -48,7 +48,7 @@ fetch('georef-germany-postleitzahl.json')
         console.error('Fehler beim Laden der JSON-Datei:', error);
     });
 
-const knownTLD = ["com", "net", "org", "de", "eu", "at", "ch", "nl", "pl", "fr", "es", "info", "name", "email", "co"];
+const knownTLD = ["com", "net", "org", "de", "eu", "at", "ch", "nl", "pl", "fr", "es", "info", "name", "email", "co", "biz"];
 const allZipCodes = [];
 const allCityNames = [];
 
