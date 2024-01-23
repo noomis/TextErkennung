@@ -34,6 +34,7 @@ let jsonObject = {
     w3w: "",
 
 };
+
 //arrays werden auf die Germany-Werte, die im json enthalten sind, gesetzt 
 fetch('georef-germany-postleitzahl.json')
     .then(response => response.json())
@@ -211,7 +212,9 @@ function checkW3W(inputLine) {
             for (let t = 0; t < wordLength.length; t++) {
                 if (wordLength[t].length < 2) {
                     return;
-                } else if (wordLength[t].length <= 44) { // TODO w3w max wort länge
+
+                // Max länge eines w3w Wortes
+                } else if (wordLength[t].length <= 24) { 
                     prob += 20;
                 }
             }
