@@ -162,7 +162,6 @@ function outputMaxValues(probArray, valueArray, html_id, fadeTime) {
     if (outputPercentage <= percentage) {
         $("#" + html_id).val(maxValue).hide().fadeIn(fadeTime);
     }
-
 }
 
 function checkW3W(inputLine) {
@@ -466,10 +465,7 @@ function checkCompanyName(inputLine) {
 
     firmenTitel.forEach(element => {
         if (inputLine.includes(element)) {
-            // console.log('element: ', element);
             wordProb += 50;
-
-
         }
     });
 
@@ -946,11 +942,9 @@ function test(valueArray, probArray, input_splitter) {
         }
     });
 
-
     // Display the combined array using console.table
 
     console.table(combinedArray);
-
     console.table(notDetectedWords);
 
 }
@@ -980,8 +974,6 @@ function adjustHeight(el){
     el.style.height = (el.scrollHeight) ? (el.scrollHeight)+"px" : "54px";
 }
 
-
-
 let i = 0;
 function randomImpressum(){
     $("#text").height(60);
@@ -1009,13 +1001,10 @@ function randomImpressum(){
 
     $("#text").trigger("onkeyup");    
     printResult();
-console.log("rand");
 i++;
 }
 
-
 window.addEventListener("load", async () => {
-
 
     // (A) GET HTML ELEMENTS
     const hSel = document.getElementById("select"),
