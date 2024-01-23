@@ -34,6 +34,7 @@ let jsonObject = {
     w3w: "",
 
 };
+
 //arrays werden auf die Germany-Werte, die im json enthalten sind, gesetzt 
 fetch('georef-germany-postleitzahl.json')
     .then(response => response.json())
