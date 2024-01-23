@@ -213,8 +213,8 @@ function checkW3W(inputLine) {
                 if (wordLength[t].length < 2) {
                     return;
 
-                // Max länge eines w3w Wortes
-                } else if (wordLength[t].length <= 24) { 
+                    // Max länge eines w3w Wortes
+                } else if (wordLength[t].length <= 24) {
                     prob += 20;
                 }
             }
@@ -548,9 +548,11 @@ function checkName(inputLine) {
                 let name = element + " " + wordAfter;
                 if (!nameValue.includes(name)) {
                     if (!vornamen.includes(wordBefore)) {
-                        nameValue.push(name);
-                        nameProbability.push(prob);
-                        console.log(element + " " + wordAfter + " ist mit " + prob + "% Wahrscheinlichkeit ein Name");
+                        if (!name.includes("§")) {
+                            nameValue.push(name);
+                            nameProbability.push(prob);
+                            console.log(element + " " + wordAfter + " ist mit " + prob + "% Wahrscheinlichkeit ein Name");
+                        }
                     }
                 }
             }
@@ -879,7 +881,6 @@ function checkCity(inputLine) {
     //check ob elements im json enthalten sind und somit eine Stadt matchen
     zipLoop: for (let i = 0; i < nurZahlen.length; i++) {
         const element = nurZahlen[i];
-        prob += 10;
         if (allZipCodes.includes(element)) {
             prob += 60;
             city = allZipCodes.indexOf(element);
@@ -908,6 +909,9 @@ function checkCity(inputLine) {
             cityValue.push(wordAfter);
             cityProbability.push(prob);
             console.log(element + " " + wordAfter + " ist mit " + prob + "% Wahrscheinlichkeit eine Postleitzahl mit Ort");
+        }
+        else {
+            continue zipLoop;
         }
     }
 }
@@ -973,12 +977,12 @@ function exportJson(el) {
 
 }
 
-function adjustHeight(el){
-    el.style.height = (el.scrollHeight) ? (el.scrollHeight)+"px" : "54px";
+function adjustHeight(el) {
+    el.style.height = (el.scrollHeight) ? (el.scrollHeight) + "px" : "54px";
 }
 
 let i = 0;
-function randomImpressum(){
+function randomImpressum() {
     $("#text").height(60);
 
     let Impressen = [];
@@ -993,37 +997,37 @@ function randomImpressum(){
 
     $("#text").val = "geoCapture GmbHRheiner Str. 3D-48496 Hopsten Telefon: +49 5458 936668-0Telefax: +49 5458 936668-28 E-Mail: info@geocapture.deWebsite: www.geocapture.dewhat3words Position:  ///zeugt.zutreffen.wissenGerichtsstand:Amtsgericht Steinfurt HRB 12637Geschäftsführer: Friedhelm BrüggeFinanzamt Steinfurt 327/5770/7451USt.-IdNr. DE276689377";
 
-    if (i<=Impressen.length-1) {
+    if (i <= Impressen.length - 1) {
         document.getElementById("text").value = Impressen[i];
 
-    }else{
+    } else {
         i = 0;
         document.getElementById("text").value = Impressen[i];
 
     }
 
-    $("#text").trigger("onkeyup");    
+    $("#text").trigger("onkeyup");
     printResult();
-i++;
+    i++;
 }
 
 window.addEventListener("load", async () => {
 
     // (A) GET HTML ELEMENTS
     const hSel = document.getElementById("select"),
-          hRes = document.getElementById("text");
-  
+        hRes = document.getElementById("text");
+
     // (B) CREATE ENGLISH TESSERACT WORKER
     const worker = await Tesseract.createWorker();
     await worker.loadLanguage("deu");
     await worker.initialize("deu");
-  
+
     // (C) ON FILE SELECT - IMAGE TO TEXT
     hSel.onchange = async () => {
 
-      const res = await worker.recognize(hSel.files[0]);
-      hRes.value = res.data.text;
-      $("#text").trigger("onkeyup");    
-    printResult();
+        const res = await worker.recognize(hSel.files[0]);
+        hRes.value = res.data.text;
+        $("#text").trigger("onkeyup");
+        printResult();
     };
-  });
+});
