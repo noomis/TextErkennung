@@ -7,7 +7,7 @@ export class AddressParser {
     cityCheck = "";
     homepageCheck = "";
     w3wAddressCheck = "";
-    emailsCheck = "";
+    emailsCheck = [];
     phoneNumbersCheck = "";
     faxNumbersCheck = "";
     contactPersonsCheck = "";
@@ -45,6 +45,10 @@ export class AddressParser {
         return this.emailsCheck;
     }
 
+    set emailsCheck(value){
+        return this.emailsCheck.push(value);
+    }
+
     get phoneNumbersCheck() {
         return this.phoneNumbersCheck;
     }
@@ -57,17 +61,27 @@ export class AddressParser {
         return this.contactPersonsCheck;
     }
 
+    // TODO: UNDBEDINGT ÄNDERN ALLES NUR VORLÄUFIGE BENNENUNGEN
+    fillArrayWithValues(arrayToFill,arrayFillFrom){
+        arrayFillFrom.forEach(element => {
+            arrayToFill.push(element);
+        });
+    }
+
+    
+
     parseText(input) {
         let inputLines = input.split("\n");
         
         console.log(inputLines);
 
         inputLines.forEach(input => {
-            this.checkCompanyName(input);
+            // this.checkCompanyName(input);
+            // this.checkPhone(input);
             // this.checkCompanyName(input);
             // this.checkCompanyName(input);
-            // this.checkCompanyName(input);
-            // this.checkCompanyName(input);
+            this.fillArrayWithValues(this.emailsCheck,this.checkMail(input));
+            console.log(this.emailsCheck)
             // this.checkCompanyName(input);
             // this.checkCompanyName(input);
             // this.checkCompanyName(input);
@@ -217,6 +231,8 @@ export class AddressParser {
     }
 
     checkMail(inputLine) {
+        let knownTLD = ["com", "net", "org", "de", "eu", "at", "ch", "nl", "pl", "fr", "es", "info", "name", "email", "co", "biz"];
+        let preMails = [];
         inputLine = inputLine.toLowerCase();
         let lineWords = inputLine.split(" ");
 
@@ -322,9 +338,12 @@ export class AddressParser {
             }
 
             console.log(element + ": ist mit " + wordProb + "% Wahrscheinlichkeit eine Mail");
-            mailValue.push(element);
-            mailProbability.push(wordProb);
+
+
+            let test = new CheckResult(lineWords[index], wordProb);
+            preMails.push(test);
         }
+      return preMails;
     }
 
     checkCompanyName(inputLine) {
@@ -387,9 +406,11 @@ export class AddressParser {
             companyProbability.push(wordProb);
             let test = new CheckResult(inputLine, wordProb);
 
-           
+
         }
+
         return test;
+
     }
 
     checkName(inputLine) {

@@ -1,4 +1,7 @@
 export class CheckResult {
+    value = "";
+    probability = "";
+
     constructor(value, probability) {
         this.value = value;
         this.probability = probability;
