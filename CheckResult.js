@@ -7,7 +7,6 @@ export class CheckResult {
     get value () {
         return this.value;
     }
-
     set value (value) {
         this.value = value;
     }
@@ -15,7 +14,6 @@ export class CheckResult {
     get probability () {
         return this.probability;
     }
-
     set probability (probability) {
         this.probability = probability;
     }
