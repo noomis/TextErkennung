@@ -17,7 +17,7 @@ export class AddressParser {
         this.outputPercentage = outputPercentage;
     }
 
-    get companyNameCheck() {
+    getcompanyNameCheck() {
         return this.companyNameCheck;
     }
 
@@ -25,43 +25,39 @@ export class AddressParser {
         return this.companyNameCheck;
     }
 
-    get streetCheck() {
+    getstreetCheck() {
         return this.streetCheck;
     }
 
-    get postalCodeCheck() {
+    getpostalCodeCheck() {
         return this.postalCodeCheck;
     }
 
-    get cityCheck() {
+    getcityCheck() {
         return this.cityCheck;
     }
 
-    get homepageCheck() {
+    gethomepageCheck() {
         return this.homepageCheck;
     }
 
-    get w3wAddressCheck() {
+    getw3wAddressCheck() {
         return this.w3wAddressCheck;
     }
 
-    get emailsCheck() {
+    getemailsCheck() {
         return this.emailsCheck;
     }
 
-    set emailsCheck(value){
-        return this.emailsCheck.push(value);
-    }
-
-    get phoneNumbersCheck() {
+    getphoneNumbersCheck() {
         return this.phoneNumbersCheck;
     }
 
-    get faxNumbersCheck() {
+    getfaxNumbersCheck() {
         return this.faxNumbersCheck;
     }
 
-    get contactPersonsCheck() {
+    getcontactPersonsCheck() {
         return this.contactPersonsCheck;
     }
 
