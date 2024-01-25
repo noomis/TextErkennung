@@ -68,8 +68,6 @@ export class AddressParser {
         });
     }
 
-    
-
     parseText(input) {
         let inputLines = input.split("\n");
         
