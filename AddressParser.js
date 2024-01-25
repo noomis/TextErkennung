@@ -65,13 +65,6 @@ export class AddressParser {
         return this.contactPersonsCheck;
     }
 
-    // TODO: UNDBEDINGT ÄNDERN ALLES NUR VORLÄUFIGE BENNENUNGEN
-    fillArrayWithValues(arrayToFill,arrayFillFrom){
-        arrayFillFrom.forEach(element => {
-            arrayToFill.push(element);
-        });
-    }
-
     parseText(input) {
         let inputLines = input.split("\n");
         
