@@ -67,21 +67,18 @@ export class AddressParser {
         console.log(inputLines);
 
         inputLines.forEach(input => {
-            // this.checkCompanyName(input);
-            // this.checkPhone(input);
-            // this.checkCompanyName(input);
-            // this.checkCompanyName(input);
 
             this.emailsCheck = this.emailsCheck.concat(this.checkMail(input));
             console.log(this.emailsCheck);
 
-            // this.checkCompanyName(input);
-            // this.checkCompanyName(input);
-            // this.checkCompanyName(input);
+            this.w3wAddressCheckCheck = this.w3wAddressCheck.concat(this.checkW3W(input));
+            console.log(this.w3wAddressCheck);
         });
     }
 
     checkW3W(inputLine) {
+        let tempW3w = [];
+        // TODO w3w/mail gleiche bennennung variblen  (words / lineWords, prob / wordprob)
         let words = inputLine.split(" ");
         inputLine = inputLine.toLowerCase();
         let prob = 0;
@@ -157,9 +154,14 @@ export class AddressParser {
             }
 
             console.log(element + ": ist mit " + prob + "% Wahrscheinlichkeit eine w3w Adresse");
-            w3wValue.push(element);
-            w3wProbability.push(prob);
+
+            // w3wValue.push(element);
+            // w3wProbability.push(prob);
+
+            tempW3w.push(new CheckResult(words[i], prob));
         }
+
+        return tempW3w;
     }
 
     checkUrl(inputLine) {
@@ -328,10 +330,6 @@ export class AddressParser {
             }
 
             console.log(element + ": ist mit " + wordProb + "% Wahrscheinlichkeit eine Mail");
-
-
-            // let test = new CheckResult(lineWords[index], wordProb);
-            // tempMails.push(test);
             tempMails.push(new CheckResult(lineWords[index], wordProb));
         }
 
