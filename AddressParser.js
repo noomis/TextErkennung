@@ -21,6 +21,10 @@ export class AddressParser {
         return this.companyNameCheck;
     }
 
+    getCompanyNameCheck() {
+        return this.companyNameCheck;
+    }
+
     get streetCheck() {
         return this.streetCheck;
     }
@@ -79,7 +83,7 @@ export class AddressParser {
             // this.checkCompanyName(input);
             // this.checkCompanyName(input);
             this.fillArrayWithValues(this.emailsCheck,this.checkMail(input));
-            console.log(this.emailsCheck)
+            console.log(this.emailsCheck);
             // this.checkCompanyName(input);
             // this.checkCompanyName(input);
             // this.checkCompanyName(input);
@@ -308,26 +312,23 @@ export class AddressParser {
                     console.log('dotHit[dotHit.length - 1]: ', dotHit[dotHit.length - 1]);
                     continue wordLoop;
 
-                }
-                else {
+                } else {
                     wordProb += 10;
                 }
-            }
-            else if (dotHit.length == 1) {  // Checkt ob die local domain mindestens 2 Zeichen lang ist.
+            } else if (dotHit.length == 1) {  // Checkt ob die local domain mindestens 2 Zeichen lang ist.
                 if (dotHit[0] - atHit[0] < 3) {
                     continue wordLoop;
-                }
-                else {
+                } else {
                     wordProb += 10;
                 }
             }
 
             if (hasTLD === false) {         // checkt ob eine TLD vorhanden ist.
                 continue wordLoop;
-            }
-            else {
+            } else {
                 wordProb += 20;
             }
+
             if (index !== 0) {
                 let wordBefore = lineWords[index - 1].toLowerCase(); // Checkt ob vor der Mail z.B. Mail: steht.
                 if (wordBefore.includes("mail")) {
@@ -341,6 +342,7 @@ export class AddressParser {
             let test = new CheckResult(lineWords[index], wordProb);
             preMails.push(test);
         }
+
       return preMails;
     }
 
