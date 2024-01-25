@@ -131,6 +131,7 @@ export class AddressParser {
                         prob += 20;
                     }
                 }
+
             } else {
                 continue;
             }
@@ -154,10 +155,6 @@ export class AddressParser {
             }
 
             console.log(element + ": ist mit " + prob + "% Wahrscheinlichkeit eine w3w Adresse");
-
-            // w3wValue.push(element);
-            // w3wProbability.push(prob);
-
             tempW3w.push(new CheckResult(words[i], prob));
         }
 
@@ -173,14 +170,17 @@ export class AddressParser {
         for (let i = 0; i < words.length; i++) {
             const element = words[i];
             let prob = 0;
+
             for (const tld of knownTLD) {
                 if (element.endsWith("." + tld || element.endsWith("." + tld + "/"))) {
                     prob += 20;
                 }
+
                 if (element.includes("." + tld)) {
                     prob += 10;
                 }
             }
+
             //überprüfung ob gewisse Kriterien erfüllt sind
             if (element.startsWith("http")) {
                 prob += 30;
@@ -196,6 +196,7 @@ export class AddressParser {
 
             if (i !== 0) {
                 let wordBefore = words[i - 1].toLowerCase();
+
                 // Checkt ob vor der URL bestimmte Keywords stehen
                 if (wordBefore.includes("url") || wordBefore.includes("website") || wordBefore.includes("homepage") || wordBefore.includes("internet")) {
                     prob += 20;
@@ -248,28 +249,24 @@ export class AddressParser {
 
             if (element.startsWith('@')) { // Checkt String mit @ beginnt
                 continue wordLoop;
-            }
-            else {
+            } else {
                 wordProb += 5;
             }
 
             if (element.startsWith('.')) { // Checkt String mit @ beginnt
                 continue wordLoop;
-            }
-            else {
+            } else {
                 wordProb += 5;
             }
 
             if (element.length < 6) {   // Checkt ob mindestens 6 Zeichen vorhanden sind
                 continue wordLoop;
-            }
-            else {
+            } else {
                 wordProb += 10;
             }
 
             charLoop: for (let i = 0; i < wordChars.length; i++) {  // Schleife um jeden Character eines Wortes zu durchlaufen
                 const element = wordChars[i];
-
 
                 if (element === "@" || (wordChars[i] == "(" && wordChars[i + 1] == "a" && wordChars[i + 2] == "t" && wordChars[i + 3] == ")" || (wordChars[i] == "[" && wordChars[i + 1] == "a" && wordChars[i + 2] == "t" && wordChars[i + 3] == "]"))) {  // countet @
                     atHit.push(i);
@@ -282,21 +279,17 @@ export class AddressParser {
                         continue wordLoop;
                     }
                 }
-
-
             }
 
             if (atHit.length !== 1) {   // checkt ob genau ein @ vorhanden ist.
                 continue wordLoop;
-            }
-            else {
+            } else {
                 wordProb += 25;
             }
 
             if (dotHit.length == 0) {   // checkt ob mindestens ein Punkt vorhanden ist.
                 continue wordLoop;
-            }
-            else {
+            } else {
                 wordProb += 5;
             }
 
@@ -361,9 +354,7 @@ export class AddressParser {
         ];
 
         const firmenTitel = ['metzgerei', 'computer', 'lackierer', 'tiefbau', 'feuerwehr', 'elektro', 'weincontor', 'weinimport', 'gerüstbau', 'hochbau', 'auto', 'galabau', 'elektriker', 'technik', 'tischlerei', 'reinigungsdienst', 'bauunternehmen', 'autohaus', 'schreinerei', 'friseursalon', 'fliesenleger', 'steuerberater', 'gartenbau', 'heizungsbau', 'sanitärinstallateur', 'baustoffhandel', 'werbeagentur', 'architekturbüro', 'edv-dienstleister', 'druckerei', 'holzbau', 'metallbau', 'malerbetrieb', 'versicherungsmakler', 'schuhgeschäft', 'buchhandlung', 'konditorei', 'baeckerei', 'elektronikladen', 'schneider', 'juwelier', 'haustierbedarf', 'blumenladen', 'optiker', 'hörgeräteakustik', 'spielwarengeschäft', 'fahrschule', 'küchenstudio', 'reisebüro', 'sportgeschäft', 'tankstelle', 'schuhmacher', 'taschengeschäft', 'dachdecker', 'zimmerei', 'fußpflege', 'druckerei', 'fahrradladen', 'elektrogroßhandel', 'lebensmittelmarkt', 'möbelhaus', 'uhrengeschäft', 'solaranlagen', 'baumaschinenverleih', 'tattoostudio', 'hundesalon', 'dönerimbiss', 'bauchladen', 'tauchschule', 'sonnenstudio', 'fotostudio', 'teppichreinigung', 'musikschule', 'modedesigner', 'yogastudio', 'autowerkstatt', 'haustechnik', 'teppichhandel', 'saunaanlagen', 'angelgeschäft', 'schlüsseldienst', 'gitarrenbau', 'fischzucht', 'hochzeitsplanung', 'hutgeschäft', 'schwimmbadtechnik', 'spielzeughersteller', 'hörbuchverlag', 'treppenbau', 'kanzlei', 'autovermietung', 'schraubenhandel', 'apotheken', 'schädlingsbekämpfung', 'vinothek', 'saftladen', 'computerladen', 'spielothek', 'elektronikmarkt', 'kindergarten', 'tanzschule', 'mietkoch', 'papierhandel', 'uhrenwerkstatt', 'stoffgeschäft', 'handyshop', 'kochschule', 'modellbau', 'goldschmied', 'floristik', 'brautmoden', 'schausteller', 'wassersport', 'segelschule', 'surfschule', 'angeln', 'haushaltswaren', 'kinderschuhladen', 'brennholzhandel', 'kaminbau', 'fotograf', 'gärtnerei', 'bioladen', 'schuhreparatur', 'mietrechtsschutz', 'müllentsorgung', 'baumschule', 'schwimmbadbau', 'catering', 'beauty-salon', 'biogasanlage', 'datenrettung', 'zeltverleih', 'videoproduktion', 'teppichhandel', 'tontechnik', 'wäscherei', 'tischlerei', 'teigwarenhersteller', 'touristik', 'taschenhersteller', 'stickerei', 'segelmacher', 'schwimmbadtechnik', 'segway-verleih', 'rolladenbau', 'reinigungsdienst', 'reiseveranstalter', 'rechtsanwalt', 'reifenservice', 'regalsysteme', 'pizzabringdienst', 'pflanzenhandel', 'pediküre', 'patisserie', 'partyservice', 'parkettverleger', 'papiergroßhandel', 'outdoorladen', 'online-marketing', 'optikergeschäft', 'orthopädietechnik', 'ölhandel', 'obstgroßhandel', 'nähmaschinenreparatur', 'motorradwerkstatt', 'mosaikleger', 'möbeltransport', 'modellflug', 'modellbahn', 'mobilfunk', 'möbeltischlerei', 'milchhandel', 'mietwagen', 'metallhandel', 'massagestudio', 'markisenbau', 'maniküre', 'malermeister', 'malerbetrieb', 'makler', 'luftaufnahmen', 'lkw-vermietung', 'lkw-werkstatt', 'logistik', 'lebensmittelhandel', 'landwirtschaft', 'lampenladen', 'laminatverleger', 'kühlhaus', 'küchenplanung', 'küchenstudio', 'küchenmontage', 'kosmetikinstitut', 'konditorei', 'kochstudio', 'kiosk', 'kinderbetreuung', 'kindermode', 'kinderzahnarzt', 'kinderarzt', 'kinderwunschzentrum', 'kinderkrippe', 'kinderpsychologe', 'kinesiologie', 'kimono-shop', 'kino', 'kiosk', 'kirchenmusik', 'kirchengemeinde', 'kiteschule', 'kletterhalle', 'konditorei', 'kosmetikstudio', 'krankenhaus', 'kunsthandel', 'kunstschule', 'kunststoffverarbeitung', 'künstleragentur', 'küchenstudio', 'kutschenverleih', 'labordienst', 'lackiererei', 'landgasthof', 'landwirtschaft', 'lebensberatung', 'lebensmittelgroßhandel', 'lebensmittelhandel', 'lebensmittelhersteller', 'lederwaren', 'lehrer', 'lerntherapie', 'lingerie-shop', 'logistikunternehmen', 'lottoladen', 'luxusuhren', 'makler', 'marketingagentur', 'massagepraxis', 'möbelhaus', 'müllabfuhr', 'müllentsorgung', 'müllverwertung', 'museum', 'musikgeschäft', 'musiklehrer', 'musikschule', 'musikstudio', 'nagelstudio', 'nahrungsergänzung', 'naturheilpraxis', 'neurologe', 'notar', 'nudelhersteller', 'ölhandel', 'obsthof', 'optiker', 'orthopäde', 'orthopädieschuhtechnik', 'packaging-design', 'papiergroßhandel', 'partyservice', 'personalberatung', 'pfandhaus', 'pflegeheim', 'pflasterarbeiten', 'pflanzenhandel', 'pflegedienst', 'physiotherapie', 'pianohaus', 'pilzzucht', 'pizza-lieferdienst', 'planungsbüro', 'polsterer', 'pr-agentur', 'pralinenhersteller', 'private-krankenversicherung', 'privatschule', 'psychiater', 'psychologe', 'psychosoziale-beratung', 'puppentheater', 'putzfrau', 'radiosender', 'rechtsanwalt', 'rechtsanwältin', 'reifenservice', 'reinigungsservice', 'reiseagentur', 'reisebüro', 'reiseveranstalter', 'reiseversicherung', 'reitsportgeschäft', 'relaxsessel', 'rentenberatung', 'restaurant', 'restauration', 'retail-design', 'rezepturenentwicklung', 'rollstuhlbau', 'rückentraining', 'saftbar', 'schauspieler', 'schlüsseldienst', 'schneiderei', 'schnittblumen', 'schokoladenhersteller', 'schornsteinfeger', 'schreibwarenhandel', 'schreinerei', 'schrottentsorgung', 'schuhgeschäft', 'schuldnerberatung', 'schwimmbadtechnik', 'schwimmschule', 'segelbootverleih', 'segelflugplatz', 'segelschule', 'sehenswürdigkeit', 'sekretariatsservice', 'selbsthilfegruppe', 'seniorendienstleistung', 'seniorenheim', 'seniorenpflege', 'shisha-bar', 'shopfitting', 'sicherheitsdienst', 'siedlungswasserwirtschaft', 'solaranlagen', 'sonnenstudio', 'sozialamt', 'sozialberatung', 'sozialdienst', 'sozialkaufhaus', 'sozialpädagogik', 'sozialpsychiatrischer-dienst', 'sozialstation', 'sozialtherapie', 'spedition', 'spielhalle', 'spielplatzbau', 'spielzeugladen', 'sportanlagenbau', 'sportartikelhersteller', 'sportgeschäft', 'sportlerheim', 'sportsbar', 'sportverein', 'stadtführung', 'stahlbau', 'staubsaugervertretung', 'steuerberatung', 'steuerberater', 'steuerfachangestellter', 'stoffgeschäft', 'straßenbau', 'stuckateur', 'studentenwohnheim', 'studienberatung', 'subunternehmen', 'supermarkt', 'sushi-bar', 'tanzschule', 'tapetenhandel', 'tattooentfernung', 'tattoostudio', 'tauchschule', 'taxiunternehmen', 'teichbau', 'teigwarenhersteller', 'telemarketing', 'telekommunikationsunternehmen', 'textildruck', 'textilveredelung', 'textilgroßhandel', 'textilhandel', 'theater', 'theaterkasse', 'theaterwerkstatt', 'therapeut', 'tierarzt', 'tierbestattung', 'tierfutterhandel', 'tierpension', 'tierpsychologie', 'tierschutzverein', 'tischlerei', 'tofuhersteller', 'tonstudio', 'touristikunternehmen', 'toyota-händler', 'traditionsunternehmen', 'trainingszentrum', 'transportunternehmen', 'treppenbau', 'trockenbau', 'trockenfrüchtehandel', 'trockenreinigung', 'trödelmarkt', 'tuningwerkstatt', 'uhrengeschäft', 'uhrenhandel', 'uhrenreparatur', 'uhrenwerkstatt', 'umzugsunternehmen', 'unternehmensberater', 'unternehmerverband', 'unterwäschehersteller', 'urlaubsbauernhof', 'us-car-vermietung', 'us-car-werkstatt', 'us-import', 'us-restaurant', 'us-shop', 'us-sportwagenvermietung', 'us-truck-vermietung', 'us-truck-werkstatt', 'us-tuning', 'uscar-handel', 'uscar-händler', 'uscar-import', 'uscar-reparatur', 'uscar-restauration', 'uscar-tuning'];
-
         inputLine = inputLine.toLowerCase();
-
         let lineWords = inputLine.split(" ");
 
         wordLoop: for (let index = 0; index < lineWords.length; index++) {
@@ -395,12 +386,9 @@ export class AddressParser {
             companyValue.push(inputLine);
             companyProbability.push(wordProb);
             let test = new CheckResult(inputLine, wordProb);
-
-
         }
 
         return test;
-
     }
 
     checkName(inputLine) {
@@ -413,64 +401,75 @@ export class AddressParser {
         let tripleName = "";
         inputLine = inputLine.toLowerCase();
         let words = inputLine.split(" ");
+
         //Vor- und Nachname-Array to lower case
         for (let a = 0; a < vornamen.length; a++) {
             const element = vornamen[a];
             vornamen[a] = element.toLowerCase();
         }
+
         for (let a = 0; a < nachnamen.length; a++) {
             const element = nachnamen[a];
             nachnamen[a] = element.toLowerCase();
         }
+
         //Schleife und check ob element im Vornamen-Array existiert
         for (let i = 0; i < words.length; i++) {
             const element = words[i];
             prob = 0;
+
             if (vornamen.includes(element)) {
                 prob += 50;
             }
+            
             //checken ob das Wort vor i, falls es existiert, mit gewisse Stichworte enthält 
             if (i !== 0) {
                 wordBefore = words[i - 1];
+
                 if (wordBefore.includes("geschäftsführer") || wordBefore.includes("ansprechpartner") || wordBefore.includes("vorstand") || wordBefore.includes("vorsitzender") || wordBefore.includes("inhaber") || wordBefore.includes("dr") && vornamen.includes(element) || wordBefore.includes("prof") || wordBefore.includes("herr") || wordBefore.includes("frau") || wordBefore.includes("verantwortliche") && element !== "nach" || wordBefore.includes("vertreter")) {
                     prob += 40;
-                }
-                else if (wordBefore.includes("firmenname") || wordBefore.includes("Umsatzsteuer-Identifikationsnummer")) {
+                } else if (wordBefore.includes("firmenname") || wordBefore.includes("Umsatzsteuer-Identifikationsnummer")) {
                     return;
                 }
             }
+
             tripleName = "";
+
             //checken ob das Wort nach i mit dem Nachnamen Array matcht 
             if (words[i + 1] !== undefined) {
                 wordAfter = words[i + 1];
                 if (nachnamen.includes(wordAfter)) {
                     prob += 40;
                 }
+
                 if (wordAfter.includes("gmbh") || wordAfter.includes("ohg") || wordAfter.includes("e.v.")) {
                     return;
-                }
-                //checken ob es ein 3er-Name ist
-                else if (vornamen.includes(wordAfter) && vornamen.includes(element)) {
+                } else if (vornamen.includes(wordAfter) && vornamen.includes(element)) { //checken ob es ein 3er-Name ist
                     if (words[i + 2] !== undefined) {
                         word2After = words[i + 2];
                         tripleName = element + " " + wordAfter + " " + word2After;
                     }
                 }
-            }
-            else if (words[i + 1] == undefined) {
+            } else if (words[i + 1] == undefined) {
                 wordAfter = "";
             }
+
             //Wahrscheinlichkeitsrundung
             if (prob > 100) {
                 prob = 100;
             }
+
             if (prob > 0) {
+
                 //output wenn es ein "normaler" Name ist
                 if (tripleName == "") {
                     wordAfter = wordAfter.replaceAll(",", "").replaceAll("_", "");
                     let name = element + " " + wordAfter;
+
                     if (!nameValue.includes(name)) {
+
                         if (!vornamen.includes(wordBefore)) {
+
                             if (!name.includes("§")) {
                                 nameValue.push(name);
                                 nameProbability.push(prob);
@@ -621,21 +620,26 @@ export class AddressParser {
         let num = 0;
         let fullStreetName = "";
         let houseNumber = 0;
+
         words: for (let i = 0; i < words.length; i++) {
+
             // Zeile nach Keywords durchsuchen
             for (let sNames = 0; sNames < streetNames.length; sNames++) {
+
                 if (words[i].includes(streetNames[sNames])) {
                     fullStreetName = inputLine;
                     prob += 40;
 
                     if (i + 1 < words.length) {
                         let wordAfter = words[i + 1].toLowerCase();
+
                         // checkt ob nach der Straße eine Hausnummer kommt
                         for (let b = 0; b < blacklist.length; b++) {
                             if (words[i + 1].includes(blacklist[b])) {
                                 num++;
                             }
                         }
+
                         if (num == 0) {
                             prob += 20;
                             if (wordAfter.length > 0 && wordAfter.length < 3) {
@@ -643,11 +647,15 @@ export class AddressParser {
                             } else if (wordAfter.length < 5) {
                                 prob += 10;
                             }
+
                             // checkt, ob nach der Hausnummer ein Buchstaben Zusatz kommt
                             if (i + 2 < words.length) {
                                 let word2After = words[i + 2].toLowerCase();
+
                                 if (word2After.length == 1) {
+
                                     for (let a = 0; a < 26; a++) {
+
                                         if (word2After == blacklist[a]) {
                                             prob += 5;
                                         }
@@ -655,20 +663,27 @@ export class AddressParser {
                                 }
                             }
                         }
+
                         // checkt den Fall, wenn der Nr. Zusatz nicht mit einem Leerzeichen von der Nr. getrennt ist
                         if (num == 1) {
                             prob += 30;
+
                             for (let z = 0; z < words[i + 1].length - 1; z++) {
+
                                 for (let b = 0; b < blacklist.length; b++) {
                                     // checkt, ob alle char Werte bis auf der letzte Nummer sind
+
                                     if (words[i + 1][z].includes(blacklist[b])) {
                                         houseNumber++;
                                     }
                                 }
                             }
+
                             // checkt, ob der letzte char Wert ein Buchstabe ist
                             if (houseNumber == 0) {
+
                                 for (let alphabet = 0; alphabet < 26; alphabet++) {
+
                                     if (words[i + 1][(words[i + 1].length) - 1] == blacklist[alphabet]) {
                                         prob += 15;
                                     }
@@ -682,6 +697,7 @@ export class AddressParser {
 
         // überprüft den Fall, wenn die Adresse mit z.b. an der ... anfängt
         for (let p = 0; p < stringStreetBeginnings.length; p++) {
+
             if (inputLine.includes(stringStreetBeginnings[p])) {
 
                 fullStreetName = inputLine;
@@ -696,7 +712,9 @@ export class AddressParser {
                         } else {
                             continue words;
                         }
+
                     } else {
+
                         if (words[m] == matchingWords[1] && words[m - 1] == matchingWords[0]) {
                             // continue
                         } else {
@@ -708,10 +726,12 @@ export class AddressParser {
                         let word2After = words[m + 2].toLowerCase();
                         // checkt ob nach der Straße eine Hausnummer kommt
                         for (let b = 0; b < blacklist.length; b++) {
+
                             if (words[m + 2].includes(blacklist[b])) {
                                 num++;
                             }
                         }
+
                         if (num == 0) {
                             prob += 20;
                             if (word2After.length > 0 && word2After.length < 3) {
@@ -719,6 +739,7 @@ export class AddressParser {
                             } else if (word2After.length < 5) {
                                 prob += 10;
                             }
+
                             // checkt, ob nach der Hausnummer ein Buchstaben Zusatz kommt
                             if (m + 3 < words.length) {
                                 let word3After = words[m + 3].toLowerCase();
@@ -734,18 +755,24 @@ export class AddressParser {
                         // checkt den Fall, wenn der Nr. Zusatz nicht mit einem Leerzeichen von der Nr. getrennt ist
                         if (num == 1) {
                             prob += 30;
+
                             for (let z = 0; z < words[m + 2].length - 1; z++) {
+
                                 for (let b = 0; b < blacklist.length; b++) {
+
                                     // checkt, ob alle char Werte bis auf der letzte Nummer sind
                                     if (words[m + 2][z].includes(blacklist[b])) {
                                         houseNumber++;
                                     }
                                 }
                             }
+
                             // checkt, ob der letzte char Wert ein Buchstabe ist
                             if (houseNumber == 0) {
                                 for (let alphabet = 0; alphabet < 26; alphabet++) {
+
                                     if (words[m + 2][(words[m + 2].length) - 1] == blacklist[alphabet]) {
+
                                         prob += 15;
                                     }
                                 }
@@ -774,20 +801,25 @@ export class AddressParser {
         let cityName = 0;
         let prob = 0;
         let wordAfter;
+
         //wenn element mit d-/de- startet wird dieses entfernt
         for (let a = 0; a < words.length; a++) {
             const element = words[a];
+
             if (element.startsWith("d-")) {
                 words[a] = element.replace("d-", "");
                 prob += 10;
             }
+
             if (element.startsWith("de-")) {
                 words[a] = element.replace("de-", "");
                 prob += 10;
             }
+
             //Falls vor der 5-Stelligen Zahl ein verbotenes Keyword steht wird diese Zahl nicht angegeben 
             if (a !== 0) {
                 let wordBefore = words[a - 1];
+
                 if (wordBefore.includes("fax") || wordBefore.includes("fon")) {
                     words.splice(a, 1);
                 }
@@ -795,45 +827,54 @@ export class AddressParser {
         }
         //neuer Array nur mit 5 Stelligen Zahlen 
         const nurZahlen = words.filter(element => !isNaN(element));
+
         for (let a = 0; a < nurZahlen.length; a++) {
             const element = nurZahlen[a];
+
             if (element.length !== 5) {
                 nurZahlen.splice(a, 1);
             }
         }
+
         //check ob elements im json enthalten sind und somit eine Stadt matchen
         zipLoop: for (let i = 0; i < nurZahlen.length; i++) {
             const element = nurZahlen[i];
+
             if (allZipCodes.includes(element)) {
                 prob += 60;
                 city = allZipCodes.indexOf(element);
                 cityName = allCityNames[city];
+
                 //check ob Wort nach dem zip Code der Stadt entspricht die im json eingetragen ist
                 if (words[i + 1] !== undefined) {
                     wordAfter = words[i + 1];
+
                     if (cityName.toLowerCase().includes(wordAfter) == false) {
                         prob = 30;
                     }
+
                     if (cityName.toLowerCase().includes(wordAfter)) {
                         prob += 30;
                     }
+
                     if (wordAfter.includes(cityName.toLowerCase())) {
                         prob = 100;
                     }
                 }
             }
+
             //output
             if (prob > 100) {
                 prob = 100;
             }
+
             if (prob > 0) {
                 zipValue.push(element);
                 zipProbability.push(prob);
                 cityValue.push(wordAfter);
                 cityProbability.push(prob);
                 console.log(element + " " + wordAfter + " ist mit " + prob + "% Wahrscheinlichkeit eine Postleitzahl mit Ort");
-            }
-            else {
+            } else {
                 continue zipLoop;
             }
         }
