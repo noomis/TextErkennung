@@ -1,16 +1,16 @@
 import { CheckResult } from "./CheckResult.js";
 
 export class AddressParser {
-    companyNameCheck = "";
-    streetCheck = "";
-    postalCodeCheck = "";
-    cityCheck = "";
-    homepageCheck = "";
-    w3wAddressCheck = "";
+    companyNameCheck = [];
+    streetCheck = [];
+    postalCodeCheck = [];
+    cityCheck = [];
+    homepageCheck = [];
+    w3wAddressCheck = [];
     emailsCheck = [];
-    phoneNumbersCheck = "";
-    faxNumbersCheck = "";
-    contactPersonsCheck = "";
+    phoneNumbersCheck = [];
+    faxNumbersCheck = [];
+    contactPersonsCheck = [];
 
     constructor (language, outputPercentage) {
         this.language = language;
