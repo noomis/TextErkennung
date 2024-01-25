@@ -71,8 +71,10 @@ export class AddressParser {
             // this.checkPhone(input);
             // this.checkCompanyName(input);
             // this.checkCompanyName(input);
-            this.fillArrayWithValues(this.emailsCheck,this.checkMail(input));
+
+            this.emailsCheck = this.emailsCheck.concat(this.checkMail(input));
             console.log(this.emailsCheck);
+
             // this.checkCompanyName(input);
             // this.checkCompanyName(input);
             // this.checkCompanyName(input);
@@ -223,7 +225,7 @@ export class AddressParser {
 
     checkMail(inputLine) {
         let knownTLD = ["com", "net", "org", "de", "eu", "at", "ch", "nl", "pl", "fr", "es", "info", "name", "email", "co", "biz"];
-        let preMails = [];
+        let tempMails = [];
         inputLine = inputLine.toLowerCase();
         let lineWords = inputLine.split(" ");
 
@@ -328,11 +330,12 @@ export class AddressParser {
             console.log(element + ": ist mit " + wordProb + "% Wahrscheinlichkeit eine Mail");
 
 
-            let test = new CheckResult(lineWords[index], wordProb);
-            preMails.push(test);
+            // let test = new CheckResult(lineWords[index], wordProb);
+            // tempMails.push(test);
+            tempMails.push(new CheckResult(lineWords[index], wordProb));
         }
 
-      return preMails;
+      return tempMails;
     }
 
     checkCompanyName(inputLine) {
