@@ -12,7 +12,7 @@ export class AddressParser {
     faxNumbersCheck = [];
     contactPersonsCheck = [];
 
-    constructor (language, outputPercentage) {
+    constructor(language, outputPercentage) {
         this.language = language;
         this.outputPercentage = outputPercentage;
     }

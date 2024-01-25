@@ -7,17 +7,17 @@ export class CheckResult {
         this.probability = probability;
     }
 
-    get value () {
+    getvalue () {
         return this.value;
     }
-    set value (value) {
+    setvalue (value) {
         this.value = value;
     }
 
-    get probability () {
+    getprobability () {
         return this.probability;
     }
-    set probability (probability) {
+    setprobability (probability) {
         this.probability = probability;
     }
 }

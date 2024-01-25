@@ -10,73 +10,73 @@ export class Address {
     faxNumbers = "";
     contactPersons = "";
 
-    get companyName() {
+    getcompanyName() {
         return this.companyName;
     }
-    set companyName(companyName) {
+    setcompanyName(companyName) {
         this.companyName = companyName;
     }
 
-    get postalCode() {
+    getpostalCode() {
         return this.zip;
     }
-    set postalCode(postalCode) {
+    setpostalCode(postalCode) {
         this.postalCode = postalCode;
     }
 
-    get street() {
+    getstreet() {
         return this.street;
     }
-    set street(street) {
+    setstreet(street) {
         this.street = street;
     }
 
-    get city() {
+    getcity() {
         return this.city;
     }
-    set city(city) {
+    setcity(city) {
         this.city = city;
     }
 
-    get homepage() {
+    gethomepage() {
         return this.homepage;
     }
-    set homepage(homepage) {
+    sethomepage(homepage) {
         this.homepage = homepage;
     }
 
-    get w3wAddress() {
+    getw3wAddress() {
         return this.w3wAddress;
     }
-    set w3wAddress(w3wAddress) {
+    setw3wAddress(w3wAddress) {
         this.w3wAddress = w3wAddress;
     }
 
-    get emails() {
+    getemails() {
         return this.emails;
     }
-    set emails(emails) {
+    setemails(emails) {
         this.emails = emails;
     }
 
-    get phoneNumbers() {
+    getphoneNumbers() {
         return this.phoneNumbers;
     }
-    set phoneNumbers(phoneNumbers) {
+    setphoneNumbers(phoneNumbers) {
         this.phoneNumbers = phoneNumbers;
     }
     
-    get faxNumbers() {
+    getfaxNumbers() {
         return this.faxNumbers;
     }
-    set faxNumbers(faxNumbers) {
+    setfaxNumbers(faxNumbers) {
         this.faxNumbers = faxNumbers;
     }
 
-    get contactPersons() {
+    getcontactPersons() {
         return this.contactPersons;
     }
-    set contactPersons(contactPersons) {
+    setcontactPersons(contactPersons) {
         this.contactPersons = contactPersons;
     }
 }
