@@ -79,6 +79,9 @@ export class AddressParser {
 
             this.companyNamesCheck.concat(this.checkCompanyNames(input));
             console.log(this.companyNamesCheck);
+
+            this.faxNumbersCheck.concat(this.checkFax(input));
+            console.log(this.faxNumbersCheck);
         });
     }
 
@@ -395,8 +398,6 @@ export class AddressParser {
 
         if (wordProb >= 50) {
             console.log(inputLine + " ist mit " + wordProb + "% Wahrscheinlichkeit ein Firmenname");
-            // companyValue.push(inputLine);
-            // companyProbability.push(wordProb);
             tempCheckCompanyNames.push(new CheckResult(inputLine, wordProb));
         }
 
@@ -504,6 +505,7 @@ export class AddressParser {
     }
 
     checkFax(inputLine) {
+        let tempFax = [];
         let fullNumber = "";
         inputLine = inputLine.toLowerCase();
         let words = inputLine.split(" ");
@@ -517,9 +519,9 @@ export class AddressParser {
                 if (words[i].includes(blacklist[b])) {
                     if (fullNumber.trim().length != 0 && prob != 0) {
                         console.log(fullNumber + ": ist mit " + prob + "% Wahrscheinlichkeit eine Faxnummer");
-                        faxValue.push(fullNumber);
-                        faxProbability.push(prob);
+                        tempFax.push(new CheckResult(words[i], prob));
                     }
+
                     fullNumber = "";
                     continue words;
                 }
@@ -548,9 +550,10 @@ export class AddressParser {
 
         if (fullNumber.trim().length != 0 && prob != 0) {
             console.log(fullNumber + ": ist mit " + prob + "% Wahrscheinlichkeit eine Faxnummer");
-            faxValue.push(fullNumber);
-            faxProbability.push(prob);
+            tempFax.push(new CheckResult(fullNumber, prob));
         }
+
+        return tempFax;
     }
 
     checkPhone(inputLine) {
