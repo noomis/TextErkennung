@@ -5,7 +5,8 @@ import { CheckResult } from "./CheckResult.js";
 let timeoutId;
 
 document.getElementById("text").addEventListener("input", printResult);
-
+let mainParser = new AddressParser();
+// mainParser.fetchCityData();
 function printResult() {
 
     clearTimeout(timeoutId);
@@ -14,11 +15,11 @@ function printResult() {
 
         let input = document.getElementById("text").value;
 
-        let mainParser = new AddressParser();
         mainParser.parseText(input);
-
+        
     }, 1000);
 }
+
 
 // function adjustHeight(element) {
 //     element.style.height = (element.scrollHeight) ? (element.scrollHeight) + "px" : "54px";

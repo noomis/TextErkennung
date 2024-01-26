@@ -11,6 +11,8 @@ export class AddressParser {
     phoneNumbersCheck = [];
     faxNumbersCheck = [];
     contactPersonsCheck = [];
+    allPostalCodes = [];
+    allCityNames = [];
 
     constructor(language, outputPercentage) {
         this.language = language;
@@ -56,6 +58,14 @@ export class AddressParser {
     getContactPersonsCheck() {
         return this.contactPersonsCheck;
     }
+    setAllPostalCodes(allPostalCodes) {
+        this.allPostalCodes = allPostalCodes;
+    }
+
+    setCityNames(cityNames) {
+        this.cityNames = cityNames;
+    }
+
 
     parseText(input) {
         let inputLines = input.split("\n");
@@ -878,11 +888,12 @@ export class AddressParser {
         //check ob elements im json enthalten sind und somit eine Stadt matchen
         zipLoop: for (let i = 0; i < nurZahlen.length; i++) {
             const element = nurZahlen[i];
-
-            if (allZipCodes.includes(element)) {
+// debugger
+console.log(this.allZipCodes);
+            if (this.allZipCodes.includes(element)) {
                 prob += 60;
-                city = allZipCodes.indexOf(element);
-                cityName = allCityNames[city];
+                city = this.allZipCodes.indexOf(element);
+                cityName = this.allCityNames[city];
 
                 //check ob Wort nach dem zip Code der Stadt entspricht die im json eingetragen ist
                 if (words[i + 1] !== undefined) {
@@ -918,8 +929,26 @@ export class AddressParser {
             } else {
                 continue zipLoop;
             }
+       
         }
-
-        return tempCitys;
+        console.log(tempCitys);
+        console.log(tempPostalCode); 
+        return(tempCitys, tempPostalCode);
     }
+
+//    fetchCityData() {
+//         //arrays werden auf die Germany-Werte, die im json enthalten sind, gesetzt 
+//         fetch('georef-germany-postleitzahl.json')
+//             .then(response => response.json())
+//             .then(data => {
+//                 data.forEach(datensatz => {
+//                     this.allPostalCodes.push(datensatz.name);
+//                     this.allCityNames.push(datensatz.plz_name);
+//                 });
+//             })
+//             .catch(error => {
+//                 console.error('Fehler beim Laden der JSON-Datei:', error);
+//             });
+//     }
+    
 }
