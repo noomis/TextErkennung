@@ -64,17 +64,20 @@ export class AddressParser {
 
         inputLines.forEach(input => {
 
-            this.emailsCheck.concat(this.checkMails(input));
-            console.log(this.emailsCheck);
-
             this.w3wAddressCheck.concat(this.checkW3ws(input));
             console.log(this.w3wAddressCheck);
-            
+
             this.homepageCheck.concat(this.checkHomepage(input));
             console.log(this.homepageCheck);
 
+            this.emailsCheck.concat(this.checkMails(input));
+            console.log(this.emailsCheck);
+
             this.companyNamesCheck.concat(this.checkCompanyNames(input));
             console.log(this.companyNamesCheck);
+
+            this.contactPersonsCheck.concat(this.checkContactPersons(input));
+            console.log(this.contactPersonsCheck);
 
             this.faxNumbersCheck.concat(this.checkFax(input));
             console.log(this.faxNumbersCheck);
@@ -84,9 +87,6 @@ export class AddressParser {
 
             this.citysCheck.concat(this.checkCitys(input));
             console.log(this.citysCheck);
-
-            this.contactPersonsCheck.concat(this.checkContactPersons(input));
-            console.log(this.contactPersonsCheck);
         });
     }
 
