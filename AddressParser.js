@@ -74,6 +74,7 @@ export class AddressParser {
 
             this.w3wAddressCheck.concat(this.checkW3ws(input));
             console.log(this.w3wAddressCheck);
+            
             this.urlCheck.concat(this.checkUrl(input));
             console.log(this.urlCheck);
 
@@ -82,6 +83,9 @@ export class AddressParser {
 
             this.faxNumbersCheck.concat(this.checkFax(input));
             console.log(this.faxNumbersCheck);
+
+            this.phoneNumbersCheck = this.phoneNumbersCheck.concat(this.checkPhone(input));
+            console.log(this.phoneNumbersCheck);
 
             this.streetCheck.concat(this.checkStreet(input));
             console.log(this.streetCheck);
@@ -559,7 +563,9 @@ export class AddressParser {
         return tempFax;
     }
 
-    checkPhone(inputLine) {
+     checkPhone(inputLine) {
+        let tempPhone = []
+
         if (inputLine.length < 10) {
             return;
         }
@@ -614,17 +620,23 @@ export class AddressParser {
 
         if (fullNumber.trim().length != 0 && prob != 0) {
             console.log(fullNumber + ": ist mit " + prob + "% Wahrscheinlichkeit eine Telefonnummer");
-            telValue.push(fullNumber);
-            telProbability.push(prob);
+            tempPhone.push(new CheckResult(fullNumber, prob));
+            console.log(tempPhone);
+
         }
 
         if (tmpFullNum > 5) {
             fullUnformattedNumber = fullUnformattedNumber.trim();
             if (fullUnformattedNumber.length > 10) {
+                console.log(tempPhone);
+                tempPhone = tempPhone.concat(this.checkPhone(fullUnformattedNumber));
+                console.log(tempPhone);
 
-                checkPhone(fullUnformattedNumber);
+
             }
         }
+        return tempPhone;
+
     }
 
     checkStreet(inputLine) {
