@@ -69,6 +69,7 @@ export class AddressParser {
 
             this.w3wAddressCheck.concat(this.checkW3ws(input));
             console.log(this.w3wAddressCheck);
+            
             this.homepageCheck.concat(this.checkHomepage(input));
             console.log(this.homepageCheck);
 
