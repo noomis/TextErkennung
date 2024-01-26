@@ -2,9 +2,9 @@ import { CheckResult } from "./CheckResult.js";
 
 export class AddressParser {
     companyNamesCheck = [];
-    streetCheck = [];
+    streetsCheck = [];
     postalCodeCheck = [];
-    cityCheck = [];
+    citysCheck = [];
     homepageCheck = [];
     w3wAddressCheck = [];
     emailsCheck = [];
@@ -83,8 +83,11 @@ export class AddressParser {
             this.faxNumbersCheck.concat(this.checkFax(input));
             console.log(this.faxNumbersCheck);
 
-            this.streetCheck.concat(this.checkStreet(input));
-            console.log(this.streetCheck);
+            this.streetsCheck.concat(this.checkStreets(input));
+            console.log(this.streetsCheck);
+
+            this.citysCheck.concat(this.checkCitys(input));
+            console.log(this.citysCheck);
         });
     }
 
@@ -627,7 +630,7 @@ export class AddressParser {
         }
     }
 
-    checkStreet(inputLine) {
+    checkStreets(inputLine) {
         let tempStreet = [];
         inputLine = inputLine.toLowerCase();
         let words = inputLine.split(" ");
@@ -814,7 +817,9 @@ export class AddressParser {
         return tempStreet;
     }
 
-    checkCity(inputLine) {
+    checkCitys(inputLine) {
+        let tempCitys = [];
+        let tempPostalCode = [];
         inputLine = inputLine.toLowerCase();
         let words = inputLine.split(" ");
         let city = 0;
@@ -889,14 +894,18 @@ export class AddressParser {
             }
 
             if (prob > 0) {
-                zipValue.push(element);
-                zipProbability.push(prob);
-                cityValue.push(wordAfter);
-                cityProbability.push(prob);
+                // zipValue.push(element);
+                // zipProbability.push(prob);
+                // cityValue.push(wordAfter);
+                // cityProbability.push(prob);
+                tempCitys.push(new CheckResult(element, prob));
+                tempPostalCode.push(new CheckResult(wordAfter, prob));
                 console.log(element + " " + wordAfter + " ist mit " + prob + "% Wahrscheinlichkeit eine Postleitzahl mit Ort");
             } else {
                 continue zipLoop;
             }
         }
+
+        return tempCitys;
     }
 }
