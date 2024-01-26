@@ -91,13 +91,17 @@ export class AddressParser {
 
             // Wörter mit SonderZ überspringen
             for (let b = 0; b < blacklist.length; b++) {
+                
                 if (words[i].includes(blacklist[b])) {
+
                     if (words[i].includes(":")) {
+
                         if (words[i].includes("https://what3words.com/") || words[i].includes("https://w3w.co/")) {
                             let w3wUrl = words[i].split("/");
                             words[i] = w3wUrl[w3wUrl.length - 1];
                             element = words[i];
                             lineChars = words[i].split("");
+
                         } else if (words[i].includes("https://") || words[i].includes("http://")) {
                             continue words;
                         }
