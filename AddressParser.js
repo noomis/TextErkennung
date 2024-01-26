@@ -78,6 +78,9 @@ export class AddressParser {
             this.faxNumbersCheck.concat(this.checkFax(input));
             console.log(this.faxNumbersCheck);
 
+            this.streetCheck.concat(this.checkStreet(input));
+            console.log(this.streetCheck);
+
             this.contactPersonsCheck.concat(this.checkContactPersons(input));
             console.log(this.contactPersonsCheck);
         });
@@ -623,6 +626,7 @@ export class AddressParser {
     }
 
     checkStreet(inputLine) {
+        let tempStreet = [];
         inputLine = inputLine.toLowerCase();
         let words = inputLine.split(" ");
         let prob = 0;
@@ -802,9 +806,10 @@ export class AddressParser {
 
         if (fullStreetName.trim().length != 0 && prob != 0) {
             console.log(fullStreetName + ": ist mit " + prob + "% Wahrscheinlichkeit eine Straße");
-            streetValue.push(fullStreetName);
-            streetProbability.push(prob);
+            tempStreet.push(new CheckResult(fullStreetName, prob));
         }
+
+        return tempStreet;
     }
 
     checkCity(inputLine) {
