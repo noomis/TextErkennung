@@ -1,7 +1,7 @@
 import { CheckResult } from "./CheckResult.js";
 
 export class AddressParser {
-    companyNameCheck = [];
+    companyNamesCheck = [];
     streetCheck = [];
     postalCodeCheck = [];
     cityCheck = [];
@@ -18,7 +18,7 @@ export class AddressParser {
     }
 
     getCompanyNameCheck() {
-        return this.companyNameCheck;
+        return this.companyNamesCheck;
     }
 
     getstreetCheck() {
@@ -64,15 +64,18 @@ export class AddressParser {
 
         inputLines.forEach(input => {
 
-            this.emailsCheck.concat(this.checkMail(input));
+            this.emailsCheck.concat(this.checkMails(input));
             console.log(this.emailsCheck);
 
-            this.w3wAddressCheck.concat(this.checkW3W(input));
+            this.w3wAddressCheck.concat(this.checkW3ws(input));
             console.log(this.w3wAddressCheck);
+
+            this.companyNamesCheck.concat(this.checkCompanyNames(input));
+            console.log(this.companyNamesCheck);
         });
     }
 
-    checkW3W(inputLine) {
+    checkW3ws(inputLine) {
         let tempW3w = [];
         // TODO w3w/mail gleiche bennennung variblen  (words / lineWords, prob / wordprob)
         let words = inputLine.split(" ");
@@ -226,7 +229,7 @@ export class AddressParser {
         }
     }
 
-    checkMail(inputLine) {
+    checkMails(inputLine) {
         let knownTLD = ["com", "net", "org", "de", "eu", "at", "ch", "nl", "pl", "fr", "es", "info", "name", "email", "co", "biz"];
         let tempMails = [];
         inputLine = inputLine.toLowerCase();
@@ -329,8 +332,9 @@ export class AddressParser {
       return tempMails;
     }
 
-    checkCompanyName(inputLine) {
+    checkCompanyNames(inputLine) {
         let wordProb = 0; // Treffer Wahrscheinlichkeit
+        let tempCheckCompanyNames = [];
 
         let unternehmensformen = [
             "einzelunternehmen",
@@ -383,12 +387,12 @@ export class AddressParser {
 
         if (wordProb >= 50) {
             console.log(inputLine + " ist mit " + wordProb + "% Wahrscheinlichkeit ein Firmenname");
-            companyValue.push(inputLine);
-            companyProbability.push(wordProb);
-            let test = new CheckResult(inputLine, wordProb);
+            // companyValue.push(inputLine);
+            // companyProbability.push(wordProb);
+            tempCheckCompanyNames.push(new CheckResult(inputLine, wordProb));
         }
 
-        return test;
+        return tempCheckCompanyNames;
     }
 
     checkName(inputLine) {
