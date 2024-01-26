@@ -64,10 +64,10 @@ export class AddressParser {
 
         inputLines.forEach(input => {
 
-            this.emailsCheck = this.emailsCheck.concat(this.checkMail(input));
+            this.emailsCheck.concat(this.checkMail(input));
             console.log(this.emailsCheck);
 
-            this.w3wAddressCheckCheck = this.w3wAddressCheck.concat(this.checkW3W(input));
+            this.w3wAddressCheck.concat(this.checkW3W(input));
             console.log(this.w3wAddressCheck);
         });
     }
