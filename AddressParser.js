@@ -17,10 +17,6 @@ export class AddressParser {
         this.outputPercentage = outputPercentage;
     }
 
-    getcompanyNameCheck() {
-        return this.companyNameCheck;
-    }
-
     getCompanyNameCheck() {
         return this.companyNameCheck;
     }
@@ -91,7 +87,7 @@ export class AddressParser {
 
             // Wörter mit SonderZ überspringen
             for (let b = 0; b < blacklist.length; b++) {
-                
+
                 if (words[i].includes(blacklist[b])) {
 
                     if (words[i].includes(":")) {
