@@ -11,6 +11,7 @@ export class AddressParser {
     phoneNumbersCheck = [];
     faxNumbersCheck = [];
     contactPersonsCheck = [];
+    urlCheck = [];
 
     constructor(language, outputPercentage) {
         this.language = language;
@@ -21,54 +22,61 @@ export class AddressParser {
         return this.companyNameCheck;
     }
 
-    getstreetCheck() {
+    getStreetCheck() {
         return this.streetCheck;
     }
 
-    getpostalCodeCheck() {
+    getPostalCodeCheck() {
         return this.postalCodeCheck;
     }
 
-    getcityCheck() {
+    getCityCheck() {
         return this.cityCheck;
     }
 
-    gethomepageCheck() {
+    getHomepageCheck() {
         return this.homepageCheck;
     }
 
-    getw3wAddressCheck() {
+    getW3wAddressCheck() {
         return this.w3wAddressCheck;
     }
 
-    getemailsCheck() {
+    getEmailsCheck() {
         return this.emailsCheck;
     }
 
-    getphoneNumbersCheck() {
+    getPhoneNumbersCheck() {
         return this.phoneNumbersCheck;
     }
 
-    getfaxNumbersCheck() {
+    getFaxNumbersCheck() {
         return this.faxNumbersCheck;
     }
 
-    getcontactPersonsCheck() {
+    getContactPersonsCheck() {
         return this.contactPersonsCheck;
+    }
+
+    getUrlCheck(){
+        return this.urlCheck;
     }
 
     parseText(input) {
         let inputLines = input.split("\n");
-        
+
         console.log(inputLines);
 
         inputLines.forEach(input => {
 
-            this.emailsCheck = this.emailsCheck.concat(this.checkMail(input));
+            this.emailsCheck.concat(this.checkMail(input));
             console.log(this.emailsCheck);
 
-            this.w3wAddressCheckCheck = this.w3wAddressCheck.concat(this.checkW3W(input));
+            this.w3wAddressCheck.concat(this.checkW3W(input));
             console.log(this.w3wAddressCheck);
+
+            this.urlCheck.concat(this.checkUrl(input));
+            console.log(this.urlCheck);
         });
     }
 
@@ -165,6 +173,8 @@ export class AddressParser {
         //alle wörter klein und in neuen array
         inputLine = inputLine.toLowerCase();
         let words = inputLine.split(" ");
+        let tempUrl = [];
+        let knownTLD = ["com", "net", "org", "de", "eu", "at", "ch", "nl", "pl", "fr", "es", "info", "name", "email", "co", "biz"];
 
         //for-Schleife die alle Worte vom Input durchläuft
         for (let i = 0; i < words.length; i++) {
@@ -219,11 +229,10 @@ export class AddressParser {
             //push in globalen Array & output
             if (prob > 0) {
                 console.log('"' + element + '"' + " ist mit " + prob + "% Wahrscheinlichkeit eine URL");
-                urlValue.push(element);
-                urlProbability.push(prob);
+                tempUrl.push(new CheckResult(element, prob));
             }
-
         }
+        return tempUrl;
     }
 
     checkMail(inputLine) {
@@ -326,7 +335,7 @@ export class AddressParser {
             tempMails.push(new CheckResult(lineWords[index], wordProb));
         }
 
-      return tempMails;
+        return tempMails;
     }
 
     checkCompanyName(inputLine) {
@@ -421,7 +430,7 @@ export class AddressParser {
             if (vornamen.includes(element)) {
                 prob += 50;
             }
-            
+
             //checken ob das Wort vor i, falls es existiert, mit gewisse Stichworte enthält 
             if (i !== 0) {
                 wordBefore = words[i - 1];
