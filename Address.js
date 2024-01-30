@@ -67,7 +67,7 @@ export class Address {
     setphoneNumbers(phoneNumbers) {
         this.phoneNumbers = phoneNumbers;
     }
-    
+
     getfaxNumbers() {
         return this.faxNumbers;
     }
@@ -85,24 +85,28 @@ export class Address {
 
 
     outputAllValues(html_id, fadeTime) {
-  let objectArray = [];
+        let objectArray = [];
         switch (html_id) {
             case "email":
                 console.log(this.getemails());
-               objectArray = objectArray.concat(this.getemails());
+                objectArray = objectArray.concat(this.getemails());
                 break;
 
-                case "contactPerson":
-                    console.log(this.getcontactPersons());
-                   objectArray = objectArray.concat(this.getcontactPersons());
-                    break;
-            
-        
+            case "contactPerson":
+                console.log(this.getcontactPersons());
+                objectArray = objectArray.concat(this.getcontactPersons());
+                break;
+
+            case "faxNumber":
+                console.log(this.getfaxNumbers());
+                objectArray = objectArray.concat(this.getfaxNumbers());
+                break;
+
             default:
                 break;
         }
         console.log(objectArray);
-        
+
         $("#" + html_id).val(""); //feld clearen
         let firstvalue = 0;
         for (let index = 0; index < objectArray.length; index++) {

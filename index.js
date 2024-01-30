@@ -29,25 +29,19 @@ function printResult() {
         console.log(mainParser.getEmailsCheck());
 
         addressObject.setemails(mainParser.getEmailsCheck());
-        addressObject.outputAllValues("email",200);
+        addressObject.outputAllValues("email", 200);
 
         addressObject.setcontactPersons(mainParser.getContactPersonsCheck());
-        addressObject.outputAllValues("contactPerson",200);
+        addressObject.outputAllValues("contactPerson", 200);
 
-
-
-
-
-
-
-
+        addressObject.setfaxNumbers(mainParser.getFaxNumbersCheck());
+        addressObject.outputAllValues("faxNumber", 200);
 
         // addressObject.setw3wAddress(mainParser.getW3wAddressCheck());
         // addressObject.outputAllValues("w3w",200)
-        
+
     }, 1000);
 
-    
 }
 
 

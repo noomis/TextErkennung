@@ -92,11 +92,8 @@ export class AddressParser {
             this.contactPersonsCheck = this.contactPersonsCheck.concat(this.checkContactPersons(input));
             console.log(this.contactPersonsCheck);
 
-            this.faxNumbersCheck.concat(this.checkFax(input));
+            this.faxNumbersCheck = this.faxNumbersCheck.concat(this.checkFax(input));
             console.log(this.faxNumbersCheck);
-
-            this.phoneNumbersCheck = this.phoneNumbersCheck.concat(this.checkPhone(input));
-            console.log(this.phoneNumbersCheck);
 
             this.phoneNumbersCheck = this.phoneNumbersCheck.concat(this.checkPhone(input));
             console.log(this.phoneNumbersCheck);
@@ -543,7 +540,7 @@ export class AddressParser {
                 if (words[i].includes(blacklist[b])) {
                     if (fullNumber.trim().length != 0 && prob != 0) {
                         console.log(fullNumber + ": ist mit " + prob + "% Wahrscheinlichkeit eine Faxnummer");
-                        tempFax.push(new CheckResult("faxNumbers",words[i], prob));
+                        tempFax.push(new CheckResult("faxNumber",words[i], prob));
                     }
 
                     fullNumber = "";
@@ -574,7 +571,7 @@ export class AddressParser {
 
         if (fullNumber.trim().length != 0 && prob != 0) {
             console.log(fullNumber + ": ist mit " + prob + "% Wahrscheinlichkeit eine Faxnummer");
-            tempFax.push(new CheckResult("faxNumbers",fullNumber, prob));
+            tempFax.push(new CheckResult("faxNumber",fullNumber, prob));
         }
 
         return tempFax;
@@ -648,8 +645,6 @@ export class AddressParser {
                 console.log(tempPhone);
                 tempPhone = tempPhone.concat(this.checkPhone(fullUnformattedNumber));
                 console.log(tempPhone);
-
-
             }
         }
         return tempPhone;
