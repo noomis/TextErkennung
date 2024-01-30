@@ -84,8 +84,6 @@ export class Address {
         this.contactPersons = contactPersons;
     }
 
-
-
     outputAllValues(html_id, fadeTime) {
 
               let objectArray = [];
