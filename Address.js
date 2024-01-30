@@ -33,8 +33,9 @@ export class Address {
         return this.street;
     }
 
-    setStreet(street) {
-        this.street = street;
+    setStreet(_street) {
+        console.log(_street);
+        this.street = this.street.concat(_street);
     }
 
     getCity() {
@@ -126,6 +127,8 @@ export class Address {
                 objectArray = objectArray.concat(this.getFaxNumbers());
                 break;
 
+
+
             default:
                 break;
         }
@@ -177,6 +180,11 @@ export class Address {
                 objectArray = objectArray.concat(this.getHomepage());
                 break;
 
+            case "street":
+                console.log(this.getStreet());
+                objectArray = objectArray.concat(this.getStreet());
+                break;
+
             default:
                 break;
         }
@@ -201,8 +209,13 @@ export class Address {
     }
 
     findMaxPercentage(Array) {
-        
-        let highestPercentage
+        let object = {
+            probability: 1,
+        }
+
+        let highestPercentage = object;
+
+
         // Gebe null für leere Arrays zurück
         if (Array.length == 0) {
             return;
@@ -213,7 +226,6 @@ export class Address {
         // Objekt mit der höhsten Wahrscheinlichkeit returnen
         Array.forEach(element => {
             if (element !== undefined) {
-                 highestPercentage = element;
 
                 console.log(element);
                 if (element.probability > highestPercentage.probability) {
