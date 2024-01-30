@@ -7,13 +7,13 @@ let timeoutId;
 document.getElementById("text").addEventListener("input", printResult);
 let mainParser = new AddressParser();
 let allZipCodes = mainParser.fetchCityData();
-console.log(allZipCodes);
+
 mainParser.setAllPostalCodes(allZipCodes);
 
 document.getElementById("slider").addEventListener("input", printResult);
 
 function printResult() {
-    console.log("test");
+    
     let outputPercentage = $("#slider")[0].value;
 
     $("#probValue").text("Treffer Wahrscheinlichkeit: " + outputPercentage + "%");
@@ -28,7 +28,7 @@ function printResult() {
 
             mainParser.parseText(input);
             let addressObject = new Address();
-            console.log(mainParser.getEmailsCheck());
+            
 
             addressObject.setEmails(mainParser.getEmailsCheck());
             addressObject.outputAllValues("email", 200);
