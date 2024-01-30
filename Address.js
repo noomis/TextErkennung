@@ -17,7 +17,7 @@ export class Address {
         return this.companyName;
     }
 
-    setCompanyNames(companyName) {
+    setCompanyName(companyName) {
         this.companyName = companyName;
     }
 
