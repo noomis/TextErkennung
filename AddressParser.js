@@ -1,18 +1,19 @@
 import { CheckResult } from "./CheckResult.js";
 
 export class AddressParser {
-    companyNamesCheck = [];
-    streetsCheck = [];
+    companyNamesCheck = []; // only max
+    streetsCheck = []; // only max
     postalCodeCheck = [];
-    citysCheck = [];
-    homepageCheck = [];
-    w3wAddressCheck = [];
+    citysCheck = []; //
+    homepageCheck = []; // only max
+    w3wAddressCheck = []; // only max
     emailsCheck = [];
     phoneNumbersCheck = [];
     faxNumbersCheck = [];
     contactPersonsCheck = [];
-    allPostalCodes = [];
-    allCityNames = [];
+
+    fetchedPostalCodes = []; // only max
+    fetchedCityNames = []; // only max
 
     constructor(language, outputPercentage) {
         this.language = language;
@@ -59,14 +60,12 @@ export class AddressParser {
         return this.contactPersonsCheck;
     }
     setAllPostalCodes(_allPostalCodes) {
-        console.log(_allPostalCodes);
-        this.allPostalCodes = this.allPostalCodes.concat(_allPostalCodes);
-        console.log(this.allPostalCodes);
+        this.fetchedPostalCodes = this.fetchedPostalCodes.concat(_allPostalCodes);
 
     }
 
-    setCityNames(cityNames) {
-        this.allCityNames = cityNames;
+    setCityNames(_cityNames) {
+        this.fetchedCityNames = this.fetchedCityNames.concat(_cityNames);    
     }
 
 
@@ -674,7 +673,6 @@ export class AddressParser {
             })
             console.log(tempAllPostalCodes);
             this.setAllPostalCodes(tempAllPostalCodes);
-            console.log(this.allPostalCodes);
             return tempAllPostalCodes;
 
     }
