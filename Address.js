@@ -22,11 +22,11 @@ export class Address {
     }
 
     getPostalCode() {
-        return this.zip;
+        return this.postalCode;
     }
 
-    setPostalCode(postalCode) {
-        this.postalCode = postalCode;
+    setPostalCode(_postalCode) {
+        this.postalCode = this.postalCode.concat(_postalCode);
     }
 
     getStreet() {
@@ -185,6 +185,11 @@ export class Address {
                 objectArray = objectArray.concat(this.getStreet());
                 break;
 
+            case "postalCode":
+                console.log(this.getPostalCode());
+                objectArray = objectArray.concat(this.getPostalCode());
+                break;
+
             default:
                 break;
         }
@@ -193,7 +198,7 @@ export class Address {
             return;
         }
 
-        console.log(objectArray);
+        console.log(html_id);
 
         $("#" + html_id).val("");
 

@@ -101,8 +101,8 @@ export class AddressParser {
             this.streetsCheck = this.streetsCheck.concat(this.checkStreets(input));
             console.log(this.streetsCheck);
 
-            this.citysCheck = this.citysCheck.concat(this.checkCitys(input));
-            console.log(this.citysCheck);
+            this.postalCodeCheck= this.postalCodeCheck.concat(this.checkPostalCode(input));
+            console.log(this.postalCodeCheck);
 
          });
     }
@@ -860,11 +860,10 @@ export class AddressParser {
         return tempStreet;
     }
 
-    checkCitys(inputLine) {
+    checkPostalCode(inputLine) {
 
         console.log(this.allPostalCodes);
 
-        let tempCitys = [];
         let tempPostalCode = [];
         inputLine = inputLine.toLowerCase();
         let words = inputLine.split(" ");
@@ -910,7 +909,8 @@ export class AddressParser {
         //check ob elements im json enthalten sind und somit eine Stadt matchen
         zipLoop: for (let i = 0; i < nurZahlen.length; i++) {
             const element = nurZahlen[i];
-            console.log(this.allPostalCodes);
+            console.log(this.fetchedPostalCodes);
+            debugger
             if (this.fetchedPostalCodes.includes(element)) {
                 prob += 60;
                 city = this.fetchedPostalCodes.indexOf(element);
@@ -940,21 +940,15 @@ export class AddressParser {
             }
 
             if (prob > 0) {
-                // zipValue.push(element);
-                // zipProbability.push(prob);
-                // cityValue.push(wordAfter);
-                // cityProbability.push(prob);
-                tempCitys.push("city", new CheckResult(element, prob));
-                tempPostalCode.push("postalCode", new CheckResult(wordAfter, prob));
-                console.log(element + " " + wordAfter + " ist mit " + prob + "% Wahrscheinlichkeit eine Postleitzahl mit Ort");
+                tempPostalCode.push(new CheckResult("postalCode", element, prob));
+                console.log(element + " ist mit " + prob + "% Wahrscheinlichkeit eine Postleitzahl");
             } else {
                 continue zipLoop;
             }
 
         }
-        console.log(tempCitys);
         console.log(tempPostalCode);
-        return (tempCitys, tempPostalCode);
+        return tempPostalCode;
     }
 
 }

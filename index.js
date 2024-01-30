@@ -53,6 +53,9 @@ function printResult() {
             
             addressObject.setCompanyName(mainParser.getCompanyNameCheck());
             addressObject.outputMaxValues("companyName", 200);
+
+            addressObject.setPostalCode(mainParser.getPostalCodeCheck());
+            addressObject.outputMaxValues("postalCode", 200);
         }
 
     }, 1000);
