@@ -98,9 +98,6 @@ export class AddressParser {
             this.phoneNumbersCheck = this.phoneNumbersCheck.concat(this.checkPhone(input));
             console.log(this.phoneNumbersCheck);
 
-            this.phoneNumbersCheck = this.phoneNumbersCheck.concat(this.checkPhone(input));
-            console.log(this.phoneNumbersCheck);
-
             this.streetsCheck.concat(this.checkStreets(input));
             console.log(this.streetsCheck);
 

@@ -34,12 +34,8 @@ function printResult() {
         addressObject.setcontactPersons(mainParser.getContactPersonsCheck());
         addressObject.outputAllValues("contactPerson",200);
 
-
-
-
-
-
-
+        addressObject.setphoneNumbers(mainParser.getPhoneNumbersCheck());
+        addressObject.outputAllValues("phoneNumber",200);
 
 
         // addressObject.setw3wAddress(mainParser.getW3wAddressCheck());
