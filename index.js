@@ -47,6 +47,9 @@ function printResult() {
 
             addressObject.setHomepage(mainParser.getHomepageCheck());
             addressObject.outputMaxValues("homepage", 200);
+            
+            addressObject.setCompanyNames(mainParser.getCompanyNameCheck());
+            addressObject.outputMaxValues("companyname", 200);
         }
 
     }, 1000);

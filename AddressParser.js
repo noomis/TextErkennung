@@ -86,7 +86,7 @@ export class AddressParser {
             this.emailsCheck = this.emailsCheck.concat(this.checkMails(input));
             console.log(this.emailsCheck);
 
-            this.companyNamesCheck.concat(this.checkCompanyNames(input));
+            this.companyNamesCheck = this.companyNamesCheck.concat(this.checkCompanyNames(input));
             console.log(this.companyNamesCheck);
 
             this.contactPersonsCheck = this.contactPersonsCheck.concat(this.checkContactPersons(input));
