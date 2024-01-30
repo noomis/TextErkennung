@@ -6,7 +6,7 @@ let timeoutId;
 
 document.getElementById("text").addEventListener("input", printResult);
 let mainParser = new AddressParser();
-// mainParser.fetchCityData();
+mainParser.setAllPostalCodes(mainParser.fetchCityData())
 function printResult() {
 
     clearTimeout(timeoutId);
