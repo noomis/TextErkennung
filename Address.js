@@ -163,11 +163,12 @@ export class Address {
             case "w3w":
                 console.log(this.getW3wAddress());
                 objectArray = objectArray.concat(this.getW3wAddress());
+        
                 break;
 
             case "companyName":
-                console.log(this.getCompanyNames());
-                objectArray = objectArray.concat(this.getCompanyNames());
+                console.log(this.getCompanyName());
+                objectArray = objectArray.concat(this.getCompanyName());
                 break;
 
             case "homepage":
@@ -178,6 +179,11 @@ export class Address {
             default:
                 break;
         }
+
+        if (objectArray.length <= 0) {
+            return;
+        }
+        
         console.log(objectArray);
 
         $("#" + html_id).val("");
