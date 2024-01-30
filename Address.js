@@ -16,6 +16,7 @@ export class Address {
     getCompanyName() {
         return this.companyName;
     }
+
     setCompanyName(companyName) {
         this.companyName = companyName;
     }
@@ -23,6 +24,7 @@ export class Address {
     getPostalCode() {
         return this.zip;
     }
+
     setPostalCode(postalCode) {
         this.postalCode = postalCode;
     }
@@ -30,6 +32,7 @@ export class Address {
     getStreet() {
         return this.street;
     }
+
     setStreet(street) {
         this.street = street;
     }
@@ -37,6 +40,7 @@ export class Address {
     getCity() {
         return this.city;
     }
+
     setCity(city) {
         this.city = city;
     }
@@ -44,6 +48,7 @@ export class Address {
     getHomepage() {
         return this.homepage;
     }
+
     setHomepage(homepage) {
         this.homepage = homepage;
     }
@@ -51,6 +56,7 @@ export class Address {
     getW3wAddress() {
         return this.w3wAddress;
     }
+
     setW3wAddress(w3wAddress) {
         this.w3wAddress = w3wAddress;
     }
@@ -58,6 +64,7 @@ export class Address {
     getEmails() {
         return this.emails;
     }
+
     setEmails(_emails) {
         console.log(_emails);
         this.emails = this.emails.concat(_emails);
@@ -66,6 +73,7 @@ export class Address {
     getPhoneNumbers() {
         return this.phoneNumbers;
     }
+
     setPhoneNumbers(phoneNumbers) {
         this.phoneNumbers = phoneNumbers;
     }
@@ -73,6 +81,7 @@ export class Address {
     getFaxNumbers() {
         return this.faxNumbers;
     }
+
     setFaxNumbers(faxNumbers) {
         this.faxNumbers = faxNumbers;
     }
@@ -80,11 +89,10 @@ export class Address {
     getContactPersons() {
         return this.contactPersons;
     }
+
     setContactPersons(contactPersons) {
         this.contactPersons = contactPersons;
     }
-
-
 
     outputAllValues(html_id, fadeTime) {
 
