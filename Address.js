@@ -11,74 +11,74 @@ export class Address {
     faxNumbers = [];
     contactPersons = [];
 
-    getcompanyName() {
+    getCompanyName() {
         return this.companyName;
     }
-    setcompanyName(companyName) {
+    setCompanyName(companyName) {
         this.companyName = companyName;
     }
 
-    getpostalCode() {
+    getPostalCode() {
         return this.zip;
     }
-    setpostalCode(postalCode) {
+    setPostalCode(postalCode) {
         this.postalCode = postalCode;
     }
 
-    getstreet() {
+    getStreet() {
         return this.street;
     }
-    setstreet(street) {
+    setStreet(street) {
         this.street = street;
     }
 
-    getcity() {
+    getCity() {
         return this.city;
     }
-    setcity(city) {
+    setCity(city) {
         this.city = city;
     }
 
-    gethomepage() {
+    getHomepage() {
         return this.homepage;
     }
-    sethomepage(homepage) {
+    setHomepage(homepage) {
         this.homepage = homepage;
     }
 
-    getw3wAddress() {
+    getW3wAddress() {
         return this.w3wAddress;
     }
-    setw3wAddress(w3wAddress) {
+    setW3wAddress(w3wAddress) {
         this.w3wAddress = w3wAddress;
     }
 
-    getemails() {
+    getEmails() {
         return this.emails;
     }
-    setemails(_emails) {
+    setEmails(_emails) {
         console.log(_emails);
         this.emails = this.emails.concat(_emails);
     }
 
-    getphoneNumbers() {
+    getPhoneNumbers() {
         return this.phoneNumbers;
     }
-    setphoneNumbers(phoneNumbers) {
+    setPhoneNumbers(phoneNumbers) {
         this.phoneNumbers = phoneNumbers;
     }
-
+    
     getfaxNumbers() {
         return this.faxNumbers;
     }
-    setfaxNumbers(faxNumbers) {
+    setFaxNumbers(faxNumbers) {
         this.faxNumbers = faxNumbers;
     }
 
-    getcontactPersons() {
+    getContactPersons() {
         return this.contactPersons;
     }
-    setcontactPersons(contactPersons) {
+    setContactPersons(contactPersons) {
         this.contactPersons = contactPersons;
     }
 
@@ -86,12 +86,12 @@ export class Address {
 
     outputAllValues(html_id, fadeTime) {
 
-        let objectArray = [];
+              let objectArray = [];
         switch (html_id) {
             case "email":
             console.log('email: ', email);
-                console.log(this.getemails());
-                objectArray = objectArray.concat(this.getemails());
+                console.log(this.getEmails());
+                 objectArray = objectArray.concat(this.getEmails());
                 break;
 
             case "contactPerson":
@@ -106,10 +106,21 @@ export class Address {
                 objectArray = objectArray.concat(this.getphoneNumbers());
                 break;
 
+            case "contactPerson":
+                console.log(this.getContactPersons());
+                objectArray = objectArray.concat(this.getContactPersons());
+                break;
+
+            case "faxNumber":
+                console.log(this.getFaxNumbers());
+                objectArray = objectArray.concat(this.getFaxNumbers());
+                break;
+
             default:
                 break;
         }
         console.log(objectArray);
+        
         $("#" + html_id).val(""); //feld clearen
         let firstvalue = 0;
         for (let index = 0; index < objectArray.length; index++) {

@@ -28,8 +28,8 @@ function printResult() {
         let addressObject = new Address();
         console.log(mainParser.getEmailsCheck());
 
-        addressObject.setemails(mainParser.getEmailsCheck());
-        addressObject.outputAllValues("email",200);
+        addressObject.setEmails(mainParser.getEmailsCheck());
+        addressObject.outputAllValues("email", 200);
 
         addressObject.setcontactPersons(mainParser.getContactPersonsCheck());
         addressObject.outputAllValues("contactPerson",200);
@@ -37,13 +37,17 @@ function printResult() {
         addressObject.setphoneNumbers(mainParser.getPhoneNumbersCheck());
         addressObject.outputAllValues("phoneNumber",200);
 
+        addressObject.setContactPersons(mainParser.getContactPersonsCheck());
+        addressObject.outputAllValues("contactPerson", 200);
+
+        addressObject.setFaxNumbers(mainParser.getFaxNumbersCheck());
+        addressObject.outputAllValues("faxNumber", 200);
 
         // addressObject.setw3wAddress(mainParser.getW3wAddressCheck());
         // addressObject.outputAllValues("w3w",200)
-        
+
     }, 1000);
 
-    
 }
 
 
