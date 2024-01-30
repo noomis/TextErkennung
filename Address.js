@@ -77,7 +77,7 @@ export class Address {
     setPhoneNumbers(phoneNumbers) {
         this.phoneNumbers = phoneNumbers;
     }
-    
+
     getFaxNumbers() {
         return this.faxNumbers;
     }
@@ -96,22 +96,22 @@ export class Address {
 
     outputAllValues(html_id, fadeTime) {
 
-              let objectArray = [];
+        let objectArray = [];
         switch (html_id) {
             case "email":
-            console.log('email: ', email);
+                console.log('email: ', email);
                 console.log(this.getEmails());
-                 objectArray = objectArray.concat(this.getEmails());
+                objectArray = objectArray.concat(this.getEmails());
                 break;
 
             case "contactPerson":
-            console.log('contactPerson: ', contactPerson);
+                console.log('contactPerson: ', contactPerson);
                 console.log(this.getContactPersons());
                 objectArray = objectArray.concat(this.getContactPersons());
                 break;
 
             case "phoneNumber":
-            console.log('phoneNumber: ', phoneNumber);
+                console.log('phoneNumber: ', phoneNumber);
                 console.log(this.getPhoneNumbers());
                 objectArray = objectArray.concat(this.getPhoneNumbers());
                 break;
@@ -169,6 +169,11 @@ export class Address {
                 objectArray = objectArray.concat(this.getCompanyNames());
                 break;
 
+            case "homepage":
+                console.log(this.getHomepage());
+                objectArray = objectArray.concat(this.getHomepage());
+                break;
+
             default:
                 break;
         }
@@ -187,14 +192,14 @@ export class Address {
         }
     }
 
-    findMaxPercentage (Array) {
+    findMaxPercentage(Array) {
         let highestPercentage = Array[0];
 
         // Gebe null für leere Arrays zurück
         if (Array.length == 0) {
-            return null; 
+            return ;
         }
-    
+
         // Objekt mit der höhsten Wahrscheinlichkeit returnen
         Array.forEach(element => {
             if (element.probability > highestPercentage.probability) {
