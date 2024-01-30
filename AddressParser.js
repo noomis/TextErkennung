@@ -77,32 +77,32 @@ export class AddressParser {
 
         inputLines.forEach(input => {
 
-            // this.w3wAddressCheck = this.w3wAddressCheck.concat(this.checkW3ws(input));
-            // console.log(this.w3wAddressCheck);
+            this.w3wAddressCheck = this.w3wAddressCheck.concat(this.checkW3ws(input));
+            console.log(this.w3wAddressCheck);
 
-            // this.homepageCheck.concat(this.checkHomepage(input));
-            // console.log(this.homepageCheck);
+            this.homepageCheck = this.homepageCheck.concat(this.checkHomepage(input));
+            console.log(this.homepageCheck);
 
             this.emailsCheck = this.emailsCheck.concat(this.checkMails(input));
             console.log(this.emailsCheck);
 
-            // this.companyNamesCheck = this.companyNamesCheck.concat(this.checkCompanyNames(input));
-            // console.log(this.companyNamesCheck);
+            this.companyNamesCheck = this.companyNamesCheck.concat(this.checkCompanyNames(input));
+            console.log(this.companyNamesCheck);
 
-            // this.contactPersonsCheck = this.contactPersonsCheck.concat(this.checkContactPersons(input));
-            // console.log(this.contactPersonsCheck);
+            this.contactPersonsCheck = this.contactPersonsCheck.concat(this.checkContactPersons(input));
+            console.log(this.contactPersonsCheck);
 
-            // this.faxNumbersCheck = this.faxNumbersCheck.concat(this.checkFax(input));
-            // console.log(this.faxNumbersCheck);
+            this.faxNumbersCheck = this.faxNumbersCheck.concat(this.checkFax(input));
+            console.log(this.faxNumbersCheck);
 
-            // this.phoneNumbersCheck = this.phoneNumbersCheck.concat(this.checkPhone(input));
-            // console.log(this.phoneNumbersCheck);
+            this.phoneNumbersCheck = this.phoneNumbersCheck.concat(this.checkPhone(input));
+            console.log(this.phoneNumbersCheck);
 
-            // this.streetsCheck.concat(this.checkStreets(input));
-            // console.log(this.streetsCheck);
+            this.streetsCheck = this.streetsCheck.concat(this.checkStreets(input));
+            console.log(this.streetsCheck);
 
-            // this.citysCheck.concat(this.checkCitys(input));
-            // console.log(this.citysCheck);
+            this.citysCheck = this.citysCheck.concat(this.checkCitys(input));
+            console.log(this.citysCheck);
 
          });
     }

@@ -130,29 +130,30 @@ export class Address {
                 break;
         }
         console.log(objectArray);
-
         $("#" + html_id).val(""); //feld clearen
         let firstvalue = 0;
         for (let index = 0; index < objectArray.length; index++) {
             let object = objectArray[index];
-            let new_id = object.name;
-            console.log(object);
+            if (object !== undefined) {
+                let new_id = object.name;
+                console.log(object);
 
-            let outputPercentage = $("#slider")[0].value; //Prozentzahl vom Input des Schiebereglers 
-            //wenn Slider-WKeit kleiner oder gleich dem des Wertes im Array entspricht ausgeben
-            if (outputPercentage <= object.probability) {
-                if (firstvalue == 0) {
-                    $("#" + html_id).val(object.value).hide().fadeIn(fadeTime); // setzen des ersten Wertes in vorhandenes Feld
+                let outputPercentage = $("#slider")[0].value; //Prozentzahl vom Input des Schiebereglers 
+                //wenn Slider-WKeit kleiner oder gleich dem des Wertes im Array entspricht ausgeben
+                if (outputPercentage <= object.probability) {
+                    if (firstvalue == 0) {
+                        $("#" + html_id).val(object.value).hide().fadeIn(fadeTime); // setzen des ersten Wertes in vorhandenes Feld
+                    }
+                    else {
+                        //Neuerstellung und Implementierung von Feldern bei mehreren Telefonnummern
+                        let newObject = document.createElement("input");
+                        newObject.id = "id" + index + new_id;
+                        newObject.classList.add("delete");
+                        $("#" + new_id).after(newObject);
+                        $("#id" + index + new_id).val(object.value).hide().fadeIn(fadeTime);
+                    }
+                    firstvalue++;
                 }
-                else {
-                    //Neuerstellung und Implementierung von Feldern bei mehreren Telefonnummern
-                    let newObject = document.createElement("input");
-                    newObject.id = "id" + index + new_id;
-                    newObject.classList.add("delete");
-                    $("#" + new_id).after(newObject);
-                    $("#id" + index + new_id).val(object.value).hide().fadeIn(fadeTime);
-                }
-                firstvalue++;
             }
         }
     }
@@ -163,7 +164,7 @@ export class Address {
             case "w3w":
                 console.log(this.getW3wAddress());
                 objectArray = objectArray.concat(this.getW3wAddress());
-        
+
                 break;
 
             case "companyName":
@@ -183,7 +184,7 @@ export class Address {
         if (objectArray.length <= 0) {
             return;
         }
-        
+
         console.log(objectArray);
 
         $("#" + html_id).val("");
@@ -204,15 +205,16 @@ export class Address {
 
         // Gebe null für leere Arrays zurück
         if (Array.length == 0) {
-            return ;
+            return;
         }
 
         // Objekt mit der höhsten Wahrscheinlichkeit returnen
         Array.forEach(element => {
+            if(element !== undefined) {
             if (element.probability > highestPercentage.probability) {
                 highestPercentage = element;
             }
-        });
+        }});
 
         return highestPercentage;
     }
