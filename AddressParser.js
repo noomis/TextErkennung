@@ -18,6 +18,23 @@ export class AddressParser {
     constructor(language, outputPercentage) {
         this.language = language;
         this.outputPercentage = outputPercentage;
+
+        this.fetchCityData();
+
+
+
+        this.companyNamesCheck = []; // only max
+        this.streetsCheck = []; // only max
+        this.postalCodeCheck = [];
+        this.citysCheck = []; //
+        this.homepageCheck = []; // only max
+        this.w3wAddressCheck = []; // only max
+        this.emailsCheck = [];
+        this.phoneNumbersCheck = [];
+        this.faxNumbersCheck = [];
+        this.contactPersonsCheck = [];
+        this.fetchedPostalCodes = []; // only max
+        this.fetchedCityNames = []; // only max
     }
 
     getCompanyNameCheck() {
@@ -59,6 +76,26 @@ export class AddressParser {
 
     getContactPersonsCheck() {
         return this.contactPersonsCheck;
+    }
+    async fetchCityData() {
+        let tempAllPostalCodes = [];
+        let tempAllCityNames = [];
+        //arrays werden auf die Germany-Werte, die im json enthalten sind, gesetzt 
+        await fetch('georef-germany-postleitzahl.json')
+            .then(response => response.json())
+            .then(data => {
+                data.forEach(datensatz => {
+                    tempAllCityNames.push(datensatz.plz_name);
+                    tempAllPostalCodes.push(datensatz.name);
+
+                });
+                // 
+
+            })
+        // 
+        this.setAllPostalCodes(tempAllPostalCodes);
+        this.setCityNames(tempAllCityNames);
+
     }
 
     setAllPostalCodes(_allPostalCodes) {
@@ -654,26 +691,9 @@ export class AddressParser {
 
     }
 
-    async fetchCityData() {
-        let tempAllPostalCodes = [];
-        let tempAllCityNames = [];
-        //arrays werden auf die Germany-Werte, die im json enthalten sind, gesetzt 
-        await fetch('georef-germany-postleitzahl.json')
-            .then(response => response.json())
-            .then(data => {
-                data.forEach(datensatz => {
-                    tempAllCityNames.push(datensatz.plz_name);
-                    tempAllPostalCodes.push(datensatz.name);
 
-                });
-                // 
 
-            })
-        // 
-        this.setAllPostalCodes(tempAllPostalCodes);
-        this.setCityNames(tempAllCityNames);
 
-    }
 
     checkStreets(inputLine) {
         let tempStreet = [];

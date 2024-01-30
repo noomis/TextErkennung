@@ -5,15 +5,23 @@ import { CheckResult } from "./CheckResult.js";
 let timeoutId;
 
 document.getElementById("text").addEventListener("input", printResult);
-let mainParser = new AddressParser();
-let allZipCodes = mainParser.fetchCityData();
 
-mainParser.setAllPostalCodes(allZipCodes);
+let zipParser = new AddressParser();
+// let mainParser = new AddressParser();
+
+// let allZipCodes = mainParser.fetchCityData();
+
+// mainParser.setAllPostalCodes(allZipCodes);
 
 document.getElementById("slider").addEventListener("input", printResult);
 
 function printResult() {
-    
+    // clearInputs();
+    let mainParser = new AddressParser();
+
+    let addressObject = new Address();
+    $(".delete").remove();
+
     let outputPercentage = $("#slider")[0].value;
 
     $("#probValue").text("Treffer Wahrscheinlichkeit: " + outputPercentage + "%");
@@ -27,7 +35,6 @@ function printResult() {
         if (input != "") { // Nur ausführen wenn Eingabe nicht leer ist
 
             mainParser.parseText(input);
-            let addressObject = new Address();
             
 
             addressObject.setEmails(mainParser.getEmailsCheck());
@@ -71,6 +78,10 @@ document.getElementById("text").addEventListener("input", adjustHeight);
 function adjustHeight(el) {
     el.style.height = (el.scrollHeight) ? (el.scrollHeight) + "px" : "54px";
 }
+
+// function clearInputs() {
+//         addressObject.setCompanyName("");
+// }
 
 
 let i = 0;

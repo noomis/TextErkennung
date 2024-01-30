@@ -13,6 +13,19 @@ export class Address {
     faxNumbers = [];
     contactPersons = [];
 
+    constructor() {
+       this.companyName = [];
+       this.postalCode = [];
+       this.street = [];
+       this.city = [];
+       this.homepage = [];
+       this.w3wAddress = [];
+       this.emails = [];
+       this.phoneNumbers = [];
+       this.faxNumbers = [];
+       this.contactPersons = [];
+    }
+
     getCompanyName() {
         return this.companyName;
     }
@@ -163,6 +176,8 @@ export class Address {
     }
 
     outputMaxValues(html_id, fadeTime) {
+        $("#" + html_id).val(""); //feld clearen
+
         let objectArray = [];
         switch (html_id) {
             case "w3w":
