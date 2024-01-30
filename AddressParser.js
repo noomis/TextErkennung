@@ -60,14 +60,14 @@ export class AddressParser {
     getContactPersonsCheck() {
         return this.contactPersonsCheck;
     }
-    
+
     setAllPostalCodes(_allPostalCodes) {
         this.fetchedPostalCodes = this.fetchedPostalCodes.concat(_allPostalCodes);
 
     }
 
     setCityNames(_cityNames) {
-        this.fetchedCityNames = this.fetchedCityNames.concat(_cityNames);    
+        this.fetchedCityNames = this.fetchedCityNames.concat(_cityNames);
     }
 
     parseText(input) {
@@ -77,33 +77,34 @@ export class AddressParser {
 
         inputLines.forEach(input => {
 
-            this.w3wAddressCheck = this.w3wAddressCheck.concat(this.checkW3ws(input));
-            console.log(this.w3wAddressCheck);
-            
-            this.homepageCheck.concat(this.checkHomepage(input));
-            console.log(this.homepageCheck);
+            // this.w3wAddressCheck = this.w3wAddressCheck.concat(this.checkW3ws(input));
+            // console.log(this.w3wAddressCheck);
+
+            // this.homepageCheck.concat(this.checkHomepage(input));
+            // console.log(this.homepageCheck);
 
             this.emailsCheck = this.emailsCheck.concat(this.checkMails(input));
             console.log(this.emailsCheck);
 
-            this.companyNamesCheck = this.companyNamesCheck.concat(this.checkCompanyNames(input));
-            console.log(this.companyNamesCheck);
+            // this.companyNamesCheck = this.companyNamesCheck.concat(this.checkCompanyNames(input));
+            // console.log(this.companyNamesCheck);
 
-            this.contactPersonsCheck = this.contactPersonsCheck.concat(this.checkContactPersons(input));
-            console.log(this.contactPersonsCheck);
+            // this.contactPersonsCheck = this.contactPersonsCheck.concat(this.checkContactPersons(input));
+            // console.log(this.contactPersonsCheck);
 
-            this.faxNumbersCheck = this.faxNumbersCheck.concat(this.checkFax(input));
-            console.log(this.faxNumbersCheck);
+            // this.faxNumbersCheck = this.faxNumbersCheck.concat(this.checkFax(input));
+            // console.log(this.faxNumbersCheck);
 
-            this.phoneNumbersCheck = this.phoneNumbersCheck.concat(this.checkPhone(input));
-            console.log(this.phoneNumbersCheck);
+            // this.phoneNumbersCheck = this.phoneNumbersCheck.concat(this.checkPhone(input));
+            // console.log(this.phoneNumbersCheck);
 
-            this.streetsCheck.concat(this.checkStreets(input));
-            console.log(this.streetsCheck);
+            // this.streetsCheck.concat(this.checkStreets(input));
+            // console.log(this.streetsCheck);
 
-            this.citysCheck.concat(this.checkCitys(input));
-            console.log(this.citysCheck);
-        });
+            // this.citysCheck.concat(this.checkCitys(input));
+            // console.log(this.citysCheck);
+
+         });
     }
 
     checkW3ws(inputLine) {
@@ -189,7 +190,7 @@ export class AddressParser {
             }
 
             console.log(element + ": ist mit " + prob + "% Wahrscheinlichkeit eine w3w Adresse");
-            tempW3w.push(new CheckResult("w3w",words[i], prob));
+            tempW3w.push(new CheckResult("w3w", words[i], prob));
         }
 
         return tempW3w;
@@ -358,7 +359,7 @@ export class AddressParser {
             }
 
             console.log(element + ": ist mit " + wordProb + "% Wahrscheinlichkeit eine Mail");
-            tempMails.push(new CheckResult("mail",lineWords[index], wordProb));
+            tempMails.push(new CheckResult("mail", lineWords[index], wordProb));
         }
 
         return tempMails;
@@ -419,7 +420,7 @@ export class AddressParser {
 
         if (wordProb >= 50) {
             console.log(inputLine + " ist mit " + wordProb + "% Wahrscheinlichkeit ein Firmenname");
-            tempCheckCompanyNames.push(new CheckResult("companyName",inputLine, wordProb));
+            tempCheckCompanyNames.push(new CheckResult("companyName", inputLine, wordProb));
         }
 
         return tempCheckCompanyNames;
@@ -506,7 +507,7 @@ export class AddressParser {
                         if (!vornamen.includes(wordBefore)) {
 
                             if (!name.includes("§")) {
-                                tempNames.push(new CheckResult("contactPerson",element +" "+ wordAfter, prob));
+                                tempNames.push(new CheckResult("contactPerson", element + " " + wordAfter, prob));
                                 console.log(element + " " + wordAfter + " ist mit " + prob + "% Wahrscheinlichkeit ein Name");
                             }
                         }
@@ -516,7 +517,7 @@ export class AddressParser {
                 else {
                     if (!tempNames.includes(tripleName)) {
                         tripleName = tripleName.replaceAll(",", "").replaceAll("_", "");
-                        tempNames.push(new CheckResult("contactPerson",element + " "+ wordAfter + " " + word2After, prob));
+                        tempNames.push(new CheckResult("contactPerson", element + " " + wordAfter + " " + word2After, prob));
                         console.log(element + " " + wordAfter + " ist mit " + prob + "% Wahrscheinlichkeit ein Name");
                     }
                 }
@@ -540,7 +541,7 @@ export class AddressParser {
                 if (words[i].includes(blacklist[b])) {
                     if (fullNumber.trim().length != 0 && prob != 0) {
                         console.log(fullNumber + ": ist mit " + prob + "% Wahrscheinlichkeit eine Faxnummer");
-                        tempFax.push(new CheckResult("faxNumber",words[i], prob));
+                        tempFax.push(new CheckResult("faxNumber", words[i], prob));
                     }
 
                     fullNumber = "";
@@ -571,13 +572,13 @@ export class AddressParser {
 
         if (fullNumber.trim().length != 0 && prob != 0) {
             console.log(fullNumber + ": ist mit " + prob + "% Wahrscheinlichkeit eine Faxnummer");
-            tempFax.push(new CheckResult("faxNumber",fullNumber, prob));
+            tempFax.push(new CheckResult("faxNumber", fullNumber, prob));
         }
 
         return tempFax;
     }
 
-     checkPhone(inputLine) {
+    checkPhone(inputLine) {
         let tempPhone = []
 
         if (inputLine.length < 10) {
@@ -634,7 +635,7 @@ export class AddressParser {
 
         if (fullNumber.trim().length != 0 && prob != 0) {
             console.log(fullNumber + ": ist mit " + prob + "% Wahrscheinlichkeit eine Telefonnummer");
-            tempPhone.push(new CheckResult("phoneNumber",fullNumber, prob));
+            tempPhone.push(new CheckResult("phoneNumber", fullNumber, prob));
             console.log(tempPhone);
 
         }
@@ -658,17 +659,17 @@ export class AddressParser {
         await fetch('georef-germany-postleitzahl.json')
             .then(response => response.json())
             .then(data => {
-                  data.forEach(datensatz => {
-                   tempAllCityNames.push(datensatz.plz_name);
-                   tempAllPostalCodes.push(datensatz.name);
+                data.forEach(datensatz => {
+                    tempAllCityNames.push(datensatz.plz_name);
+                    tempAllPostalCodes.push(datensatz.name);
 
                 });
                 // console.log(tempAllPostalCodes);
 
             })
-            // console.log(tempAllPostalCodes);
-            this.setAllPostalCodes(tempAllPostalCodes);
-            this.setCityNames(tempAllCityNames);
+        // console.log(tempAllPostalCodes);
+        this.setAllPostalCodes(tempAllPostalCodes);
+        this.setCityNames(tempAllCityNames);
 
     }
 
@@ -853,7 +854,7 @@ export class AddressParser {
 
         if (fullStreetName.trim().length != 0 && prob != 0) {
             console.log(fullStreetName + ": ist mit " + prob + "% Wahrscheinlichkeit eine Straße");
-            tempStreet.push(new CheckResult("street",fullStreetName, prob));
+            tempStreet.push(new CheckResult("street", fullStreetName, prob));
         }
 
         return tempStreet;
@@ -909,7 +910,7 @@ export class AddressParser {
         //check ob elements im json enthalten sind und somit eine Stadt matchen
         zipLoop: for (let i = 0; i < nurZahlen.length; i++) {
             const element = nurZahlen[i];
-console.log(this.allPostalCodes);
+            console.log(this.allPostalCodes);
             if (this.fetchedPostalCodes.includes(element)) {
                 prob += 60;
                 city = this.fetchedPostalCodes.indexOf(element);
@@ -943,17 +944,17 @@ console.log(this.allPostalCodes);
                 // zipProbability.push(prob);
                 // cityValue.push(wordAfter);
                 // cityProbability.push(prob);
-                tempCitys.push("city",new CheckResult(element, prob));
-                tempPostalCode.push("postalCode",new CheckResult(wordAfter, prob));
+                tempCitys.push("city", new CheckResult(element, prob));
+                tempPostalCode.push("postalCode", new CheckResult(wordAfter, prob));
                 console.log(element + " " + wordAfter + " ist mit " + prob + "% Wahrscheinlichkeit eine Postleitzahl mit Ort");
             } else {
                 continue zipLoop;
             }
-       
+
         }
         console.log(tempCitys);
-        console.log(tempPostalCode); 
-        return(tempCitys, tempPostalCode);
+        console.log(tempPostalCode);
+        return (tempCitys, tempPostalCode);
     }
-    
+
 }
