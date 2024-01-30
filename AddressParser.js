@@ -60,6 +60,7 @@ export class AddressParser {
     getContactPersonsCheck() {
         return this.contactPersonsCheck;
     }
+    
     setAllPostalCodes(_allPostalCodes) {
         this.fetchedPostalCodes = this.fetchedPostalCodes.concat(_allPostalCodes);
 
