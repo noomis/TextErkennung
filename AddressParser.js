@@ -663,10 +663,10 @@ export class AddressParser {
                    tempAllPostalCodes.push(datensatz.name);
 
                 });
-                console.log(tempAllPostalCodes);
+                // console.log(tempAllPostalCodes);
 
             })
-            console.log(tempAllPostalCodes);
+            // console.log(tempAllPostalCodes);
             this.setAllPostalCodes(tempAllPostalCodes);
             this.setCityNames(tempAllCityNames);
 
