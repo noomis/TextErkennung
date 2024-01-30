@@ -9,7 +9,14 @@ let mainParser = new AddressParser();
 let allZipCodes = mainParser.fetchCityData();
 console.log(allZipCodes);
 mainParser.setAllPostalCodes(allZipCodes);
+
+document.getElementById("slider").addEventListener("Oninput", printResult);
+
 function printResult() {
+    console.log("test");
+    let outputPercentage = $("#slider")[0].value;
+
+    $("#probValue").text("Treffer Wahrscheinlichkeit: " + outputPercentage + "%");
 
     clearTimeout(timeoutId);
 
@@ -26,6 +33,8 @@ function printResult() {
         addressObject.outputAllValues("email",200)
         
     }, 1000);
+
+    
 }
 
 
