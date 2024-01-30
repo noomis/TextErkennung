@@ -22,7 +22,7 @@ export class Address {
     }
 
     getPostalCode() {
-        return this.zip;
+        return this.postalCode;
     }
 
     setPostalCode(postalCode) {
@@ -30,6 +30,7 @@ export class Address {
     }
 
     getStreet() {
+        console.log(this.street);
         return this.street;
     }
 
@@ -194,11 +195,12 @@ export class Address {
         }
 
         console.log(objectArray);
+        console.log($("#" + html_id));
 
         $("#" + html_id).val("");
 
         let maxValue = this.findMaxPercentage(objectArray);
-        console.log(maxValue);
+        console.log(objectArray);
 
         // wenn slider wert größer als Wkeit nicht ausgeben
         let outputPercentage = $("#slider")[0].value;
