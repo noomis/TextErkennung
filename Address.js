@@ -30,12 +30,12 @@ export class Address {
     }
 
     getStreet() {
-        console.log(this.street);
+        
         return this.street;
     }
 
     setStreet(_street) {
-        console.log(_street);
+        
         this.street = this.street.concat(_street);
     }
 
@@ -68,7 +68,7 @@ export class Address {
     }
 
     setEmails(_emails) {
-        console.log(_emails);
+        
         this.emails = this.emails.concat(_emails);
     }
 
@@ -101,30 +101,30 @@ export class Address {
         let objectArray = [];
         switch (html_id) {
             case "email":
-                console.log('email: ', email);
-                console.log(this.getEmails());
+                
+                
                 objectArray = objectArray.concat(this.getEmails());
                 break;
 
             case "contactPerson":
-                console.log('contactPerson: ', contactPerson);
-                console.log(this.getContactPersons());
+                
+                
                 objectArray = objectArray.concat(this.getContactPersons());
                 break;
 
             case "phoneNumber":
-                console.log('phoneNumber: ', phoneNumber);
-                console.log(this.getPhoneNumbers());
+                
+                
                 objectArray = objectArray.concat(this.getPhoneNumbers());
                 break;
 
             case "contactPerson":
-                console.log(this.getContactPersons());
+                
                 objectArray = objectArray.concat(this.getContactPersons());
                 break;
 
             case "faxNumber":
-                console.log(this.getFaxNumbers());
+                
                 objectArray = objectArray.concat(this.getFaxNumbers());
                 break;
 
@@ -133,14 +133,14 @@ export class Address {
             default:
                 break;
         }
-        console.log(objectArray);
+        
         $("#" + html_id).val(""); //feld clearen
         let firstvalue = 0;
         for (let index = 0; index < objectArray.length; index++) {
             let object = objectArray[index];
             if (object !== undefined) {
                 let new_id = object.name;
-                console.log(object);
+                
 
                 let outputPercentage = $("#slider")[0].value; //Prozentzahl vom Input des Schiebereglers 
                 //wenn Slider-WKeit kleiner oder gleich dem des Wertes im Array entspricht ausgeben
@@ -166,23 +166,23 @@ export class Address {
         let objectArray = [];
         switch (html_id) {
             case "w3w":
-                console.log(this.getW3wAddress());
+                
                 objectArray = objectArray.concat(this.getW3wAddress());
 
                 break;
 
             case "companyName":
-                console.log(this.getCompanyName());
+                
                 objectArray = objectArray.concat(this.getCompanyName());
                 break;
 
             case "homepage":
-                console.log(this.getHomepage());
+                
                 objectArray = objectArray.concat(this.getHomepage());
                 break;
 
             case "street":
-                console.log(this.getStreet());
+                
                 objectArray = objectArray.concat(this.getStreet());
                 break;
 
@@ -194,13 +194,13 @@ export class Address {
             return;
         }
 
-        console.log(objectArray);
-        console.log($("#" + html_id));
+        
+        
 
         $("#" + html_id).val("");
 
         let maxValue = this.findMaxPercentage(objectArray);
-        console.log(objectArray);
+        
 
         // wenn slider wert größer als Wkeit nicht ausgeben
         let outputPercentage = $("#slider")[0].value;
@@ -229,7 +229,7 @@ export class Address {
         Array.forEach(element => {
             if (element !== undefined) {
 
-                console.log(element);
+                
                 if (element.probability > highestPercentage.probability) {
                     highestPercentage = element;
                 }

@@ -45,7 +45,7 @@ export class AddressParser {
     }
 
     getEmailsCheck() {
-        console.log(this.emailsCheck);
+        
         return this.emailsCheck;
     }
 
@@ -73,36 +73,36 @@ export class AddressParser {
     parseText(input) {
         let inputLines = input.split("\n");
 
-        console.log(inputLines);
+        
 
         inputLines.forEach(input => {
 
             this.w3wAddressCheck = this.w3wAddressCheck.concat(this.checkW3ws(input));
-            console.log(this.w3wAddressCheck);
+            
 
             this.homepageCheck = this.homepageCheck.concat(this.checkHomepage(input));
-            console.log(this.homepageCheck);
+            
 
             this.emailsCheck = this.emailsCheck.concat(this.checkMails(input));
-            console.log(this.emailsCheck);
+            
 
             this.companyNamesCheck = this.companyNamesCheck.concat(this.checkCompanyNames(input));
-            console.log(this.companyNamesCheck);
+            
 
             this.contactPersonsCheck = this.contactPersonsCheck.concat(this.checkContactPersons(input));
-            console.log(this.contactPersonsCheck);
+            
 
             this.faxNumbersCheck = this.faxNumbersCheck.concat(this.checkFax(input));
-            console.log(this.faxNumbersCheck);
+            
 
             this.phoneNumbersCheck = this.phoneNumbersCheck.concat(this.checkPhone(input));
-            console.log(this.phoneNumbersCheck);
+            
 
             this.streetsCheck = this.streetsCheck.concat(this.checkStreets(input));
-            console.log(this.streetsCheck);
+            
 
             this.citysCheck = this.citysCheck.concat(this.checkCitys(input));
-            console.log(this.citysCheck);
+            
 
          });
     }
@@ -189,7 +189,7 @@ export class AddressParser {
                 prob += 5;
             }
 
-            console.log(element + ": ist mit " + prob + "% Wahrscheinlichkeit eine w3w Adresse");
+            
             tempW3w.push(new CheckResult("w3w", words[i], prob));
         }
 
@@ -255,7 +255,7 @@ export class AddressParser {
             }
             //push in globalen Array & output
             if (prob > 0) {
-                console.log('"' + element + '"' + " ist mit " + prob + "% Wahrscheinlichkeit eine URL");
+                
                 tempUrl.push(new CheckResult("homepage", element, prob));
             }
         }
@@ -331,7 +331,7 @@ export class AddressParser {
 
             if (dotHit.length > 1) {    // Checkt ob die local domain mindestens 2 Zeichen lang ist.
                 if (dotHit[dotHit.length - 1] - atHit[0] < 3) {
-                    console.log('dotHit[dotHit.length - 1]: ', dotHit[dotHit.length - 1]);
+                    
                     continue wordLoop;
 
                 } else {
@@ -358,7 +358,7 @@ export class AddressParser {
                 }
             }
 
-            console.log(element + ": ist mit " + wordProb + "% Wahrscheinlichkeit eine Mail");
+            
             tempMails.push(new CheckResult("mail", lineWords[index], wordProb));
         }
 
@@ -419,7 +419,7 @@ export class AddressParser {
         });
 
         if (wordProb >= 50) {
-            console.log(inputLine + " ist mit " + wordProb + "% Wahrscheinlichkeit ein Firmenname");
+            
             tempCheckCompanyNames.push(new CheckResult("companyName", inputLine, wordProb));
         }
 
@@ -508,7 +508,7 @@ export class AddressParser {
 
                             if (!name.includes("§")) {
                                 tempNames.push(new CheckResult("contactPerson", element + " " + wordAfter, prob));
-                                console.log(element + " " + wordAfter + " ist mit " + prob + "% Wahrscheinlichkeit ein Name");
+                                
                             }
                         }
                     }
@@ -518,7 +518,7 @@ export class AddressParser {
                     if (!tempNames.includes(tripleName)) {
                         tripleName = tripleName.replaceAll(",", "").replaceAll("_", "");
                         tempNames.push(new CheckResult("contactPerson", element + " " + wordAfter + " " + word2After, prob));
-                        console.log(element + " " + wordAfter + " ist mit " + prob + "% Wahrscheinlichkeit ein Name");
+                        
                     }
                 }
             }
@@ -540,7 +540,7 @@ export class AddressParser {
             for (let b = 0; b < blacklist.length; b++) {
                 if (words[i].includes(blacklist[b])) {
                     if (fullNumber.trim().length != 0 && prob != 0) {
-                        console.log(fullNumber + ": ist mit " + prob + "% Wahrscheinlichkeit eine Faxnummer");
+                        
                         tempFax.push(new CheckResult("faxNumber", words[i], prob));
                     }
 
@@ -571,7 +571,7 @@ export class AddressParser {
         }
 
         if (fullNumber.trim().length != 0 && prob != 0) {
-            console.log(fullNumber + ": ist mit " + prob + "% Wahrscheinlichkeit eine Faxnummer");
+            
             tempFax.push(new CheckResult("faxNumber", fullNumber, prob));
         }
 
@@ -600,7 +600,7 @@ export class AddressParser {
             for (let b = 0; b < blacklist.length; b++) {
                 if (words[i].includes(blacklist[b])) {
                     if (fullNumber.trim().length != 0 && prob != 0) {
-                        console.log(fullNumber + ": ist mit " + prob + "% Wahrscheinlichkeit eine Telefonnummer");
+                        
                         telValue.push(fullNumber);
                         telProbability.push(prob);
                     }
@@ -634,18 +634,18 @@ export class AddressParser {
         }
 
         if (fullNumber.trim().length != 0 && prob != 0) {
-            console.log(fullNumber + ": ist mit " + prob + "% Wahrscheinlichkeit eine Telefonnummer");
+            
             tempPhone.push(new CheckResult("phoneNumber", fullNumber, prob));
-            console.log(tempPhone);
+            
 
         }
 
         if (tmpFullNum > 5) {
             fullUnformattedNumber = fullUnformattedNumber.trim();
             if (fullUnformattedNumber.length > 10) {
-                console.log(tempPhone);
+                
                 tempPhone = tempPhone.concat(this.checkPhone(fullUnformattedNumber));
-                console.log(tempPhone);
+                
             }
         }
         return tempPhone;
@@ -664,10 +664,10 @@ export class AddressParser {
                     tempAllPostalCodes.push(datensatz.name);
 
                 });
-                // console.log(tempAllPostalCodes);
+                // 
 
             })
-        // console.log(tempAllPostalCodes);
+        // 
         this.setAllPostalCodes(tempAllPostalCodes);
         this.setCityNames(tempAllCityNames);
 
@@ -853,7 +853,7 @@ export class AddressParser {
         }
 
         if (fullStreetName.trim().length != 0 && prob != 0) {
-            console.log(fullStreetName + ": ist mit " + prob + "% Wahrscheinlichkeit eine Straße");
+            
             tempStreet.push(new CheckResult("street", fullStreetName, prob));
         }
 
@@ -862,7 +862,7 @@ export class AddressParser {
 
     checkCitys(inputLine) {
 
-        console.log(this.allPostalCodes);
+        
 
         let tempCitys = [];
         let tempPostalCode = [];
@@ -910,7 +910,7 @@ export class AddressParser {
         //check ob elements im json enthalten sind und somit eine Stadt matchen
         zipLoop: for (let i = 0; i < nurZahlen.length; i++) {
             const element = nurZahlen[i];
-            console.log(this.allPostalCodes);
+            
             if (this.fetchedPostalCodes.includes(element)) {
                 prob += 60;
                 city = this.fetchedPostalCodes.indexOf(element);
@@ -946,14 +946,14 @@ export class AddressParser {
                 // cityProbability.push(prob);
                 tempCitys.push("city", new CheckResult(element, prob));
                 tempPostalCode.push("postalCode", new CheckResult(wordAfter, prob));
-                console.log(element + " " + wordAfter + " ist mit " + prob + "% Wahrscheinlichkeit eine Postleitzahl mit Ort");
+                
             } else {
                 continue zipLoop;
             }
 
         }
-        console.log(tempCitys);
-        console.log(tempPostalCode);
+        
+        
         return (tempCitys, tempPostalCode);
     }
 
