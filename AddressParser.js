@@ -915,10 +915,10 @@ export class AddressParser {
         zipLoop: for (let i = 0; i < nurZahlen.length; i++) {
             const element = nurZahlen[i];
 console.log(this.allPostalCodes);
-            if (this.allPostalCodes.includes(element)) {
+            if (this.fetchedPostalCodes.includes(element)) {
                 prob += 60;
-                city = this.allPostalCodes.indexOf(element);
-                cityName = this.allCityNames[city];
+                city = this.fetchedPostalCodes.indexOf(element);
+                cityName = this.fetchedCityNames[city];
 
                 //check ob Wort nach dem zip Code der Stadt entspricht die im json eingetragen ist
                 if (words[i + 1] !== undefined) {
