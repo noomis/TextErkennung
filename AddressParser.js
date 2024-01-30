@@ -89,7 +89,7 @@ export class AddressParser {
             this.companyNamesCheck.concat(this.checkCompanyNames(input));
             console.log(this.companyNamesCheck);
 
-            this.contactPersonsCheck.concat(this.checkContactPersons(input));
+            this.contactPersonsCheck = this.contactPersonsCheck.concat(this.checkContactPersons(input));
             console.log(this.contactPersonsCheck);
 
             this.faxNumbersCheck.concat(this.checkFax(input));
@@ -509,7 +509,7 @@ export class AddressParser {
                         if (!vornamen.includes(wordBefore)) {
 
                             if (!name.includes("§")) {
-                                tempNames.push(new CheckResult(element, prob));
+                                tempNames.push(new CheckResult("contactPerson",element +" "+ wordAfter, prob));
                                 console.log(element + " " + wordAfter + " ist mit " + prob + "% Wahrscheinlichkeit ein Name");
                             }
                         }
@@ -519,7 +519,7 @@ export class AddressParser {
                 else {
                     if (!tempNames.includes(tripleName)) {
                         tripleName = tripleName.replaceAll(",", "").replaceAll("_", "");
-                        tempNames.push(new CheckResult("name",element, prob));
+                        tempNames.push(new CheckResult("contactPerson",element + " "+ wordAfter + " " + word2After, prob));
                         console.log(element + " " + wordAfter + " ist mit " + prob + "% Wahrscheinlichkeit ein Name");
                     }
                 }

@@ -10,7 +10,7 @@ let allZipCodes = mainParser.fetchCityData();
 console.log(allZipCodes);
 mainParser.setAllPostalCodes(allZipCodes);
 
-document.getElementById("slider").addEventListener("Oninput", printResult);
+document.getElementById("slider").addEventListener("input", printResult);
 
 function printResult() {
     console.log("test");
@@ -27,10 +27,23 @@ function printResult() {
         mainParser.parseText(input);
         let addressObject = new Address();
         console.log(mainParser.getEmailsCheck());
-        addressObject.setemails(mainParser.getEmailsCheck());
-        console.log(addressObject.getemails());
 
-        addressObject.outputAllValues("email",200)
+        addressObject.setemails(mainParser.getEmailsCheck());
+        addressObject.outputAllValues("email",200);
+
+        addressObject.setcontactPersons(mainParser.getContactPersonsCheck());
+        addressObject.outputAllValues("contactPerson",200);
+
+
+
+
+
+
+
+
+
+        // addressObject.setw3wAddress(mainParser.getW3wAddressCheck());
+        // addressObject.outputAllValues("w3w",200)
         
     }, 1000);
 
