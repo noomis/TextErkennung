@@ -101,7 +101,7 @@ export class AddressParser {
             this.streetsCheck = this.streetsCheck.concat(this.checkStreets(input));
             
 
-            this.citysCheck = this.citysCheck.concat(this.checkCitys(input));
+            this.postalCodeCheck = this.postalCodeCheck.concat(this.checkPostalCode(input));
             
          });
     }
@@ -936,12 +936,7 @@ export class AddressParser {
             }
 
             if (prob > 0) {
-                // zipValue.push(element);
-                // zipProbability.push(prob);
-                // cityValue.push(wordAfter);
-                // cityProbability.push(prob);
-                tempCitys.push("city", new CheckResult(element, prob));
-                tempPostalCode.push("postalCode", new CheckResult(wordAfter, prob));
+                tempPostalCode.push(new CheckResult("postalCode", element, prob));
                 
             } else {
                 continue zipLoop;
@@ -949,7 +944,7 @@ export class AddressParser {
 
         }
         
-        return (tempCitys, tempPostalCode);
+        return tempPostalCode;
     }
 
 }
