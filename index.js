@@ -31,10 +31,7 @@ function printResult() {
         addressObject.setEmails(mainParser.getEmailsCheck());
         addressObject.outputAllValues("email", 200);
 
-        addressObject.setcontactPersons(mainParser.getContactPersonsCheck());
-        addressObject.outputAllValues("contactPerson",200);
-
-        addressObject.setphoneNumbers(mainParser.getPhoneNumbersCheck());
+        addressObject.setPhoneNumbers(mainParser.getPhoneNumbersCheck());
         addressObject.outputAllValues("phoneNumber",200);
 
         addressObject.setContactPersons(mainParser.getContactPersonsCheck());

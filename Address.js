@@ -68,7 +68,7 @@ export class Address {
         this.phoneNumbers = phoneNumbers;
     }
     
-    getfaxNumbers() {
+    getFaxNumbers() {
         return this.faxNumbers;
     }
     setFaxNumbers(faxNumbers) {
@@ -96,14 +96,14 @@ export class Address {
 
             case "contactPerson":
             console.log('contactPerson: ', contactPerson);
-                console.log(this.getcontactPersons());
-                objectArray = objectArray.concat(this.getcontactPersons());
+                console.log(this.getContactPersons());
+                objectArray = objectArray.concat(this.getContactPersons());
                 break;
 
             case "phoneNumber":
             console.log('phoneNumber: ', phoneNumber);
-                console.log(this.getphoneNumbers());
-                objectArray = objectArray.concat(this.getphoneNumbers());
+                console.log(this.getPhoneNumbers());
+                objectArray = objectArray.concat(this.getPhoneNumbers());
                 break;
 
             case "contactPerson":
