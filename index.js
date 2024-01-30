@@ -24,21 +24,25 @@ function printResult() {
 
         let input = document.getElementById("text").value;
 
-        mainParser.parseText(input);
-        let addressObject = new Address();
-        console.log(mainParser.getEmailsCheck());
+        if (input != "") { // Nur ausführen wenn Eingabe nicht leer ist
+            
+            mainParser.parseText(input);
+            let addressObject = new Address();
+            console.log(mainParser.getEmailsCheck());
+    
+            addressObject.setEmails(mainParser.getEmailsCheck());
+            addressObject.outputAllValues("email", 200);
+    
+            addressObject.setPhoneNumbers(mainParser.getPhoneNumbersCheck());
+            addressObject.outputAllValues("phoneNumber",200);
+    
+            addressObject.setContactPersons(mainParser.getContactPersonsCheck());
+            addressObject.outputAllValues("contactPerson", 200);
+    
+            addressObject.setFaxNumbers(mainParser.getFaxNumbersCheck());
+            addressObject.outputAllValues("faxNumber", 200);
 
-        addressObject.setemails(mainParser.getEmailsCheck());
-        addressObject.outputAllValues("email",200);
-
-        addressObject.setcontactPersons(mainParser.getContactPersonsCheck());
-        addressObject.outputAllValues("contactPerson",200);
-
-
-
-
-
-
+        }
 
 
 
@@ -48,7 +52,6 @@ function printResult() {
         
     }, 1000);
 
-    
 }
 
 
