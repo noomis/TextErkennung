@@ -42,8 +42,9 @@ function printResult() {
 
 
 
-        // addressObject.setw3wAddress(mainParser.getW3wAddressCheck());
-        // addressObject.outputAllValues("w3w",200)
+
+        addressObject.setw3wAddress(mainParser.getW3wAddressCheck());
+        addressObject.outputMaxValues("w3w",200);
         
     }, 1000);
 

@@ -1,3 +1,5 @@
+import { CheckResult } from "./CheckResult.js";
+
 export class Address {
 
     companyName = [];
@@ -67,7 +69,7 @@ export class Address {
     setphoneNumbers(phoneNumbers) {
         this.phoneNumbers = phoneNumbers;
     }
-    
+
     getfaxNumbers() {
         return this.faxNumbers;
     }
@@ -85,24 +87,24 @@ export class Address {
 
 
     outputAllValues(html_id, fadeTime) {
-  let objectArray = [];
+        let objectArray = [];
         switch (html_id) {
             case "email":
                 console.log(this.getemails());
-               objectArray = objectArray.concat(this.getemails());
+                objectArray = objectArray.concat(this.getemails());
                 break;
 
-                case "contactPerson":
-                    console.log(this.getcontactPersons());
-                   objectArray = objectArray.concat(this.getcontactPersons());
-                    break;
-            
-        
+            case "contactPerson":
+                console.log(this.getcontactPersons());
+                objectArray = objectArray.concat(this.getcontactPersons());
+                break;
+
+
             default:
                 break;
         }
         console.log(objectArray);
-        
+
         $("#" + html_id).val(""); //feld clearen
         let firstvalue = 0;
         for (let index = 0; index < objectArray.length; index++) {
@@ -128,5 +130,52 @@ export class Address {
         }
     }
 
+    outputMaxValues(html_id, fadeTime) {
+        let objectArray = [];
+        switch (html_id) {
+            case "w3w":
+                console.log(this.getw3wAddress());
+                objectArray = objectArray.concat(this.getw3wAddress());
+                break;
 
+            case "fgd":
+                console.log(this.getcontactPersons());
+                objectArray = objectArray.concat(this.getcontactPersons());
+                break;
+
+            default:
+                break;
+        }
+        console.log(objectArray);
+
+        $("#" + html_id).val("");
+
+        let maxValue = this.findMaxPercentage(objectArray);
+        console.log(maxValue);
+
+        // wenn slider wert größer als Wkeit nicht ausgeben
+        let outputPercentage = $("#slider")[0].value;
+
+        if (outputPercentage <= maxValue.probability) {
+            $("#" + html_id).val(maxValue.value).hide().fadeIn(fadeTime);
+        }
+    }
+
+    findMaxPercentage (Array) {
+        let highestPercentage = Array[0];
+
+        // Gebe null für leere Arrays zurück
+        if (Array.length == 0) {
+            return null; 
+        }
+    
+        // Objekt mit der höhsten Wahrscheinlichkeit returnen
+        Array.forEach(element => {
+            if (element.probability > highestPercentage.probability) {
+                highestPercentage = element;
+            }
+        });
+
+        return highestPercentage;
+    }
 }

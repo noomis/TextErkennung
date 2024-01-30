@@ -77,7 +77,7 @@ export class AddressParser {
 
         inputLines.forEach(input => {
 
-            this.w3wAddressCheck.concat(this.checkW3ws(input));
+            this.w3wAddressCheck = this.w3wAddressCheck.concat(this.checkW3ws(input));
             console.log(this.w3wAddressCheck);
             
             this.homepageCheck.concat(this.checkHomepage(input));
