@@ -28,13 +28,13 @@ function printResult() {
         let addressObject = new Address();
         console.log(mainParser.getEmailsCheck());
 
-        addressObject.setemails(mainParser.getEmailsCheck());
+        addressObject.setEmails(mainParser.getEmailsCheck());
         addressObject.outputAllValues("email", 200);
 
-        addressObject.setcontactPersons(mainParser.getContactPersonsCheck());
+        addressObject.setContactPersons(mainParser.getContactPersonsCheck());
         addressObject.outputAllValues("contactPerson", 200);
 
-        addressObject.setfaxNumbers(mainParser.getFaxNumbersCheck());
+        addressObject.setFaxNumbers(mainParser.getFaxNumbersCheck());
         addressObject.outputAllValues("faxNumber", 200);
 
         // addressObject.setw3wAddress(mainParser.getW3wAddressCheck());
