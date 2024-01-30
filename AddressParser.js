@@ -68,7 +68,6 @@ export class AddressParser {
         this.fetchedCityNames = this.fetchedCityNames.concat(_cityNames);    
     }
 
-
     parseText(input) {
         let inputLines = input.split("\n");
 
@@ -654,7 +653,6 @@ export class AddressParser {
         return tempPhone;
 
     }
-
 
     async fetchCityData() {
         let tempAllPostalCodes = [];
