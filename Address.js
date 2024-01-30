@@ -1,14 +1,15 @@
 export class Address {
-    companyName = "";
-    postalCode = "";
-    street = "";
-    city = "";
-    homepage = "";
-    w3wAddress = "";
-    emails = "";
-    phoneNumbers = "";
-    faxNumbers = "";
-    contactPersons = "";
+
+    companyName = [];
+    postalCode = [];
+    street = [];
+    city = [];
+    homepage = [];
+    w3wAddress = [];
+    emails = [];
+    phoneNumbers = [];
+    faxNumbers = [];
+    contactPersons = [];
 
     getcompanyName() {
         return this.companyName;
@@ -55,8 +56,9 @@ export class Address {
     getemails() {
         return this.emails;
     }
-    setemails(emails) {
-        this.emails = emails;
+    setemails(_emails) {
+        console.log(_emails);
+        this.emails = this.emails.concat(_emails);
     }
 
     getphoneNumbers() {
@@ -79,4 +81,45 @@ export class Address {
     setcontactPersons(contactPersons) {
         this.contactPersons = contactPersons;
     }
+
+
+
+    outputAllValues(html_id, fadeTime) {
+  let objectArray = [];
+        switch (html_id) {
+            case "email":
+                console.log(this.getemails());
+               objectArray = objectArray.concat(this.getemails());
+                break;
+        
+            default:
+                break;
+        }
+        console.log(objectArray);
+        $("#" + html_id).val(""); //feld clearen
+        let firstvalue = 0;
+        for (let index = 0; index < objectArray.length; index++) {
+            let object = objectArray[index];
+            let new_id = object.name;
+            console.log(new_id);
+            let outputPercentage = $("#slider")[0].value; //Prozentzahl vom Input des Schiebereglers 
+            //wenn Slider-WKeit kleiner oder gleich dem des Wertes im Array entspricht ausgeben
+            if (outputPercentage <= object.probability) {
+                if (firstvalue == 0) {
+                    $("#" + html_id).val(valueArray[index]).hide().fadeIn(fadeTime); // setzen des ersten Wertes in vorhandenes Feld
+                }
+                else {
+                    //Neuerstellung und Implementierung von Feldern bei mehreren Telefonnummern
+                    let newObject = document.createElement("input");
+                    newObject.id = "id" + index + new_id;
+                    newObject.classList.add("delete");
+                    $("#" + new_id).after(newObject);
+                    $("#id" + index + new_id).val(valueArray[index]).hide().fadeIn(fadeTime);
+                }
+                firstvalue++;
+            }
+        }
+    }
+
+
 }

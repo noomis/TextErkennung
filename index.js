@@ -18,6 +18,12 @@ function printResult() {
         let input = document.getElementById("text").value;
 
         mainParser.parseText(input);
+        let addressObject = new Address();
+        console.log(mainParser.getEmailsCheck());
+        addressObject.setemails(mainParser.getEmailsCheck());
+        console.log(addressObject.getemails());
+
+        addressObject.outputAllValues("email",200)
         
     }, 1000);
 }

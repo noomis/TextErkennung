@@ -1,8 +1,10 @@
 export class CheckResult {
+    name = "";
     value = "";
     probability = "";
 
-    constructor(value, probability) {
+    constructor(name,value, probability) {
+        this.name = name;
         this.value = value;
         this.probability = probability;
     }

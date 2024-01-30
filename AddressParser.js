@@ -45,6 +45,7 @@ export class AddressParser {
     }
 
     getEmailsCheck() {
+        console.log(this.emailsCheck);
         return this.emailsCheck;
     }
 
@@ -81,7 +82,7 @@ export class AddressParser {
             this.homepageCheck.concat(this.checkHomepage(input));
             console.log(this.homepageCheck);
 
-            this.emailsCheck.concat(this.checkMails(input));
+            this.emailsCheck = this.emailsCheck.concat(this.checkMails(input));
             console.log(this.emailsCheck);
 
             this.companyNamesCheck.concat(this.checkCompanyNames(input));
@@ -359,7 +360,7 @@ export class AddressParser {
             }
 
             console.log(element + ": ist mit " + wordProb + "% Wahrscheinlichkeit eine Mail");
-            tempMails.push(new CheckResult(lineWords[index], wordProb));
+            tempMails.push(new CheckResult("mail",lineWords[index], wordProb));
         }
 
         return tempMails;
