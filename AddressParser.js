@@ -58,8 +58,11 @@ export class AddressParser {
     getContactPersonsCheck() {
         return this.contactPersonsCheck;
     }
-    setAllPostalCodes(allPostalCodes) {
-        this.allPostalCodes = allPostalCodes;
+    setAllPostalCodes(_allPostalCodes) {
+        console.log(_allPostalCodes);
+        this.allPostalCodes = this.allPostalCodes.concat(_allPostalCodes);
+        console.log(this.allPostalCodes);
+
     }
 
     setCityNames(cityNames) {
@@ -661,14 +664,17 @@ export class AddressParser {
         await fetch('georef-germany-postleitzahl.json')
             .then(response => response.json())
             .then(data => {
-                data.forEach(datensatz => {
-                   tempAllPostalCodes.push(datensatz.name);
+                  data.forEach(datensatz => {
                    tempAllCityNames.push(datensatz.plz_name);
+                   tempAllPostalCodes.push(datensatz.name);
+
                 });
                 console.log(tempAllPostalCodes);
 
             })
             console.log(tempAllPostalCodes);
+            this.setAllPostalCodes(tempAllPostalCodes);
+            console.log(this.allPostalCodes);
             return tempAllPostalCodes;
 
     }
