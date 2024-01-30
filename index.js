@@ -49,7 +49,7 @@ function printResult() {
             addressObject.outputMaxValues("homepage", 200);
             
             addressObject.setCompanyNames(mainParser.getCompanyNameCheck());
-            addressObject.outputMaxValues("companyname", 200);
+            addressObject.outputMaxValues("companyName", 200);
         }
 
     }, 1000);
