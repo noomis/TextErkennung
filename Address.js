@@ -201,20 +201,26 @@ export class Address {
     }
 
     findMaxPercentage(Array) {
-        let highestPercentage = Array[0];
-
+        
+        let highestPercentage
         // Gebe null für leere Arrays zurück
         if (Array.length == 0) {
             return;
         }
 
+
+
         // Objekt mit der höhsten Wahrscheinlichkeit returnen
         Array.forEach(element => {
-            if(element !== undefined) {
-            if (element.probability > highestPercentage.probability) {
-                highestPercentage = element;
+            if (element !== undefined) {
+                 highestPercentage = element;
+
+                console.log(element);
+                if (element.probability > highestPercentage.probability) {
+                    highestPercentage = element;
+                }
             }
-        }});
+        });
 
         return highestPercentage;
     }
