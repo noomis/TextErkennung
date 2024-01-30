@@ -17,7 +17,7 @@ export class Address {
         return this.companyName;
     }
 
-    setCompanyName(companyName) {
+    setCompanyNames(companyName) {
         this.companyName = companyName;
     }
 
@@ -164,9 +164,9 @@ export class Address {
                 objectArray = objectArray.concat(this.getW3wAddress());
                 break;
 
-            case "fgd":
-                console.log(this.getContactPersons());
-                objectArray = objectArray.concat(this.getContactPersons());
+            case "companyName":
+                console.log(this.getCompanyNames());
+                objectArray = objectArray.concat(this.getCompanyNames());
                 break;
 
             default:
