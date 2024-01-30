@@ -191,6 +191,11 @@ export class Address {
                 objectArray = objectArray.concat(this.getPostalCode());
                 break;
 
+                case "city":
+                    console.log(this.getCity());
+                    objectArray = objectArray.concat(this.getCity());
+                    break;
+
             default:
                 break;
         }

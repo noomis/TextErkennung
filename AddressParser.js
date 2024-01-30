@@ -33,7 +33,7 @@ export class AddressParser {
     }
 
     getCityCheck() {
-        return this.cityCheck;
+        return this.citysCheck;
     }
 
     getHomepageCheck() {
@@ -102,6 +102,9 @@ export class AddressParser {
             
 
             this.postalCodeCheck = this.postalCodeCheck.concat(this.checkPostalCode(input));
+
+            this.citysCheck = this.citysCheck.concat(this.checkCity(input));
+
             
          });
     }
@@ -940,6 +943,88 @@ export class AddressParser {
 
         }
         return tempPostalCode;
+    }
+
+    checkCity(inputLine){
+        let tempCity = [];
+        inputLine = inputLine.toLowerCase();
+        let words = inputLine.split(" ");
+        let city = 0;
+        let cityName = 0;
+        let prob = 0;
+        let wordAfter;
+
+        //wenn element mit d-/de- startet wird dieses entfernt
+        for (let a = 0; a < words.length; a++) {
+            const element = words[a];
+
+            if (element.startsWith("d-")) {
+                words[a] = element.replace("d-", "");
+                prob += 10;
+            }
+
+            if (element.startsWith("de-")) {
+                words[a] = element.replace("de-", "");
+                prob += 10;
+            }
+
+            //Falls vor der 5-Stelligen Zahl ein verbotenes Keyword steht wird diese Zahl nicht angegeben 
+            if (a !== 0) {
+                let wordBefore = words[a - 1];
+
+                if (wordBefore.includes("fax") || wordBefore.includes("fon")) {
+                    words.splice(a, 1);
+                }
+            }
+        }
+        //neuer Array nur mit 5 Stelligen Zahlen 
+        const nurZahlen = words.filter(element => !isNaN(element));
+
+        for (let a = 0; a < nurZahlen.length; a++) {
+            const element = nurZahlen[a];
+
+            if (element.length !== 5) {
+                nurZahlen.splice(a, 1);
+            }
+        }
+
+        //check ob elements im json enthalten sind und somit eine Stadt matchen
+        zipLoop: for (let i = 0; i < nurZahlen.length; i++) {
+            const element = nurZahlen[i];
+            
+            if (this.fetchedPostalCodes.includes(element)) {
+                prob += 60;
+                city = this.fetchedPostalCodes.indexOf(element);
+                cityName = this.fetchedCityNames[city];
+
+                //check ob Wort nach dem zip Code der Stadt entspricht die im json eingetragen ist
+                if (words[i + 1] !== undefined) {
+                    wordAfter = words[i + 1];
+
+                    if (cityName.toLowerCase().includes(wordAfter)) {
+                        prob += 30;
+                    }
+
+                    if (wordAfter.includes(cityName.toLowerCase())) {
+                        prob = 100;
+                    }
+                }
+            }
+
+            //output
+            if (prob > 100) {
+                prob = 100;
+            }
+
+            if (prob > 0) {
+                tempCity.push(new CheckResult("city", wordAfter, prob));
+                
+            } else {
+                continue zipLoop;
+            }
+
+        }
+        return tempCity;
     }
 
 }

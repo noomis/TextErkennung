@@ -56,6 +56,9 @@ function printResult() {
 
             addressObject.setPostalCode(mainParser.getPostalCodeCheck());
             addressObject.outputMaxValues("postalCode", 200);
+
+            addressObject.setCity(mainParser.getCityCheck());
+            addressObject.outputMaxValues("city", 200);
         }
 
     }, 1000);
