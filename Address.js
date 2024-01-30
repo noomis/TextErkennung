@@ -160,13 +160,13 @@ export class Address {
         let objectArray = [];
         switch (html_id) {
             case "w3w":
-                console.log(this.getw3wAddress());
-                objectArray = objectArray.concat(this.getw3wAddress());
+                console.log(this.getW3wAddress());
+                objectArray = objectArray.concat(this.getW3wAddress());
                 break;
 
             case "fgd":
-                console.log(this.getcontactPersons());
-                objectArray = objectArray.concat(this.getcontactPersons());
+                console.log(this.getContactPersons());
+                objectArray = objectArray.concat(this.getContactPersons());
                 break;
 
             default:
