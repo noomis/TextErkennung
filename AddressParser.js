@@ -916,10 +916,6 @@ export class AddressParser {
                 if (words[i + 1] !== undefined) {
                     wordAfter = words[i + 1];
 
-                    if (cityName.toLowerCase().includes(wordAfter) == false) {
-                        prob = 30;
-                    }
-
                     if (cityName.toLowerCase().includes(wordAfter)) {
                         prob += 30;
                     }
@@ -943,7 +939,6 @@ export class AddressParser {
             }
 
         }
-        
         return tempPostalCode;
     }
 

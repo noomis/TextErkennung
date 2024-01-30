@@ -30,12 +30,12 @@ export class Address {
     }
 
     getStreet() {
-        
+
         return this.street;
     }
 
     setStreet(_street) {
-        
+
         this.street = this.street.concat(_street);
     }
 
@@ -68,7 +68,7 @@ export class Address {
     }
 
     setEmails(_emails) {
-        
+
         this.emails = this.emails.concat(_emails);
     }
 
@@ -101,30 +101,30 @@ export class Address {
         let objectArray = [];
         switch (html_id) {
             case "email":
-                
-                
+
+
                 objectArray = objectArray.concat(this.getEmails());
                 break;
 
             case "contactPerson":
-                
-                
+
+
                 objectArray = objectArray.concat(this.getContactPersons());
                 break;
 
             case "phoneNumber":
-                
-                
+
+
                 objectArray = objectArray.concat(this.getPhoneNumbers());
                 break;
 
             case "contactPerson":
-                
+
                 objectArray = objectArray.concat(this.getContactPersons());
                 break;
 
             case "faxNumber":
-                
+
                 objectArray = objectArray.concat(this.getFaxNumbers());
                 break;
 
@@ -133,14 +133,14 @@ export class Address {
             default:
                 break;
         }
-        
+
         $("#" + html_id).val(""); //feld clearen
         let firstvalue = 0;
         for (let index = 0; index < objectArray.length; index++) {
             let object = objectArray[index];
             if (object !== undefined) {
                 let new_id = object.name;
-                
+
 
                 let outputPercentage = $("#slider")[0].value; //Prozentzahl vom Input des Schiebereglers 
                 //wenn Slider-WKeit kleiner oder gleich dem des Wertes im Array entspricht ausgeben
@@ -166,23 +166,23 @@ export class Address {
         let objectArray = [];
         switch (html_id) {
             case "w3w":
-                
+
                 objectArray = objectArray.concat(this.getW3wAddress());
 
                 break;
 
             case "companyName":
-                
+
                 objectArray = objectArray.concat(this.getCompanyName());
                 break;
 
             case "homepage":
-                
+
                 objectArray = objectArray.concat(this.getHomepage());
                 break;
 
             case "street":
-                
+
                 objectArray = objectArray.concat(this.getStreet());
                 break;
 
@@ -199,13 +199,15 @@ export class Address {
             return;
         }
 
-        
-        
+
+
 
         $("#" + html_id).val("");
 
         let maxValue = this.findMaxPercentage(objectArray);
-        
+
+        console.log(maxValue);
+
 
         // wenn slider wert größer als Wkeit nicht ausgeben
         let outputPercentage = $("#slider")[0].value;
@@ -213,7 +215,7 @@ export class Address {
         if (outputPercentage <= maxValue.probability) {
             $("#" + html_id).val(maxValue.value).hide().fadeIn(fadeTime);
         }
-    }
+    }   
 
     findMaxPercentage(Array) {
         let object = {
@@ -234,7 +236,7 @@ export class Address {
         Array.forEach(element => {
             if (element !== undefined) {
 
-                
+
                 if (element.probability > highestPercentage.probability) {
                     highestPercentage = element;
                 }
