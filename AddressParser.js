@@ -673,7 +673,7 @@ export class AddressParser {
             })
             console.log(tempAllPostalCodes);
             this.setAllPostalCodes(tempAllPostalCodes);
-            return tempAllPostalCodes;
+            this.setCityNames(tempAllCityNames);
 
     }
 
