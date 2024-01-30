@@ -24,7 +24,7 @@ function printResult() {
 
         let input = document.getElementById("text").value;
 
-        if (input != "") {
+        if (input != "") { // Nur ausführen wenn Eingabe nicht leer ist
             
             mainParser.parseText(input);
             let addressObject = new Address();
