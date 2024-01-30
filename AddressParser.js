@@ -25,7 +25,7 @@ export class AddressParser {
     }
 
     getStreetCheck() {
-        return this.streetCheck;
+        return this.streetsCheck;
     }
 
     getPostalCodeCheck() {
