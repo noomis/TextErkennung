@@ -90,7 +90,7 @@ export class AddressParser {
             this.w3wAddressCheck = this.w3wAddressCheck.concat(this.checkW3ws(input));
 
             this.homepageCheck = this.homepageCheck.concat(this.checkHomepage(input));
-
+            console.log(this.homepageCheck);
             this.emailsCheck = this.emailsCheck.concat(this.checkMails(input));
 
             this.companyNamesCheck = this.companyNamesCheck.concat(this.checkCompanyNames(input));
@@ -201,6 +201,7 @@ export class AddressParser {
 
     checkHomepage(inputLine) {
         //alle wörter klein und in neuen array
+        debugger
         inputLine = inputLine.toLowerCase();
         let words = inputLine.split(" ");
         let tempUrl = [];
@@ -244,7 +245,8 @@ export class AddressParser {
             }
 
             if (element.includes("ö") || element.includes("ü") || element.includes("ß") || element.includes("ä") || element.includes("@") || element.includes("(at)")) {
-                return;
+                prob = 0;
+                return tempUrl;
             }
 
             //Runden
@@ -254,7 +256,6 @@ export class AddressParser {
 
             if (prob < 0) {
                 prob = 0;
-
             }
             //push in globalen Array & output
             if (prob > 0) {
