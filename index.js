@@ -6,20 +6,10 @@ let timeoutId;
 
 document.getElementById("text").addEventListener("input", printResult);
 
-let zipParser = new AddressParser();
-// let mainParser = new AddressParser();
-
-// let allZipCodes = mainParser.fetchCityData();
-
-// mainParser.setAllPostalCodes(allZipCodes);
-
 document.getElementById("slider").addEventListener("input", printResult);
 
 function printResult() {
-    // clearInputs();
-    let mainParser = new AddressParser();
-
-    let addressObject = new Address();
+   let mainParser = new AddressParser();
     $(".delete").remove();
 
     let outputPercentage = $("#slider")[0].value;
@@ -35,7 +25,8 @@ function printResult() {
         if (input != "") { // Nur ausführen wenn Eingabe nicht leer ist
 
             mainParser.parseText(input);
-            
+
+            let addressObject = new Address();
 
             addressObject.setEmails(mainParser.getEmailsCheck());
             addressObject.outputAllValues("email", 200);
@@ -71,18 +62,8 @@ function printResult() {
     }, 1000);
 
 }
+
 document.getElementById("random").addEventListener("click", randomImpressum);
-
-document.getElementById("text").addEventListener("input", adjustHeight);
-
-function adjustHeight(el) {
-    el.style.height = (el.scrollHeight) ? (el.scrollHeight) + "px" : "54px";
-}
-
-// function clearInputs() {
-//         addressObject.setCompanyName("");
-// }
-
 
 let i = 0;
 function randomImpressum() {
@@ -113,7 +94,3 @@ function randomImpressum() {
     printResult();
     i++;
 }
-
-// function adjustHeight(element) {
-//     element.style.height = (element.scrollHeight) ? (element.scrollHeight) + "px" : "54px";
-// }

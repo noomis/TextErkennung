@@ -19,10 +19,6 @@ export class AddressParser {
         this.language = language;
         this.outputPercentage = outputPercentage;
 
-        this.fetchCityData();
-
-
-
         this.companyNamesCheck = []; // only max
         this.streetsCheck = []; // only max
         this.postalCodeCheck = [];
@@ -62,7 +58,7 @@ export class AddressParser {
     }
 
     getEmailsCheck() {
-        
+
         return this.emailsCheck;
     }
 
@@ -77,6 +73,7 @@ export class AddressParser {
     getContactPersonsCheck() {
         return this.contactPersonsCheck;
     }
+
     async fetchCityData() {
         let tempAllPostalCodes = [];
         let tempAllCityNames = [];
@@ -110,40 +107,39 @@ export class AddressParser {
     parseText(input) {
         let inputLines = input.split("\n");
 
-        
-
         inputLines.forEach(input => {
-
+            console.log(this.contactPersonsCheck);
             this.w3wAddressCheck = this.w3wAddressCheck.concat(this.checkW3ws(input));
-            
+
 
             this.homepageCheck = this.homepageCheck.concat(this.checkHomepage(input));
-            
+
 
             this.emailsCheck = this.emailsCheck.concat(this.checkMails(input));
-            
+
 
             this.companyNamesCheck = this.companyNamesCheck.concat(this.checkCompanyNames(input));
-            
+
 
             this.contactPersonsCheck = this.contactPersonsCheck.concat(this.checkContactPersons(input));
-            
+            console.log(this.contactPersonsCheck);
 
             this.faxNumbersCheck = this.faxNumbersCheck.concat(this.checkFax(input));
-            
+
 
             this.phoneNumbersCheck = this.phoneNumbersCheck.concat(this.checkPhone(input));
-            
+
 
             this.streetsCheck = this.streetsCheck.concat(this.checkStreets(input));
-            
+
 
             this.postalCodeCheck = this.postalCodeCheck.concat(this.checkPostalCode(input));
 
+
             this.citysCheck = this.citysCheck.concat(this.checkCity(input));
 
-            
-         });
+
+        });
     }
 
     checkW3ws(inputLine) {
@@ -228,7 +224,7 @@ export class AddressParser {
                 prob += 5;
             }
 
-            
+
             tempW3w.push(new CheckResult("w3w", words[i], prob));
         }
 
@@ -294,7 +290,7 @@ export class AddressParser {
             }
             //push in globalen Array & output
             if (prob > 0) {
-                
+
                 tempUrl.push(new CheckResult("homepage", element, prob));
             }
         }
@@ -370,7 +366,7 @@ export class AddressParser {
 
             if (dotHit.length > 1) {    // Checkt ob die local domain mindestens 2 Zeichen lang ist.
                 if (dotHit[dotHit.length - 1] - atHit[0] < 3) {
-                    
+
                     continue wordLoop;
 
                 } else {
@@ -397,7 +393,7 @@ export class AddressParser {
                 }
             }
 
-            
+
             tempMails.push(new CheckResult("mail", lineWords[index], wordProb));
         }
 
@@ -458,7 +454,7 @@ export class AddressParser {
         });
 
         if (wordProb >= 50) {
-            
+
             tempCheckCompanyNames.push(new CheckResult("companyName", inputLine, wordProb));
         }
 
@@ -547,7 +543,7 @@ export class AddressParser {
 
                             if (!name.includes("§")) {
                                 tempNames.push(new CheckResult("contactPerson", element + " " + wordAfter, prob));
-                                
+
                             }
                         }
                     }
@@ -557,7 +553,7 @@ export class AddressParser {
                     if (!tempNames.includes(tripleName)) {
                         tripleName = tripleName.replaceAll(",", "").replaceAll("_", "");
                         tempNames.push(new CheckResult("contactPerson", element + " " + wordAfter + " " + word2After, prob));
-                        
+
                     }
                 }
             }
@@ -579,7 +575,7 @@ export class AddressParser {
             for (let b = 0; b < blacklist.length; b++) {
                 if (words[i].includes(blacklist[b])) {
                     if (fullNumber.trim().length != 0 && prob != 0) {
-                        
+
                         tempFax.push(new CheckResult("faxNumber", words[i], prob));
                     }
 
@@ -610,7 +606,7 @@ export class AddressParser {
         }
 
         if (fullNumber.trim().length != 0 && prob != 0) {
-            
+
             tempFax.push(new CheckResult("faxNumber", fullNumber, prob));
         }
 
@@ -639,7 +635,7 @@ export class AddressParser {
             for (let b = 0; b < blacklist.length; b++) {
                 if (words[i].includes(blacklist[b])) {
                     if (fullNumber.trim().length != 0 && prob != 0) {
-                        
+
                         telValue.push(fullNumber);
                         telProbability.push(prob);
                     }
@@ -673,27 +669,23 @@ export class AddressParser {
         }
 
         if (fullNumber.trim().length != 0 && prob != 0) {
-            
+
             tempPhone.push(new CheckResult("phoneNumber", fullNumber, prob));
-            
+
 
         }
 
         if (tmpFullNum > 5) {
             fullUnformattedNumber = fullUnformattedNumber.trim();
             if (fullUnformattedNumber.length > 10) {
-                
+
                 tempPhone = tempPhone.concat(this.checkPhone(fullUnformattedNumber));
-                
+
             }
         }
         return tempPhone;
 
     }
-
-
-
-
 
     checkStreets(inputLine) {
         let tempStreet = [];
@@ -875,7 +867,7 @@ export class AddressParser {
         }
 
         if (fullStreetName.trim().length != 0 && prob != 0) {
-            
+
             tempStreet.push(new CheckResult("street", fullStreetName, prob));
         }
 
@@ -925,11 +917,10 @@ export class AddressParser {
                 nurZahlen.splice(a, 1);
             }
         }
-
         //check ob elements im json enthalten sind und somit eine Stadt matchen
         zipLoop: for (let i = 0; i < nurZahlen.length; i++) {
             const element = nurZahlen[i];
-            
+
             if (this.fetchedPostalCodes.includes(element)) {
                 prob += 60;
                 city = this.fetchedPostalCodes.indexOf(element);
@@ -956,7 +947,7 @@ export class AddressParser {
 
             if (prob > 0) {
                 tempPostalCode.push(new CheckResult("postalCode", element, prob));
-                
+
             } else {
                 continue zipLoop;
             }
@@ -965,69 +956,47 @@ export class AddressParser {
         return tempPostalCode;
     }
 
-    checkCity(inputLine){
+    checkCity(inputLine) {
         let tempCity = [];
-        inputLine = inputLine.toLowerCase();
         let words = inputLine.split(" ");
-        let city = 0;
+        let postalCode = 0;
         let cityName = 0;
         let prob = 0;
-        let wordAfter;
-
-        //wenn element mit d-/de- startet wird dieses entfernt
-        for (let a = 0; a < words.length; a++) {
-            const element = words[a];
-
-            if (element.startsWith("d-")) {
-                words[a] = element.replace("d-", "");
-                prob += 10;
-            }
-
-            if (element.startsWith("de-")) {
-                words[a] = element.replace("de-", "");
-                prob += 10;
-            }
-
-            //Falls vor der 5-Stelligen Zahl ein verbotenes Keyword steht wird diese Zahl nicht angegeben 
-            if (a !== 0) {
-                let wordBefore = words[a - 1];
-
-                if (wordBefore.includes("fax") || wordBefore.includes("fon")) {
-                    words.splice(a, 1);
-                }
-            }
-        }
-        //neuer Array nur mit 5 Stelligen Zahlen 
-        const nurZahlen = words.filter(element => !isNaN(element));
-
-        for (let a = 0; a < nurZahlen.length; a++) {
-            const element = nurZahlen[a];
-
-            if (element.length !== 5) {
-                nurZahlen.splice(a, 1);
-            }
-        }
+        let wordBefore;
 
         //check ob elements im json enthalten sind und somit eine Stadt matchen
-        zipLoop: for (let i = 0; i < nurZahlen.length; i++) {
-            const element = nurZahlen[i];
-            
-            if (this.fetchedPostalCodes.includes(element)) {
+        zipLoop: for (let i = 0; i < words.length; i++) {
+            const element = words[i];
+            prob = 0;
+            if (this.fetchedCityNames.includes(element)) {
                 prob += 60;
-                city = this.fetchedPostalCodes.indexOf(element);
-                cityName = this.fetchedCityNames[city];
+                cityName = this.fetchedCityNames.indexOf(element);
+                postalCode = this.fetchedPostalCodes[cityName];
 
                 //check ob Wort nach dem zip Code der Stadt entspricht die im json eingetragen ist
-                if (words[i + 1] !== undefined) {
-                    wordAfter = words[i + 1];
+                if (words[i - 1] !== undefined) {
+                    wordBefore = words[i - 1];
+                    if (wordBefore.startsWith("D-")) {
+                        wordBefore = wordBefore.replace("D-", "");
+                        prob += 10;
+                    }
 
-                    if (cityName.toLowerCase().includes(wordAfter)) {
+                    if (wordBefore.startsWith("DE-")) {
+                        wordBefore = wordBefore.replace("DE-", "");
+                        prob += 10;
+                    }
+                    if (postalCode.toLowerCase().includes(wordBefore)) {
                         prob += 30;
                     }
 
-                    if (wordAfter.includes(cityName.toLowerCase())) {
+                    if (wordBefore.includes(postalCode.toLowerCase())) {
                         prob = 100;
                     }
+                    if (wordBefore.toLowerCase().includes("amtsgericht")
+                        || wordBefore.toLowerCase().includes("finanzamt")) {
+                        prob = 15;
+                    }
+        
                 }
             }
 
@@ -1037,14 +1006,29 @@ export class AddressParser {
             }
 
             if (prob > 0) {
-                tempCity.push(new CheckResult("city", wordAfter, prob));
-                
+                tempCity.push(new CheckResult("city", element, prob));
+
             } else {
                 continue zipLoop;
             }
 
         }
         return tempCity;
+    }
+
+    clearInputs() {
+        this.companyNamesCheck = [];
+        this.streetsCheck = [];
+        this.postalCodeCheck = [];
+        this.citysCheck = [];
+        this.homepageCheck = [];
+        this.w3wAddressCheck = [];
+        this.emailsCheck = [];
+        this.phoneNumbersCheck = [];
+        this.faxNumbersCheck = [];
+        this.contactPersonsCheck = [];
+
+        console.log(this.contactPersonsCheck);
     }
 
 }

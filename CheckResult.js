@@ -3,9 +3,7 @@ export class CheckResult {
     value = "";
     probability = "";
 
-    constructor(name,value, probability) {
-
-        
+    constructor(name, value, probability) {
         this.name = name;
         this.value = value;
         this.probability = probability;
