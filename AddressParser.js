@@ -74,27 +74,6 @@ export class AddressParser {
         return this.contactPersonsCheck;
     }
 
-    async fetchCityData() {
-        let tempAllPostalCodes = [];
-        let tempAllCityNames = [];
-        //arrays werden auf die Germany-Werte, die im json enthalten sind, gesetzt 
-        await fetch('georef-germany-postleitzahl.json')
-            .then(response => response.json())
-            .then(data => {
-                data.forEach(datensatz => {
-                    tempAllCityNames.push(datensatz.plz_name);
-                    tempAllPostalCodes.push(datensatz.name);
-
-                });
-                // 
-
-            })
-        // 
-        this.setAllPostalCodes(tempAllPostalCodes);
-        this.setCityNames(tempAllCityNames);
-
-    }
-
     setAllPostalCodes(_allPostalCodes) {
         this.fetchedPostalCodes = this.fetchedPostalCodes.concat(_allPostalCodes);
 

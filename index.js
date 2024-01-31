@@ -1,15 +1,19 @@
 import { Address } from "./Address.js";
 import { AddressParser } from "./AddressParser.js";
 import { CheckResult } from "./CheckResult.js";
+import { FetchData } from "./fetchData.js";
 
 let timeoutId;
+
+let fetchData = new FetchData;
+fetchData.fetchCityData();
 
 document.getElementById("text").addEventListener("input", printResult);
 
 document.getElementById("slider").addEventListener("input", printResult);
 
 function printResult() {
-   let mainParser = new AddressParser();
+    let mainParser = new AddressParser();
     $(".delete").remove();
 
     let outputPercentage = $("#slider")[0].value;
@@ -23,6 +27,9 @@ function printResult() {
         let input = document.getElementById("text").value;
 
         if (input != "") { // Nur ausführen wenn Eingabe nicht leer ist
+
+            mainParser.setAllPostalCodes(fetchData.getAllPostalCodes());
+            mainParser.setCityNames(fetchData.getCityNames());
 
             mainParser.parseText(input);
 
@@ -48,7 +55,7 @@ function printResult() {
 
             addressObject.setStreet(mainParser.getStreetCheck());
             addressObject.outputMaxValues("street", 200);
-            
+
             addressObject.setCompanyName(mainParser.getCompanyNameCheck());
             addressObject.outputMaxValues("companyName", 200);
 
