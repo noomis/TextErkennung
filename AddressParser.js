@@ -951,13 +951,27 @@ export class AddressParser {
                 //check ob Wort nach dem zip Code der Stadt entspricht die im json eingetragen ist
                 if (words[i - 1] !== undefined) {
                     wordBefore = words[i - 1];
-                    if (wordBefore.startsWith("D-")) {
-                        wordBefore = wordBefore.replace("D-", "");
+
+                    const nurZahlen = words.filter(element => !isNaN(element));
+
+                    for (let a = 0; a < nurZahlen.length; a++) {
+                        const e = nurZahlen[a];
+            
+                        if (e.length !== 5) {
+                            nurZahlen.splice(a, 1);
+                        }
+                    }
+
+                    if (nurZahlen.includes(wordBefore)) {
+                        prob +=10;
+                    }
+                    if (wordBefore.startsWith("d-")) {
+                        wordBefore = wordBefore.replace("d-", "");
                         prob += 10;
                     }
 
-                    if (wordBefore.startsWith("DE-")) {
-                        wordBefore = wordBefore.replace("DE-", "");
+                    if (wordBefore.startsWith("de-")) {
+                        wordBefore = wordBefore.replace("de-", "");
                         prob += 10;
                     }
                     if (postalCode.toLowerCase().includes(wordBefore)) {
