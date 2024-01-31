@@ -469,7 +469,8 @@ export class AddressParser {
                 if (wordBefore.includes("geschäftsführer") || wordBefore.includes("ansprechpartner") || wordBefore.includes("vorstand") || wordBefore.includes("vorsitzender") || wordBefore.includes("inhaber") || wordBefore.includes("dr") && vornamen.includes(element) || wordBefore.includes("prof") || wordBefore.includes("herr") || wordBefore.includes("frau") || wordBefore.includes("verantwortliche") && element !== "nach" || wordBefore.includes("vertreter")) {
                     prob += 40;
                 } else if (wordBefore.includes("firmenname") || wordBefore.includes("Umsatzsteuer-Identifikationsnummer")) {
-                    return;
+                    prob = 0;
+                    return tempNames;
                 }
             }
 
@@ -483,7 +484,8 @@ export class AddressParser {
                 }
 
                 if (wordAfter.includes("gmbh") || wordAfter.includes("ohg") || wordAfter.includes("e.v.")) {
-                    return;
+                    prob = 0;
+                    return tempNames;
                 } else if (vornamen.includes(wordAfter) && vornamen.includes(element)) { //checken ob es ein 3er-Name ist
                     if (words[i + 2] !== undefined) {
                         word2After = words[i + 2];
@@ -559,7 +561,8 @@ export class AddressParser {
                 if (wordBefore.includes("fax")) {
                     prob += 90;
                 } else if (wordBefore.includes("tel") || wordBefore.includes("fon") || wordBefore.includes("mobil") || wordBefore.includes("handy")) {
-                    return;
+                    prob = 0;
+                    return tempFax;
                 }
             }
             // Checkt ob die gesamt länge der Nummer zu groß ist
@@ -586,7 +589,7 @@ export class AddressParser {
         let tempPhone = []
 
         if (inputLine.length < 10) {
-            return;
+            return tempPhone;
         }
 
         let fullNumber = "";
@@ -621,7 +624,9 @@ export class AddressParser {
                 }
 
                 if (wordBefore.includes("fax")) {
-                    return;
+                    // TODO villeicht prob entfernen?
+                    prob = 0;
+                    return tempPhone;
                 }
             }
             // Checkt ob die gesamt länge der Nummer zu groß ist
