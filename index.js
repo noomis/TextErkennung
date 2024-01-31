@@ -38,31 +38,31 @@ function printResult() {
             addressObject.outputAllValues("email", 200);
 
             addressObject.setPhoneNumbers(mainParser.getPhoneNumbersCheck());
-            addressObject.outputAllValues("phoneNumber", 200);
+            addressObject.outputAllValues("phoneNumber", 250);
 
             addressObject.setContactPersons(mainParser.getContactPersonsCheck());
             addressObject.outputAllValues("contactPerson", 200);
 
             addressObject.setFaxNumbers(mainParser.getFaxNumbersCheck());
-            addressObject.outputAllValues("faxNumber", 200);
+            addressObject.outputAllValues("faxNumber", 300);
 
             addressObject.setW3wAddress(mainParser.getW3wAddressCheck());
-            addressObject.outputMaxValues("w3w", 200);
+            addressObject.outputMaxValues("w3w", 300);
 
             addressObject.setHomepage(mainParser.getHomepageCheck());
-            addressObject.outputMaxValues("homepage", 200);
+            addressObject.outputMaxValues("homepage", 150);
 
             addressObject.setStreet(mainParser.getStreetCheck());
-            addressObject.outputMaxValues("street", 200);
+            addressObject.outputMaxValues("street", 250);
 
             addressObject.setCompanyName(mainParser.getCompanyNameCheck());
-            addressObject.outputMaxValues("companyName", 200);
+            addressObject.outputMaxValues("companyName", 150);
 
             addressObject.setPostalCode(mainParser.getPostalCodeCheck());
-            addressObject.outputMaxValues("postalCode", 200);
+            addressObject.outputMaxValues("postalCode", 300);
 
             addressObject.setCity(mainParser.getCityCheck());
-            addressObject.outputMaxValues("city", 200);
+            addressObject.outputMaxValues("city", 300);
         }
 
     }, 1000);
