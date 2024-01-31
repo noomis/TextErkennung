@@ -665,8 +665,7 @@ export class AddressParser {
 
     checkStreets(inputLine) {
         let tempStreet = [];
-        inputLine = inputLine.toLowerCase();
-        let words = inputLine.split(" ");
+        let words = inputLine.toLowerCase().split(" ");
         let prob = 0;
         let streetNames = ["str.", "stra", "weg", "allee", "gasse", "ring", "platz", "promenade", "chaussee", "boulevard", "stieg", "pfad", "feld", "kamp", "berg", "wiesen", "hof", "lanen", "pleinen", "grachten", "singels", "hoven"];
         let stringBlacklist = "abcdefghijklmnopqrstuvwxyzäöü@#$!%^&*_={}[]|;:<>,?";
@@ -674,6 +673,7 @@ export class AddressParser {
         const blacklist = stringBlacklist.split("");
         let num = 0;
         let fullStreetName = "";
+        let fullStreetNameClear = "";
         let houseNumber = 0;
 
         words: for (let i = 0; i < words.length; i++) {
@@ -682,7 +682,8 @@ export class AddressParser {
             for (let sNames = 0; sNames < streetNames.length; sNames++) {
 
                 if (words[i].includes(streetNames[sNames])) {
-                    fullStreetName = inputLine;
+                    fullStreetName = inputLine.toLowerCase();
+                    fullStreetNameClear = inputLine;
                     prob += 40;
 
                     if (i + 1 < words.length) {
@@ -755,7 +756,8 @@ export class AddressParser {
 
             if (inputLine.includes(stringStreetBeginnings[p])) {
 
-                fullStreetName = inputLine;
+                fullStreetName = inputLine.toLowerCase();
+                fullStreetNameClear = inputLine;
                 prob += 25;
                 let matchingWords = stringStreetBeginnings[p].split(" ");
 
@@ -844,7 +846,7 @@ export class AddressParser {
 
         if (fullStreetName.trim().length != 0 && prob != 0) {
 
-            tempStreet.push(new CheckResult("street", fullStreetName, prob));
+            tempStreet.push(new CheckResult("street", fullStreetNameClear, prob));
         }
 
         return tempStreet;
