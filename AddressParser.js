@@ -164,7 +164,7 @@ export class AddressParser {
                     if (wordLength[t].length < 2) {
                         return;
 
-                    // Max länge eines w3w Wortes
+                        // Max länge eines w3w Wortes
                     } else if (wordLength[t].length <= 24) {
                         prob += 20;
                     }
@@ -932,12 +932,18 @@ export class AddressParser {
         let cityName = 0;
         let prob = 0;
         let wordBefore;
+        let cityNamesArray = this.fetchedCityNames;
+        for (let a = 0; a < cityNamesArray.length; a++) {
+            const element = cityNamesArray[a];
+            cityNamesArray[a] = element.toLowerCase();
+        }
 
         //check ob elements im json enthalten sind und somit eine Stadt matchen
         zipLoop: for (let i = 0; i < words.length; i++) {
-            const element = words[i];
+            const element = words[i].toLowerCase();
+            const elementClear = words[i];
             prob = 0;
-            if (this.fetchedCityNames.includes(element)) {
+            if (cityNamesArray.includes(element)) {
                 prob += 60;
                 cityName = this.fetchedCityNames.indexOf(element);
                 postalCode = this.fetchedPostalCodes[cityName];
@@ -965,7 +971,7 @@ export class AddressParser {
                         || wordBefore.toLowerCase().includes("finanzamt")) {
                         prob = 15;
                     }
-        
+
                 }
             }
 
@@ -975,7 +981,7 @@ export class AddressParser {
             }
 
             if (prob > 0) {
-                tempCity.push(new CheckResult("city", element, prob));
+                tempCity.push(new CheckResult("city", elementClear, prob));
 
             } else {
                 continue zipLoop;
