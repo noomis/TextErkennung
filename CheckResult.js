@@ -12,6 +12,7 @@ export class CheckResult {
     getvalue () {
         return this.value;
     }
+    
     setvalue (value) {
         this.value = value;
     }
@@ -19,6 +20,7 @@ export class CheckResult {
     getprobability () {
         return this.probability;
     }
+
     setprobability (probability) {
         this.probability = probability;
     }
