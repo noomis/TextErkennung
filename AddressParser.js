@@ -76,7 +76,6 @@ export class AddressParser {
 
     setAllPostalCodes(_allPostalCodes) {
         this.fetchedPostalCodes = this.fetchedPostalCodes.concat(_allPostalCodes);
-
     }
 
     setCityNames(_cityNames) {
@@ -87,36 +86,26 @@ export class AddressParser {
         let inputLines = input.split("\n");
 
         inputLines.forEach(input => {
-            console.log(this.contactPersonsCheck);
-            this.w3wAddressCheck = this.w3wAddressCheck.concat(this.checkW3ws(input));
 
+            this.w3wAddressCheck = this.w3wAddressCheck.concat(this.checkW3ws(input));
 
             this.homepageCheck = this.homepageCheck.concat(this.checkHomepage(input));
 
-
             this.emailsCheck = this.emailsCheck.concat(this.checkMails(input));
-
 
             this.companyNamesCheck = this.companyNamesCheck.concat(this.checkCompanyNames(input));
 
-
             this.contactPersonsCheck = this.contactPersonsCheck.concat(this.checkContactPersons(input));
-            console.log(this.contactPersonsCheck);
 
             this.faxNumbersCheck = this.faxNumbersCheck.concat(this.checkFax(input));
 
-
             this.phoneNumbersCheck = this.phoneNumbersCheck.concat(this.checkPhone(input));
-
 
             this.streetsCheck = this.streetsCheck.concat(this.checkStreets(input));
 
-
             this.postalCodeCheck = this.postalCodeCheck.concat(this.checkPostalCode(input));
 
-
             this.citysCheck = this.citysCheck.concat(this.checkCity(input));
-
 
         });
     }
@@ -993,21 +982,6 @@ export class AddressParser {
 
         }
         return tempCity;
-    }
-
-    clearInputs() {
-        this.companyNamesCheck = [];
-        this.streetsCheck = [];
-        this.postalCodeCheck = [];
-        this.citysCheck = [];
-        this.homepageCheck = [];
-        this.w3wAddressCheck = [];
-        this.emailsCheck = [];
-        this.phoneNumbersCheck = [];
-        this.faxNumbersCheck = [];
-        this.contactPersonsCheck = [];
-
-        console.log(this.contactPersonsCheck);
     }
 
 }

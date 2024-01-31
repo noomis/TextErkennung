@@ -18,7 +18,6 @@ export class FetchData {
                     tempAllPostalCodes.push(datensatz.name);
                 });
             })
-console.log("fetched!");
         this.setAllPostalCodes(tempAllPostalCodes);
         this.setCityNames(tempAllCityNames);
 

@@ -1,5 +1,3 @@
-import { CheckResult } from "./CheckResult.js";
-
 export class Address {
 
     companyName = [];
@@ -14,16 +12,16 @@ export class Address {
     contactPersons = [];
 
     constructor() {
-       this.companyName = [];
-       this.postalCode = [];
-       this.street = [];
-       this.city = [];
-       this.homepage = [];
-       this.w3wAddress = [];
-       this.emails = [];
-       this.phoneNumbers = [];
-       this.faxNumbers = [];
-       this.contactPersons = [];
+        this.companyName = [];
+        this.postalCode = [];
+        this.street = [];
+        this.city = [];
+        this.homepage = [];
+        this.w3wAddress = [];
+        this.emails = [];
+        this.phoneNumbers = [];
+        this.faxNumbers = [];
+        this.contactPersons = [];
     }
 
     getCompanyName() {
@@ -43,12 +41,10 @@ export class Address {
     }
 
     getStreet() {
-
         return this.street;
     }
 
     setStreet(_street) {
-
         this.street = this.street.concat(_street);
     }
 
@@ -81,7 +77,6 @@ export class Address {
     }
 
     setEmails(_emails) {
-
         this.emails = this.emails.concat(_emails);
     }
 
@@ -113,35 +108,26 @@ export class Address {
 
         let objectArray = [];
         switch (html_id) {
+
             case "email":
-
-
                 objectArray = objectArray.concat(this.getEmails());
                 break;
 
             case "contactPerson":
-
-
                 objectArray = objectArray.concat(this.getContactPersons());
                 break;
 
             case "phoneNumber":
-
-
                 objectArray = objectArray.concat(this.getPhoneNumbers());
                 break;
 
             case "contactPerson":
-
                 objectArray = objectArray.concat(this.getContactPersons());
                 break;
 
             case "faxNumber":
-
                 objectArray = objectArray.concat(this.getFaxNumbers());
                 break;
-
-
 
             default:
                 break;
@@ -153,8 +139,7 @@ export class Address {
             let object = objectArray[index];
             if (object !== undefined) {
                 let new_id = object.name;
-
-
+                console.log(object);
                 let outputPercentage = $("#slider")[0].value; //Prozentzahl vom Input des Schiebereglers 
                 //wenn Slider-WKeit kleiner oder gleich dem des Wertes im Array entspricht ausgeben
                 if (outputPercentage <= object.probability) {
@@ -181,35 +166,28 @@ export class Address {
         let objectArray = [];
         switch (html_id) {
             case "w3w":
-
                 objectArray = objectArray.concat(this.getW3wAddress());
-
                 break;
 
             case "companyName":
-
                 objectArray = objectArray.concat(this.getCompanyName());
                 break;
 
             case "homepage":
-
                 objectArray = objectArray.concat(this.getHomepage());
                 break;
 
             case "street":
-
                 objectArray = objectArray.concat(this.getStreet());
                 break;
 
             case "postalCode":
-                console.log(this.getPostalCode());
                 objectArray = objectArray.concat(this.getPostalCode());
                 break;
 
-                case "city":
-                    console.log(this.getCity());
-                    objectArray = objectArray.concat(this.getCity());
-                    break;
+            case "city":
+                objectArray = objectArray.concat(this.getCity());
+                break;
 
             default:
                 break;
@@ -219,15 +197,11 @@ export class Address {
             return;
         }
 
-
-
-
         $("#" + html_id).val("");
 
         let maxValue = this.findMaxPercentage(objectArray);
 
         console.log(maxValue);
-
 
         // wenn slider wert größer als Wkeit nicht ausgeben
         let outputPercentage = $("#slider")[0].value;
@@ -235,7 +209,7 @@ export class Address {
         if (outputPercentage <= maxValue.probability) {
             $("#" + html_id).val(maxValue.value).hide().fadeIn(fadeTime);
         }
-    }   
+    }
 
     findMaxPercentage(Array) {
         let object = {
@@ -249,8 +223,6 @@ export class Address {
         if (Array.length == 0) {
             return;
         }
-
-
 
         // Objekt mit der höhsten Wahrscheinlichkeit returnen
         Array.forEach(element => {

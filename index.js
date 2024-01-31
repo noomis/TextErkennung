@@ -1,6 +1,5 @@
 import { Address } from "./Address.js";
 import { AddressParser } from "./AddressParser.js";
-import { CheckResult } from "./CheckResult.js";
 import { FetchData } from "./fetchData.js";
 
 let timeoutId;
