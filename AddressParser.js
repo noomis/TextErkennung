@@ -162,7 +162,8 @@ export class AddressParser {
 
                 for (let t = 0; t < wordLength.length; t++) {
                     if (wordLength[t].length < 2) {
-                        return;
+                        prob = 0;
+                        return tempUrl;
 
                         // Max länge eines w3w Wortes
                     } else if (wordLength[t].length <= 24) {
