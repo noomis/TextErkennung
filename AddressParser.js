@@ -201,7 +201,6 @@ export class AddressParser {
 
     checkHomepage(inputLine) {
         //alle wörter klein und in neuen array
-        debugger
         inputLine = inputLine.toLowerCase();
         let words = inputLine.split(" ");
         let tempUrl = [];
