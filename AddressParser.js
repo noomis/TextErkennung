@@ -436,7 +436,6 @@ export class AddressParser {
         let word2After;
         let wordBefore;
         let tripleName = "";
-        inputLine = inputLine.toLowerCase();
         let words = inputLine.split(" ");
         let tempNames = [];
 
@@ -453,7 +452,8 @@ export class AddressParser {
 
         //Schleife und check ob element im Vornamen-Array existiert
         for (let i = 0; i < words.length; i++) {
-            const element = words[i];
+            const element = words[i].toLowerCase();
+            const elementClear = words[i];
             prob = 0;
 
             if (vornamen.includes(element)) {
@@ -509,7 +509,7 @@ export class AddressParser {
                         if (!vornamen.includes(wordBefore)) {
 
                             if (!name.includes("§")) {
-                                tempNames.push(new CheckResult("contactPerson", element + " " + wordAfter, prob));
+                                tempNames.push(new CheckResult("contactPerson", elementClear + " " + wordAfter, prob));
 
                             }
                         }
@@ -519,7 +519,7 @@ export class AddressParser {
                 else {
                     if (!tempNames.includes(tripleName)) {
                         tripleName = tripleName.replaceAll(",", "").replaceAll("_", "");
-                        tempNames.push(new CheckResult("contactPerson", element + " " + wordAfter + " " + word2After, prob));
+                        tempNames.push(new CheckResult("contactPerson", elementClear + " " + wordAfter + " " + word2After, prob));
 
                     }
                 }
