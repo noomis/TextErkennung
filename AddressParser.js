@@ -90,7 +90,7 @@ export class AddressParser {
             this.w3wAddressCheck = this.w3wAddressCheck.concat(this.checkW3ws(input));
 
             this.homepageCheck = this.homepageCheck.concat(this.checkHomepage(input));
-            console.log(this.homepageCheck);
+            
             this.emailsCheck = this.emailsCheck.concat(this.checkMails(input));
 
             this.companyNamesCheck = this.companyNamesCheck.concat(this.checkCompanyNames(input));
@@ -164,7 +164,7 @@ export class AddressParser {
                     if (wordLength[t].length < 2) {
                         return;
 
-                        // Max länge eines w3w Wortes
+                    // Max länge eines w3w Wortes
                     } else if (wordLength[t].length <= 24) {
                         prob += 20;
                     }
@@ -191,7 +191,6 @@ export class AddressParser {
             if (words[i].startsWith("///")) {
                 prob += 5;
             }
-
 
             tempW3w.push(new CheckResult("w3w", words[i], prob));
         }
@@ -983,5 +982,4 @@ export class AddressParser {
         }
         return tempCity;
     }
-
 }
