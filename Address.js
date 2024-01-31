@@ -226,12 +226,9 @@ export class Address {
 
         // Objekt mit der höhsten Wahrscheinlichkeit returnen
         Array.forEach(element => {
-            if (element !== undefined) {
 
-
-                if (element.probability > highestPercentage.probability) {
-                    highestPercentage = element;
-                }
+            if (element.probability > highestPercentage.probability) {
+                highestPercentage = element;
             }
         });
 

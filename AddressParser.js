@@ -90,7 +90,7 @@ export class AddressParser {
             this.w3wAddressCheck = this.w3wAddressCheck.concat(this.checkW3ws(input));
 
             this.homepageCheck = this.homepageCheck.concat(this.checkHomepage(input));
-            
+
             this.emailsCheck = this.emailsCheck.concat(this.checkMails(input));
 
             this.companyNamesCheck = this.companyNamesCheck.concat(this.checkCompanyNames(input));
@@ -400,11 +400,13 @@ export class AddressParser {
             const element = lineWords[index];
 
             if (element.includes('@')) { // Checkt String mit @ beginnt
-                return;
+                wordProb = 0;
+                return tempCheckCompanyNames;
             }
 
             if (element.includes('(at)')) { // Checkt String mit @ beginnt
-                return;
+                wordProb = 0;
+                return tempCheckCompanyNames;
             }
 
             unternehmensformen.forEach(unternehmensform => {
