@@ -8,7 +8,6 @@
 - [ ] Telefonnummern keine Blacklist sondern Whitelist
 - [ ] Code alles auf Englisch
 - [ ] Kommentare
-- [ ] in Address Class name Code Conventions ändern
 
 ----------
 
@@ -19,3 +18,4 @@
 - [x] json Namen gleiche Naming Conventions (Sprache, Groß und klein)
 - [x] Value und Propability als ein Object in Array speichern
 - [x] Wahrscheinlichkeiten im Json angeben
+- [x] in Address Class name Code Conventions ändern
