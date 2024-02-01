@@ -748,7 +748,7 @@ export class AddressParser {
 
                 fullStreetName = inputLine.toLowerCase();
                 fullStreetNameClear = inputLine;
-                prob += 25;
+                prob += 10;
                 let matchingWords = stringStreetBeginnings[p].split(" ");
 
                 words: for (let m = 0; m < words.length; m++) {
@@ -780,11 +780,11 @@ export class AddressParser {
                         }
 
                         if (num == 0) {
-                            prob += 20;
+                            prob += 25;
                             if (word2After.length > 0 && word2After.length < 3) {
-                                prob += 20;
+                                prob += 25;
                             } else if (word2After.length < 5) {
-                                prob += 10;
+                                prob += 15;
                             }
 
                             // checkt, ob nach der Hausnummer ein Buchstaben Zusatz kommt
@@ -801,7 +801,7 @@ export class AddressParser {
                         }
                         // checkt den Fall, wenn der Nr. Zusatz nicht mit einem Leerzeichen von der Nr. getrennt ist
                         if (num == 1) {
-                            prob += 30;
+                            prob += 35;
 
                             for (let z = 0; z < words[m + 2].length - 1; z++) {
 
@@ -820,7 +820,7 @@ export class AddressParser {
 
                                     if (words[m + 2][(words[m + 2].length) - 1] == blacklist[alphabet]) {
 
-                                        prob += 15;
+                                        prob += 25;
                                     }
                                 }
                             }
