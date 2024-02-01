@@ -112,7 +112,6 @@ export class AddressParser {
 
     checkW3ws(inputLine) {
         let tempW3w = [];
-        // TODO w3w/mail gleiche bennennung variblen  (words / lineWords, prob / wordprob)
         let inputLineWords = inputLine.split(" ");
         inputLine = inputLine.toLowerCase();
         let probability = 0;
@@ -205,29 +204,29 @@ export class AddressParser {
         //for-Schleife die alle Worte vom Input durchläuft
         for (let i = 0; i < inputLineWords.length; i++) {
             const element = inputLineWords[i];
-            let prob = 0;
+            let probability = 0;
 
             for (const tld of knownTLD) {
                 if (element.endsWith("." + tld || element.endsWith("." + tld + "/"))) {
-                    prob += 20;
+                    probability += 20;
                 }
 
                 if (element.includes("." + tld)) {
-                    prob += 10;
+                    probability += 10;
                 }
             }
 
             //überprüfung ob gewisse Kriterien erfüllt sind
             if (element.startsWith("http")) {
-                prob += 30;
+                probability += 30;
             }
 
             if (element.includes("://")) {
-                prob += 10;
+                probability += 10;
             }
 
             if (element.includes("www.")) {
-                prob += 80;
+                probability += 80;
             }
 
             if (i !== 0) {
@@ -235,7 +234,7 @@ export class AddressParser {
 
                 // Checkt ob vor der URL bestimmte Keywords stehen
                 if (wordBefore.includes("url") || wordBefore.includes("website") || wordBefore.includes("homepage") || wordBefore.includes("internet")) {
-                    prob += 20;
+                    probability += 20;
                 }
             }
 
@@ -244,17 +243,16 @@ export class AddressParser {
             }
 
             //Runden
-            if (prob > 100) {
-                prob = 100;
+            if (probability > 100) {
+                probability = 100;
             }
 
-            if (prob < 0) {
-                prob = 0;
+            if (probability < 0) {
+                probability = 0;
             }
             //push in globalen Array & output
-            if (prob > 0) {
-
-                tempUrl.push(new CheckResult("homepage", element, prob));
+            if (probability > 0) {
+                tempUrl.push(new CheckResult("homepage", element, probability));
             }
         }
         return tempUrl;
@@ -428,7 +426,7 @@ export class AddressParser {
     checkContactPersons(inputLine) {
         const firstName = ["Fenna", "Luuk", "Evi", "Jurre", "Lotte", "Stijn", "Saar", "Francesco", "Thijs", "Lynn", "Tijn", "Maud", "Bram", "Isa", "Sem", "Tessa", "Jens", "Jan-Peer", "Fleur", "Daan", "Noa", "Femke", "Sven", "Loes", "Mees", "Noor", "Luuk", "Liv", "Jesse", "Mila", "Noud", "Elin", "Ruben", "Femke", "Jelle", "Jasmijn", "Tygo", "Sophie", "Rens", "Elin", "Lars", "Eva", "Niek", "Jara", "Gijs", "Julia", "Thijn", "Yara", "Sander", "Lieke", "Jesper", "Evy", "Bo", "Fay", "Stan", "Isabella", "Teun", "Roos", "Tom", "Puck", "Joris", "Demi", "Lucas", "Noor", "Jop", "Roos", "Hidde", "Lara", "Milan", "Anna", "Jens", "Liv", "Luca", "Madelief", "Siem", "Mia", "Cas", "Luna", "Ties", "Sophie", "Bram", "Fenna", "Finn", "Nina", "Thom", "Sophie", "Renske", "Olaf", "Liza", "Floris", "Saar", "Jesse", "Pien", "Julian", "Isabel", "Levi", "Esmee", "Guus", "Sara", "Jurre", "Feline", "Liam", "Iris", "Noud", "Lise", "Jens", "Fay", "Stijn", "Lisa", "Jesper", "Fleur", "Lars", "Lina", "Hugo", "Nova", "Benthe", "Sepp", "Lara", "Tim", "Mila", "Dani", "Elin", "Thijn", "Isa", "Jelle", "Lola", "Finn", "Lotte", "Niek", "Emma", "Teun", "Lynn", "Luca", "Maud", "Oliver", "Femke", "Pim", "Fleur", "Mats", "Mia", "Dex", "Lena", "Quinn", "Sophie", "Sam", "Zoe", "Boaz", "Tess", "Hidde", "Mara", "Jesper", "Puck", "Rens", "Lynn", "Siem", "Eva", "Ties", "Saar", "Mees", "Roos", "Thijs", "Jara", "Luuk", "Pien", "Finn", "Evy", "Bram", "Sophie", "Ruben", "Noa", "Lars", "Isa", "Jesse", "Maud", "Thijn", "Lise", "Jop", "Nina", "Tijn", "Lina", "Floris", "Lisa", "Guus", "Emma", "Gijs", "Nova", "Stijn", "Benthe", "Luca", "Feline", "Jens", "Liam", "Madelief", "Jurre", "Mara", "Levi", "Lola", "Tom", "Fay", "Milan", "Sara", "Julian", "Zoe", "Cas", "Olaf", "Esmee", "Tess", "Dani", "Iris", "Bo", "Liza", "Mats", "Isabel", "Pim", "Oliver", "Sophie", "Dex", "Lynn", "Quinn", "Mia", "Zoe", "Lena", "Boaz", "Ben", "Paul", "Leon", "Maike", "Finn", "Kai", "Giacomo", "Lara", "Lukas", "Selina", "Luca", "Verena", "Benjamin", "Alina", "Ferdinand", "Valentina", "Niklas", "Clara", "Philipp", "Greta", "Adrian", "Antonia", "Vincent", "Paulina", "Max", "Celine", "Fabio", "Lea", "Matthias", "Sophie", "David", "Rosa", "Klaus", "Helena", "Alexander", "Zoe", "Valentin", "Emma", "Raphael", "Valerie", "Daniel", "Maya", "Dominik", "Lina", "Julia", "Leah", "Johann", "Isabella", "Emanuel", "Katharina", "Fabienne", "Benjamin", "Annika", "Marcel", "Paula", "Jonathan", "Helen", "Dirk", "Volker", "Joachim", "Sandra", "Anke", "Rudolf", "Wolfram", "Isabell", "Rosemarie", "Martina", "Hans", "Anja", "Jörg", "Petra", "Verena", "Michael", "Yvonne", "Günther", "Eva", "Roland", "Susanne", "Axel", "Ingrid", "Babara", "Fynn", "Matthias", "Christoph", "Peter", "Elias", "Thomas", "Ursula", "Elon", "Stefan", "Olaf", "Jennifer", "Steffen", "Joe", "Angela", "Jonas", "Gerd", "Franz", "Wilhelm", "Jürgen", "Josef", "Hans", "Noah", "Luis", "Louis", "Maximilian", "Felix", "Luca", "Luka", "Tim", "Emil", "Oskar", "Oscar", "Henry", "Moritz", "Theo", "Theodor", "Anton", "David", "Niklas", "Andreas", "Brigitte", "Karl-Heinz", "Karen", "Jens", "Ralf", "Ann-Kristin", "Nicolas", "Philipp", "Samuel", "Fabian", "Leo", "Frank", "Sabine", "Simone", "Markus", "Marcus", "Clemens", "Monika", "Ingo", "Regina", "Uwe", "Dorothee", "Gabriele", "Jonathan", "Carl", "Karl", "Alexander", "Jakob", "Vincent", "Simon", "Aaron", "Emiliano", "Julius", "Matteo", "Raphael", "Valentin", "Johann", "Finnian", "Daniel", "Gabriel", "Richard", "Max", "Adrian", "Sebastian", "Tobias", "Liam", "Joshua", "Reiner", "Sven", "Rainer", "Melanie", "Heike", "Hannelore", "Ernst", "Dietmar", "Werner", "Renate", "Justin", "Jonah", "Yannick", "Bruno", "Milan", "Rafael", "Leonhard", "Timon", "Adam", "Fabio", "Leonard", "Henryk", "Erik", "Silas", "Jannik", "Jasper", "Nico", "Lenny", "Colin", "Tom", "Bastian", "Damian", "Jasper", "Silas", "Lennard", "Finnegan", "Malte", "Aaron", "Jannis", "Elias", "Paul", "Samuel", "Victor", "Jonathan", "Nick", "Alexander", "Malte", "Florian", "Noah", "Eric", "Oliver", "Matteo", "Theodor", "Niklas", "Jan-Stephan", "Gustav", "Marius", "Arne", "Frederik", "Julius", "Emil", "Theo", "Elias", "Jasper", "Luis", "Gustav", "Florian", "Lias", "Aaron", "Tilo", "Mathis", "Janosch", "Lennert", "Jeremy", "Leopold", "Marius", "Valentin", "Julius", "Julian", "Melvin", "Laurin", "Nils", "Oliver", "Jaron", "Laurin", "Leif", "Florian", "Jaron", "Leonard", "Silvan", "Levin", "Ole", "Henri", "Johann", "Lars", "Luke", "Lukas", "Lucas", "Friedhelm", "Ludwig", "Valentin", "Mattis", "Justus", "Constantin", "Maxim", "Leonard", "Friedrich", "Theodor", "Maximilian", "Leander", "Lias", "Christian", "Elias", "Colin", "Thilo", "Emma", "Mia", "Hannah", "Hanna", "Emilia", "Sophia", "Sofia", "Lina", "Marie", "Mila", "Ella", "Lea", "Clara", "Klara", "Lena", "Leni", "Luisa", "Louisa", "Anna", "Laura", "Lara", "Maja", "Maya", "Amelie", "Johanna", "Nele", "Charlotte", "Jana", "Mara", "Frieda", "Mira", "Paula", "Alina", "Lotta", "Greta", "Nina", "Matilda", "Mathilda", "Rosa", "Fiona", "Sarah", "Sara", "Emelie", "Zoe", "Isabella", "Melina", "Ida", "Frida", "Julia", "Eva", "Amelia", "Tilda", "Anni", "Liv", "Ava", "Victoria", "Lucy", "Helen", "Helena", "Elif", "Aaliyah", "Elsa", "Julie", "Stella", "Leona", "Juna", "Mina", "Jara", "Elina", "Nela", "Nora", "Emma", "Zara", "Elena", "Malia", "Aria", "Mira", "Elisa", "Aurora", "Enna", "Ronja", "Nora", "Elin", "Emmy", "Ivy", "Ella", "Anastasia", "Josephine", "Jasmin", "Amira", "Emmi", "Merle", "Joline", "Carolin", "Estelle", "Leila", "Kiara", "Romy", "Elif", "Tara", "Joana", "Klara", "Lotte", "Marlene", "Magdalena", "Lia", "Annika", "Liana", "Liselotte", "Katharina", "Rosalie", "Enya", "Selma", "Hedda", "Luise", "Louise", "Pia", "Elisabeth", "Malin", "Leana", "Yara", "Alma", "Carlotta", "Jolina", "Elsa", "Cara", "Lavinia", "Milla", "Josephina", "Marla", "Malou", "Johanna", "Luisa", "Louisa", "Juliana", "Malia", "Paulina", "Carla", "Alessia", "Valentina", "Nova", "Mila", "Alexandra", "Antonia", "Anita", "Joleen", "Jara", "Annabelle", "Kira", "Liana", "Svenja", "Melissa", "Delia", "Elif", "Luana", "Anni", "Tessa", "Rosie", "Esma", "Leticia", "Eleni", "Carolina", "Anya", "Louna", "Kim", "Livia", "Fenja", "Thea", "Juna", "Selina", "Celine", "Alessa", "Rosa", "Evelyn", "Alissa", "Hanna", "Mara", "Cassandra", "Viola", "Elena", "Valeria", "Kiana", "Helena", "Sofie", "Lana", "Nina", "Alessandra", "Eveline", "Anika", "Luna", "Anouk", "Paulina", "Felicitas", "Rieke", "Lotte", "Yuna", "Jette", "Antonia", "Jolene", "Felina", "Miley", "Anisa", "Martha", "Ava", "Philippa", "Edda", "Karolina", "Linda", "Greta", "Ella", "Larissa", "Vanessa", "Esther", "Elena", "Nola", "Lucia", "Elaine", "Flora", "Lola", "Rosalie", "Lena", "Alia", "Elina", "Mina", "Luisa/Louisa", "Carolina", "Tamara", "Annabelle", "Elisa", "Nina", "Johanna", "Leonie", "Jolie", "Rieke", "Anastasia", "Lotte", "Lynn", "Josefine", "Lotta", "Leona", "Johanna", "Lorena", "Marie", "Pia", "Leni", "Paulina", "Lotte", "Maja/Maya", "Larissa", "Nora", "Amalia", "Mira", "Alexandra", "Louisa", "Lara", "Greta", "Ella", "Marlene", "Mila", "Elif", "Kiara", "Mina", "Lucia", "Maya", "Zara", "Liv", "Aurora", "Nela", "Sophie", "Emilia", "Tara", "Helena", "Leonie", "Lina", "Jasmin", "Lieselotte", "Stella", "Yara", "Mira", "Mina", "Nina", "Emma", "Liam", "Olivia", "Noah", "Ava", "Isabella", "Sophia", "Jackson", "Mia", "Lucas", "Oliver", "Aiden", "Charlotte", "Harper", "Elijah", "Amelia", "Abigail", "Ella", "Leo", "Grace", "Mason", "Evelyn", "Logan", "Avery", "Sofia", "Ethan", "Lily", "Aria", "Hazel", "Zoe", "Alexander", "Madison", "Luna", "Mateo", "Chloe", "Nora", "Zoey", "Mila", "Carter", "Eli", "Aubrey", "Ellie", "Scarlett", "Jaxon", "Maya", "Levi", "Elena", "Penelope", "Aurora", "Samuel", "Cora", "Skylar", "Carson", "Sadie", "Nathan", "Kinsley", "Anna", "Elizabeth", "Grayson", "Camila", "Lincoln", "Asher", "Aaliyah", "Callie", "Xavier", "Luke", "Madelyn", "Caleb", "Kai", "Isaac", "Bella", "Zara", "Landon", "Matthew", "Lucy", "Adrian", "Joseph", "Stella", "Mackenzie", "Kailey", "Nolan", "Eleanor", "Samantha", "Dylan", "Leah", "Audrey", "Aaron", "Jasmine", "Tyler", "Easton", "Hudson", "Bailey", "Alice", "Layla", "Eliana", "Brooklyn", "Jackson", "Bentley", "Trinity", "Liliana", "Claire", "Adeline", "Ariel", "Jordyn", "Emery", "Max", "Naomi", "Eva", "Paisley", "Brody", "Kennedy", "Bryson", "Nova", "Emmett", "Kaylee", "Genesis", "Julian", "Elliot", "Piper", "Harrison", "Sarah", "Daisy", "Cole", "Kylie", "Serenity", "Jace", "Elena", "Ruby", "Camden", "Eva", "Delilah", "John", "Liam", "Catherine", "Madeline", "Isla", "Jordan", "Julia", "Sydney", "Levi", "Alexa", "Kinsley", "Hayden", "Gianna", "Everly", "Alexis", "Jaxson", "Isabelle", "Allison", "Alyssa", "Elias", "Brynn", "Leilani", "Alexandra", "Kayla", "Gracie", "Lucia", "Reagan", "Valentina", "Brayden", "Jocelyn", "Molly", "Kendall", "Blake", "Diana", "Isabel", "Zachary", "Emilia", "Lilah", "David", "Charlie", "Charlie", "Eliana", "Ryder", "Lydia", "Nevaeh", "Savannah", "Zayden", "Sydney", "Amaya", "Nicole", "Caroline", "Jaxon", "Natalia", "Jayden", "Mila", "Lincoln", "Nash", "Emilia", "Peyton", "Annabelle", "Zane", "Zoey", "Elena", "Hannah", "Lyla", "Christian", "Lily", "Violet", "Sophie", "Bentley", "Kai", "Jasmine", "Skylar", "Bella", "Penelope", "Alexandra", "Joseph", "Khloe", "Rebecca", "Leo", "Luna", "Alina", "Ashley", "Audrey", "Riley", "Alexa", "Parker", "Adeline", "Leon", "Lucy", "Taylor", "Maria", "Evan", "Chase", "Eva", "Maya", "Kayla", "Mia", "Naomi", "Ryder", "Peyton", "Eli", "Zoe", "Zara", "Mateo", "Ellie", "Julian", "Christopher", "Aiden", "Emma", "Evelyn", "Layla", "Sophia", "Grace", "Benjamin", "Harper", "Mila", "Eleanor", "Carter", "Amelia", "Ella", "Jackson", "Oliver", "Charlotte", "Ava", "Lucas", "Liam", "Abigail", "Avery", "Ethan", "Aria", "Scarlett", "Chloe", "Hazel", "Mason", "Emma", "Zoey", "Aiden", "Penelope", "Claire", "Lily", "Isabella", "Daniel", "Nora", "Madison", "Grace", "Luna", "Mia", "Lily", "Zoe", "Layla", "Ariana", "Aubrey", "Liam", "Eli", "Alexander", "Sebastian", "Aria", "Scarlett", "Victoria", "Lucy", "Mila", "Emily", "Levi", "Avery", "Ella", "Abigail", "Evelyn", "Sophia", "James", "Ben", "Wilhelm", "Friedrich", "Heinrich", "Karl", "Johann", "Georg", "Ludwig", "Ernst", "Otto", "Heinrich", "Hans", "Fritz", "Paul", "Max", "Albert", "August", "Richard", "Walter", "Hermann", "Gustav", "Rudolf", "Anton", "Franz", "Emil", "Adolf", "Oskar", "Gottfried", "Eduard", "Kurt", "Klaus", "Theodor", "Alfred", "Friedrich", "Hugo", "Arthur", "Gerhard", "Werner", "Erwin", "Berthold", "Helmut", "Konrad", "Wolfgang", "Arnold", "Rolf", "Ulrich", "Dieter", "Erich", "Günther", "Hans-Jürgen", "Winfried", "Willi", "Rolf", "Helmut", "Reinhard", "Gerd", "Manfred", "Jürgen", "Hubert", "Friedhelm", "Gustav", "Ludwig", "Karl-Heinz", "Otto", "Karl-Friedrich", "Hans-Dieter", "Heinz", "Ernst", "Walter", "Rudolf", "Herbert", "Klaus-Dieter", "Wolfram", "Friedrich-Wilhelm", "Ewald", "Egon", "Wilfried", "Norbert", "Karl-Heinz", "Gerhard", "Hans-Peter", "Dieter", "Werner", "Alfred", "Helmut", "Walter", "Heinz", "Kurt", "Hans-Joachim", "Günther", "Ernst", "Rainer", "Bernd", "Hans-Jürgen", "Wilhelm", "Joachim", "Friedrich", "Karl", "Klaus", "Reinhard", "Heinz", "Karl-Heinz", "Peter", "Jürgen", "Helmut", "Werner", "Rolf", "Günter", "Fritz", "Wolfgang", "Alfred", "Erich", "Karl-Friedrich", "Gustav", "Dieter", "Friedhelm", "Hans-Dieter", "Gerd", "Herbert", "Ludwig", "Ulrich", "Winfried", "Hans-Joachim", "Reiner", "Günther", "Manfred", "Rudolf", "Berthold", "Eduard", "Franz", "Heinrich", "Friedrich-Wilhelm", "Wilfried", "Klaus-Dieter", "Werner", "Erwin", "Wolfram", "Rainer", "Ernst", "Hubert", "Hans-Peter", "Joachim", "Norbert", "Arthur", "Karl-Heinz", "Heinz", "Otto", "Egon", "Ewald", "Kurt", "Hans", "Gustav", "Wilhelm", "Franz", "Ernst", "Heinrich", "Hermann", "Karl", "Friedrich", "Ludwig", "Alfred", "Otto", "Walter", "Richard", "Wilhelm", "Hans", "Fritz", "Paul", "Max", "Albert", "August", "Theodor", "Werner", "Friedrich", "Hugo", "Arthur", "Erwin", "Gerhard", "Eduard", "Kurt", "Heinz", "Erich", "Günther", "Hans-Jürgen", "Winfried", "Willi", "Helmut", "Reinhard", "Gerd", "Manfred", "Jürgen", "Karl-Heinz", "Hubert", "Friedhelm", "Gustav", "Ludwig", "Ewald", "Egon", "Wilfried", "Karl", "Franz", "Peter", "Wolfgang", "Ulrich", "Dieter", "Klaus-Dieter", "Heinz", "Karl-Friedrich", "Hans-Dieter", "Wolfram", "Friedrich-Wilhelm", "Ernst", "Erich", "Günter", "Rainer", "Bernd", "Herbert", "Hans-Joachim", "Wilhelm", "Joachim", "Friedrich", "Karl", "Klaus", "Reinhard", "Heinz", "Karl-Heinz", "Peter", "Jürgen", "Helmut", "Werner", "Rolf", "Günter", "Fritz", "Wolfgang", "Alfred", "Erich", "Karl-Friedrich", "Gustav", "Dieter", "Friedhelm", "Hans-Dieter", "Gerd", "Herbert", "Ludwig", "Ulrich", "Winfried", "Hans-Joachim", "Reiner", "Günther", "Manfred", "Rudolf", "Berthold", "Eduard", "Franz", "Heinrich", "Friedrich-Wilhelm", "Wilfried", "Klaus-Dieter", "Werner", "Erwin", "Wolfram", "Rainer", "Ernst", "Hubert", "Hans-Peter", "Joachim", 'Jörg', 'Hermann', 'Ulrich', 'Roland', 'Frank', 'Cord', 'Ralf', 'Sascha', 'Andreas', 'Heiko', 'Christoph', 'Kerstin', 'Christian', 'Lucas', 'Axel', 'Dirk', 'Hans-Gerd', 'Thomas', 'Norman', 'Karsten', 'Regina', 'Werner', 'Daniel', 'Leendert', 'Anton', 'Joachim', 'Alexander', 'Bastian', 'Horst', 'Sven', 'Dieter', 'Araik', 'Hans-Jürgen', 'Jens', 'Jan', 'Matthias', 'Toni', 'Erika', 'Dipl. Ing. Elmar', 'Ludger', 'Mark', 'Guido', 'Dennis', 'Marcel', 'Björn', 'Hans-Hermann', 'Monze', 'Walter', 'Maik', 'Thorsten', 'Nadine', 'Ulf', 'Meinhard', 'Johann', 'Gerhard', 'Tibor', 'Wilhelm', 'Ernst-Christian', 'Maja', 'Wolfgang', 'Jana', 'Otto', 'Franz', 'Andre', 'Bertholt', 'Klaus', 'Lukas', 'Stephan', 'Knut', 'Burghart', 'Torsten', 'Thijs Petrus Antonius', 'Hans', 'Ernst', 'Erich', 'Vinzenz', 'Volker', 'Uwe', 'Hans-Joachim', 'Detlef', 'Hinnerk', 'Bernd', 'Gernot', 'Peter', 'Markus', 'Claus', 'Armin', 'Otto Johann', 'Kurt-Egon', 'Dan', 'Timo', 'Kai', 'Herbert', 'Hilmar', 'Rainer', 'Sören', 'Gunnar', 'Nico', 'Tim', 'Christine', 'Cengiz', 'Nicolas', 'Jürgen', 'Josef', 'Raphael', 'Heinrich', 'Lüder', 'Harald', 'Helmuth', 'Savino', 'Julian', 'Carsten', 'Bernhard', 'Simon', 'Patrick', 'Rolf', 'Urs', 'Ewald', 'Jörn', 'Stefan', 'Mirco', 'Emanuel', 'Cristian-Valentin', 'Talha', 'Christina', 'Andrey', 'Henning', 'Heike', 'Marcus', 'Johannes', 'Ingo', 'Ina', 'Philipp', 'Mirko', 'Tore', 'Anja', 'Olaf', 'Fridel', 'Cornelia', 'Sandra', 'Martin', 'Monika', 'Tanja', 'Jessica', 'Marc', 'Rowena', 'Erik', 'Lasse', 'Benedikt', 'Heiner', 'Ansgar', 'Linda', 'Sebastian', 'Michaela', 'David', 'Anne', 'Stanislavas', 'Swantje', 'Petra', 'Melanie', 'Maren', 'Friedhelm', 'Lothar', 'Sarah', 'Manfred', 'Günter', 'Florian', 'Thore', 'Doris', 'Anneliese', 'Beate', 'Oliver', 'Phillip', 'Bianca', 'Marion', 'Katharina', 'Kathrin', 'Michele', 'Nina', 'Günther', 'Corinna', 'Kolja Ole', 'Helmut', 'Ilka', 'Mario', 'Helge', 'Lena', 'Jathavan', 'Karl', 'Julia', 'Martina', 'Reinhard', 'Dörk', 'Andrea', 'Achim', 'Bettina', 'Carina', 'Lars', 'Paul', 'Bodo', 'Lambert', 'Yvonne', 'Constanze', 'Rüdiger', 'Arthur', 'Wolny', 'Ronja', 'Annett', 'Kornelia', 'Friedrich', 'Ruth', 'Georg', 'Birgit', 'Siegfried', 'Eva-Maria', 'Frederik', 'Steffen', 'Holger', 'Milan', 'Miriam', 'Jakob', 'Viktor', 'Jaqueline', 'Sabine', 'Nils', 'Lisa', 'Leo', 'Berthold', 'Fatih', 'Sabrina', 'Luca', 'Heino', 'Sergey', 'Verena', 'Robert', 'Klaus-Dieter', 'Jochen', 'Igor', 'Kristina', 'Denis', 'Enes', 'Fait', 'Mathias', 'Henner', 'Ulla', 'Elke', 'Wilfried', 'Rene', 'Hubert', 'Willi', 'Roderik', 'Udo', 'Monique', 'Marco', 'Enrico', 'Richard', 'Jonas', 'Otmar', 'Tobias', 'Boris', 'Nicole', 'Elmar', 'Immo', 'Frederick', 'Margit', 'Hans-Jörg', 'Jordan', 'Lutz', 'Heinz', 'Justas', 'Detlev', 'Reimer', 'Gerald', 'Rita', 'Emil', 'Pascal', 'Karl-Hans', 'Benno', 'Ralph', 'Thilo', 'Murat', 'Denise', 'Danila', 'Ömür', 'Katja', 'Christof', 'Berndt', 'Norbert', 'Freddy', 'Ursula', 'Heinz Willi', 'Frederic', 'Ralf-Peter', 'Sylvia', 'Alois', 'Carl', 'Bert', 'Iris', 'Benjamin', 'Arne', 'Jan-Hermann', 'Sybille', 'Ute', 'Fabian', 'Sotirios', 'Khanh', 'Annette', 'Nadja', 'Antonius', 'Geigle', 'Chiara', 'Lucien', 'Beata', 'Reiner', 'Ramon', 'Hüsniye', 'Mijo', 'Erwin', 'Rogerio', 'Mike', 'Benny', 'Ludwig', 'Roger', 'Herge', 'Niklas', 'Andres', 'Roxanne', 'Othmar', 'Cyril', 'Karl-Heinz', 'Stefanie', 'Burkhard', 'Angelus', 'Pierre', 'Götz', 'Tilmann', 'Claudia', 'Ronald', 'Tammo', 'Dietmar', 'Rico', 'Dejan', 'Dainius', 'Silvio', 'Vitalij'];
         const lastName = ["Müller", "Schmidt", "Schneider", "Fischer", "Meyer", "Weber", "Meier", "Mayer", "Maier", "Wagner", "Becker", "Schulz", "Hoffmann", "Schäfer", "Koch", "Bauer", "Richter", "Klein", "Wolf", "Braun", "Schmid", "Hartmann", "Zimmermann", "Krüger", "Schmitz", "Lange", "Werner", "Schulte", "Köhler", "Lehmann", "Maier", "Scholz", "Albrecht", "Vogel", "Pohl", "Huber", "Roth", "Arnold", "König", "Friedrich", "Beyer", "Bruegge", "Seidel", "Sommer", "Haas", "Graf", "Heinrich", "Schreiber", "Schiller", "Günther", "Krämer", "Zimmer", "Jäger", "Ludwig", "Ritter", "Winkler", "Ziegler", "Frank", "Schwarz", "Neumann", "Herrmann", "Kühn", "Walter", "Peters", "Möller", "Martin", "Schubert", "Dietrich", "Ullrich", "Fuchs", "Voigt", "Simon", "Kunz", "Marx", "Sauer", "Hauser", "Böhm", "Dreher", "Schuster", "Stahl", "Hein", "Hess", "Berger", "Bock", "Busch", "Menzel", "Weiß", "Engels", "Sander", "Geiger", "Lorenz", "Rommel", "Hahn", "Schütz", "Keller", "Petersen", "Thiel", "Böttcher", "Dahl", "Heinze", "Trautmann", "Zimmerer", "Vogt", "Otto", "Voß", "Janßen", "Dahlke", "Stein", "Hesse", "Röder", "Rieger", "Wendt", "Kühne", "Seeger", "Brinkmann", "Franke", "Ackermann", "Drechsler", "Wenzel", "Hagen", "Reuter", "Döring", "Groß", "Böhme", "Kellermann", "Ebert", "Renner", "Pfeiffer", "Eichhorn", "Blum", "Stoll", "Rupp", "Vetter", "Breuer", "Hildebrand", "Wendel", "Grote", "Rosenberger", "Rößler", "Adam", "Weiß", "Ostermann", "Wiegand", "Wirth", "Bode", "Brügge", "Kolb", "Geyer", "Kling", "Heßler", "Ritz", "Lambrecht", "Essing"];
-        let prob = 0;
+        let probability = 0;
         let wordAfter = "";
         let word2After;
         let wordBefore;
@@ -449,10 +447,10 @@ export class AddressParser {
         for (let i = 0; i < inputLineWords.length; i++) {
             const tempWord = inputLineWords[i].toLowerCase();
             const tempInputWord = inputLineWords[i];
-            prob = 0;
+            probability = 0;
 
             if (firstName.includes(tempWord)) {
-                prob += 50;
+                probability += 50;
             }
 
             //checken ob das Wort vor i, falls es existiert, gewisse Stichworte enthält
@@ -461,7 +459,7 @@ export class AddressParser {
 
                 if (wordBefore.includes("geschäftsführer") || wordBefore.includes("ansprechpartner") || wordBefore.includes("vorstand") || wordBefore.includes("vorsitzender") || wordBefore.includes("inhaber") || wordBefore.includes("dr") && firstName.includes(tempWord) ||
                     wordBefore.includes("prof") || wordBefore.includes("herr") || wordBefore.includes("frau") || wordBefore.includes("verantwortliche") && tempWord !== "nach" || wordBefore.includes("vertreter")) {
-                    prob += 40;
+                        probability += 40;
                 } else if (wordBefore.includes("firmenname") || wordBefore.includes("Umsatzsteuer-Identifikationsnummer")) {
                     return tempNames;
                 }
@@ -473,7 +471,7 @@ export class AddressParser {
             if (inputLineWords[i + 1] !== undefined) {
                 wordAfter = inputLineWords[i + 1];
                 if (lastName.includes(wordAfter)) {
-                    prob += 40;
+                    probability += 40;
                 }
 
                 if (wordAfter.includes("gmbh") || wordAfter.includes("ohg") || wordAfter.includes("e.v.")) {
@@ -487,11 +485,11 @@ export class AddressParser {
             }
 
             //Wahrscheinlichkeitsrundung
-            if (prob > 100) {
-                prob = 100;
+            if (probability > 100) {
+                probability = 100;
             }
 
-            if (prob > 0) {
+            if (probability > 0) {
 
                 //output wenn es ein "normaler" Name ist
                 if (tripleName == "") {
@@ -502,7 +500,7 @@ export class AddressParser {
                     if (!firstName.includes(wordBefore)) {
 
                         if (!name.includes("§")) {
-                            tempNames.push(new CheckResult("contactPerson", tempInputWord + " " + wordAfter, prob));
+                            tempNames.push(new CheckResult("contactPerson", tempInputWord + " " + wordAfter, probability));
                         }
                     }
                 }
@@ -510,7 +508,7 @@ export class AddressParser {
                 else {
                     if (!tempNames.includes(tripleName)) {
                         tripleName = tripleName.replaceAll(",", "").replaceAll("_", "");
-                        tempNames.push(new CheckResult("contactPerson", tempInputWord + " " + wordAfter + " " + word2After, prob));
+                        tempNames.push(new CheckResult("contactPerson", tempInputWord + " " + wordAfter + " " + word2After, probability));
                     }
                 }
             }
@@ -523,7 +521,7 @@ export class AddressParser {
         let fullNumber = "";
         inputLine = inputLine.toLowerCase();
         let inputLineWords = inputLine.split(" ");
-        let prob = 0;
+        let prprobabilityob = 0;
         let stringBlacklist = "abcdefghijklmnopqrstuvwxyzäöü@#$!%^&*_={}[]|;:<>,?";
         const blacklist = stringBlacklist.split("");
 
@@ -531,9 +529,9 @@ export class AddressParser {
             // Checkt ob das Wort Buchstaben usw. enthält
             for (let b = 0; b < blacklist.length; b++) {
                 if (inputLineWords[i].includes(blacklist[b])) {
-                    if (fullNumber.trim().length != 0 && prob != 0) {
+                    if (fullNumber.trim().length != 0 && probability != 0) {
 
-                        tempFax.push(new CheckResult("faxNumber", inputLineWords[i], prob));
+                        tempFax.push(new CheckResult("faxNumber", inputLineWords[i], probability));
                     }
 
                     fullNumber = "";
@@ -545,7 +543,7 @@ export class AddressParser {
             if (i !== 0) {
                 let wordBefore = inputLineWords[i - 1].toLowerCase();
                 if (wordBefore.includes("fax")) {
-                    prob += 90;
+                    probability += 90;
                 } else if (wordBefore.includes("tel") || wordBefore.includes("fon") || wordBefore.includes("mobil") || wordBefore.includes("handy")) {
                     return tempFax;
                 }
@@ -559,12 +557,12 @@ export class AddressParser {
         let tmpFullNum = fullNumber
         tmpFullNum = tmpFullNum.replaceAll("+", "").replaceAll("/", "").replaceAll("-", "").replaceAll(".", "");
         if (tmpFullNum.length > 5 && tmpFullNum.length < 33) {
-            prob += 10;
+            probability += 10;
         }
 
-        if (fullNumber.trim().length != 0 && prob != 0) {
+        if (fullNumber.trim().length != 0 && probability != 0) {
 
-            tempFax.push(new CheckResult("faxNumber", fullNumber, prob));
+            tempFax.push(new CheckResult("faxNumber", fullNumber, probability));
         }
 
         return tempFax;
@@ -647,7 +645,7 @@ export class AddressParser {
     checkStreets(inputLine) {
         let tempStreet = [];
         let inputLineWords = inputLine.toLowerCase().split(" ");
-        let prob = 0;
+        let probability = 0;
         let streetNames = ["str.", "stra", "weg", "allee", "gasse", "ring", "platz", "promenade", "chaussee", "boulevard", "stieg", "pfad", "feld", "kamp", "berg", "wiesen", "hof", "lanen", "pleinen", "grachten", "singels", "hoven"];
         let stringBlacklist = "abcdefghijklmnopqrstuvwxyzäöü@#$!%^&*_={}[]|;:<>,?";
         let stringStreetBeginnings = ["an der", "zu den", "in der", "in den", "im ", "auf den", "auf der", "am ", "an den", "auf dem", "zur "];
@@ -665,7 +663,7 @@ export class AddressParser {
                 if (inputLineWords[i].includes(streetNames[sNames])) {
                     fullStreetName = inputLine.toLowerCase();
                     fullStreetNameClear = inputLine;
-                    prob += 40;
+                    probability += 40;
 
                     if (i + 1 < inputLineWords.length) {
                         let wordAfter = inputLineWords[i + 1].toLowerCase();
@@ -678,11 +676,11 @@ export class AddressParser {
                         }
 
                         if (num == 0) {
-                            prob += 20;
+                            probability += 20;
                             if (wordAfter.length > 0 && wordAfter.length < 3) {
-                                prob += 20;
+                                probability += 20;
                             } else if (wordAfter.length < 5) {
-                                prob += 10;
+                                probability += 10;
                             }
 
                             // checkt, ob nach der Hausnummer ein Buchstaben Zusatz kommt
@@ -694,7 +692,7 @@ export class AddressParser {
                                     for (let a = 0; a < 26; a++) {
 
                                         if (word2After == blacklist[a]) {
-                                            prob += 5;
+                                            probability += 5;
                                         }
                                     }
                                 }
@@ -703,7 +701,7 @@ export class AddressParser {
 
                         // checkt den Fall, wenn der Nr. Zusatz nicht mit einem Leerzeichen von der Nr. getrennt ist
                         if (num == 1) {
-                            prob += 30;
+                            probability += 30;
 
                             for (let z = 0; z < inputLineWords[i + 1].length - 1; z++) {
 
@@ -722,7 +720,7 @@ export class AddressParser {
                                 for (let alphabet = 0; alphabet < 26; alphabet++) {
 
                                     if (inputLineWords[i + 1][(inputLineWords[i + 1].length) - 1] == blacklist[alphabet]) {
-                                        prob += 15;
+                                        probability += 15;
                                     }
                                 }
                             }
@@ -739,7 +737,7 @@ export class AddressParser {
 
                 fullStreetName = inputLine.toLowerCase();
                 fullStreetNameClear = inputLine;
-                prob += 10;
+                probability += 10;
                 let matchingWords = stringStreetBeginnings[p].split(" ");
 
                 words: for (let m = 0; m < inputLineWords.length; m++) {
@@ -771,11 +769,11 @@ export class AddressParser {
                         }
 
                         if (num == 0) {
-                            prob += 25;
+                            probability += 25;
                             if (word2After.length > 0 && word2After.length < 3) {
-                                prob += 25;
+                                probability += 25;
                             } else if (word2After.length < 5) {
-                                prob += 15;
+                                probability += 15;
                             }
 
                             // checkt, ob nach der Hausnummer ein Buchstaben Zusatz kommt
@@ -784,7 +782,7 @@ export class AddressParser {
                                 if (word3After.length == 1) {
                                     for (let a = 0; a < 26; a++) {
                                         if (word3After == blacklist[a]) {
-                                            prob += 5;
+                                            probability += 5;
                                         }
                                     }
                                 }
@@ -792,7 +790,7 @@ export class AddressParser {
                         }
                         // checkt den Fall, wenn der Nr. Zusatz nicht mit einem Leerzeichen von der Nr. getrennt ist
                         if (num == 1) {
-                            prob += 35;
+                            probability += 35;
 
                             for (let z = 0; z < inputLineWords[m + 2].length - 1; z++) {
 
@@ -811,7 +809,7 @@ export class AddressParser {
 
                                     if (inputLineWords[m + 2][(inputLineWords[m + 2].length) - 1] == blacklist[alphabet]) {
 
-                                        prob += 25;
+                                        probability += 25;
                                     }
                                 }
                             }
@@ -822,12 +820,12 @@ export class AddressParser {
         }
 
         if (fullStreetName.length < 20 && fullStreetName.length > 10) {
-            prob += 10;
+            probability += 10;
         }
 
-        if (fullStreetName.trim().length != 0 && prob != 0) {
+        if (fullStreetName.trim().length != 0 && probability != 0) {
 
-            tempStreet.push(new CheckResult("street", fullStreetNameClear, prob));
+            tempStreet.push(new CheckResult("street", fullStreetNameClear, probability));
         }
 
         return tempStreet;
@@ -840,7 +838,7 @@ export class AddressParser {
         let inputLineWords = inputLine.split(" ");
         let city = 0;
         let cityName = 0;
-        let prob = 0;
+        let probability = 0;
         let wordAfter;
 
         //wenn element mit d-/de- startet wird dieses entfernt
@@ -849,12 +847,12 @@ export class AddressParser {
 
             if (element.startsWith("d-")) {
                 inputLineWords[a] = element.replace("d-", "");
-                prob += 10;
+                probability += 10;
             }
 
             if (element.startsWith("de-")) {
                 inputLineWords[a] = element.replace("de-", "");
-                prob += 10;
+                probability += 10;
             }
 
             //Falls vor der 5-Stelligen Zahl ein verbotenes Keyword steht wird diese Zahl nicht angegeben 
@@ -881,7 +879,7 @@ export class AddressParser {
             const element = nurZahlen[i];
 
             if (this.fetchedPostalCodes.includes(element)) {
-                prob += 60;
+                probability += 60;
                 city = this.fetchedPostalCodes.indexOf(element);
                 cityName = this.fetchedCityNames[city];
 
@@ -890,22 +888,22 @@ export class AddressParser {
                     wordAfter = inputLineWords[i + 1];
 
                     if (cityName.toLowerCase().includes(wordAfter)) {
-                        prob += 30;
+                        probability += 30;
                     }
 
                     if (wordAfter.includes(cityName.toLowerCase())) {
-                        prob = 100;
+                        probability = 100;
                     }
                 }
             }
 
             //output
-            if (prob > 100) {
-                prob = 100;
+            if (probability > 100) {
+                probability = 100;
             }
 
-            if (prob > 0) {
-                tempPostalCode.push(new CheckResult("postalCode", element, prob));
+            if (probability > 0) {
+                tempPostalCode.push(new CheckResult("postalCode", element, probability));
 
             } else {
                 continue zipLoop;
