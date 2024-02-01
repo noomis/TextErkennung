@@ -113,28 +113,28 @@ export class AddressParser {
     checkW3ws(inputLine) {
         let tempW3w = [];
         // TODO w3w/mail gleiche bennennung variblen  (words / lineWords, prob / wordprob)
-        let words = inputLine.split(" ");
+        let inputLineWords = inputLine.split(" ");
         inputLine = inputLine.toLowerCase();
         let prob = 0;
         const blacklist = ['!', '@', '#', '$', '%', '^', '&', '*', '(', ')', '_', '-', '+', '=', '{', '}', '[', ']', '|', ';', ':', "'", '"', '<', '>', ',', '?', '`', '~', '0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'ä', 'ü', 'ö'];
 
-        words: for (let i = 0; i < words.length; i++) {
+        words: for (let i = 0; i < inputLineWords.length; i++) {
             let countDot = 0;
-            let lineChars = words[i].split("");
+            let lineChars = inputLineWords[i].split("");
 
             // Wörter mit SonderZ überspringen
             for (let b = 0; b < blacklist.length; b++) {
 
-                if (words[i].includes(blacklist[b])) {
+                if (inputLineWords[i].includes(blacklist[b])) {
 
-                    if (words[i].includes(":")) {
+                    if (inputLineWords[i].includes(":")) {
 
-                        if (words[i].includes("https://what3words.com/") || words[i].includes("https://w3w.co/")) {
-                            let w3wUrl = words[i].split("/");
-                            words[i] = w3wUrl[w3wUrl.length - 1];
-                            lineChars = words[i].split("");
+                        if (inputLineWords[i].includes("https://what3words.com/") || words[i].includes("https://w3w.co/")) {
+                            let w3wUrl = inputLineWords[i].split("/");
+                            inputLineWords[i] = w3wUrl[w3wUrl.length - 1];
+                            lineChars = inputLineWords[i].split("");
 
-                        } else if (words[i].includes("https://") || words[i].includes("http://")) {
+                        } else if (inputLineWords[i].includes("https://") || inputLineWords[i].includes("http://")) {
                             continue words;
                         }
                     } else {
@@ -144,7 +144,7 @@ export class AddressParser {
             }
 
             // Url ausschließen
-            if (words[i].includes("www")) {
+            if (inputLineWords[i].includes("www")) {
                 continue;
             }
 
@@ -156,11 +156,10 @@ export class AddressParser {
 
             // bei genau zwei Punkten die Zeile dannach aufteilen und die länge der einezelenen Wörter überprüfen
             if (countDot == 2) {
-                let wordLength = words[i].split(".");
+                let wordLength = inputLineWords[i].split(".");
 
                 for (let t = 0; t < wordLength.length; t++) {
                     if (wordLength[t].length < 2) {
-                        prob = 0;
                         return tempW3w;
 
                         // Max länge eines w3w Wortes
@@ -179,7 +178,7 @@ export class AddressParser {
             }
 
             if (i !== 0) {
-                let wordBefore = words[i - 1].toLowerCase();
+                let wordBefore = inputLineWords[i - 1].toLowerCase();
                 // Checkt ob vor der w3w z.B. w3w steht.
                 if (wordBefore.includes("w3w") || wordBefore.includes("what 3 words") || wordBefore.includes("what3words") ||
                     wordBefore.includes("position") || wordBefore.includes("///")) {
@@ -187,11 +186,11 @@ export class AddressParser {
                 }
             }
 
-            if (words[i].startsWith("///")) {
+            if (inputLineWords[i].startsWith("///")) {
                 prob += 5;
             }
 
-            tempW3w.push(new CheckResult("w3w", words[i], prob));
+            tempW3w.push(new CheckResult("w3w", inputLineWords[i], prob));
         }
 
         return tempW3w;
@@ -199,13 +198,13 @@ export class AddressParser {
 
     checkHomepage(inputLine) {
         //alle wörter klein und in neuen array
-        let words = inputLine.toLowerCase().split(" ");
+        let inputLineWords = inputLine.toLowerCase().split(" ");
         let tempUrl = [];
         let knownTLD = ["com", "net", "org", "de", "eu", "at", "ch", "nl", "pl", "fr", "es", "info", "name", "email", "co", "biz"];
 
         //for-Schleife die alle Worte vom Input durchläuft
-        for (let i = 0; i < words.length; i++) {
-            const element = words[i];
+        for (let i = 0; i < inputLineWords.length; i++) {
+            const element = inputLineWords[i];
             let prob = 0;
 
             for (const tld of knownTLD) {
@@ -232,7 +231,7 @@ export class AddressParser {
             }
 
             if (i !== 0) {
-                let wordBefore = words[i - 1].toLowerCase();
+                let wordBefore = inputLineWords[i - 1].toLowerCase();
 
                 // Checkt ob vor der URL bestimmte Keywords stehen
                 if (wordBefore.includes("url") || wordBefore.includes("website") || wordBefore.includes("homepage") || wordBefore.includes("internet")) {
@@ -241,7 +240,6 @@ export class AddressParser {
             }
 
             if (element.includes("ö") || element.includes("ü") || element.includes("ß") || element.includes("ä") || element.includes("@") || element.includes("(at)")) {
-                prob = 0;
                 return tempUrl;
             }
 
@@ -266,15 +264,15 @@ export class AddressParser {
         let knownTLD = ["com", "net", "org", "de", "eu", "at", "ch", "nl", "pl", "fr", "es", "info", "name", "email", "co", "biz"];
         let tempMails = [];
         inputLine = inputLine.toLowerCase();
-        let lineWords = inputLine.split(" ");
+        let inputLineWords = inputLine.split(" ");
 
-        wordLoop: for (let index = 0; index < lineWords.length; index++) {
+        wordLoop: for (let index = 0; index < inputLineWords.length; index++) {
             let wordProb = 0; // Treffer Wahrscheinlichkeit
             let atHit = []; // Anzahl von @ im String
             let dotHit = []; //  Anzahl von . im String
             let hasTLD = false; //  hat TLD Domain
 
-            const element = lineWords[index];
+            const element = inputLineWords[index];
             let wordChars = element.split("");  //Splittet jedes Wort in einzelne Chars
 
             knownTLD.forEach(tld => {
@@ -352,14 +350,14 @@ export class AddressParser {
             }
 
             if (index !== 0) {
-                let wordBefore = lineWords[index - 1].toLowerCase(); // Checkt ob vor der Mail z.B. Mail: steht.
+                let wordBefore = inputLineWords[index - 1].toLowerCase(); // Checkt ob vor der Mail z.B. Mail: steht.
                 if (wordBefore.includes("mail")) {
                     wordProb += 20;
                 }
             }
 
 
-            tempMails.push(new CheckResult("mail", lineWords[index], wordProb));
+            tempMails.push(new CheckResult("mail", inputLineWords[index], wordProb));
         }
 
         return tempMails;
@@ -393,18 +391,16 @@ export class AddressParser {
         const companyKeyWords = ['metzgerei', 'computer', 'lackierer', 'tiefbau', 'feuerwehr', 'elektro', 'weincontor', 'weinimport', 'gerüstbau', 'hochbau', 'auto', 'galabau', 'elektriker', 'technik', 'tischlerei', 'reinigungsdienst', 'bauunternehmen', 'autohaus', 'schreinerei', 'friseursalon', 'fliesenleger', 'steuerberater', 'gartenbau', 'heizungsbau', 'sanitärinstallateur', 'baustoffhandel', 'werbeagentur', 'architekturbüro', 'edv-dienstleister', 'druckerei', 'holzbau', 'metallbau', 'malerbetrieb', 'versicherungsmakler', 'schuhgeschäft', 'buchhandlung', 'konditorei', 'baeckerei', 'elektronikladen', 'schneider', 'juwelier', 'haustierbedarf', 'blumenladen', 'optiker', 'hörgeräteakustik', 'spielwarengeschäft', 'fahrschule', 'küchenstudio', 'reisebüro', 'sportgeschäft', 'tankstelle', 'schuhmacher', 'taschengeschäft', 'dachdecker', 'zimmerei', 'fußpflege', 'druckerei', 'fahrradladen', 'elektrogroßhandel', 'lebensmittelmarkt', 'möbelhaus', 'uhrengeschäft', 'solaranlagen', 'baumaschinenverleih', 'tattoostudio', 'hundesalon', 'dönerimbiss', 'bauchladen', 'tauchschule', 'sonnenstudio', 'fotostudio', 'teppichreinigung', 'musikschule', 'modedesigner', 'yogastudio', 'autowerkstatt', 'haustechnik', 'teppichhandel', 'saunaanlagen', 'angelgeschäft', 'schlüsseldienst', 'gitarrenbau', 'fischzucht', 'hochzeitsplanung', 'hutgeschäft', 'schwimmbadtechnik', 'spielzeughersteller', 'hörbuchverlag', 'treppenbau', 'kanzlei', 'autovermietung', 'schraubenhandel', 'apotheken', 'schädlingsbekämpfung', 'vinothek', 'saftladen', 'computerladen', 'spielothek', 'elektronikmarkt', 'kindergarten', 'tanzschule', 'mietkoch', 'papierhandel', 'uhrenwerkstatt', 'stoffgeschäft', 'handyshop', 'kochschule', 'modellbau', 'goldschmied', 'floristik', 'brautmoden', 'schausteller', 'wassersport', 'segelschule', 'surfschule', 'angeln', 'haushaltswaren', 'kinderschuhladen', 'brennholzhandel', 'kaminbau', 'fotograf', 'gärtnerei', 'bioladen', 'schuhreparatur', 'mietrechtsschutz', 'müllentsorgung', 'baumschule', 'schwimmbadbau', 'catering', 'beauty-salon', 'biogasanlage', 'datenrettung', 'zeltverleih', 'videoproduktion', 'teppichhandel', 'tontechnik', 'wäscherei', 'tischlerei', 'teigwarenhersteller', 'touristik', 'taschenhersteller', 'stickerei', 'segelmacher', 'schwimmbadtechnik', 'segway-verleih', 'rolladenbau', 'reinigungsdienst', 'reiseveranstalter', 'rechtsanwalt', 'reifenservice', 'regalsysteme', 'pizzabringdienst', 'pflanzenhandel', 'pediküre', 'patisserie', 'partyservice', 'parkettverleger', 'papiergroßhandel', 'outdoorladen', 'online-marketing', 'optikergeschäft', 'orthopädietechnik', 'ölhandel', 'obstgroßhandel', 'nähmaschinenreparatur', 'motorradwerkstatt', 'mosaikleger', 'möbeltransport', 'modellflug', 'modellbahn', 'mobilfunk', 'möbeltischlerei', 'milchhandel', 'mietwagen', 'metallhandel', 'massagestudio', 'markisenbau', 'maniküre', 'malermeister', 'malerbetrieb', 'makler', 'luftaufnahmen', 'lkw-vermietung', 'lkw-werkstatt', 'logistik', 'lebensmittelhandel', 'landwirtschaft', 'lampenladen', 'laminatverleger', 'kühlhaus', 'küchenplanung', 'küchenstudio', 'küchenmontage', 'kosmetikinstitut', 'konditorei', 'kochstudio', 'kiosk', 'kinderbetreuung', 'kindermode', 'kinderzahnarzt', 'kinderarzt', 'kinderwunschzentrum', 'kinderkrippe', 'kinderpsychologe', 'kinesiologie', 'kimono-shop', 'kino', 'kiosk', 'kirchenmusik', 'kirchengemeinde', 'kiteschule', 'kletterhalle', 'konditorei', 'kosmetikstudio', 'krankenhaus', 'kunsthandel', 'kunstschule', 'kunststoffverarbeitung', 'künstleragentur', 'küchenstudio', 'kutschenverleih', 'labordienst', 'lackiererei', 'landgasthof', 'landwirtschaft', 'lebensberatung', 'lebensmittelgroßhandel', 'lebensmittelhandel', 'lebensmittelhersteller', 'lederwaren', 'lehrer', 'lerntherapie', 'lingerie-shop', 'logistikunternehmen', 'lottoladen', 'luxusuhren', 'makler', 'marketingagentur', 'massagepraxis', 'möbelhaus', 'müllabfuhr', 'müllentsorgung', 'müllverwertung', 'museum', 'musikgeschäft', 'musiklehrer', 'musikschule', 'musikstudio', 'nagelstudio', 'nahrungsergänzung', 'naturheilpraxis', 'neurologe', 'notar', 'nudelhersteller', 'ölhandel', 'obsthof', 'optiker', 'orthopäde', 'orthopädieschuhtechnik', 'packaging-design', 'papiergroßhandel', 'partyservice', 'personalberatung', 'pfandhaus', 'pflegeheim', 'pflasterarbeiten', 'pflanzenhandel', 'pflegedienst', 'physiotherapie', 'pianohaus', 'pilzzucht', 'pizza-lieferdienst', 'planungsbüro', 'polsterer', 'pr-agentur', 'pralinenhersteller', 'private-krankenversicherung', 'privatschule', 'psychiater', 'psychologe', 'psychosoziale-beratung', 'puppentheater', 'putzfrau', 'radiosender', 'rechtsanwalt', 'rechtsanwältin', 'reifenservice', 'reinigungsservice', 'reiseagentur', 'reisebüro', 'reiseveranstalter', 'reiseversicherung', 'reitsportgeschäft', 'relaxsessel', 'rentenberatung', 'restaurant', 'restauration', 'retail-design', 'rezepturenentwicklung', 'rollstuhlbau', 'rückentraining', 'saftbar', 'schauspieler', 'schlüsseldienst', 'schneiderei', 'schnittblumen', 'schokoladenhersteller', 'schornsteinfeger', 'schreibwarenhandel', 'schreinerei', 'schrottentsorgung', 'schuhgeschäft', 'schuldnerberatung', 'schwimmbadtechnik', 'schwimmschule', 'segelbootverleih', 'segelflugplatz', 'segelschule', 'sehenswürdigkeit', 'sekretariatsservice', 'selbsthilfegruppe', 'seniorendienstleistung', 'seniorenheim', 'seniorenpflege', 'shisha-bar', 'shopfitting', 'sicherheitsdienst', 'siedlungswasserwirtschaft', 'solaranlagen', 'sonnenstudio', 'sozialamt', 'sozialberatung', 'sozialdienst', 'sozialkaufhaus', 'sozialpädagogik', 'sozialpsychiatrischer-dienst', 'sozialstation', 'sozialtherapie', 'spedition', 'spielhalle', 'spielplatzbau', 'spielzeugladen', 'sportanlagenbau', 'sportartikelhersteller', 'sportgeschäft', 'sportlerheim', 'sportsbar', 'sportverein', 'stadtführung', 'stahlbau', 'staubsaugervertretung', 'steuerberatung', 'steuerberater', 'steuerfachangestellter', 'stoffgeschäft', 'straßenbau', 'stuckateur', 'studentenwohnheim', 'studienberatung', 'subunternehmen', 'supermarkt', 'sushi-bar', 'tanzschule', 'tapetenhandel', 'tattooentfernung', 'tattoostudio', 'tauchschule', 'taxiunternehmen', 'teichbau', 'teigwarenhersteller', 'telemarketing', 'telekommunikationsunternehmen', 'textildruck', 'textilveredelung', 'textilgroßhandel', 'textilhandel', 'theater', 'theaterkasse', 'theaterwerkstatt', 'therapeut', 'tierarzt', 'tierbestattung', 'tierfutterhandel', 'tierpension', 'tierpsychologie', 'tierschutzverein', 'tischlerei', 'tofuhersteller', 'tonstudio', 'touristikunternehmen', 'toyota-händler', 'traditionsunternehmen', 'trainingszentrum', 'transportunternehmen', 'treppenbau', 'trockenbau', 'trockenfrüchtehandel', 'trockenreinigung', 'trödelmarkt', 'tuningwerkstatt', 'uhrengeschäft', 'uhrenhandel', 'uhrenreparatur', 'uhrenwerkstatt', 'umzugsunternehmen', 'unternehmensberater', 'unternehmerverband', 'unterwäschehersteller', 'urlaubsbauernhof', 'us-car-vermietung', 'us-car-werkstatt', 'us-import', 'us-restaurant', 'us-shop', 'us-sportwagenvermietung', 'us-truck-vermietung', 'us-truck-werkstatt', 'us-tuning', 'uscar-handel', 'uscar-händler', 'uscar-import', 'uscar-reparatur', 'uscar-restauration', 'uscar-tuning'];
         let inputLineClear = inputLine;
         inputLine = inputLine.toLowerCase();
-        let lineWords = inputLine.split(" ");
+        let inputLineWords = inputLine.split(" ");
 
-        wordLoop: for (let index = 0; index < lineWords.length; index++) {
-            const element = lineWords[index];
+        wordLoop: for (let index = 0; index < inputLineWords.length; index++) {
+            const element = inputLineWords[index];
 
             if (element.includes('@')) { // Checkt String mit @ beginnt
-                wordProb = 0;
                 return tempCheckCompanyNames;
             }
 
             if (element.includes('(at)')) { // Checkt String mit @ beginnt
-                wordProb = 0;
                 return tempCheckCompanyNames;
             }
 
@@ -437,7 +433,7 @@ export class AddressParser {
         let word2After;
         let wordBefore;
         let tripleName = "";
-        let words = inputLine.split(" ");
+        let inputLineWords = inputLine.split(" ");
         let tempNames = [];
 
         //Vor- und Nachname-Array to lower case
@@ -449,10 +445,10 @@ export class AddressParser {
             lastName[a] = lastName[a].toLowerCase();
         }
 
-        //Schleife und check ob das aktuelle Word im firstName-Array existiert
-        for (let i = 0; i < words.length; i++) {
-            const tempWord = words[i].toLowerCase();
-            const tempInputWord = words[i];
+        //Schleife und check ob das aktuelle Word im Vornamen-Array existiert
+        for (let i = 0; i < inputLineWords.length; i++) {
+            const tempWord = inputLineWords[i].toLowerCase();
+            const tempInputWord = inputLineWords[i];
             prob = 0;
 
             if (firstName.includes(tempWord)) {
@@ -461,30 +457,28 @@ export class AddressParser {
 
             //checken ob das Wort vor i, falls es existiert, gewisse Stichworte enthält
             if (i !== 0) {
-                wordBefore = words[i - 1];
+                wordBefore = inputLineWords[i - 1];
 
                 if (wordBefore.includes("geschäftsführer") || wordBefore.includes("ansprechpartner") || wordBefore.includes("vorstand") || wordBefore.includes("vorsitzender") || wordBefore.includes("inhaber") || wordBefore.includes("dr") && firstName.includes(tempWord) ||
                     wordBefore.includes("prof") || wordBefore.includes("herr") || wordBefore.includes("frau") || wordBefore.includes("verantwortliche") && tempWord !== "nach" || wordBefore.includes("vertreter")) {
                     prob += 40;
                 } else if (wordBefore.includes("firmenname") || wordBefore.includes("Umsatzsteuer-Identifikationsnummer")) {
-                    prob = 0;
                     return tempNames;
                 }
             }
 
             tripleName = "";
 
-            //checken ob das Wort nach i mit dem lastName Array matscht 
+            //checken ob das Wort nach i mit dem Nachnamen Array matscht 
             if (words[i + 1] !== undefined) {
                 wordAfter = words[i + 1];
-                if (lastName.includes(wordAfter)) {
+                if (nachnamen.includes(wordAfter)) {
                     prob += 40;
                 }
 
                 if (wordAfter.includes("gmbh") || wordAfter.includes("ohg") || wordAfter.includes("e.v.")) {
-                    prob = 0;
                     return tempNames;
-                } else if (firstName.includes(wordAfter) && firstName.includes(tempWord)) { //checken ob es ein 3er-Name ist
+                } else if (vornamen.includes(wordAfter) && vornamen.includes(tempWord)) { //checken ob es ein 3er-Name ist
                     if (words[i + 2] !== undefined) {
                         word2After = words[i + 2];
                         tripleName = tempWord + " " + wordAfter + " " + word2After;
@@ -528,18 +522,18 @@ export class AddressParser {
         let tempFax = [];
         let fullNumber = "";
         inputLine = inputLine.toLowerCase();
-        let words = inputLine.split(" ");
+        let inputLineWords = inputLine.split(" ");
         let prob = 0;
         let stringBlacklist = "abcdefghijklmnopqrstuvwxyzäöü@#$!%^&*_={}[]|;:<>,?";
         const blacklist = stringBlacklist.split("");
 
-        words: for (let i = 0; i < words.length; i++) {
+        words: for (let i = 0; i < inputLineWords.length; i++) {
             // Checkt ob das Wort Buchstaben usw. enthält
             for (let b = 0; b < blacklist.length; b++) {
-                if (words[i].includes(blacklist[b])) {
+                if (inputLineWords[i].includes(blacklist[b])) {
                     if (fullNumber.trim().length != 0 && prob != 0) {
 
-                        tempFax.push(new CheckResult("faxNumber", words[i], prob));
+                        tempFax.push(new CheckResult("faxNumber", inputLineWords[i], prob));
                     }
 
                     fullNumber = "";
@@ -549,17 +543,16 @@ export class AddressParser {
 
             // Checkt ob vor der nummer z.B. fax steht
             if (i !== 0) {
-                let wordBefore = words[i - 1].toLowerCase();
+                let wordBefore = inputLineWords[i - 1].toLowerCase();
                 if (wordBefore.includes("fax")) {
                     prob += 90;
                 } else if (wordBefore.includes("tel") || wordBefore.includes("fon") || wordBefore.includes("mobil") || wordBefore.includes("handy")) {
-                    prob = 0;
                     return tempFax;
                 }
             }
             // Checkt ob die gesamt länge der Nummer zu groß ist
-            if (words[i].length + fullNumber.length < 20) {
-                fullNumber += words[i];
+            if (inputLineWords[i].length + fullNumber.length < 20) {
+                fullNumber += inputLineWords[i];
             }
         }
 
@@ -588,16 +581,16 @@ export class AddressParser {
         let fullUnformattedNumber = "";
 
         inputLine = inputLine.toLowerCase();
-        let words = inputLine.split(" ");
+        let inputLineWords = inputLine.split(" ");
         fullUnformattedNumber = inputLine;
         let prob = 0;
         let stringBlacklist = "abcdefghijklmnopqrstuvwxyzäöü@#$!%^&*_={}[]|;:<>,?";
         const blacklist = stringBlacklist.split("");
 
-        words: for (let i = 0; i < words.length; i++) {
+        words: for (let i = 0; i < inputLineWords.length; i++) {
             // Checkt ob das Wort Buchstaben usw. enthält
             for (let b = 0; b < blacklist.length; b++) {
-                if (words[i].includes(blacklist[b])) {
+                if (inputLineWords[i].includes(blacklist[b])) {
                     if (fullNumber.trim().length != 0 && prob != 0) {
 
                         telValue.push(fullNumber);
@@ -610,21 +603,19 @@ export class AddressParser {
 
             // Checkt ob vor der nummer z.B. Fon steht
             if (i !== 0) {
-                let wordBefore = words[i - 1].toLowerCase();
+                let wordBefore = inputLineWords[i - 1].toLowerCase();
                 if (wordBefore.includes("fon") || wordBefore.includes("tel") || wordBefore.includes("mobil") || wordBefore.includes("handy")) {
                     prob += 70;
                 }
 
                 if (wordBefore.includes("fax")) {
-                    // TODO villeicht prob entfernen?
-                    prob = 0;
                     return tempPhone;
                 }
             }
             // Checkt ob die gesamt länge der Nummer zu groß ist
-            if (words[i].length + fullNumber.length < 17) {
-                fullNumber += words[i];
-                fullUnformattedNumber = fullUnformattedNumber.replace(words[i], "");
+            if (inputLineWords[i].length + fullNumber.length < 17) {
+                fullNumber += inputLineWords[i];
+                fullUnformattedNumber = fullUnformattedNumber.replace(inputLineWords[i], "");
             }
         }
 
@@ -655,7 +646,7 @@ export class AddressParser {
 
     checkStreets(inputLine) {
         let tempStreet = [];
-        let words = inputLine.toLowerCase().split(" ");
+        let inputLineWords = inputLine.toLowerCase().split(" ");
         let prob = 0;
         let streetNames = ["str.", "stra", "weg", "allee", "gasse", "ring", "platz", "promenade", "chaussee", "boulevard", "stieg", "pfad", "feld", "kamp", "berg", "wiesen", "hof", "lanen", "pleinen", "grachten", "singels", "hoven"];
         let stringBlacklist = "abcdefghijklmnopqrstuvwxyzäöü@#$!%^&*_={}[]|;:<>,?";
@@ -666,22 +657,22 @@ export class AddressParser {
         let fullStreetNameClear = "";
         let houseNumber = 0;
 
-        words: for (let i = 0; i < words.length; i++) {
+        words: for (let i = 0; i < inputLineWords.length; i++) {
 
             // Zeile nach Keywords durchsuchen
             for (let sNames = 0; sNames < streetNames.length; sNames++) {
 
-                if (words[i].includes(streetNames[sNames])) {
+                if (inputLineWords[i].includes(streetNames[sNames])) {
                     fullStreetName = inputLine.toLowerCase();
                     fullStreetNameClear = inputLine;
                     prob += 40;
 
-                    if (i + 1 < words.length) {
-                        let wordAfter = words[i + 1].toLowerCase();
+                    if (i + 1 < inputLineWords.length) {
+                        let wordAfter = inputLineWords[i + 1].toLowerCase();
 
                         // checkt ob nach der Straße eine Hausnummer kommt
                         for (let b = 0; b < blacklist.length; b++) {
-                            if (words[i + 1].includes(blacklist[b])) {
+                            if (inputLineWords[i + 1].includes(blacklist[b])) {
                                 num++;
                             }
                         }
@@ -695,8 +686,8 @@ export class AddressParser {
                             }
 
                             // checkt, ob nach der Hausnummer ein Buchstaben Zusatz kommt
-                            if (i + 2 < words.length) {
-                                let word2After = words[i + 2].toLowerCase();
+                            if (i + 2 < inputLineWords.length) {
+                                let word2After = inputLineWords[i + 2].toLowerCase();
 
                                 if (word2After.length == 1) {
 
@@ -714,12 +705,12 @@ export class AddressParser {
                         if (num == 1) {
                             prob += 30;
 
-                            for (let z = 0; z < words[i + 1].length - 1; z++) {
+                            for (let z = 0; z < inputLineWords[i + 1].length - 1; z++) {
 
                                 for (let b = 0; b < blacklist.length; b++) {
                                     // checkt, ob alle char Werte bis auf der letzte Nummer sind
 
-                                    if (words[i + 1][z].includes(blacklist[b])) {
+                                    if (inputLineWords[i + 1][z].includes(blacklist[b])) {
                                         houseNumber++;
                                     }
                                 }
@@ -730,7 +721,7 @@ export class AddressParser {
 
                                 for (let alphabet = 0; alphabet < 26; alphabet++) {
 
-                                    if (words[i + 1][(words[i + 1].length) - 1] == blacklist[alphabet]) {
+                                    if (inputLineWords[i + 1][(inputLineWords[i + 1].length) - 1] == blacklist[alphabet]) {
                                         prob += 15;
                                     }
                                 }
@@ -751,10 +742,10 @@ export class AddressParser {
                 prob += 10;
                 let matchingWords = stringStreetBeginnings[p].split(" ");
 
-                words: for (let m = 0; m < words.length; m++) {
+                words: for (let m = 0; m < inputLineWords.length; m++) {
 
                     if (matchingWords.length == 1) {
-                        if (words[m] == matchingWords[0]) {
+                        if (inputLineWords[m] == matchingWords[0]) {
                             // continue
                         } else {
                             continue words;
@@ -762,19 +753,19 @@ export class AddressParser {
 
                     } else {
 
-                        if (words[m] == matchingWords[1] && words[m - 1] == matchingWords[0]) {
+                        if (inputLineWords[m] == matchingWords[1] && inputLineWords[m - 1] == matchingWords[0]) {
                             // continue
                         } else {
                             continue words;
                         }
                     }
 
-                    if (m + 2 < words.length) {
-                        let word2After = words[m + 2].toLowerCase();
+                    if (m + 2 < inputLineWords.length) {
+                        let word2After = inputLineWords[m + 2].toLowerCase();
                         // checkt ob nach der Straße eine Hausnummer kommt
                         for (let b = 0; b < blacklist.length; b++) {
 
-                            if (words[m + 2].includes(blacklist[b])) {
+                            if (inputLineWords[m + 2].includes(blacklist[b])) {
                                 num++;
                             }
                         }
@@ -788,8 +779,8 @@ export class AddressParser {
                             }
 
                             // checkt, ob nach der Hausnummer ein Buchstaben Zusatz kommt
-                            if (m + 3 < words.length) {
-                                let word3After = words[m + 3].toLowerCase();
+                            if (m + 3 < inputLineWords.length) {
+                                let word3After = inputLineWords[m + 3].toLowerCase();
                                 if (word3After.length == 1) {
                                     for (let a = 0; a < 26; a++) {
                                         if (word3After == blacklist[a]) {
@@ -803,12 +794,12 @@ export class AddressParser {
                         if (num == 1) {
                             prob += 35;
 
-                            for (let z = 0; z < words[m + 2].length - 1; z++) {
+                            for (let z = 0; z < inputLineWords[m + 2].length - 1; z++) {
 
                                 for (let b = 0; b < blacklist.length; b++) {
 
                                     // checkt, ob alle char Werte bis auf der letzte Nummer sind
-                                    if (words[m + 2][z].includes(blacklist[b])) {
+                                    if (inputLineWords[m + 2][z].includes(blacklist[b])) {
                                         houseNumber++;
                                     }
                                 }
@@ -818,7 +809,7 @@ export class AddressParser {
                             if (houseNumber == 0) {
                                 for (let alphabet = 0; alphabet < 26; alphabet++) {
 
-                                    if (words[m + 2][(words[m + 2].length) - 1] == blacklist[alphabet]) {
+                                    if (inputLineWords[m + 2][(inputLineWords[m + 2].length) - 1] == blacklist[alphabet]) {
 
                                         prob += 25;
                                     }
@@ -846,37 +837,37 @@ export class AddressParser {
 
         let tempPostalCode = [];
         inputLine = inputLine.toLowerCase();
-        let words = inputLine.split(" ");
+        let inputLineWords = inputLine.split(" ");
         let city = 0;
         let cityName = 0;
         let prob = 0;
         let wordAfter;
 
         //wenn element mit d-/de- startet wird dieses entfernt
-        for (let a = 0; a < words.length; a++) {
-            const element = words[a];
+        for (let a = 0; a < inputLineWords.length; a++) {
+            const element = woinputLineWordsrds[a];
 
             if (element.startsWith("d-")) {
-                words[a] = element.replace("d-", "");
+                inputLineWords[a] = element.replace("d-", "");
                 prob += 10;
             }
 
             if (element.startsWith("de-")) {
-                words[a] = element.replace("de-", "");
+                inputLineWords[a] = element.replace("de-", "");
                 prob += 10;
             }
 
             //Falls vor der 5-Stelligen Zahl ein verbotenes Keyword steht wird diese Zahl nicht angegeben 
             if (a !== 0) {
-                let wordBefore = words[a - 1];
+                let wordBefore = inputLineWords[a - 1];
 
                 if (wordBefore.includes("fax") || wordBefore.includes("fon")) {
-                    words.splice(a, 1);
+                    inputLineWords.splice(a, 1);
                 }
             }
         }
         //neuer Array nur mit 5 Stelligen Zahlen 
-        const nurZahlen = words.filter(element => !isNaN(element));
+        const nurZahlen = inputLineWords.filter(element => !isNaN(element));
 
         for (let a = 0; a < nurZahlen.length; a++) {
             const element = nurZahlen[a];
@@ -895,8 +886,8 @@ export class AddressParser {
                 cityName = this.fetchedCityNames[city];
 
                 //check ob Wort nach dem zip Code der Stadt entspricht die im json eingetragen ist
-                if (words[i + 1] !== undefined) {
-                    wordAfter = words[i + 1];
+                if (inputLineWords[i + 1] !== undefined) {
+                    wordAfter = inputLineWords[i + 1];
 
                     if (cityName.toLowerCase().includes(wordAfter)) {
                         prob += 30;
@@ -926,7 +917,7 @@ export class AddressParser {
 
     checkCity(inputLine) {
         let tempCity = [];
-        let words = inputLine.split(" ");
+        let inputLineWords = inputLine.split(" ");
         let postalCode = 0;
         let cityName = 0;
         let prob = 0;
@@ -938,9 +929,9 @@ export class AddressParser {
         }
 
         //check ob elements im json enthalten sind und somit eine Stadt matchen
-        zipLoop: for (let i = 0; i < words.length; i++) {
-            const element = words[i].toLowerCase();
-            const elementClear = words[i];
+        zipLoop: for (let i = 0; i < inputLineWords.length; i++) {
+            const element = inputLineWords[i].toLowerCase();
+            const elementClear = inputLineWords[i];
             prob = 0;
             if (cityNamesArray.includes(element)) {
                 prob += 60;
@@ -948,10 +939,10 @@ export class AddressParser {
                 postalCode = this.fetchedPostalCodes[cityName];
 
                 //check ob Wort nach dem zip Code der Stadt entspricht die im json eingetragen ist
-                if (words[i - 1] !== undefined) {
-                    wordBefore = words[i - 1];
+                if (inputLineWords[i - 1] !== undefined) {
+                    wordBefore = inputLineWords[i - 1];
 
-                    const nurZahlen = words.filter(element => !isNaN(element));
+                    const nurZahlen = inputLineWords.filter(element => !isNaN(element));
 
                     for (let a = 0; a < nurZahlen.length; a++) {
                         const e = nurZahlen[a];
