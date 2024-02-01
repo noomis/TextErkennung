@@ -521,7 +521,7 @@ export class AddressParser {
         let fullNumber = "";
         inputLine = inputLine.toLowerCase();
         let inputLineWords = inputLine.split(" ");
-        let prprobabilityob = 0;
+        let probability = 0;
         let stringBlacklist = "abcdefghijklmnopqrstuvwxyzäöü@#$!%^&*_={}[]|;:<>,?";
         const blacklist = stringBlacklist.split("");
 
