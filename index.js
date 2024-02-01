@@ -35,34 +35,38 @@ function printResult() {
             let addressObject = new Address();
 
             addressObject.setEmails(mainParser.getEmailsCheck());
-            addressObject.outputAllValues("email", 200);
+            addressObject.outputAllValues("email", 0);
 
             addressObject.setPhoneNumbers(mainParser.getPhoneNumbersCheck());
-            addressObject.outputAllValues("phoneNumber", 250);
+            addressObject.outputAllValues("phoneNumber", 0);
 
             addressObject.setContactPersons(mainParser.getContactPersonsCheck());
-            addressObject.outputAllValues("contactPerson", 200);
+            addressObject.outputAllValues("contactPerson", 0);
 
             addressObject.setFaxNumbers(mainParser.getFaxNumbersCheck());
-            addressObject.outputAllValues("faxNumber", 300);
+            addressObject.outputAllValues("faxNumber", 0);
 
             addressObject.setW3wAddress(mainParser.getW3wAddressCheck());
-            addressObject.outputMaxValues("w3w", 300);
+            addressObject.outputMaxValues("w3w", 0);
 
             addressObject.setHomepage(mainParser.getHomepageCheck());
-            addressObject.outputMaxValues("homepage", 150);
+            addressObject.outputMaxValues("homepage", 0);
 
             addressObject.setStreet(mainParser.getStreetCheck());
-            addressObject.outputMaxValues("street", 250);
+            addressObject.outputMaxValues("street", 0);
 
             addressObject.setCompanyName(mainParser.getCompanyNameCheck());
-            addressObject.outputMaxValues("companyName", 150);
+            addressObject.outputMaxValues("companyName", 0);
 
             addressObject.setPostalCode(mainParser.getPostalCodeCheck());
-            addressObject.outputMaxValues("postalCode", 300);
+            addressObject.outputMaxValues("postalCode", 0);
 
             addressObject.setCity(mainParser.getCityCheck());
-            addressObject.outputMaxValues("city", 300);
+            addressObject.outputMaxValues("city", 0);
+
+            document.getElementById('exportJSON').addEventListener('click', function() {
+                addressObject.exportJson(this); // 
+            });
         }
 
     }, 1000);
@@ -70,6 +74,10 @@ function printResult() {
 }
 
 document.getElementById("random").addEventListener("click", randomImpressum);
+
+
+ 
+
 
 let i = 0;
 function randomImpressum() {

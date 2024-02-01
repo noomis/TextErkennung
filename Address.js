@@ -1,3 +1,5 @@
+
+
 export class Address {
 
     companyName = [];
@@ -138,24 +140,24 @@ export class Address {
         for (let index = 0; index < objectArray.length; index++) {
             let object = objectArray[index];
             // if (object !== undefined) {
-                let new_id = object.name;
-                console.log(object);
-                let outputPercentage = $("#slider")[0].value; //Prozentzahl vom Input des Schiebereglers 
-                //wenn Slider-Wahrscheinlichkeit kleiner oder gleich dem des Wertes im Array entspricht ausgeben
-                if (outputPercentage <= object.probability) {
-                    if (firstvalue == 0) {
-                        $("#" + html_id).val(object.value).hide().fadeIn(fadeTime); // setzen des ersten Wertes in vorhandenes Feld
-                    }
-                    else {
-                        //Neuerstellung und Implementierung von Feldern bei mehreren Telefonnummern
-                        let newObject = document.createElement("input");
-                        newObject.id = "id" + index + new_id;
-                        newObject.classList.add("delete");
-                        $("#" + new_id).after(newObject);
-                        $("#id" + index + new_id).val(object.value).hide().fadeIn(fadeTime);
-                    }
-                    firstvalue++;
+            let new_id = object.name;
+            console.log(object);
+            let outputPercentage = $("#slider")[0].value; //Prozentzahl vom Input des Schiebereglers 
+            //wenn Slider-Wahrscheinlichkeit kleiner oder gleich dem des Wertes im Array entspricht ausgeben
+            if (outputPercentage <= object.probability) {
+                if (firstvalue == 0) {
+                    $("#" + html_id).val(object.value).hide().fadeIn(fadeTime); // setzen des ersten Wertes in vorhandenes Feld
                 }
+                else {
+                    //Neuerstellung und Implementierung von Feldern bei mehreren Telefonnummern
+                    let newObject = document.createElement("input");
+                    newObject.id = "id" + index + new_id;
+                    newObject.classList.add("delete");
+                    $("#" + new_id).after(newObject);
+                    $("#id" + index + new_id).val(object.value).hide().fadeIn(fadeTime);
+                }
+                firstvalue++;
+            }
             // }
         }
     }
@@ -234,4 +236,43 @@ export class Address {
 
         return highestPercentage;
     }
+
+
+    exportJson(el) {
+    
+        let jsonObject = {
+            companyName: "",
+            homepage: "",
+            contactPersons: "",
+            emails: "",
+            street: "",
+            phone: "",
+            fax: "",
+            zip: "",
+            city: "",
+            w3w: "",
+        };
+    
+        jsonObject.city = this.getCity();
+        jsonObject.zip = this.getPostalCode();
+        jsonObject.w3w = this.getW3wAddress();
+        jsonObject.companyName = this.getCompanyName();
+        jsonObject.homepage = this.getHomepage();
+        jsonObject.contactPersons = this.getContactPersons();
+        jsonObject.emails = this.getEmails();
+        jsonObject.street = this.getStreet();
+        jsonObject.phone = this.getPhoneNumbers();
+        jsonObject.fax = this.getFaxNumbers();
+    
+        // Convert the JSON object to a string
+        let jsonString = JSON.stringify(jsonObject, null, 4);
+    
+        // Create a data URI for the JSON content
+        let dataUri = "data:text/json;charset=utf-8," + encodeURIComponent(jsonString);
+    
+        // Set the element's attributes to create the download link
+        el.setAttribute("href", dataUri);
+        el.setAttribute("download", "data.json");
+    }
+    
 }
