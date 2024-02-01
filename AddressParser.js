@@ -462,7 +462,7 @@ export class AddressParser {
 
             tripleName = "";
 
-            //checken ob das Wort nach i mit dem Nachnamen Array matscht 
+            //checken ob das Wort nach i mit dem Nachnamen Array matcht 
             if (inputLineWords[i + 1] !== undefined) {
                 wordAfter = inputLineWords[i + 1];
                 if (lastName.includes(wordAfter)) {
