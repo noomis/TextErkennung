@@ -181,7 +181,7 @@ export class AddressParser {
                 // Checkt ob vor der w3w z.B. w3w steht.
                 if (wordBefore.includes("w3w") || wordBefore.includes("what 3 words") || wordBefore.includes("what3words") ||
                     wordBefore.includes("position") || wordBefore.includes("///")) {
-                    probability += 15;
+                        probability += 15;
                 }
             }
 
@@ -459,7 +459,7 @@ export class AddressParser {
 
                 if (wordBefore.includes("geschäftsführer") || wordBefore.includes("ansprechpartner") || wordBefore.includes("vorstand") || wordBefore.includes("vorsitzender") || wordBefore.includes("inhaber") || wordBefore.includes("dr") && firstName.includes(tempWord) ||
                     wordBefore.includes("prof") || wordBefore.includes("herr") || wordBefore.includes("frau") || wordBefore.includes("verantwortliche") && tempWord !== "nach" || wordBefore.includes("vertreter")) {
-                    probability += 40;
+                        probability += 40;
                 } else if (wordBefore.includes("firmenname") || wordBefore.includes("Umsatzsteuer-Identifikationsnummer")) {
                     return tempNames;
                 }
@@ -623,19 +623,20 @@ export class AddressParser {
             probability += 30;
         }
 
-        if (fullNumber.trim().length != 0 && probability != 0) {
-            if (fullNumber.startsWith("+49") || fullNumber.startsWith("0") || fullNumber.startsWith("(0") || fullNumber.startsWith("(+49")) {
-                tempPhone.push(new CheckResult("phoneNumber", fullNumber.replace("0", "+49"), probability));
+        if (fullNumber.trim().length != 0 && probability != 0 ) {
+            if (fullNumber.startsWith("+49") || fullNumber.startsWith("0") || fullNumber.startsWith("(0") || fullNumber.startsWith("(+49") ) {
+                if (fullNumber.startsWith("0") || fullNumber.startsWith("(0")) {
+                    tempPhone.push(new CheckResult("phoneNumber", fullNumber.replace("0","+49"), probability));
 
+                } else {
+                    tempPhone.push(new CheckResult("phoneNumber", fullNumber, probability));
+
+                }
 
             }
 
+
         }
-
-
-
-
-
 
         if (tmpFullNum > 5) {
             fullUnformattedNumber = fullUnformattedNumber.trim();
@@ -978,7 +979,7 @@ export class AddressParser {
                     }
                     if (wordBefore.toLowerCase().includes("amtsgericht")
                         || wordBefore.toLowerCase().includes("finanzamt")) {
-                        probability = 15;
+                            probability = 15;
                     }
 
                 }
