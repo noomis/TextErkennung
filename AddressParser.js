@@ -115,7 +115,7 @@ export class AddressParser {
         // TODO w3w/mail gleiche bennennung variblen  (words / lineWords, prob / wordprob)
         let inputLineWords = inputLine.split(" ");
         inputLine = inputLine.toLowerCase();
-        let prob = 0;
+        let probability = 0;
         const blacklist = ['!', '@', '#', '$', '%', '^', '&', '*', '(', ')', '_', '-', '+', '=', '{', '}', '[', ']', '|', ';', ':', "'", '"', '<', '>', ',', '?', '`', '~', '0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'ä', 'ü', 'ö'];
 
         words: for (let i = 0; i < inputLineWords.length; i++) {
@@ -164,7 +164,7 @@ export class AddressParser {
 
                         // Max länge eines w3w Wortes
                     } else if (wordLength[t].length <= 24) {
-                        prob += 20;
+                        probability += 20;
                     }
                 }
 
@@ -174,7 +174,7 @@ export class AddressParser {
 
             // überprüfen ob 2 Punkte
             if (countDot == 2) {
-                prob += 20;
+                probability += 20;
             }
 
             if (i !== 0) {
@@ -182,15 +182,15 @@ export class AddressParser {
                 // Checkt ob vor der w3w z.B. w3w steht.
                 if (wordBefore.includes("w3w") || wordBefore.includes("what 3 words") || wordBefore.includes("what3words") ||
                     wordBefore.includes("position") || wordBefore.includes("///")) {
-                    prob += 15;
+                        probability += 15;
                 }
             }
 
             if (inputLineWords[i].startsWith("///")) {
-                prob += 5;
+                probability += 5;
             }
 
-            tempW3w.push(new CheckResult("w3w", inputLineWords[i], prob));
+            tempW3w.push(new CheckResult("w3w", inputLineWords[i], probability));
         }
 
         return tempW3w;
@@ -583,7 +583,7 @@ export class AddressParser {
         inputLine = inputLine.toLowerCase();
         let inputLineWords = inputLine.split(" ");
         fullUnformattedNumber = inputLine;
-        let prob = 0;
+        let probability = 0;
         let stringBlacklist = "abcdefghijklmnopqrstuvwxyzäöü@#$!%^&*_={}[]|;:<>,?";
         const blacklist = stringBlacklist.split("");
 
@@ -591,10 +591,10 @@ export class AddressParser {
             // Checkt ob das Wort Buchstaben usw. enthält
             for (let b = 0; b < blacklist.length; b++) {
                 if (inputLineWords[i].includes(blacklist[b])) {
-                    if (fullNumber.trim().length != 0 && prob != 0) {
+                    if (fullNumber.trim().length != 0 && probability != 0) {
 
                         telValue.push(fullNumber);
-                        telProbability.push(prob);
+                        telProbability.push(probability);
                     }
                     fullNumber = "";
                     continue words;
@@ -605,7 +605,7 @@ export class AddressParser {
             if (i !== 0) {
                 let wordBefore = inputLineWords[i - 1].toLowerCase();
                 if (wordBefore.includes("fon") || wordBefore.includes("tel") || wordBefore.includes("mobil") || wordBefore.includes("handy")) {
-                    prob += 70;
+                    probability += 70;
                 }
 
                 if (wordBefore.includes("fax")) {
@@ -622,12 +622,12 @@ export class AddressParser {
         let tmpFullNum = fullNumber;
         tmpFullNum = tmpFullNum.replaceAll("+", "").replaceAll("/", "").replaceAll("-", "").replaceAll(".", "");
         if (tmpFullNum.length > 5 && tmpFullNum.length < 20) {
-            prob += 30;
+            probability += 30;
         }
 
-        if (fullNumber.trim().length != 0 && prob != 0) {
+        if (fullNumber.trim().length != 0 && probability != 0) {
 
-            tempPhone.push(new CheckResult("phoneNumber", fullNumber, prob));
+            tempPhone.push(new CheckResult("phoneNumber", fullNumber, probability));
 
 
         }
@@ -920,7 +920,7 @@ export class AddressParser {
         let inputLineWords = inputLine.split(" ");
         let postalCode = 0;
         let cityName = 0;
-        let prob = 0;
+        let probability = 0;
         let wordBefore;
         let cityNamesArray = this.fetchedCityNames;
         for (let a = 0; a < cityNamesArray.length; a++) {
@@ -932,9 +932,9 @@ export class AddressParser {
         zipLoop: for (let i = 0; i < inputLineWords.length; i++) {
             const element = inputLineWords[i].toLowerCase();
             const elementClear = inputLineWords[i];
-            prob = 0;
+            probability = 0;
             if (cityNamesArray.includes(element)) {
-                prob += 60;
+                probability += 60;
                 cityName = this.fetchedCityNames.indexOf(element);
                 postalCode = this.fetchedPostalCodes[cityName];
 
@@ -953,39 +953,39 @@ export class AddressParser {
                     }
 
                     if (nurZahlen.includes(wordBefore)) {
-                        prob += 10;
+                        probability += 10;
                     }
                     if (wordBefore.startsWith("d-")) {
                         wordBefore = wordBefore.replace("d-", "");
-                        prob += 10;
+                        probability += 10;
                     }
 
                     if (wordBefore.startsWith("de-")) {
                         wordBefore = wordBefore.replace("de-", "");
-                        prob += 10;
+                        probability += 10;
                     }
                     if (postalCode.toLowerCase().includes(wordBefore)) {
-                        prob += 30;
+                        probability += 30;
                     }
 
                     if (wordBefore.includes(postalCode.toLowerCase())) {
-                        prob = 100;
+                        probability = 100;
                     }
                     if (wordBefore.toLowerCase().includes("amtsgericht")
                         || wordBefore.toLowerCase().includes("finanzamt")) {
-                        prob = 15;
+                            probability = 15;
                     }
 
                 }
             }
 
             //output
-            if (prob > 100) {
-                prob = 100;
+            if (probability > 100) {
+                probability = 100;
             }
 
-            if (prob > 0) {
-                tempCity.push(new CheckResult("city", elementClear, prob));
+            if (probability > 0) {
+                tempCity.push(new CheckResult("city", elementClear, probability));
 
             } else {
                 continue zipLoop;
