@@ -1,12 +1,12 @@
 # TODO
 
 
-- [ ] Nummern internationale Vorwahl ausgeben
-- [ ] Land anhand Paramtern in der Eingabe erkennen
-- [ ] Telefonnummern überprüfen ob gültige Vorwahl vorhanden ist
-- [ ] Ausgabe für Steuernummer, Handelsregisternummer, Ländername
-- [ ] Telefonnummern keine Blacklist sondern Whitelist
 - [ ] Code alles auf Englisch
+- [ ] Telefonnummern überprüfen ob gültige Vorwahl vorhanden ist
+- [ ] Telefonnummern keine Blacklist sondern Whitelist
+- [ ] Nummern internationale Vorwahl ausgeben
+- [ ] Land anhand Parametern in der Eingabe erkennen
+- [ ] Ausgabe für Steuernummer, Handelsregisternummer, Ländername
 - [ ] Kommentare
 
 ----------
