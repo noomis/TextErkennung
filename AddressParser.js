@@ -160,7 +160,6 @@ export class AddressParser {
 
                 for (let t = 0; t < wordLength.length; t++) {
                     if (wordLength[t].length < 2) {
-                        prob = 0;
                         return tempW3w;
 
                         // Max länge eines w3w Wortes
@@ -241,7 +240,6 @@ export class AddressParser {
             }
 
             if (element.includes("ö") || element.includes("ü") || element.includes("ß") || element.includes("ä") || element.includes("@") || element.includes("(at)")) {
-                prob = 0;
                 return tempUrl;
             }
 
@@ -399,12 +397,10 @@ export class AddressParser {
             const element = lineWords[index];
 
             if (element.includes('@')) { // Checkt String mit @ beginnt
-                wordProb = 0;
                 return tempCheckCompanyNames;
             }
 
             if (element.includes('(at)')) { // Checkt String mit @ beginnt
-                wordProb = 0;
                 return tempCheckCompanyNames;
             }
 
@@ -467,7 +463,6 @@ export class AddressParser {
                     wordBefore.includes("prof") || wordBefore.includes("herr") || wordBefore.includes("frau") || wordBefore.includes("verantwortliche") && tempWord !== "nach" || wordBefore.includes("vertreter")) {
                     prob += 40;
                 } else if (wordBefore.includes("firmenname") || wordBefore.includes("Umsatzsteuer-Identifikationsnummer")) {
-                    prob = 0;
                     return tempNames;
                 }
             }
@@ -482,7 +477,6 @@ export class AddressParser {
                 }
 
                 if (wordAfter.includes("gmbh") || wordAfter.includes("ohg") || wordAfter.includes("e.v.")) {
-                    prob = 0;
                     return tempNames;
                 } else if (vornamen.includes(wordAfter) && vornamen.includes(tempWord)) { //checken ob es ein 3er-Name ist
                     if (words[i + 2] !== undefined) {
@@ -553,7 +547,6 @@ export class AddressParser {
                 if (wordBefore.includes("fax")) {
                     prob += 90;
                 } else if (wordBefore.includes("tel") || wordBefore.includes("fon") || wordBefore.includes("mobil") || wordBefore.includes("handy")) {
-                    prob = 0;
                     return tempFax;
                 }
             }
@@ -616,8 +609,6 @@ export class AddressParser {
                 }
 
                 if (wordBefore.includes("fax")) {
-                    // TODO villeicht prob entfernen?
-                    prob = 0;
                     return tempPhone;
                 }
             }
