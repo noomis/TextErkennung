@@ -623,9 +623,11 @@ export class AddressParser {
             probability += 30;
         }
 
-        if (fullNumber.trim().length != 0 && probability != 0) {
+        if (fullNumber.trim().length != 0 && probability != 0 ) {
+            if (fullNumber.startsWith("+49") || fullNumber.startsWith("0")) {
+                tempPhone.push(new CheckResult("phoneNumber", fullNumber, probability));
 
-            tempPhone.push(new CheckResult("phoneNumber", fullNumber, probability));
+            }
 
 
         }
