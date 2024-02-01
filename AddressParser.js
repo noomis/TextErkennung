@@ -115,43 +115,70 @@ export class AddressParser {
         let inputLineWords = inputLine.split(" ");
         inputLine = inputLine.toLowerCase();
         let probability = 0;
-        const blacklist = ['!', '@', '#', '$', '%', '^', '&', '*', '(', ')', '_', '-', '+', '=', '{', '}', '[', ']', '|', ';', ':', "'", '"', '<', '>', ',', '?', '`', '~', '0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'ä', 'ü', 'ö'];
+        // const blacklist = ['!', '@', '#', '$', '%', '^', '&', '*', '(', ')', '_', '-', '+', '=', '{', '}', '[', ']', '|', ';', ':', "'", '"', '<', '>', ',', '?', '`', '~', '0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'ä', 'ü', 'ö'];
+        const whiteList = [];
 
         words: for (let i = 0; i < inputLineWords.length; i++) {
             let countDot = 0;
             let lineChars = inputLineWords[i].split("");
 
-            // Wörter mit SonderZ überspringen
-            for (let b = 0; b < blacklist.length; b++) {
+            // // Wörter mit SonderZ überspringen
+            // for (let b = 0; b < blacklist.length; b++) {
 
-                if (inputLineWords[i].includes(blacklist[b])) {
+            //     if (inputLineWords[i].includes(blacklist[b])) {
 
-                    if (inputLineWords[i].includes(":")) {
+            //         if (inputLineWords[i].includes(":")) {
 
-                        if (inputLineWords[i].includes("https://what3words.com/") || inputLineWords[i].includes("https://w3w.co/")) {
-                            let w3wUrl = inputLineWords[i].split("/");
-                            inputLineWords[i] = w3wUrl[w3wUrl.length - 1];
-                            lineChars = inputLineWords[i].split("");
+            //             if (inputLineWords[i].includes("https://what3words.com/") || inputLineWords[i].includes("https://w3w.co/")) {
+            //                 let w3wUrl = inputLineWords[i].split("/");
+            //                 inputLineWords[i] = w3wUrl[w3wUrl.length - 1];
+            //                 lineChars = inputLineWords[i].split("");
 
-                        } else if (inputLineWords[i].includes("https://") || inputLineWords[i].includes("http://")) {
-                            continue words;
-                        }
-                    } else {
-                        continue words;
+            //             } else if (inputLineWords[i].includes("https://") || inputLineWords[i].includes("http://")) {
+            //                 continue words;
+            //             }
+            //         } else {
+            //             continue words;
+            //         }
+            //     }
+            // }
+
+            lineChars.forEach(e => {
+                let charAsciiCode = e.charCodeAt(0)
+                console.log(e);
+                // console.log(charAsciiCode);
+
+                if (!(charAsciiCode >= 65 && charAsciiCode <= 90 || charAsciiCode >= 97 && charAsciiCode <= 122 || charAsciiCode == 46)) {
+
+                    if (inputLineWords[i].includes("https://what3words.com/") || inputLineWords[i].includes("https://w3w.co/")) {
+                        let w3wUrl = inputLineWords[i].split("/");
+                        inputLineWords[i] = w3wUrl[w3wUrl.length - 1];
+                        lineChars = inputLineWords[i].split("");
+
+                    } else if (inputLineWords[i].includes("https://") || inputLineWords[i].includes("http://")) {
+                        // continue words;
                     }
+
+                } else {
+                    console.log("weiter machen");
                 }
-            }
+
+                if (e == ".") {
+                    countDot++;
+                }
+            });
+
 
             // Url ausschließen
             if (inputLineWords[i].includes("www")) {
                 continue;
             }
 
-            lineChars.forEach(e => {
-                if (e == ".") {
-                    countDot++;
-                }
-            });
+            // lineChars.forEach(e => {
+            //     if (e == ".") {
+            //         countDot++;
+            //     }
+            // });
 
             // bei genau zwei Punkten die Zeile dannach aufteilen und die länge der einezelenen Wörter überprüfen
             if (countDot == 2) {
@@ -181,7 +208,7 @@ export class AddressParser {
                 // Checkt ob vor der w3w z.B. w3w steht.
                 if (wordBefore.includes("w3w") || wordBefore.includes("what 3 words") || wordBefore.includes("what3words") ||
                     wordBefore.includes("position") || wordBefore.includes("///")) {
-                        probability += 15;
+                    probability += 15;
                 }
             }
 
@@ -459,7 +486,7 @@ export class AddressParser {
 
                 if (wordBefore.includes("geschäftsführer") || wordBefore.includes("ansprechpartner") || wordBefore.includes("vorstand") || wordBefore.includes("vorsitzender") || wordBefore.includes("inhaber") || wordBefore.includes("dr") && firstName.includes(tempWord) ||
                     wordBefore.includes("prof") || wordBefore.includes("herr") || wordBefore.includes("frau") || wordBefore.includes("verantwortliche") && tempWord !== "nach" || wordBefore.includes("vertreter")) {
-                        probability += 40;
+                    probability += 40;
                 } else if (wordBefore.includes("firmenname") || wordBefore.includes("Umsatzsteuer-Identifikationsnummer")) {
                     return tempNames;
                 }
@@ -971,7 +998,7 @@ export class AddressParser {
                     }
                     if (wordBefore.toLowerCase().includes("amtsgericht")
                         || wordBefore.toLowerCase().includes("finanzamt")) {
-                            probability = 15;
+                        probability = 15;
                     }
 
                 }
