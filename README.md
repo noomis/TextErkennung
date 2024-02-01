@@ -2,9 +2,7 @@
 
 
 - [ ] Code alles auf Englisch
-- [ ] Telefonnummern überprüfen ob gültige Vorwahl vorhanden ist
 - [ ] Telefonnummern keine Blacklist sondern Whitelist
-- [ ] Nummern internationale Vorwahl ausgeben
 - [ ] Land anhand Parametern in der Eingabe erkennen
 - [ ] Ausgabe für Steuernummer, Handelsregisternummer, Ländername
 - [ ] Kommentare
@@ -19,3 +17,5 @@
 - [x] Value und Propability als ein Object in Array speichern
 - [x] Wahrscheinlichkeiten im Json angeben
 - [x] in Address Class name Code Conventions ändern
+- [x] Telefonnummern überprüfen ob gültige Vorwahl vorhanden ist
+- [x] Nummern internationale Vorwahl ausgeben

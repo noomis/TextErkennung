@@ -650,9 +650,17 @@ export class AddressParser {
             probability += 30;
         }
 
-        if (fullNumber.trim().length != 0 && probability != 0) {
+        if (fullNumber.trim().length != 0 && probability != 0 ) {
+            if (fullNumber.startsWith("+49") || fullNumber.startsWith("0") || fullNumber.startsWith("(0") || fullNumber.startsWith("(+49") ) {
+                if (fullNumber.startsWith("0") || fullNumber.startsWith("(0")) {
+                    tempPhone.push(new CheckResult("phoneNumber", fullNumber.replace("0","+49"), probability));
 
-            tempPhone.push(new CheckResult("phoneNumber", fullNumber, probability));
+                } else {
+                    tempPhone.push(new CheckResult("phoneNumber", fullNumber, probability));
+
+                }
+
+            }
 
 
         }
