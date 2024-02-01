@@ -115,70 +115,38 @@ export class AddressParser {
         let inputLineWords = inputLine.split(" ");
         inputLine = inputLine.toLowerCase();
         let probability = 0;
-        // const blacklist = ['!', '@', '#', '$', '%', '^', '&', '*', '(', ')', '_', '-', '+', '=', '{', '}', '[', ']', '|', ';', ':', "'", '"', '<', '>', ',', '?', '`', '~', '0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'ä', 'ü', 'ö'];
-        const whiteList = [];
 
         words: for (let i = 0; i < inputLineWords.length; i++) {
             let countDot = 0;
             let lineChars = inputLineWords[i].split("");
 
-            // // Wörter mit SonderZ überspringen
-            // for (let b = 0; b < blacklist.length; b++) {
+            // Für jeden Buchstaben von dem aktullen Wort den Ascii Code berechnen
+            for (let index = 0; index < lineChars.length; index++) {
+                let charAsciiCode = lineChars[index].charCodeAt(0);
 
-            //     if (inputLineWords[i].includes(blacklist[b])) {
+                // Überprüfen, ob die Buchstaben valide sind indem sie (A-Z, a-z, ., /) entsprechen
+                if (!(charAsciiCode >= 65 && charAsciiCode <= 90 || charAsciiCode >= 97 && charAsciiCode <= 122 || charAsciiCode == 46 || charAsciiCode == 47)) {
 
-            //         if (inputLineWords[i].includes(":")) {
-
-            //             if (inputLineWords[i].includes("https://what3words.com/") || inputLineWords[i].includes("https://w3w.co/")) {
-            //                 let w3wUrl = inputLineWords[i].split("/");
-            //                 inputLineWords[i] = w3wUrl[w3wUrl.length - 1];
-            //                 lineChars = inputLineWords[i].split("");
-
-            //             } else if (inputLineWords[i].includes("https://") || inputLineWords[i].includes("http://")) {
-            //                 continue words;
-            //             }
-            //         } else {
-            //             continue words;
-            //         }
-            //     }
-            // }
-
-            lineChars.forEach(e => {
-                let charAsciiCode = e.charCodeAt(0)
-                console.log(e);
-                // console.log(charAsciiCode);
-
-                if (!(charAsciiCode >= 65 && charAsciiCode <= 90 || charAsciiCode >= 97 && charAsciiCode <= 122 || charAsciiCode == 46)) {
-
+                    // Bei einem Link zur w3w Adresse, den Verzeichnis Pfad der Url herausnehmen und damit weiter durchlaufen
                     if (inputLineWords[i].includes("https://what3words.com/") || inputLineWords[i].includes("https://w3w.co/")) {
                         let w3wUrl = inputLineWords[i].split("/");
                         inputLineWords[i] = w3wUrl[w3wUrl.length - 1];
                         lineChars = inputLineWords[i].split("");
 
-                    } else if (inputLineWords[i].includes("https://") || inputLineWords[i].includes("http://")) {
-                        // continue words;
+                    } else {
+                        continue words;
                     }
-
-                } else {
-                    console.log("weiter machen");
                 }
 
-                if (e == ".") {
+                if (lineChars[index] == ".") {
                     countDot++;
                 }
-            });
-
+            }
 
             // Url ausschließen
             if (inputLineWords[i].includes("www")) {
                 continue;
             }
-
-            // lineChars.forEach(e => {
-            //     if (e == ".") {
-            //         countDot++;
-            //     }
-            // });
 
             // bei genau zwei Punkten die Zeile dannach aufteilen und die länge der einezelenen Wörter überprüfen
             if (countDot == 2) {
@@ -650,17 +618,9 @@ export class AddressParser {
             probability += 30;
         }
 
-        if (fullNumber.trim().length != 0 && probability != 0 ) {
-            if (fullNumber.startsWith("+49") || fullNumber.startsWith("0") || fullNumber.startsWith("(0") || fullNumber.startsWith("(+49") ) {
-                if (fullNumber.startsWith("0") || fullNumber.startsWith("(0")) {
-                    tempPhone.push(new CheckResult("phoneNumber", fullNumber.replace("0","+49"), probability));
+        if (fullNumber.trim().length != 0 && probability != 0) {
 
-                } else {
-                    tempPhone.push(new CheckResult("phoneNumber", fullNumber, probability));
-
-                }
-
-            }
+            tempPhone.push(new CheckResult("phoneNumber", fullNumber, probability));
 
 
         }
