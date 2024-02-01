@@ -129,7 +129,7 @@ export class AddressParser {
 
                     if (inputLineWords[i].includes(":")) {
 
-                        if (inputLineWords[i].includes("https://what3words.com/") || words[i].includes("https://w3w.co/")) {
+                        if (inputLineWords[i].includes("https://what3words.com/") || inputLineWords[i].includes("https://w3w.co/")) {
                             let w3wUrl = inputLineWords[i].split("/");
                             inputLineWords[i] = w3wUrl[w3wUrl.length - 1];
                             lineChars = inputLineWords[i].split("");
@@ -472,13 +472,13 @@ export class AddressParser {
             //checken ob das Wort nach i mit dem Nachnamen Array matscht 
             if (inputLineWords[i + 1] !== undefined) {
                 wordAfter = inputLineWords[i + 1];
-                if (nachnamen.includes(wordAfter)) {
+                if (lastName.includes(wordAfter)) {
                     prob += 40;
                 }
 
                 if (wordAfter.includes("gmbh") || wordAfter.includes("ohg") || wordAfter.includes("e.v.")) {
                     return tempNames;
-                } else if (vornamen.includes(wordAfter) && vornamen.includes(tempWord)) { //checken ob es ein 3er-Name ist
+                } else if (firstName.includes(wordAfter) && firstName.includes(tempWord)) { //checken ob es ein 3er-Name ist
                     if (inputLineWords[i + 2] !== undefined) {
                         word2After = inputLineWords[i + 2];
                         tripleName = tempWord + " " + wordAfter + " " + word2After;
@@ -845,7 +845,7 @@ export class AddressParser {
 
         //wenn element mit d-/de- startet wird dieses entfernt
         for (let a = 0; a < inputLineWords.length; a++) {
-            const element = woinputLineWordsrds[a];
+            const element = inputLineWords[a];
 
             if (element.startsWith("d-")) {
                 inputLineWords[a] = element.replace("d-", "");
