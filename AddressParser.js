@@ -470,8 +470,8 @@ export class AddressParser {
             tripleName = "";
 
             //checken ob das Wort nach i mit dem Nachnamen Array matscht 
-            if (words[i + 1] !== undefined) {
-                wordAfter = words[i + 1];
+            if (inputLineWords[i + 1] !== undefined) {
+                wordAfter = inputLineWords[i + 1];
                 if (nachnamen.includes(wordAfter)) {
                     prob += 40;
                 }
@@ -479,8 +479,8 @@ export class AddressParser {
                 if (wordAfter.includes("gmbh") || wordAfter.includes("ohg") || wordAfter.includes("e.v.")) {
                     return tempNames;
                 } else if (vornamen.includes(wordAfter) && vornamen.includes(tempWord)) { //checken ob es ein 3er-Name ist
-                    if (words[i + 2] !== undefined) {
-                        word2After = words[i + 2];
+                    if (inputLineWords[i + 2] !== undefined) {
+                        word2After = inputLineWords[i + 2];
                         tripleName = tempWord + " " + wordAfter + " " + word2After;
                     }
                 }
