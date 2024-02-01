@@ -119,7 +119,6 @@ export class AddressParser {
         const blacklist = ['!', '@', '#', '$', '%', '^', '&', '*', '(', ')', '_', '-', '+', '=', '{', '}', '[', ']', '|', ';', ':', "'", '"', '<', '>', ',', '?', '`', '~', '0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'ä', 'ü', 'ö'];
 
         words: for (let i = 0; i < words.length; i++) {
-            let element = words[i];
             let countDot = 0;
             let lineChars = words[i].split("");
 
@@ -133,7 +132,6 @@ export class AddressParser {
                         if (words[i].includes("https://what3words.com/") || words[i].includes("https://w3w.co/")) {
                             let w3wUrl = words[i].split("/");
                             words[i] = w3wUrl[w3wUrl.length - 1];
-                            element = words[i];
                             lineChars = words[i].split("");
 
                         } else if (words[i].includes("https://") || words[i].includes("http://")) {
