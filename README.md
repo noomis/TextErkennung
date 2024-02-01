@@ -6,7 +6,7 @@
 - [ ] Land anhand Parametern in der Eingabe erkennen
 - [ ] Ausgabe für Steuernummer, Handelsregisternummer, Ländername
 - [ ] Kommentare
-
+- [ ] keine doppelten contactPersons und Citys als objects erstellen 
 ----------
 
 - [x] Wenn nur eine Nummer im Text ist dann wahrscheinlicher eine Tel Nummer
