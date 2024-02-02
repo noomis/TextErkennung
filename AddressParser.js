@@ -501,7 +501,7 @@ export class AddressParser {
             if (probability > 0) {
                 //output wenn es ein "normaler" Name ist
                 if (tripleName == "") {
-                    wordAfter = wordAfter.replaceAll(",", "").replaceAll("_", "");
+                    wordAfterClean = wordAfterClean.replaceAll(",", "").replaceAll("_", "");
                     let name = tempInputWord + " " + wordAfterClean;
 
                     // checken, ob das Wort vorher nicht auch ein Vorname ist, dann pushen um einen möglichen 3er-Namen nicht doppelt zu erhalten
@@ -1044,12 +1044,12 @@ export class AddressParser {
             let existingObjects = this.citysCheck;
             let inlineExistingObjects = tempCity;
             inlineExistingObjects.forEach(cityObject => {
-                if (cityObject.value === elementClear) {
+                if (cityObject.value === elementClear && cityObject.probability > probability) {
                     probability = 0;
                 }
             });
             existingObjects.forEach(cityObject => {
-                if (cityObject.value === elementClear) {
+                if (cityObject.value === elementClear && cityObject.probability > probability) {
                     probability = 0;
                 }
             });
