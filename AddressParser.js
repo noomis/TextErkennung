@@ -537,7 +537,7 @@ export class AddressParser {
             let inputLineChars = inputLineWords[i].split("");
 
             inputLineChars.forEach(element => {
-                if (!whiteList.match(element)) {
+                if (!whiteList.includes(element)) {
                     // console.log("false");
                 }
             });
