@@ -521,26 +521,20 @@ export class AddressParser {
 
         words: for (let i = 0; i < inputLineWords.length; i++) {
 
-            // // Checkt ob das Wort Buchstaben usw. enthält
-            // for (let b = 0; b < blacklist.length; b++) {
-            //     if (inputLineWords[i].includes(blacklist[b])) {
-            //         if (fullNumber.trim().length != 0 && probability != 0) {
-
-            //             tempFax.push(new CheckResult("faxNumber", inputLineWords[i], probability));
-            //         }
-
-            //         fullNumber = "";
-            //         continue words;
-            //     }
-            // }
-
             let inputLineChars = inputLineWords[i].split("");
 
-            inputLineChars.forEach(element => {
-                if (!whiteList.includes(element)) {
-                    // console.log("false");
+            for (let index = 0; index < inputLineChars.length; index++) {
+                
+                if (!whiteList.includes(inputLineChars[index])) {
+
+                    if (fullNumber.trim().length >= 6 && probability != 0) {
+                        tempFax.push(new CheckResult("faxNumber", inputLineWords[i - 1], probability));
+                        tempFax.push(new CheckResult("faxNumber", fullNumber, probability));
+                    }
+                    fullNumber = "";
+                    continue words;
                 }
-            });
+            }
 
             // Checkt ob vor der nummer z.B. fax steht
             if (i !== 0) {
@@ -557,9 +551,15 @@ export class AddressParser {
             if (inputLineWords[i].length + fullNumber.length < 20) {
                 fullNumber += inputLineWords[i];
             }
+
+            let tmpFullNum = fullNumber;
+            tmpFullNum = tmpFullNum.replaceAll("+", "").replaceAll("/", "").replaceAll("-", "").replaceAll(".", "");
+            if (tmpFullNum.length > 5 && tmpFullNum.length < 33) {
+                probability += 10;
+            }
         }
 
-        let tmpFullNum = fullNumber
+        let tmpFullNum = fullNumber;
         tmpFullNum = tmpFullNum.replaceAll("+", "").replaceAll("/", "").replaceAll("-", "").replaceAll(".", "");
         if (tmpFullNum.length > 5 && tmpFullNum.length < 33) {
             probability += 10;
@@ -598,21 +598,21 @@ export class AddressParser {
 
 
 
-                        
-                        if (inputLineWords[i-1].startsWith("0") || inputLineWords[i-1].startsWith("(0")) {
-                            tempPhone.push(new CheckResult("phoneNumber", inputLineWords[i-1].replace("0", "+49"), probability));
-        
+
+                        if (inputLineWords[i - 1].startsWith("0") || inputLineWords[i - 1].startsWith("(0")) {
+                            tempPhone.push(new CheckResult("phoneNumber", inputLineWords[i - 1].replace("0", "+49"), probability));
+
                         } else {
-                            tempPhone.push(new CheckResult("phoneNumber", inputLineWords[i-1], probability));
-        
+                            tempPhone.push(new CheckResult("phoneNumber", inputLineWords[i - 1], probability));
+
                         }
 
                         if (fullNumber.startsWith("0") || fullNumber.startsWith("(0")) {
                             tempPhone.push(new CheckResult("phoneNumber", fullNumber.replace("0", "+49"), probability));
-        
+
                         } else {
                             tempPhone.push(new CheckResult("phoneNumber", fullNumber, probability));
-        
+
                         }
 
                     }
