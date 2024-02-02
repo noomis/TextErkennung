@@ -616,6 +616,7 @@ export class AddressParser {
                     // Falls nach einer Nummer ein Wort kommt, wird die bisher gespeicherte Nummer ausgegeben
                     if (fullNumber.trim().length >= 6 && probability != 0) {
 
+                        // Telefonnummer einheitliche Schreibweise setzen
                         if (inputLineWords[i - 1].startsWith("0") || inputLineWords[i - 1].startsWith("(0")) {
                             tempPhone.push(new CheckResult("phoneNumber", inputLineWords[i - 1].replace("0", "+49"), probability));
                         
@@ -658,20 +659,6 @@ export class AddressParser {
             if (tmpFullNum.length > 5 && tmpFullNum.length < 20) {
                 probability += 30;
             }
-
-            // if (fullNumber.trim().length != 0 && probability != 0) {
-            //     if (fullNumber.startsWith("+49") || fullNumber.startsWith("0") || fullNumber.startsWith("(0") || fullNumber.startsWith("(+49")) {
-            //         if (fullNumber.startsWith("0") || fullNumber.startsWith("(0")) {
-            //             tempPhone.push(new CheckResult("phoneNumber", fullNumber.replace("0", "+49"), probability));
-
-            //         } else {
-            //             tempPhone.push(new CheckResult("phoneNumber", fullNumber, probability));
-
-            //         }
-
-            //     }
-
-            // }
         }
 
         let tmpFullNum = fullNumber;
