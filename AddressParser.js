@@ -619,11 +619,19 @@ export class AddressParser {
         }
 
         if (fullNumber.trim().length != 0 && probability != 0) {
+            if (fullNumber.startsWith("+49") || fullNumber.startsWith("0") || fullNumber.startsWith("(0") || fullNumber.startsWith("(+49")) {
+                if (fullNumber.startsWith("0") || fullNumber.startsWith("(0")) {
+                    tempPhone.push(new CheckResult("phoneNumber", fullNumber.replace("0", "+49"), probability));
 
-            tempPhone.push(new CheckResult("phoneNumber", fullNumber, probability));
+                } else {
+                    tempPhone.push(new CheckResult("phoneNumber", fullNumber, probability));
 
+                }
+
+            }
 
         }
+
 
         if (tmpFullNum > 5) {
             fullUnformattedNumber = fullUnformattedNumber.trim();
@@ -636,6 +644,10 @@ export class AddressParser {
         return tempPhone;
 
     }
+
+
+
+
 
     checkStreets(inputLine) {
         let tempStreet = [];
