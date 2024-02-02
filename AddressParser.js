@@ -517,28 +517,38 @@ export class AddressParser {
         inputLine = inputLine.toLowerCase();
         let inputLineWords = inputLine.split(" ");
         let probability = 0;
-        let stringBlacklist = "abcdefghijklmnopqrstuvwxyzäöü@#$!%^&*_={}[]|;:<>,?";
-        const blacklist = stringBlacklist.split("");
+        const whiteList = ("0123456789+/-");
 
         words: for (let i = 0; i < inputLineWords.length; i++) {
-            // Checkt ob das Wort Buchstaben usw. enthält
-            for (let b = 0; b < blacklist.length; b++) {
-                if (inputLineWords[i].includes(blacklist[b])) {
-                    if (fullNumber.trim().length != 0 && probability != 0) {
 
-                        tempFax.push(new CheckResult("faxNumber", inputLineWords[i], probability));
-                    }
+            // // Checkt ob das Wort Buchstaben usw. enthält
+            // for (let b = 0; b < blacklist.length; b++) {
+            //     if (inputLineWords[i].includes(blacklist[b])) {
+            //         if (fullNumber.trim().length != 0 && probability != 0) {
 
-                    fullNumber = "";
-                    continue words;
+            //             tempFax.push(new CheckResult("faxNumber", inputLineWords[i], probability));
+            //         }
+
+            //         fullNumber = "";
+            //         continue words;
+            //     }
+            // }
+
+            let inputLineChars = inputLineWords[i].split("");
+
+            inputLineChars.forEach(element => {
+                if (!whiteList.match(element)) {
+                    // console.log("false");
                 }
-            }
+            });
 
             // Checkt ob vor der nummer z.B. fax steht
             if (i !== 0) {
                 let wordBefore = inputLineWords[i - 1].toLowerCase();
+
                 if (wordBefore.includes("fax")) {
                     probability += 90;
+
                 } else if (wordBefore.includes("tel") || wordBefore.includes("fon") || wordBefore.includes("mobil") || wordBefore.includes("handy")) {
                     return tempFax;
                 }
