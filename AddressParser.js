@@ -610,8 +610,10 @@ export class AddressParser {
             // Checkt ob das Wort Buchstaben usw. enthält
             for (let b = 0; b < blacklist.length; b++) {
 
+                // Überprüfen, ob die Eingabe einer Nummer entspricht
                 if (inputLineWords[i].includes(blacklist[b])) {
 
+                    // Falls nach einer Nummer ein Wort kommt, wird die bisher gespeicherte Nummer ausgegeben
                     if (fullNumber.trim().length >= 6 && probability != 0) {
 
                         if (inputLineWords[i - 1].startsWith("0") || inputLineWords[i - 1].startsWith("(0")) {
