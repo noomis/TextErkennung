@@ -517,7 +517,7 @@ export class AddressParser {
         inputLine = inputLine.toLowerCase();
         let inputLineWords = inputLine.split(" ");
         let probability = 0;
-        const whiteList = ("0123456789+/-.");
+        const whiteList = ("0123456789+/-");
 
         words: for (let i = 0; i < inputLineWords.length; i++) {
 
