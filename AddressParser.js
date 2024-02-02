@@ -96,7 +96,7 @@ export class AddressParser {
             this.companyNamesCheck = this.companyNamesCheck.concat(this.checkCompanyNames(input));
 
             this.contactPersonsCheck = this.contactPersonsCheck.concat(this.checkContactPersons(input));
-            console.log(this.contactPersonsCheck);
+
             this.faxNumbersCheck = this.faxNumbersCheck.concat(this.checkFax(input));
 
             this.phoneNumbersCheck = this.phoneNumbersCheck.concat(this.checkPhone(input));
@@ -1040,7 +1040,19 @@ export class AddressParser {
 
                 }
             }
-
+            //checken, ob citys bereits ein Objekt haben, um Doppelungen zu vermeiden
+            let existingObjects = this.citysCheck;
+            let inlineExistingObjects = tempCity;
+            inlineExistingObjects.forEach(cityObject => {
+                if (cityObject.value === elementClear) {
+                    probability = 0;
+                }
+            });
+            existingObjects.forEach(cityObject => {
+                if (cityObject.value === elementClear) {
+                    probability = 0;
+                }
+            });
             //output
             if (probability > 100) {
                 probability = 100;
