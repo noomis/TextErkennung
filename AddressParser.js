@@ -584,10 +584,27 @@ export class AddressParser {
             // Checkt ob das Wort Buchstaben usw. enthält
             for (let b = 0; b < blacklist.length; b++) {
                 if (inputLineWords[i].includes(blacklist[b])) {
-                    if (fullNumber.trim().length != 0 && probability != 0) {
+                    if (fullNumber.trim().length >= 6 && probability != 0) {
 
-                        telValue.push(fullNumber);
-                        telProbability.push(probability);
+
+
+                        
+                        if (inputLineWords[i-1].startsWith("0") || inputLineWords[i-1].startsWith("(0")) {
+                            tempPhone.push(new CheckResult("phoneNumber", inputLineWords[i-1].replace("0", "+49"), probability));
+        
+                        } else {
+                            tempPhone.push(new CheckResult("phoneNumber", inputLineWords[i-1], probability));
+        
+                        }
+
+                        if (fullNumber.startsWith("0") || fullNumber.startsWith("(0")) {
+                            tempPhone.push(new CheckResult("phoneNumber", fullNumber.replace("0", "+49"), probability));
+        
+                        } else {
+                            tempPhone.push(new CheckResult("phoneNumber", fullNumber, probability));
+        
+                        }
+
                     }
                     fullNumber = "";
                     continue words;
@@ -610,6 +627,26 @@ export class AddressParser {
                 fullNumber += inputLineWords[i];
                 fullUnformattedNumber = fullUnformattedNumber.replace(inputLineWords[i], "");
             }
+
+            let tmpFullNum = fullNumber;
+            tmpFullNum = tmpFullNum.replaceAll("+", "").replaceAll("/", "").replaceAll("-", "").replaceAll(".", "");
+            if (tmpFullNum.length > 5 && tmpFullNum.length < 20) {
+                probability += 30;
+            }
+
+            // if (fullNumber.trim().length != 0 && probability != 0) {
+            //     if (fullNumber.startsWith("+49") || fullNumber.startsWith("0") || fullNumber.startsWith("(0") || fullNumber.startsWith("(+49")) {
+            //         if (fullNumber.startsWith("0") || fullNumber.startsWith("(0")) {
+            //             tempPhone.push(new CheckResult("phoneNumber", fullNumber.replace("0", "+49"), probability));
+
+            //         } else {
+            //             tempPhone.push(new CheckResult("phoneNumber", fullNumber, probability));
+
+            //         }
+
+            //     }
+
+            // }
         }
 
         let tmpFullNum = fullNumber;
