@@ -96,7 +96,7 @@ export class AddressParser {
             this.companyNamesCheck = this.companyNamesCheck.concat(this.checkCompanyNames(input));
 
             this.contactPersonsCheck = this.contactPersonsCheck.concat(this.checkContactPersons(input));
-
+            console.log(this.contactPersonsCheck);
             this.faxNumbersCheck = this.faxNumbersCheck.concat(this.checkFax(input));
 
             this.phoneNumbersCheck = this.phoneNumbersCheck.concat(this.checkPhone(input));
@@ -428,6 +428,7 @@ export class AddressParser {
         let tripleName = "";
         let inputLineWords = inputLine.split(" ");
         let tempNames = [];
+        let wordAfterClean = "";
 
         //Vor- und Nachname-Array to lower case
         for (let a = 0; a < firstName.length; a++) {
@@ -450,7 +451,7 @@ export class AddressParser {
 
             //checken ob das Wort vor i, falls es existiert, gewisse Stichworte enthält
             if (i !== 0) {
-                wordBefore = inputLineWords[i - 1];
+                wordBefore = inputLineWords[i - 1].toLowerCase();
 
                 if (wordBefore.includes("geschäftsführer") || wordBefore.includes("ansprechpartner") || wordBefore.includes("vorstand") || wordBefore.includes("vorsitzender") || wordBefore.includes("inhaber") || wordBefore.includes("dr") && firstName.includes(tempWord) ||
                     wordBefore.includes("prof") || wordBefore.includes("herr") || wordBefore.includes("frau") || wordBefore.includes("verantwortliche") && tempWord !== "nach" || wordBefore.includes("vertreter")) {
@@ -464,7 +465,8 @@ export class AddressParser {
 
             //checken ob das Wort nach i mit dem Nachnamen Array matcht 
             if (inputLineWords[i + 1] !== undefined) {
-                wordAfter = inputLineWords[i + 1];
+                wordAfter = inputLineWords[i + 1].toLowerCase();
+                wordAfterClean = inputLineWords[i + 1];
                 if (lastName.includes(wordAfter)) {
                     probability += 40;
                 }
@@ -474,7 +476,7 @@ export class AddressParser {
                 } else if (firstName.includes(wordAfter) && firstName.includes(tempWord)) { //checken ob es ein 3er-Name ist
                     if (inputLineWords[i + 2] !== undefined) {
                         word2After = inputLineWords[i + 2];
-                        tripleName = tempWord + " " + wordAfter + " " + word2After;
+                        tripleName = tempInputWord + " " + wordAfterClean + " " + word2After;
                     }
                 }
             }
@@ -483,19 +485,30 @@ export class AddressParser {
             if (probability > 100) {
                 probability = 100;
             }
-
+            //checken, ob Namen bereits als Objekte erstellt wurden, um Doppelungen zu vermeiden
+            let inlineExistingObjects = tempNames;
+            let existingObjects = this.contactPersonsCheck;
+            inlineExistingObjects.forEach(nameObject => {
+                if (nameObject.value === tripleName || nameObject.value === tempInputWord + " " + wordAfterClean) {
+                    probability = 0;
+                }
+            });
+            existingObjects.forEach(nameObject => {
+                if (nameObject.value === tripleName || nameObject.value === tempInputWord + " " + wordAfterClean) {
+                    probability = 0;
+                }
+            });
             if (probability > 0) {
-
                 //output wenn es ein "normaler" Name ist
                 if (tripleName == "") {
                     wordAfter = wordAfter.replaceAll(",", "").replaceAll("_", "");
-                    let name = tempWord + " " + wordAfter;
+                    let name = tempInputWord + " " + wordAfterClean;
 
-                    // TODO was ist das für eine Abfrage? (middle name)
+                    // checken, ob das Wort vorher nicht auch ein Vorname ist, dann pushen um einen möglichen 3er-Namen nicht doppelt zu erhalten
                     if (!firstName.includes(wordBefore)) {
-
+                        //checken, ob name kein § enthält = edge case
                         if (!name.includes("§")) {
-                            tempNames.push(new CheckResult("contactPerson", tempInputWord + " " + wordAfter, probability));
+                            tempNames.push(new CheckResult("contactPerson", name, probability));
                         }
                     }
                 }
@@ -503,7 +516,8 @@ export class AddressParser {
                 else {
                     if (!tempNames.includes(tripleName)) {
                         tripleName = tripleName.replaceAll(",", "").replaceAll("_", "");
-                        tempNames.push(new CheckResult("contactPerson", tempInputWord + " " + wordAfter + " " + word2After, probability));
+                        tempNames.push(new CheckResult("contactPerson", tripleName, probability));
+                        console.log("create " + tripleName);
                     }
                 }
             }
