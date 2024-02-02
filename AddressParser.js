@@ -682,10 +682,6 @@ export class AddressParser {
 
     }
 
-
-
-
-
     checkStreets(inputLine) {
         let tempStreet = [];
         let inputLineWords = inputLine.toLowerCase().split(" ");
