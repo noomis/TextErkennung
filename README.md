@@ -6,7 +6,7 @@
 - [ ] Land anhand Parametern in der Eingabe erkennen
 - [ ] Ausgabe für Steuernummer, Handelsregisternummer, Ländername
 - [ ] Kommentare
-- [ ] keine doppelten contactPersons und Citys als objects erstellen 
+
 ----------
 
 - [x] Wenn nur eine Nummer im Text ist dann wahrscheinlicher eine Tel Nummer
@@ -19,3 +19,4 @@
 - [x] in Address Class name Code Conventions ändern
 - [x] Telefonnummern überprüfen ob gültige Vorwahl vorhanden ist
 - [x] Nummern internationale Vorwahl ausgeben
+- [x] keine doppelten contactPersons und Citys als objects erstellen 

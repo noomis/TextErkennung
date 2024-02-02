@@ -610,10 +610,13 @@ export class AddressParser {
             // Checkt ob das Wort Buchstaben usw. enthält
             for (let b = 0; b < blacklist.length; b++) {
 
+                // Überprüfen, ob die Eingabe einer Nummer entspricht
                 if (inputLineWords[i].includes(blacklist[b])) {
 
+                    // Falls nach einer Nummer ein Wort kommt, wird die bisher gespeicherte Nummer ausgegeben
                     if (fullNumber.trim().length >= 6 && probability != 0) {
 
+                        // Telefonnummer einheitliche Schreibweise setzen
                         if (inputLineWords[i - 1].startsWith("0") || inputLineWords[i - 1].startsWith("(0")) {
                             tempPhone.push(new CheckResult("phoneNumber", inputLineWords[i - 1].replace("0", "+49"), probability));
                         
@@ -645,6 +648,7 @@ export class AddressParser {
                     return tempPhone;
                 }
             }
+            
             // Checkt ob die gesamt länge der Nummer zu groß ist
             if (inputLineWords[i].length + fullNumber.length < 17) {
                 fullNumber += inputLineWords[i];
@@ -656,20 +660,6 @@ export class AddressParser {
             if (tmpFullNum.length > 5 && tmpFullNum.length < 20) {
                 probability += 30;
             }
-
-            // if (fullNumber.trim().length != 0 && probability != 0) {
-            //     if (fullNumber.startsWith("+49") || fullNumber.startsWith("0") || fullNumber.startsWith("(0") || fullNumber.startsWith("(+49")) {
-            //         if (fullNumber.startsWith("0") || fullNumber.startsWith("(0")) {
-            //             tempPhone.push(new CheckResult("phoneNumber", fullNumber.replace("0", "+49"), probability));
-
-            //         } else {
-            //             tempPhone.push(new CheckResult("phoneNumber", fullNumber, probability));
-
-            //         }
-
-            //     }
-
-            // }
         }
 
         let tmpFullNum = fullNumber;
@@ -685,24 +675,21 @@ export class AddressParser {
 
                 } else {
                     tempPhone.push(new CheckResult("phoneNumber", fullNumber, probability));
-
                 }
 
             }
 
         }
 
-
         if (tmpFullNum > 5) {
             fullUnformattedNumber = fullUnformattedNumber.trim();
+
             if (fullUnformattedNumber.length > 10) {
 
                 tempPhone = tempPhone.concat(this.checkPhone(fullUnformattedNumber));
-
             }
         }
         return tempPhone;
-
     }
 
     checkStreets(inputLine) {
