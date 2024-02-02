@@ -648,6 +648,7 @@ export class AddressParser {
                     return tempPhone;
                 }
             }
+            
             // Checkt ob die gesamt länge der Nummer zu groß ist
             if (inputLineWords[i].length + fullNumber.length < 17) {
                 fullNumber += inputLineWords[i];
@@ -674,24 +675,21 @@ export class AddressParser {
 
                 } else {
                     tempPhone.push(new CheckResult("phoneNumber", fullNumber, probability));
-
                 }
 
             }
 
         }
 
-
         if (tmpFullNum > 5) {
             fullUnformattedNumber = fullUnformattedNumber.trim();
+
             if (fullUnformattedNumber.length > 10) {
 
                 tempPhone = tempPhone.concat(this.checkPhone(fullUnformattedNumber));
-
             }
         }
         return tempPhone;
-
     }
 
     checkStreets(inputLine) {
