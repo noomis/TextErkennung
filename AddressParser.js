@@ -359,8 +359,8 @@ export class AddressParser {
     checkCompanyNames(inputLine) {
         let wordProb = 0; // Treffer Wahrscheinlichkeit
         let tempCheckCompanyNames = [];
-
-        let companyType = [
+        const knownTLD = ["com", "net", "org", "de", "eu", "at", "ch", "nl", "pl", "fr", "es", "info", "name", "email", "co", "biz"];
+        const companyType = [
             "einzelunternehmen",
             "gesellschaft mit beschränkter haftung",
             "aktiengesellschaft",
@@ -395,6 +395,12 @@ export class AddressParser {
 
             if (element.includes('(at)')) { // Checkt String mit @ beginnt
                 return tempCheckCompanyNames;
+            }
+            for (let i = 0; i < knownTLD.length; i++) {
+                const el = knownTLD[i];
+                if (element.startsWith("www.") && element.endsWith(el)) {
+                    return tempCheckCompanyNames;
+                }
             }
 
             companyType.forEach(unternehmensform => {
@@ -456,7 +462,7 @@ export class AddressParser {
                 if (wordBefore.includes("geschäftsführer") || wordBefore.includes("ansprechpartner") || wordBefore.includes("vorstand") || wordBefore.includes("vorsitzender") || wordBefore.includes("inhaber") || wordBefore.includes("dr") && firstName.includes(tempWord) ||
                     wordBefore.includes("prof") || wordBefore.includes("herr") || wordBefore.includes("frau") || wordBefore.includes("verantwortliche") && tempWord !== "nach" || wordBefore.includes("vertreter")) {
                     probability += 40;
-                } else if (wordBefore.includes("firmenname") || wordBefore.includes("Umsatzsteuer-Identifikationsnummer")) {
+                } else if (wordBefore.includes("firmenname") || wordBefore.includes("umsatzsteuer-identifikationsnummer")) {
                     return tempNames;
                 }
             }
@@ -1036,7 +1042,7 @@ export class AddressParser {
                     inlineExistingObjects.splice(index, 1);
                 }
             });
-            existingObjects.forEach((cityObject, index)=> {
+            existingObjects.forEach((cityObject, index) => {
                 if (cityObject.value.toLowerCase() === elementClear.toLowerCase() && cityObject.probability > probability) {
                     probability = 0;
                 } else if (cityObject.value.toLowerCase() === elementClear.toLowerCase() && cityObject.probability <= probability) {
@@ -1059,5 +1065,3 @@ export class AddressParser {
         return tempCity;
     }
 }
-
-//TODO lars Nachnamen auch auf Vornamen kontrollieren und citys nicht doppelt pushen bei größerer probability
