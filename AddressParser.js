@@ -619,14 +619,14 @@ export class AddressParser {
                         // Telefonnummer einheitliche Schreibweise setzen
                         if (inputLineWords[i - 1].startsWith("0") || inputLineWords[i - 1].startsWith("(0")) {
                             tempPhone.push(new CheckResult("phoneNumber", inputLineWords[i - 1].replace("0", "+49"), probability));
-                        
+
                         } else {
                             tempPhone.push(new CheckResult("phoneNumber", inputLineWords[i - 1], probability));
                         }
 
                         if (fullNumber.startsWith("0") || fullNumber.startsWith("(0")) {
                             tempPhone.push(new CheckResult("phoneNumber", fullNumber.replace("0", "+49"), probability));
-                        
+
                         } else {
                             tempPhone.push(new CheckResult("phoneNumber", fullNumber, probability));
                         }
@@ -648,7 +648,7 @@ export class AddressParser {
                     return tempPhone;
                 }
             }
-            
+
             // Checkt ob die gesamt länge der Nummer zu groß ist
             if (inputLineWords[i].length + fullNumber.length < 17) {
                 fullNumber += inputLineWords[i];
@@ -1029,14 +1029,18 @@ export class AddressParser {
             //checken, ob citys bereits ein Objekt haben, um Doppelungen zu vermeiden
             let existingObjects = this.citysCheck;
             let inlineExistingObjects = tempCity;
-            inlineExistingObjects.forEach(cityObject => {
-                if (cityObject.value === elementClear && cityObject.probability > probability) {
+            inlineExistingObjects.forEach((cityObject, index) => {
+                if (cityObject.value.toLowerCase() === elementClear.toLowerCase() && cityObject.probability > probability) {
                     probability = 0;
+                } else if (cityObject.value.toLowerCase() === elementClear.toLowerCase() && cityObject.probability <= probability) {
+                    inlineExistingObjects.splice(index, 1);
                 }
             });
-            existingObjects.forEach(cityObject => {
-                if (cityObject.value === elementClear && cityObject.probability > probability) {
+            existingObjects.forEach((cityObject, index)=> {
+                if (cityObject.value.toLowerCase() === elementClear.toLowerCase() && cityObject.probability > probability) {
                     probability = 0;
+                } else if (cityObject.value.toLowerCase() === elementClear.toLowerCase() && cityObject.probability <= probability) {
+                    existingObjects.splice(index, 1);
                 }
             });
             //output
