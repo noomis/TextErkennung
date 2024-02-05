@@ -11,6 +11,7 @@ export class AddressParser {
     phoneNumbersCheck = [];
     faxNumbersCheck = [];
     contactPersonsCheck = [];
+    companyRegistrationNumberCheck = [];
 
     fetchedPostalCodes = []; // only max
     fetchedCityNames = []; // only max
@@ -74,6 +75,10 @@ export class AddressParser {
         return this.contactPersonsCheck;
     }
 
+    getCompanyRegistrationNumberCheck() {
+        return this.companyRegistrationNumberCheck;
+    }
+
     setAllPostalCodes(_allPostalCodes) {
         this.fetchedPostalCodes = this.fetchedPostalCodes.concat(_allPostalCodes);
     }
@@ -81,6 +86,7 @@ export class AddressParser {
     setCityNames(_cityNames) {
         this.fetchedCityNames = this.fetchedCityNames.concat(_cityNames);
     }
+
 
     parseText(input) {
         let inputLines = input.split("\n");
@@ -107,6 +113,8 @@ export class AddressParser {
 
             this.citysCheck = this.citysCheck.concat(this.checkCity(input));
 
+            this.companyRegistrationNumberCheck = this.companyRegistrationNumberCheck.concat(this.checkCompanyRegistrationNumber(input));
+            console.log(this.companyRegistrationNumberCheck);
         });
     }
 
@@ -1063,5 +1071,37 @@ export class AddressParser {
 
         }
         return tempCity;
+    }
+
+    checkCompanyRegistrationNumber(inputLine) {
+        let tempRegistrationNumber = [];
+        let inputLineWords = inputLine.split(" ");
+        let probability = 0;
+        let wordBefore;
+        const nurZahlen = inputLineWords.filter(element => !isNaN(element));
+        for (let index = 0; index < inputLineWords.length; index++) {
+            const element = inputLineWords[index];
+            probability = 0;
+            if (nurZahlen.includes(element)) {
+                if (element.length === 5) {
+                    probability += 15;
+                }
+            }
+            if (index !== 0) {
+                wordBefore = inputLineWords[index - 1].toLowerCase();
+                if (wordBefore.startsWith("hrb") || wordBefore.startsWith("hra") || wordBefore.startsWith("hr") || wordBefore.startsWith("hrg") || wordBefore.startsWith("hrm")) {
+                    probability = +50;
+                } else if (wordBefore.includes(" ")) {
+                    probability = 0;
+                }
+            }
+            if (probability >100) {
+                probability = 100;
+            }  
+            if (probability > 0) {
+            tempRegistrationNumber.push(new CheckResult("registrationNumber", element, probability));
+            }
+        }
+        return tempRegistrationNumber;
     }
 }

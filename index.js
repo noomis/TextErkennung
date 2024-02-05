@@ -64,6 +64,9 @@ function printResult() {
             addressObject.setCity(mainParser.getCityCheck());
             addressObject.outputMaxValues("city", 0);
 
+            addressObject.setRegistrationNumber(mainParser.getCompanyRegistrationNumberCheck());
+            addressObject.outputMaxValues("registrationNumber", 0);
+
             document.getElementById('exportJSON').addEventListener('click', function() {
                 addressObject.exportJson(this); // 
             });
@@ -110,7 +113,7 @@ function randomImpressum() {
     Impressen.push('Impressum\nHerausgeber der Seite\nGemeinde Hopsten\nBunte Straße 35\n48496 Hopsten\n\nTelefon: 05458 9325 0\nTelefax: 05458 9325 93\n\nE-Mail: info@hopsten.de\nDE-Mail: postfach@hopsten.de-mail.de\n\nDie Gemeinde Hopsten ist eine Körperschaft des öffentlichen Rechts.\nSie wird vertreten durch den Bürgermeister Ludger Kleine-Harmeyer (Kontaktdaten siehe oben)\n\nPresserechtliche Verantwortung und Vertretungsberechtigter gem. § 5 Telemediengesetz TMG bzw. inhaltlich Verantwortlich § 55 II Rundfunkstaatsvertrag RStV:');
     Impressen.push('Gemeinde Recke\nDer Bürgermeister\nHauptstraße 28\n49509 Recke\nVertreten durch:\nHerrn Peter Vos\nKontakt:\nTelefon:  +49 (0) 5453 910 31\nTelefax:  +49 (0) 5453 910 88 31\nE-Mail:   vos@recke.de\nE-Mail:   info@recke.de\nDE-Mail: info@recke.de-mail.de');
     Impressen.push('Betreiber\nM. Holl GmbH\nGeschäftsführer: Michael Holl\nMax-Planck-Straße 3\n53577 Neustadt (Wied)\nTel. (02683) 938 050\nFax (02683) 938 052\nEmail info@mholl-gmbh.de');
-    Impressen.push('Impressum:\n\nMustermann GmbH\nMusterstraße 123\n48607 Ochtrup\nw3w: ///huhn.katze.maus\n\nVertreten durch:\nMax Mustermann\nMaria Musterfrau\n\nKontakt:\nE-Mail: info@muster-gbr.de\nTelefon: +49 123 456789\nTelefax: +49 123 456780\nInternet: www.mustersite.de\n\nUmsatzsteuer-ID:\nDE123456789');
+    Impressen.push('Impressum:\n\nMustermann GmbH\nMusterstraße 123\n48607 Ochtrup\nw3w: ///huhn.katze.maus\n\nVertreten durch:\nMax Mustermann\nMaria Musterfrau\n\nKontakt:\nE-Mail: info@muster-gbr.de\nTelefon: +49 123 456789\nTelefax: +49 123 456780\nInternet: www.mustersite.de\n\nUmsatzsteuer-ID:\nDE123456789\nAmtsgericht Musterstadt HRB 12345');
 
     $("#text").val = "geoCapture GmbHRheiner Str. 3D-48496 Hopsten Telefon: +49 5458 936668-0Telefax: +49 5458 936668-28 E-Mail: info@geocapture.deWebsite: www.geocapture.dewhat3words Position:  ///zeugt.zutreffen.wissenGerichtsstand:Amtsgericht Steinfurt HRB 12637Geschäftsführer: Friedhelm BrüggeFinanzamt Steinfurt 327/5770/7451USt.-IdNr. DE276689377";
 

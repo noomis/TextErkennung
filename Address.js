@@ -12,6 +12,7 @@ export class Address {
     phoneNumbers = [];
     faxNumbers = [];
     contactPersons = [];
+    companyRegistrationNumber = [];
 
     constructor() {
         this.companyName = [];
@@ -24,6 +25,7 @@ export class Address {
         this.phoneNumbers = [];
         this.faxNumbers = [];
         this.contactPersons = [];
+        this.companyRegistrationNumber = [];
     }
 
     getCompanyName() {
@@ -104,6 +106,14 @@ export class Address {
 
     setContactPersons(contactPersons) {
         this.contactPersons = this.contactPersons.concat(contactPersons);
+    }
+
+    getRegistrationNumber() {
+        return this.companyRegistrationNumber;
+    }
+
+    setRegistrationNumber(registrationNumber) {
+        this.companyRegistrationNumber = this.companyRegistrationNumber.concat(registrationNumber);
     }
 
     outputAllValues(html_id, fadeTime) {
@@ -191,6 +201,10 @@ export class Address {
                 objectArray = objectArray.concat(this.getCity());
                 break;
 
+            case "registrationNumber":
+                objectArray = objectArray.concat(this.getRegistrationNumber());
+                break;
+
             default:
                 break;
         }
@@ -198,7 +212,7 @@ export class Address {
         if (objectArray.length <= 0) {
             return;
         }
-
+console.log(objectArray);
         $("#" + html_id).val("");
 
         let maxValue = this.findMaxPercentage(objectArray);
@@ -239,7 +253,7 @@ export class Address {
 
 
     exportJson(el) {
-    
+
         let jsonObject = {
             companyName: "",
             homepage: "",
@@ -252,7 +266,7 @@ export class Address {
             city: "",
             w3w: "",
         };
-    
+
         jsonObject.city = this.getCity();
         jsonObject.zip = this.getPostalCode();
         jsonObject.w3w = this.getW3wAddress();
@@ -263,16 +277,16 @@ export class Address {
         jsonObject.street = this.getStreet();
         jsonObject.phone = this.getPhoneNumbers();
         jsonObject.fax = this.getFaxNumbers();
-    
+
         // Convert the JSON object to a string
         let jsonString = JSON.stringify(jsonObject, null, 4);
-    
+
         // Create a data URI for the JSON content
         let dataUri = "data:text/json;charset=utf-8," + encodeURIComponent(jsonString);
-    
+
         // Set the element's attributes to create the download link
         el.setAttribute("href", dataUri);
         el.setAttribute("download", "data.json");
     }
-    
+
 }
