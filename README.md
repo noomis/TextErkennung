@@ -6,7 +6,7 @@
 - [ ] Land anhand Parametern in der Eingabe erkennen
 - [ ] Ausgabe für Steuernummer, Handelsregisternummer, Ländername
 - [ ] Kommentare
-
+- [ ] companyName wenn mit www. beginnt oder/und mit .de endet nicht ausgeben 
 ----------
 
 - [x] Wenn nur eine Nummer im Text ist dann wahrscheinlicher eine Tel Nummer
