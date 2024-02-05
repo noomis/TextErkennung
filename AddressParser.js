@@ -1146,7 +1146,7 @@ export class AddressParser {
             }
             if (index !== 0) {
                 wordBefore = inputLineWords[index - 1].toLowerCase();
-                if (wordBefore.includes("ust.-idnr.")) {
+                if (wordBefore.includes("ust.-idnr.") || wordBefore.includes("umsatzsteuer-id")) {
                     probability += 70;
                 } else if (wordBefore.includes("fon") || wordBefore.includes("fax")) {
                     probability = 0;
