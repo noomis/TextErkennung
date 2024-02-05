@@ -11,7 +11,8 @@ export class AddressParser {
     phoneNumbersCheck = [];
     faxNumbersCheck = [];
     contactPersonsCheck = [];
-    companyRegistrationNumberCheck = [];
+    companyRegistrationNumberCheck = []; //only max
+    vatIdNumberCheck = []; //only max
 
     fetchedPostalCodes = []; // only max
     fetchedCityNames = []; // only max
@@ -30,6 +31,8 @@ export class AddressParser {
         this.phoneNumbersCheck = [];
         this.faxNumbersCheck = [];
         this.contactPersonsCheck = [];
+        this.companyRegistrationNumberCheck = []; //only max
+        this.vatIdNumberCheck = []; //only max
         this.fetchedPostalCodes = []; // only max
         this.fetchedCityNames = []; // only max
     }
@@ -79,6 +82,10 @@ export class AddressParser {
         return this.companyRegistrationNumberCheck;
     }
 
+    getVatIdNumberCheck() {
+        return this.vatIdNumberCheck;
+    }
+
     setAllPostalCodes(_allPostalCodes) {
         this.fetchedPostalCodes = this.fetchedPostalCodes.concat(_allPostalCodes);
     }
@@ -115,6 +122,7 @@ export class AddressParser {
 
             this.companyRegistrationNumberCheck = this.companyRegistrationNumberCheck.concat(this.checkCompanyRegistrationNumber(input));
 
+            this.vatIdNumberCheck = this.vatIdNumberCheck.concat(this.checkVatIdNumber(input));
         });
     }
 
@@ -1040,7 +1048,6 @@ export class AddressParser {
                         || wordBefore.toLowerCase().includes("finanzamt")) {
                         probability = 15;
                     }
-
                 }
             }
             //checken, ob citys bereits ein Objekt haben, um Doppelungen zu vermeiden
@@ -1100,8 +1107,72 @@ export class AddressParser {
             if (probability > 0) {
                 tempRegistrationNumber.push(new CheckResult("registrationNumber", element.replaceAll(",", "").replaceAll(".", ""), probability));
             }
-
         }
         return tempRegistrationNumber;
+    }
+
+    checkVatIdNumber(inputLine) {
+        let tempTax = [];
+        let inputLineWords = inputLine.split(" ");
+        let wordBefore;
+        let probability = 0;
+        let tempInputWords = inputLine.split(" ");
+        let elementReplaced;
+        //checken, ob es mit DE startet und dann DE replacen für den nurZahlen Array
+        for (let index = 0; index < tempInputWords.length; index++) {
+            const element = tempInputWords[index];
+            if (element.startsWith("DE")) {
+                tempInputWords[index] = element.replace("DE", "");
+            }
+        }
+        const nurZahlen = tempInputWords.filter(element => !isNaN(element));
+//nurZahlen Array wird auf Zahlen mit ausschließlich 9 Ziffern begrenzt  
+        for (let a = 0; a < nurZahlen.length; a++) {
+            const el = nurZahlen[a];
+            if (el.length !== 9) {
+                nurZahlen.splice(a, 1);
+            }
+        } 
+        //checken, ob vor dem element ein string mit bestimmten Keyword steht und ob element mit de startet
+        for (let index = 0; index < inputLineWords.length; index++) {
+            const elementClear = inputLineWords[index];
+            const element = inputLineWords[index].toLowerCase();
+            if (element.startsWith("de")) {
+                elementReplaced = element.replace("de", "");
+                probability += 15;
+            }
+            else {
+                elementReplaced = element;
+            }
+            if (index !== 0) {
+                wordBefore = inputLineWords[index - 1].toLowerCase();
+                if (wordBefore.includes("ust.-idnr.")) {
+                    probability += 70;
+                } else if (wordBefore.includes("fon") || wordBefore.includes("fax")) {
+                    probability = 0;
+                }
+            }
+            //checken, ob das element eine 9 stellige Zahl ist und ob verbotene keywords davorstehen
+            for (let i = 0; i < nurZahlen.length; i++) {
+                const e = nurZahlen[i];
+                if (e == elementReplaced && elementReplaced.length == 9) {
+                    probability += 40;
+                    if (index !== 0) {
+                        if (wordBefore.includes("fon") || wordBefore.includes("fax")) {
+                            probability = 0;
+                        }
+                    }
+                }
+            }
+            //Rundungen
+            if (probability > 100) {
+                probability = 100;
+            }
+            //Objekt Erstellung / Output
+            if (probability > 0) {
+                tempTax.push(new CheckResult("vatIdNumber", elementClear, probability));
+            }
+        }
+        return tempTax
     }
 }

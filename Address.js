@@ -13,6 +13,7 @@ export class Address {
     faxNumbers = [];
     contactPersons = [];
     companyRegistrationNumber = [];
+    vatIdNumber = [];
 
     constructor() {
         this.companyName = [];
@@ -26,6 +27,7 @@ export class Address {
         this.faxNumbers = [];
         this.contactPersons = [];
         this.companyRegistrationNumber = [];
+        this.vatIdNumber = [];
     }
 
     getCompanyName() {
@@ -114,6 +116,14 @@ export class Address {
 
     setRegistrationNumber(registrationNumber) {
         this.companyRegistrationNumber = this.companyRegistrationNumber.concat(registrationNumber);
+    }
+
+    getVatIdNumber() {
+        return this.vatIdNumber;
+    }
+
+    setVatIdNumber(_vatIdNumber) {
+        this.vatIdNumber = this.vatIdNumber.concat(_vatIdNumber);
     }
 
     outputAllValues(html_id, fadeTime) {
@@ -205,6 +215,9 @@ export class Address {
                 objectArray = objectArray.concat(this.getRegistrationNumber());
                 break;
 
+            case "vatIdNumber":
+                objectArray = objectArray.concat(this.getVatIdNumber());
+                break;
             default:
                 break;
         }
@@ -212,7 +225,7 @@ export class Address {
         if (objectArray.length <= 0) {
             return;
         }
-        
+
         $("#" + html_id).val("");
 
         let maxValue = this.findMaxPercentage(objectArray);
