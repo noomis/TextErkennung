@@ -13,6 +13,7 @@ export class AddressParser {
     contactPersonsCheck = [];
     companyRegistrationNumberCheck = []; //only max
     vatIdNumberCheck = []; //only max
+    taxNumberCheck = []; //only max
 
     fetchedPostalCodes = []; // only max
     fetchedCityNames = []; // only max
@@ -33,6 +34,7 @@ export class AddressParser {
         this.contactPersonsCheck = [];
         this.companyRegistrationNumberCheck = []; //only max
         this.vatIdNumberCheck = []; //only max
+        this.taxNumberCheck = []; //only max
         this.fetchedPostalCodes = []; // only max
         this.fetchedCityNames = []; // only max
     }
@@ -86,6 +88,10 @@ export class AddressParser {
         return this.vatIdNumberCheck;
     }
 
+    getTaxNumberCheck() {
+        return this.taxNumberCheck;
+    }
+
     setAllPostalCodes(_allPostalCodes) {
         this.fetchedPostalCodes = this.fetchedPostalCodes.concat(_allPostalCodes);
     }
@@ -123,6 +129,8 @@ export class AddressParser {
             this.companyRegistrationNumberCheck = this.companyRegistrationNumberCheck.concat(this.checkCompanyRegistrationNumber(input));
 
             this.vatIdNumberCheck = this.vatIdNumberCheck.concat(this.checkVatIdNumber(input));
+
+            this.taxNumberCheck = this.taxNumberCheck.concat(this.checkTaxNumber(input));
         });
     }
 
@@ -940,18 +948,18 @@ export class AddressParser {
             }
         }
         //neuer Array nur mit 5 Stelligen Zahlen 
-        const nurZahlen = inputLineWords.filter(element => !isNaN(element));
+        const onlyNumbers = inputLineWords.filter(element => !isNaN(element));
 
-        for (let a = 0; a < nurZahlen.length; a++) {
-            const element = nurZahlen[a];
+        for (let a = 0; a < onlyNumbers.length; a++) {
+            const element = onlyNumbers[a];
 
             if (element.length !== 5) {
-                nurZahlen.splice(a, 1);
+                onlyNumbers.splice(a, 1);
             }
         }
         //check ob elements im json enthalten sind und somit eine Stadt matchen
-        zipLoop: for (let i = 0; i < nurZahlen.length; i++) {
-            const element = nurZahlen[i];
+        zipLoop: for (let i = 0; i < onlyNumbers.length; i++) {
+            const element = onlyNumbers[i];
 
             if (this.fetchedPostalCodes.includes(element)) {
                 probability += 60;
@@ -1015,17 +1023,17 @@ export class AddressParser {
                 if (inputLineWords[i - 1] !== undefined) {
                     wordBefore = inputLineWords[i - 1];
 
-                    const nurZahlen = inputLineWords.filter(element => !isNaN(element));
+                    const onlyNumbers = inputLineWords.filter(element => !isNaN(element));
 
-                    for (let a = 0; a < nurZahlen.length; a++) {
-                        const e = nurZahlen[a];
+                    for (let a = 0; a < onlyNumbers.length; a++) {
+                        const e = onlyNumbers[a];
 
                         if (e.length !== 5) {
-                            nurZahlen.splice(a, 1);
+                            onlyNumbers.splice(a, 1);
                         }
                     }
 
-                    if (nurZahlen.includes(wordBefore)) {
+                    if (onlyNumbers.includes(wordBefore)) {
                         probability += 10;
                     }
                     if (wordBefore.startsWith("d-")) {
@@ -1118,19 +1126,19 @@ export class AddressParser {
         let probability = 0;
         let tempInputWords = inputLine.split(" ");
         let elementReplaced;
-        //checken, ob es mit DE startet und dann DE replacen für den nurZahlen Array
+        //checken, ob es mit DE startet und dann DE replacen für den onlyNumbers Array
         for (let index = 0; index < tempInputWords.length; index++) {
             const element = tempInputWords[index];
             if (element.startsWith("DE")) {
                 tempInputWords[index] = element.replace("DE", "");
             }
         }
-        const nurZahlen = tempInputWords.filter(element => !isNaN(element));
-//nurZahlen Array wird auf Zahlen mit ausschließlich 9 Ziffern begrenzt  
-        for (let a = 0; a < nurZahlen.length; a++) {
-            const el = nurZahlen[a];
+        const onlyNumbers = tempInputWords.filter(element => !isNaN(element));
+        //onlyNumbers Array wird auf Zahlen mit ausschließlich 9 Ziffern begrenzt  
+        for (let a = 0; a < onlyNumbers.length; a++) {
+            const el = onlyNumbers[a];
             if (el.length !== 9) {
-                nurZahlen.splice(a, 1);
+                onlyNumbers.splice(a, 1);
             }
         } 
         //checken, ob vor dem element ein string mit bestimmten Keyword steht und ob element mit de startet
@@ -1153,8 +1161,8 @@ export class AddressParser {
                 }
             }
             //checken, ob das element eine 9 stellige Zahl ist und ob verbotene keywords davorstehen
-            for (let i = 0; i < nurZahlen.length; i++) {
-                const e = nurZahlen[i];
+            for (let i = 0; i < onlyNumbers.length; i++) {
+                const e = onlyNumbers[i];
                 if (e == elementReplaced && elementReplaced.length == 9) {
                     probability += 40;
                     if (index !== 0) {
@@ -1175,4 +1183,13 @@ export class AddressParser {
         }
         return tempTax
     }
+
+    checkTaxNumber(inputLine) {
+        let tempTax = [];
+        let inputLineWords = inputLine.split(" ");
+        let wordBefore;
+        let probability = 0;
+    }
 }
+
+//TODO checkCompanyRegistationNumber- und checkTaxNumber Funktionalität -- integration in die JSON   

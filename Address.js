@@ -1,5 +1,3 @@
-
-
 export class Address {
 
     companyName = [];
@@ -14,6 +12,7 @@ export class Address {
     contactPersons = [];
     companyRegistrationNumber = [];
     vatIdNumber = [];
+    taxNumber = [];
 
     constructor() {
         this.companyName = [];
@@ -28,6 +27,7 @@ export class Address {
         this.contactPersons = [];
         this.companyRegistrationNumber = [];
         this.vatIdNumber = [];
+        this.taxNumber = [];
     }
 
     getCompanyName() {
@@ -126,6 +126,14 @@ export class Address {
         this.vatIdNumber = this.vatIdNumber.concat(_vatIdNumber);
     }
 
+    getTaxNumber() {
+        return this.taxNumber;
+    }
+
+    setTaxNumber(_taxNumber) {
+        this.taxNumber = this.taxNumber.concat(_taxNumber);
+    }
+
     outputAllValues(html_id, fadeTime) {
 
         let objectArray = [];
@@ -218,6 +226,11 @@ export class Address {
             case "vatIdNumber":
                 objectArray = objectArray.concat(this.getVatIdNumber());
                 break;
+
+            case "taxNumber":
+                objectArray = objectArray.concat(this.getTaxNumber());
+                break;
+
             default:
                 break;
         }
@@ -270,8 +283,8 @@ export class Address {
         let jsonObject = {
             companyName: "",
             homepage: "",
-            contactPersons: "",
-            emails: "",
+            contactPerson: "",
+            email: "",
             street: "",
             phone: "",
             fax: "",
@@ -285,8 +298,8 @@ export class Address {
         jsonObject.w3w = this.getW3wAddress();
         jsonObject.companyName = this.getCompanyName();
         jsonObject.homepage = this.getHomepage();
-        jsonObject.contactPersons = this.getContactPersons();
-        jsonObject.emails = this.getEmails();
+        jsonObject.contactPerson = this.getContactPersons();
+        jsonObject.email = this.getEmails();
         jsonObject.street = this.getStreet();
         jsonObject.phone = this.getPhoneNumbers();
         jsonObject.fax = this.getFaxNumbers();
