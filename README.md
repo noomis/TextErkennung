@@ -6,7 +6,7 @@
 - [ ] Land anhand Parametern in der Eingabe erkennen
 - [ ] Ausgabe für Steuernummer, Handelsregisternummer, Ländername
 - [ ] Kommentare
-- [ ] companyName wenn mit www. beginnt oder/und mit .de endet nicht ausgeben 
+
 ----------
 
 - [x] Wenn nur eine Nummer im Text ist dann wahrscheinlicher eine Tel Nummer
@@ -20,3 +20,4 @@
 - [x] Telefonnummern überprüfen ob gültige Vorwahl vorhanden ist
 - [x] Nummern internationale Vorwahl ausgeben
 - [x] keine doppelten contactPersons und Citys als objects erstellen 
+- [x] companyName wenn mit www. beginnt oder/und mit .de endet nicht ausgeben 
