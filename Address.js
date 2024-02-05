@@ -212,7 +212,7 @@ export class Address {
         if (objectArray.length <= 0) {
             return;
         }
-console.log(objectArray);
+        
         $("#" + html_id).val("");
 
         let maxValue = this.findMaxPercentage(objectArray);

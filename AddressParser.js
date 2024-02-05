@@ -114,7 +114,7 @@ export class AddressParser {
             this.citysCheck = this.citysCheck.concat(this.checkCity(input));
 
             this.companyRegistrationNumberCheck = this.companyRegistrationNumberCheck.concat(this.checkCompanyRegistrationNumber(input));
-            console.log(this.companyRegistrationNumberCheck);
+            
         });
     }
 
@@ -494,7 +494,8 @@ export class AddressParser {
                     }
                 }
             }
-
+            //für sauberere Ausgabe
+            wordAfterClean = wordAfterClean.replaceAll(",", "").replaceAll("_", "");
             //Wahrscheinlichkeitsrundung
             if (probability > 100) {
                 probability = 100;
@@ -502,22 +503,25 @@ export class AddressParser {
             //checken, ob Namen bereits als Objekte erstellt wurden, um Doppelungen zu vermeiden
             let inlineExistingObjects = tempNames;
             let existingObjects = this.contactPersonsCheck;
-            inlineExistingObjects.forEach(nameObject => {
-                if (nameObject.value === tripleName || nameObject.value === tempInputWord + " " + wordAfterClean) {
+            inlineExistingObjects.forEach((nameObject, index) => {
+                if (nameObject.value === tripleName || nameObject.value === tempInputWord + " " + wordAfterClean && nameObject.probability > probability) {
                     probability = 0;
+                } else if (nameObject.value === tripleName || nameObject.value === tempInputWord + " " + wordAfterClean && nameObject.probability <= probability) {
+                    inlineExistingObjects.splice(index, 1);
                 }
             });
-            existingObjects.forEach(nameObject => {
-                if (nameObject.value === tripleName || nameObject.value === tempInputWord + " " + wordAfterClean) {
+            existingObjects.forEach((nameObject, index) => {
+                if ((nameObject.value === tripleName || nameObject.value === tempInputWord + " " + wordAfterClean) && nameObject.probability > probability) {
                     probability = 0;
+                } else if ((nameObject.value === tripleName || nameObject.value === tempInputWord + " " + wordAfterClean) && nameObject.probability <= probability) {
+                    console.log(nameObject);
+                    existingObjects.splice(index, 1);
                 }
             });
             if (probability > 0) {
                 //output wenn es ein "normaler" Name ist
                 if (tripleName == "") {
-                    wordAfterClean = wordAfterClean.replaceAll(",", "").replaceAll("_", "");
                     let name = tempInputWord + " " + wordAfterClean;
-
                     // checken, ob das Wort vorher nicht auch ein Vorname ist, dann pushen um einen möglichen 3er-Namen nicht doppelt zu erhalten
                     if (!firstName.includes(wordBefore)) {
                         //checken, ob name kein § enthält = edge case
@@ -531,7 +535,6 @@ export class AddressParser {
                     if (!tempNames.includes(tripleName)) {
                         tripleName = tripleName.replaceAll(",", "").replaceAll("_", "");
                         tempNames.push(new CheckResult("contactPerson", tripleName, probability));
-                        console.log("create " + tripleName);
                     }
                 }
             }
@@ -1095,11 +1098,11 @@ export class AddressParser {
                     probability = 0;
                 }
             }
-            if (probability >100) {
+            if (probability > 100) {
                 probability = 100;
-            }  
+            }
             if (probability > 0) {
-            tempRegistrationNumber.push(new CheckResult("registrationNumber", element, probability));
+                tempRegistrationNumber.push(new CheckResult("registrationNumber", element.replaceAll(",", "").replaceAll(".", ""), probability));
             }
         }
         return tempRegistrationNumber;
