@@ -114,7 +114,7 @@ export class AddressParser {
             this.citysCheck = this.citysCheck.concat(this.checkCity(input));
 
             this.companyRegistrationNumberCheck = this.companyRegistrationNumberCheck.concat(this.checkCompanyRegistrationNumber(input));
-            
+
         });
     }
 
@@ -1081,15 +1081,10 @@ export class AddressParser {
         let inputLineWords = inputLine.split(" ");
         let probability = 0;
         let wordBefore;
-        const nurZahlen = inputLineWords.filter(element => !isNaN(element));
         for (let index = 0; index < inputLineWords.length; index++) {
             const element = inputLineWords[index];
             probability = 0;
-            if (nurZahlen.includes(element)) {
-                if (element.length === 5) {
-                    probability += 15;
-                }
-            }
+            //checken, ob im word vor dem element ein bestimmtes Keyword/Blacklist-Wort steht
             if (index !== 0) {
                 wordBefore = inputLineWords[index - 1].toLowerCase();
                 if (wordBefore.startsWith("hrb") || wordBefore.startsWith("hra") || wordBefore.startsWith("hr") || wordBefore.startsWith("hrg") || wordBefore.startsWith("hrm")) {
@@ -1098,12 +1093,14 @@ export class AddressParser {
                     probability = 0;
                 }
             }
+            //output durch  Objekt
             if (probability > 100) {
                 probability = 100;
             }
             if (probability > 0) {
                 tempRegistrationNumber.push(new CheckResult("registrationNumber", element.replaceAll(",", "").replaceAll(".", ""), probability));
             }
+
         }
         return tempRegistrationNumber;
     }
