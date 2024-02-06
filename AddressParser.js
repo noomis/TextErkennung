@@ -113,6 +113,7 @@ export class AddressParser {
             this.emailsCheck = this.emailsCheck.concat(this.checkMails(input));
 
             this.companyNamesCheck = this.companyNamesCheck.concat(this.checkCompanyNames(input));
+
             this.contactPersonsCheck = this.contactPersonsCheck.concat(this.checkContactPersons(input));
 
             this.faxNumbersCheck = this.faxNumbersCheck.concat(this.checkFax(input));
@@ -1278,8 +1279,4 @@ export class AddressParser {
         // Überprüfe, ob alle Zeichen in der Variable im germanNamesWhitelist Array enthalten sind
         return name.split('').every(char => germanNamesWhitelist.includes(char));
     }
-
-
 }
-
-//TODO checkCompanyRegistationNumber- und checkTaxNumber Funktionalität
