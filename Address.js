@@ -291,6 +291,9 @@ export class Address {
             zip: "",
             city: "",
             w3w: "",
+            registrationNumber: "",
+            vatIdNumber: "",
+            taxNumber: "",
         };
 
         jsonObject.city = this.getCity();
@@ -303,6 +306,9 @@ export class Address {
         jsonObject.street = this.getStreet();
         jsonObject.phone = this.getPhoneNumbers();
         jsonObject.fax = this.getFaxNumbers();
+        jsonObject.registrationNumber = this.getRegistrationNumber();
+        jsonObject.vatIdNumber = this.getVatIdNumber();
+        jsonObject.taxNumber = this.getTaxNumber();
 
         // Convert the JSON object to a string
         let jsonString = JSON.stringify(jsonObject, null, 4);
