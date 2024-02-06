@@ -242,7 +242,6 @@ export class Address {
 
         let maxValue = this.findMaxPercentage(objectArray);
 
-        console.log(maxValue);
 
         // wenn Slider wert größer als Wahrscheinlichkeit nicht ausgeben
         let outputPercentage = $("#slider")[0].value;
