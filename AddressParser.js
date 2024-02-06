@@ -1278,6 +1278,4 @@ export class AddressParser {
         // Überprüfe, ob alle Zeichen in der Variable im germanNamesWhitelist Array enthalten sind
         return name.split('').every(char => germanNamesWhitelist.includes(char));
     }
-
-
 }
