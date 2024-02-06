@@ -285,7 +285,7 @@ export class Address {
             homepage: this.getHomepage(),
             contactPerson: this.getContactPersons(),
             email: this.getEmails(),
-            street:  this.getStreet(),
+            street: this.getStreet(),
             phone: this.getPhoneNumbers(),
             fax: this.getFaxNumbers(),
             zip: this.getPostalCode(),
