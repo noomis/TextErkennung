@@ -281,34 +281,20 @@ export class Address {
     exportJson(el) {
 
         let jsonObject = {
-            companyName: "",
-            homepage: "",
-            contactPerson: "",
-            email: "",
-            street: "",
-            phone: "",
-            fax: "",
-            zip: "",
-            city: "",
-            w3w: "",
-            registrationNumber: "",
-            vatIdNumber: "",
-            taxNumber: "",
+            companyName: this.getCompanyName(),
+            homepage: this.getHomepage(),
+            contactPerson: this.getContactPersons(),
+            email: this.getEmails(),
+            street:  this.getStreet(),
+            phone: this.getPhoneNumbers(),
+            fax: this.getFaxNumbers(),
+            zip: this.getPostalCode(),
+            city: this.getCity(),
+            w3w: this.getW3wAddress(),
+            registrationNumber: this.getRegistrationNumber(),
+            vatIdNumber: this.getVatIdNumber(),
+            taxNumber: this.getTaxNumber(),
         };
-
-        jsonObject.city = this.getCity();
-        jsonObject.zip = this.getPostalCode();
-        jsonObject.w3w = this.getW3wAddress();
-        jsonObject.companyName = this.getCompanyName();
-        jsonObject.homepage = this.getHomepage();
-        jsonObject.contactPerson = this.getContactPersons();
-        jsonObject.email = this.getEmails();
-        jsonObject.street = this.getStreet();
-        jsonObject.phone = this.getPhoneNumbers();
-        jsonObject.fax = this.getFaxNumbers();
-        jsonObject.registrationNumber = this.getRegistrationNumber();
-        jsonObject.vatIdNumber = this.getVatIdNumber();
-        jsonObject.taxNumber = this.getTaxNumber();
 
         // Convert the JSON object to a string
         let jsonString = JSON.stringify(jsonObject, null, 4);
