@@ -5,7 +5,8 @@
 - [ ] Telefonnummern keine Blacklist sondern Whitelist
 - [ ] Land anhand Parametern in der Eingabe erkennen
 - [ ] Kommentare
-
+- [ ] Deutsch, Niederländisch, Englisch
+- [ ] JSON direkt darein nicht doppelt
 ----------
 
 - [x] Wenn nur eine Nummer im Text ist dann wahrscheinlicher eine Tel Nummer

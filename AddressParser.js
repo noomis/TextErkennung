@@ -1122,16 +1122,13 @@ export class AddressParser {
 
                 if (wordBefore.startsWith("hrb") || wordBefore.startsWith("hra") || wordBefore.startsWith("hr") || wordBefore.startsWith("hrg") || wordBefore.startsWith("hrm")) {
                     probability = +50;
-                } else if (wordBefore.includes(" ")) {
-                    probability = 0;
                 }
             }
 
-            //output durch  Objekt
             if (probability > 100) {
                 probability = 100;
             }
-            
+            //Objekt Erstellung / Output            
             if (probability > 0) {
                 tempRegistrationNumber.push(new CheckResult("registrationNumber", element.replaceAll(",", "").replaceAll(".", ""), probability));
             }
@@ -1146,7 +1143,6 @@ export class AddressParser {
         let probability = 0;
         let tempInputWords = inputLine.split(" ");
         let elementReplaced;
-        const numbers = ["1", "2", "3", "4", "5", "6", "7", "8", "9", "0"]
         //checken, ob es mit DE startet und dann DE replacen für den onlyNumbers Array
         for (let index = 0; index < tempInputWords.length; index++) {
             const element = tempInputWords[index].toLowerCase();
@@ -1212,7 +1208,7 @@ export class AddressParser {
                 tempTax.push(new CheckResult("vatIdNumber", elementClear, probability));
             }
         }
-        return tempTax
+        return tempTax;
     }
 
     checkTaxNumber(inputLine) {
