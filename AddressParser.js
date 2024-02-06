@@ -113,6 +113,7 @@ export class AddressParser {
             this.emailsCheck = this.emailsCheck.concat(this.checkMails(input));
 
             this.companyNamesCheck = this.companyNamesCheck.concat(this.checkCompanyNames(input));
+            
             this.contactPersonsCheck = this.contactPersonsCheck.concat(this.checkContactPersons(input));
 
             this.faxNumbersCheck = this.faxNumbersCheck.concat(this.checkFax(input));
@@ -120,7 +121,6 @@ export class AddressParser {
             this.phoneNumbersCheck = this.phoneNumbersCheck.concat(this.checkPhone(input));
 
             this.streetsCheck = this.streetsCheck.concat(this.checkStreets(input));
-            console.log(this.streetsCheck);
 
             this.postalCodeCheck = this.postalCodeCheck.concat(this.checkPostalCode(input));
 
