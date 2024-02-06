@@ -6,7 +6,7 @@
 - [ ] Land anhand Parametern in der Eingabe erkennen
 - [ ] Kommentare
 - [ ] Deutsch, Niederländisch, Englisch
-- [ ] JSON direkt darein nicht doppelt
+
 - [ ] index setter in AddressParser auslagern
 - [ ] Methode fürs erkennen der Sprache  aus der Eingabe
 ----------
@@ -24,3 +24,4 @@
 - [x] keine doppelten contactPersons und Citys als objects erstellen 
 - [x] companyName wenn mit www. beginnt oder/und mit .de endet nicht ausgeben 
 - [x] Ausgabe für Steuernummer, Handelsregisternummer, Ländername
+- [x] JSON direkt darein nicht doppelt
