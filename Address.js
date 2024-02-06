@@ -169,7 +169,6 @@ export class Address {
             let object = objectArray[index];
             // if (object !== undefined) {
             let new_id = object.name;
-            console.log(object);
             let outputPercentage = $("#slider")[0].value; //Prozentzahl vom Input des Schiebereglers 
             //wenn Slider-Wahrscheinlichkeit kleiner oder gleich dem des Wertes im Array entspricht ausgeben
             if (outputPercentage <= object.probability) {
