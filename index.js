@@ -12,10 +12,10 @@ document.getElementById("text").addEventListener("input", printResult);
 document.getElementById("slider").addEventListener("input", printResult);
 
 function printResult() {
-    let mainParser = new AddressParser();
     $(".delete").remove();
-
+    
     let outputPercentage = $("#slider")[0].value;
+    let mainParser = new AddressParser(NULL,outputPercentage);
 
     $("#probValue").text("Treffer Wahrscheinlichkeit: " + outputPercentage + "%");
 
