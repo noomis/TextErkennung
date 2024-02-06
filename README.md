@@ -1,5 +1,9 @@
 # TODO
 
+## LUKE SPECIAL TODO
+- [ ] schreibe eine Methode in Addressparser die folgende Parameter hat (Array,percentageValue) und dann für jeden Index im Array schaut ob dieser mindestens die percentageValue hat und am Ende einen neuen Array returned der nur die Werte hat die darüber liegen.
+
+
 
 - [ ] Telefonnummern keine Blacklist sondern Whitelist
 - [ ] Land anhand Parametern in der Eingabe erkennen
