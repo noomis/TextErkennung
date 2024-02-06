@@ -1,7 +1,6 @@
 # TODO
 
 
-- [ ] Code alles auf Englisch
 - [ ] Telefonnummern keine Blacklist sondern Whitelist
 - [ ] Land anhand Parametern in der Eingabe erkennen
 - [ ] Kommentare
