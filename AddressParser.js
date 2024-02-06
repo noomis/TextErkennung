@@ -1126,11 +1126,12 @@ export class AddressParser {
         let probability = 0;
         let tempInputWords = inputLine.split(" ");
         let elementReplaced;
+        const numbers = ["1", "2", "3", "4", "5", "6", "7", "8", "9", "0"]
         //checken, ob es mit DE startet und dann DE replacen für den onlyNumbers Array
         for (let index = 0; index < tempInputWords.length; index++) {
-            const element = tempInputWords[index];
-            if (element.startsWith("DE")) {
-                tempInputWords[index] = element.replace("DE", "");
+            const element = tempInputWords[index].toLowerCase();
+            if (element.startsWith("de")) {
+                tempInputWords[index] = element.replace("de", "");
             }
         }
         const onlyNumbers = tempInputWords.filter(element => !isNaN(element));
@@ -1140,16 +1141,26 @@ export class AddressParser {
             if (el.length !== 9) {
                 onlyNumbers.splice(a, 1);
             }
-        } 
+        }
         //checken, ob vor dem element ein string mit bestimmten Keyword steht und ob element mit de startet
         for (let index = 0; index < inputLineWords.length; index++) {
             const elementClear = inputLineWords[index];
             const element = inputLineWords[index].toLowerCase();
             if (element.startsWith("de")) {
-                elementReplaced = element.replace("de", "");
-                probability += 15;
-            }
-            else {
+                // Extrahiere die letzten beiden Zeichen des Elements
+                const lastTwoCharacters = element.slice(-2);
+
+                // Überprüfe, ob die letzten beiden Zeichen Zahlen sind
+                if (!isNaN(lastTwoCharacters)) {
+                    // Entferne "de" aus dem Element
+                    elementReplaced = element.replace("de", "");
+
+                    // Erhöhe die Wahrscheinlichkeit um 15
+                    probability += 15;
+                } else {
+                    elementReplaced = element;
+                }
+            } else {
                 elementReplaced = element;
             }
             if (index !== 0) {
