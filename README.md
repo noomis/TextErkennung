@@ -7,6 +7,7 @@
 - [ ] Kommentare
 - [ ] Deutsch, Niederländisch, Englisch
 - [ ] JSON direkt darein nicht doppelt
+- [ ] index setter in AddressParser auslagern
 ----------
 
 - [x] Wenn nur eine Nummer im Text ist dann wahrscheinlicher eine Tel Nummer
