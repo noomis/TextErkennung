@@ -1114,16 +1114,13 @@ export class AddressParser {
 
                 if (wordBefore.startsWith("hrb") || wordBefore.startsWith("hra") || wordBefore.startsWith("hr") || wordBefore.startsWith("hrg") || wordBefore.startsWith("hrm")) {
                     probability = +50;
-                } else if (wordBefore.includes(" ")) {
-                    probability = 0;
                 }
             }
 
-            //output durch  Objekt
             if (probability > 100) {
                 probability = 100;
             }
-            
+            //Objekt Erstellung / Output            
             if (probability > 0) {
                 tempRegistrationNumber.push(new CheckResult("registrationNumber", element.replaceAll(",", "").replaceAll(".", ""), probability));
             }
