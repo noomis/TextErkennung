@@ -1281,5 +1281,3 @@ export class AddressParser {
 
 
 }
-
-//TODO checkCompanyRegistationNumber- und checkTaxNumber Funktionalität
