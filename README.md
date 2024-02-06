@@ -5,7 +5,10 @@
 - [ ] Telefonnummern keine Blacklist sondern Whitelist
 - [ ] Land anhand Parametern in der Eingabe erkennen
 - [ ] Kommentare
-
+- [ ] Deutsch, Niederländisch, Englisch
+- [ ] JSON direkt darein nicht doppelt
+- [ ] index setter in AddressParser auslagern
+- [ ] Methode fürs erkennen der Sprache  aus der Eingabe
 ----------
 
 - [x] Wenn nur eine Nummer im Text ist dann wahrscheinlicher eine Tel Nummer
