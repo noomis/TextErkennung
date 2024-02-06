@@ -739,6 +739,7 @@ export class AddressParser {
         let stringBlacklist = "abcdefghijklmnopqrstuvwxyzäöü@#$!%^&*_={}[]|;:<>,?";
         let stringStreetBeginnings = ["an der", "zu den", "in der", "in den", "im ", "auf den", "auf der", "am ", "an den", "auf dem", "zur "];
         const blacklist = stringBlacklist.split("");
+        const whiteList = ("0123456789+/-");
         let num = 0;
         let fullStreetName = "";
         let fullStreetNameClear = "";
@@ -1102,22 +1103,27 @@ export class AddressParser {
         let inputLineWords = inputLine.split(" ");
         let probability = 0;
         let wordBefore;
+
         for (let index = 0; index < inputLineWords.length; index++) {
             const element = inputLineWords[index];
             probability = 0;
+
             //checken, ob im word vor dem element ein bestimmtes Keyword/Blacklist-Wort steht
             if (index !== 0) {
                 wordBefore = inputLineWords[index - 1].toLowerCase();
+
                 if (wordBefore.startsWith("hrb") || wordBefore.startsWith("hra") || wordBefore.startsWith("hr") || wordBefore.startsWith("hrg") || wordBefore.startsWith("hrm")) {
                     probability = +50;
                 } else if (wordBefore.includes(" ")) {
                     probability = 0;
                 }
             }
+
             //output durch  Objekt
             if (probability > 100) {
                 probability = 100;
             }
+            
             if (probability > 0) {
                 tempRegistrationNumber.push(new CheckResult("registrationNumber", element.replaceAll(",", "").replaceAll(".", ""), probability));
             }
