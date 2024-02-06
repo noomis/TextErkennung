@@ -9,6 +9,7 @@
 
 - [ ] index setter in AddressParser auslagern
 - [ ] Methode fürs erkennen der Sprache  aus der Eingabe
+- [ ] Output values percentage egal
 ----------
 
 - [x] Wenn nur eine Nummer im Text ist dann wahrscheinlicher eine Tel Nummer
