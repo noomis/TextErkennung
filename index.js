@@ -30,11 +30,9 @@ function printResult() {
             mainParser.setAllPostalCodes(fetchData.getAllPostalCodes());
             mainParser.setCityNames(fetchData.getCityNames());
 
-            mainParser.parseText(input);
+            let addressObject = mainParser.parseText(input);
 
-            let addressObject = new Address();
-
-            addressObject.setEmails(mainParser.getEmailsCheck());
+            addressObject.setEmails(mainParser.getEmailsCheck()); // TODO remove
             addressObject.outputAllValues("email", 0);
 
             addressObject.setPhoneNumbers(mainParser.getPhoneNumbersCheck());

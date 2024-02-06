@@ -18,8 +18,14 @@ export class AddressParser {
     fetchedPostalCodes = []; // only max
     fetchedCityNames = []; // only max
 
-    constructor(language, outputPercentage) {
-        this.language = language;
+    constructor(language = null, outputPercentage) {
+        if (!language) {
+
+        } else {
+            this.language = language;
+        }
+    
+        
         this.outputPercentage = outputPercentage;
 
         this.companyNamesCheck = []; // only max
@@ -131,6 +137,8 @@ export class AddressParser {
             this.vatIdNumberCheck = this.vatIdNumberCheck.concat(this.checkVatIdNumber(input));
 
             this.taxNumberCheck = this.taxNumberCheck.concat(this.checkTaxNumber(input));
+
+            
         });
     }
 
@@ -1210,7 +1218,6 @@ export class AddressParser {
     checkTaxNumber(inputLine) {
         let tempTax = [];
         let inputLineWords = inputLine.toLowerCase().split(" ");
-        let wordBefore;
         let probability = 0;
         const whiteList = "0123456789+/-";
         const numbers = "0123456789"
@@ -1232,7 +1239,6 @@ export class AddressParser {
             }
 
             charLoop: for (let i = 0; i < wordChars.length; i++) {
-                const element = wordChars[i];
 
                 if (!whiteList.includes(wordChars[i])) {
                     continue wordloop;
