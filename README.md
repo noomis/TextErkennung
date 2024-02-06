@@ -4,7 +4,6 @@
 - [ ] Code alles auf Englisch
 - [ ] Telefonnummern keine Blacklist sondern Whitelist
 - [ ] Land anhand Parametern in der Eingabe erkennen
-- [ ] Ausgabe für Steuernummer, Handelsregisternummer, Ländername
 - [ ] Kommentare
 
 ----------
@@ -21,3 +20,4 @@
 - [x] Nummern internationale Vorwahl ausgeben
 - [x] keine doppelten contactPersons und Citys als objects erstellen 
 - [x] companyName wenn mit www. beginnt oder/und mit .de endet nicht ausgeben 
+- [x] Ausgabe für Steuernummer, Handelsregisternummer, Ländername
