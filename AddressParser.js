@@ -120,8 +120,7 @@ export class AddressParser {
             this.phoneNumbersCheck = this.phoneNumbersCheck.concat(this.checkPhone(input));
 
             this.streetsCheck = this.streetsCheck.concat(this.checkStreets(input));
-            console.log(this.streetsCheck);
-
+            
             this.postalCodeCheck = this.postalCodeCheck.concat(this.checkPostalCode(input));
 
             this.citysCheck = this.citysCheck.concat(this.checkCity(input));
@@ -1234,6 +1233,7 @@ export class AddressParser {
                     probability += 10;
                 }
 
+                // Checkt ob folgendes Format vorliegt: 123/4567/9876
                 if (numbers.includes(wordChars[i])) {
                     if (numbers.includes(wordChars[i + 1])) {
                         if (numbers.includes(wordChars[i + 2])) {
