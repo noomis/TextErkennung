@@ -1,8 +1,9 @@
 
 
 ## LUKE SPECIAL TODO
-- [ ] schreibe eine Methode in Addressparser die folgende Parameter hat (Array,percentageValue) und dann für jeden Index im Array schaut ob dieser mindestens die percentageValue hat und am Ende einen neuen Array returned der nur die Werte hat die darüber liegen.
+- [ ] Bitte implementiere eine Methode in Addressparser mit dem Namen "filterResults", die zwei Parameter annimmt: ein Array von Zahlen und einen Prozentsatzwert. Die Methode soll jedes Element im Array überprüfen und nur die Werte zurückgeben, die mindestens dem Prozentwert entsprechen, den du als Parameter übergibst. Diese passenden Werte sollen als neues Array zurückgegeben werden.
 
+Ich benutze diese Methode dann weiter.
 
 # TODO
 
