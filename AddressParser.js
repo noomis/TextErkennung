@@ -121,7 +121,7 @@ export class AddressParser {
             this.phoneNumbersCheck = this.phoneNumbersCheck.concat(this.checkPhone(input));
 
             this.streetsCheck = this.streetsCheck.concat(this.checkStreets(input));
-            
+
             this.postalCodeCheck = this.postalCodeCheck.concat(this.checkPostalCode(input));
 
             this.citysCheck = this.citysCheck.concat(this.checkCity(input));
@@ -1254,6 +1254,7 @@ export class AddressParser {
                                                         if (numbers.includes(wordChars[i + 10])) {
                                                             if (numbers.includes(wordChars[i + 11])) {
                                                                 if (numbers.includes(wordChars[i + 12])) {
+                                                                    probability+=50;
                                                                     tempTax.push(new CheckResult("companyTax", inputLineWords[index], probability));
                                                                 }
                                                             }
@@ -1285,5 +1286,3 @@ export class AddressParser {
         return name.split('').every(char => germanNamesWhitelist.includes(char));
     }
 }
-
-//TODO checkCompanyRegistationNumber- und checkTaxNumber Funktionalität
