@@ -571,12 +571,12 @@ export class AddressParser {
 
             for (let index = 0; index < inputLineChars.length; index++) {
 
-                // Überprüfen, ob die Eingabe einer Nummer entspricht
+                // Überprüfen, ob die Eingabe keiner Nummer entspricht
                 if (!whiteList.includes(inputLineChars[index])) {
 
                     // Falls nach einer Nummer ein Wort kommt, wird die bisher gespeicherte Nummer ausgegeben
                     if (fullNumber.trim().length >= 6 && probability != 0) {
-                        tempFax.push(new CheckResult("faxNumber", inputLineWords[i - 1], probability));
+                        // tempFax.push(new CheckResult("faxNumber", inputLineWords[i - 1], probability));
                         tempFax.push(new CheckResult("faxNumber", fullNumber, probability));
                     }
                     fullNumber = "";
@@ -1197,10 +1197,71 @@ export class AddressParser {
 
     checkTaxNumber(inputLine) {
         let tempTax = [];
-        let inputLineWords = inputLine.split(" ");
+        let inputLineWords = inputLine.toLowerCase().split(" ");
         let wordBefore;
         let probability = 0;
+        const whiteList = "0123456789+/-";
+        const numbers = "0123456789"
+
+
+
+        wordloop: for (let index = 0; index < inputLineWords.length; index++) {
+            const element = inputLineWords[index];
+            const wordChars = element.split("");
+
+            if (element === "finanzamt") {
+                probability += 30;
+
+                this.fetchedCityNames.forEach(element => {
+                    if (element === inputLineWords[index + 1]) {
+                        probability += 40;
+                    }
+                });
+            }
+
+            charLoop: for (let i = 0; i < wordChars.length; i++) {
+                const element = wordChars[i];
+
+                if (!whiteList.includes(wordChars[i])) {
+                    continue wordloop;
+                } else {
+                    probability += 10;
+                }
+
+                if (numbers.includes(wordChars[i])) {
+                    if (numbers.includes(wordChars[i + 1])) {
+                        if (numbers.includes(wordChars[i + 2])) {
+                            if (wordChars[i + 3] === "/") {
+                                if (numbers.includes(wordChars[i + 4])) {
+                                    if (numbers.includes(wordChars[i + 5])) {
+                                        if (numbers.includes(wordChars[i + 6])) {
+                                            if (numbers.includes(wordChars[i + 7])) {
+                                                if (wordChars[i + 8] === "/") {
+                                                    if (numbers.includes(wordChars[i + 9])) {
+                                                        if (numbers.includes(wordChars[i + 10])) {
+                                                            if (numbers.includes(wordChars[i + 11])) {
+                                                                if (numbers.includes(wordChars[i + 12])) {
+                                                                    tempTax.push(new CheckResult("companyTax", inputLineWords[index], probability));
+                                                                }
+                                                            }
+                                                        }
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
+        return tempTax;
     }
+
+
 }
 
 //TODO checkCompanyRegistationNumber- und checkTaxNumber Funktionalität -- integration in die JSON   

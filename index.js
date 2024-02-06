@@ -70,8 +70,8 @@ function printResult() {
             addressObject.setVatIdNumber(mainParser.getVatIdNumberCheck());
             addressObject.outputMaxValues("vatIdNumber", 0);
 
-            // addressObject.setTaxNumber(mainParser.getTaxNumberCheck());
-            // addressObject.outputMaxValues("taxNumber", 0);
+            addressObject.setTaxNumber(mainParser.getTaxNumberCheck());
+            addressObject.outputMaxValues("taxNumber", 0);
 
             document.getElementById('exportJSON').addEventListener('click', function () {
                 addressObject.exportJson(this);
