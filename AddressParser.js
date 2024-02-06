@@ -1206,7 +1206,6 @@ export class AddressParser {
     checkTaxNumber(inputLine) {
         let tempTax = [];
         let inputLineWords = inputLine.toLowerCase().split(" ");
-        let wordBefore;
         let probability = 0;
         const whiteList = "0123456789+/-";
         const numbers = "0123456789"
