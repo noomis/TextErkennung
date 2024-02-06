@@ -113,7 +113,6 @@ export class AddressParser {
             this.emailsCheck = this.emailsCheck.concat(this.checkMails(input));
 
             this.companyNamesCheck = this.companyNamesCheck.concat(this.checkCompanyNames(input));
-
             this.contactPersonsCheck = this.contactPersonsCheck.concat(this.checkContactPersons(input));
 
             this.faxNumbersCheck = this.faxNumbersCheck.concat(this.checkFax(input));
@@ -121,6 +120,7 @@ export class AddressParser {
             this.phoneNumbersCheck = this.phoneNumbersCheck.concat(this.checkPhone(input));
 
             this.streetsCheck = this.streetsCheck.concat(this.checkStreets(input));
+            console.log(this.streetsCheck);
 
             this.postalCodeCheck = this.postalCodeCheck.concat(this.checkPostalCode(input));
 
@@ -510,6 +510,12 @@ export class AddressParser {
                     }
                 }
             }
+            if (inputLineWords[i + 2] !== undefined) {
+                word2After = inputLineWords[i + 2].toLowerCase();
+                if (word2After.includes("stra")) {
+                    probability -= 35;
+                }
+            }
             //für sauberere Ausgabe
             wordAfterClean = wordAfterClean.replaceAll(",", "").replaceAll("_", "");
             //Wahrscheinlichkeitsrundung
@@ -541,14 +547,14 @@ export class AddressParser {
                     // checken, ob das Wort vorher nicht auch ein Vorname ist, dann pushen um einen möglichen 3er-Namen nicht doppelt zu erhalten
                     if (!firstName.includes(wordBefore)) {
                         //checken, ob name kein § enthält = edge case
-                        if (!name.includes("§")) {
+                        if (!name.includes("§") && this.checkCorrectName(name)) {
                             tempNames.push(new CheckResult("contactPerson", name, probability));
                         }
                     }
                 }
                 //output bei einem 3er-Namen 
                 else {
-                    if (!tempNames.includes(tripleName)) {
+                    if (!tempNames.includes(tripleName) && this.checkCorrectName(tripleName)) {
                         tripleName = tripleName.replaceAll(",", "").replaceAll("_", "");
                         tempNames.push(new CheckResult("contactPerson", tripleName, probability));
                     }
@@ -1261,7 +1267,18 @@ export class AddressParser {
         return tempTax;
     }
 
+    checkCorrectName(name) {
+        const germanNamesWhitelist = [
+            'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm',
+            'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z',
+            'ä', 'ö', 'ü', 'ß', '-', ' '
+        ];
+        name = name.toLowerCase();
+        // Überprüfe, ob alle Zeichen in der Variable im germanNamesWhitelist Array enthalten sind
+        return name.split('').every(char => germanNamesWhitelist.includes(char));
+    }
+
 
 }
 
-//TODO checkCompanyRegistationNumber- und checkTaxNumber Funktionalität -- integration in die JSON   
+//TODO checkCompanyRegistationNumber- und checkTaxNumber Funktionalität
