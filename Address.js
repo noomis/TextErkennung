@@ -14,20 +14,20 @@ export class Address {
     vatIdNumber = [];
     taxNumber = [];
 
-    constructor() {
-        this.companyName = [];
-        this.postalCode = [];
-        this.street = [];
-        this.city = [];
-        this.homepage = [];
-        this.w3wAddress = [];
-        this.emails = [];
-        this.phoneNumbers = [];
-        this.faxNumbers = [];
-        this.contactPersons = [];
-        this.companyRegistrationNumber = [];
-        this.vatIdNumber = [];
-        this.taxNumber = [];
+    constructor(_companyName,_postalCode,_street,_city,_homepage,_w3wAddress,_emails,_phoneNumbers,_faxNumbers,_contactPersons,_companyRegistrationNumber,_vatIdNumber,_taxNumber) {
+        this.companyName = _companyName;
+        this.postalCode = _postalCode;
+        this.street = _street;
+        this.city = _city;
+        this.homepage = _homepage;
+        this.w3wAddress = _w3wAddress;
+        this.emails = _emails;
+        this.phoneNumbers = _phoneNumbers;
+        this.faxNumbers = _faxNumbers;
+        this.contactPersons = _contactPersons;
+        this.companyRegistrationNumber = _companyRegistrationNumber;
+        this.vatIdNumber = _vatIdNumber;
+        this.taxNumber = _taxNumber;
     }
 
     getCompanyName() {

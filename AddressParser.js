@@ -1,3 +1,4 @@
+import { Address } from "./Address.js";
 import { CheckResult } from "./CheckResult.js";
 
 export class AddressParser {
@@ -109,7 +110,7 @@ export class AddressParser {
 
     parseText(input) {
         let inputLines = input.split("\n");
-
+        let addressObject;
         inputLines.forEach(input => {
 
             this.w3wAddressCheck = this.w3wAddressCheck.concat(this.checkW3ws(input));
@@ -139,7 +140,13 @@ export class AddressParser {
             this.taxNumberCheck = this.taxNumberCheck.concat(this.checkTaxNumber(input));
 
             
+            addressObject = new Address(this.companyNamesCheck,this.postalCodeCheck,this.streetsCheck,this.citysCheck,this.homepageCheck,this.w3wAddressCheck,this.emailsCheck,this.phoneNumbersCheck,this.faxNumbersCheck,this.contactPersonsCheck,this.companyRegistrationNumberCheck,this.vatIdNumberCheck,this.taxNumberCheck)
+
         });
+        console.log(addressObject);
+        
+        return addressObject;
+
     }
 
     checkW3ws(inputLine) {

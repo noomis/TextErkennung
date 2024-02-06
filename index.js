@@ -29,50 +29,25 @@ function printResult() {
 
             mainParser.setAllPostalCodes(fetchData.getAllPostalCodes());
             mainParser.setCityNames(fetchData.getCityNames());
+            let addressObject;
+            addressObject = mainParser.parseText(input);
 
-            let addressObject = mainParser.parseText(input);
-
-            addressObject.setEmails(mainParser.getEmailsCheck()); // TODO remove
             addressObject.outputAllValues("email", 0);
-
-            addressObject.setPhoneNumbers(mainParser.getPhoneNumbersCheck());
             addressObject.outputAllValues("phoneNumber", 0);
-
-            addressObject.setContactPersons(mainParser.getContactPersonsCheck());
             addressObject.outputAllValues("contactPerson", 0);
-
-            addressObject.setFaxNumbers(mainParser.getFaxNumbersCheck());
             addressObject.outputAllValues("faxNumber", 0);
-
-            addressObject.setW3wAddress(mainParser.getW3wAddressCheck());
             addressObject.outputMaxValues("w3w", 0);
-
-            addressObject.setHomepage(mainParser.getHomepageCheck());
             addressObject.outputMaxValues("homepage", 0);
-
-            addressObject.setStreet(mainParser.getStreetCheck());
             addressObject.outputMaxValues("street", 0);
-
-            addressObject.setCompanyName(mainParser.getCompanyNameCheck());
             addressObject.outputMaxValues("companyName", 0);
-
-            addressObject.setPostalCode(mainParser.getPostalCodeCheck());
             addressObject.outputMaxValues("postalCode", 0);
-
-            addressObject.setCity(mainParser.getCityCheck());
             addressObject.outputMaxValues("city", 0);
-
-            addressObject.setRegistrationNumber(mainParser.getCompanyRegistrationNumberCheck());
             addressObject.outputMaxValues("registrationNumber", 0);
-
-            addressObject.setVatIdNumber(mainParser.getVatIdNumberCheck());
             addressObject.outputMaxValues("vatIdNumber", 0);
-
-            addressObject.setTaxNumber(mainParser.getTaxNumberCheck());
             addressObject.outputMaxValues("taxNumber", 0);
 
             document.getElementById('exportJSON').addEventListener('click', function () {
-                addressObject.exportJson(this);
+            addressObject.exportJson(this);
             });
         }
 
