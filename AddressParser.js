@@ -99,7 +99,6 @@ export class AddressParser {
     parseText(input) {
         let inputLines = input.split("\n");
         let addressObject;
-        console.log(this.language);
         inputLines.forEach(input => {
 
             this.w3wAddressCheck = this.w3wAddressCheck.concat(this.checkW3ws(input));
