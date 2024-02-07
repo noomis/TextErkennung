@@ -1297,7 +1297,6 @@ export class AddressParser {
                     element.probability = 100;
                 }
                 tempArray.push(element);
-
             }
         });
         return tempArray;
