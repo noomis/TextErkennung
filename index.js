@@ -15,9 +15,7 @@ function printResult() {
     $(".delete").remove();
     let input = document.getElementById("text").value;
     let languageChecker = new CheckLanguage();
-
-    
-    console.log(languageChecker.parseLanguage(input));
+    languageChecker= languageChecker.parseLanguage(input);
     let outputPercentage = $("#slider")[0].value;
     let mainParser = new AddressParser(languageChecker,outputPercentage);
 
