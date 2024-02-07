@@ -18,6 +18,7 @@ export class AddressParser {
 
     fetchedPostalCodes = []; // only max
     fetchedCityNames = []; // only max
+    outputPercentage = 0;
 
     constructor(language = null, outputPercentage) {
 
@@ -26,8 +27,8 @@ export class AddressParser {
         } else {
             this.language = language;
         }
-    
-        
+
+
         this.outputPercentage = outputPercentage;
 
 
@@ -101,7 +102,7 @@ export class AddressParser {
         inputLines.forEach(input => {
 
             this.w3wAddressCheck = this.w3wAddressCheck.concat(this.checkW3ws(input));
-            
+
 
             this.homepageCheck = this.homepageCheck.concat(this.checkHomepage(input));
 
@@ -127,16 +128,16 @@ export class AddressParser {
 
             this.taxNumberCheck = this.taxNumberCheck.concat(this.checkTaxNumber(input));
 
-            
 
-            
+
+
 
         });
-        addressObject = new Address(this.companyNamesCheck,this.postalCodeCheck,this.streetsCheck,this.citysCheck,this.homepageCheck,this.w3wAddressCheck,this.emailsCheck,this.phoneNumbersCheck,this.faxNumbersCheck,this.contactPersonsCheck,this.companyRegistrationNumberCheck,this.vatIdNumberCheck,this.taxNumberCheck)
+        addressObject = new Address(this.filterResults(this.companyNamesCheck), this.filterResults(this.postalCodeCheck), this.filterResults(this.streetsCheck), this.filterResults(this.citysCheck), this.filterResults(this.homepageCheck), this.filterResults(this.w3wAddressCheck), this.filterResults(this.emailsCheck), this.filterResults(this.phoneNumbersCheck), this.filterResults(this.faxNumbersCheck), this.filterResults(this.contactPersonsCheck), this.filterResults(this.companyRegistrationNumberCheck), this.filterResults(this.vatIdNumberCheck), this.filterResults(this.taxNumberCheck))
         console.log(addressObject);
 
 
-        
+
         return addressObject;
 
     }
@@ -1255,7 +1256,7 @@ export class AddressParser {
                                                         if (numbers.includes(wordChars[i + 10])) {
                                                             if (numbers.includes(wordChars[i + 11])) {
                                                                 if (numbers.includes(wordChars[i + 12])) {
-                                                                    probability+=50;
+                                                                    probability += 50;
                                                                     tempTax.push(new CheckResult("companyTax", inputLineWords[index], probability));
                                                                 }
                                                             }
@@ -1287,12 +1288,16 @@ export class AddressParser {
         return name.split('').every(char => germanNamesWhitelist.includes(char));
     }
 
-    filterResults(Array, outputPercentage) {
+    filterResults(Array) {
         let tempArray = [];
 
         Array.forEach(element => {
-            if (element.probability > outputPercentage) {
+            if (element.probability > this.outputPercentage) {
+                if (element.probability > 100) {
+                    element.probability = 100;
+                }
                 tempArray.push(element);
+
             }
         });
         return tempArray;
