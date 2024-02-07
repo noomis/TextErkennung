@@ -589,17 +589,17 @@ export class AddressParser {
                     if (fullNumber.trim().length >= 6 && probability != 0) {
                         // Faxnummern einheitliche Schreibweise setzen
                         if (inputLineWords[i - 1].startsWith("0") || inputLineWords[i - 1].startsWith("(0")) {
-                            tempPhone.push(new CheckResult("faxNumber", inputLineWords[i - 1].replace("0", "+49"), probability));
+                            tempFax.push(new CheckResult("faxNumber", inputLineWords[i - 1].replace("0", "+49"), probability));
 
                         } else {
-                            tempPhone.push(new CheckResult("faxNumber", inputLineWords[i - 1], probability));
+                            tempFax.push(new CheckResult("faxNumber", inputLineWords[i - 1], probability));
                         }
 
                         if (fullNumber.startsWith("0") || fullNumber.startsWith("(0")) {
-                            tempPhone.push(new CheckResult("faxNumber", fullNumber.replace("0", "+49"), probability));
+                            tempFax.push(new CheckResult("faxNumber", fullNumber.replace("0", "+49"), probability));
 
                         } else {
-                            tempPhone.push(new CheckResult("faxNumber", fullNumber, probability));
+                            tempFax.push(new CheckResult("faxNumber", fullNumber, probability));
                         }
                     }
                     fullNumber = "";
@@ -618,7 +618,7 @@ export class AddressParser {
                     return tempFax;
                 }
             }
-            
+
             // Checkt ob die gesamt länge der Nummer zu groß ist
             if (inputLineWords[i].length + fullNumber.length < 20) {
                 fullNumber += inputLineWords[i];
