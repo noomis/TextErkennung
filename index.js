@@ -15,7 +15,7 @@ function printResult() {
     $(".delete").remove();
     
     let outputPercentage = $("#slider")[0].value;
-    let mainParser = new AddressParser(NULL,outputPercentage);
+    let mainParser = new AddressParser("",outputPercentage);
 
     $("#probValue").text("Treffer Wahrscheinlichkeit: " + outputPercentage + "%");
 
