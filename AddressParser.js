@@ -22,7 +22,7 @@ export class AddressParser {
     constructor(language = null, outputPercentage) {
 
         if (!language) {
-
+            language = "German"
         } else {
             this.language = language;
         }
