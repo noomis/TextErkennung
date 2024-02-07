@@ -18,32 +18,20 @@ export class AddressParser {
 
     fetchedPostalCodes = []; // only max
     fetchedCityNames = []; // only max
+    outputPercentage = 0;
 
     constructor(language = null, outputPercentage) {
-        if (!language) {
 
+        if (!language) {
+            language = "German"
         } else {
             this.language = language;
         }
-    
-        
+
+
         this.outputPercentage = outputPercentage;
 
-        this.companyNamesCheck = []; // only max
-        this.streetsCheck = []; // only max
-        this.postalCodeCheck = [];
-        this.citysCheck = []; //
-        this.homepageCheck = []; // only max
-        this.w3wAddressCheck = []; // only max
-        this.emailsCheck = [];
-        this.phoneNumbersCheck = [];
-        this.faxNumbersCheck = [];
-        this.contactPersonsCheck = [];
-        this.companyRegistrationNumberCheck = []; //only max
-        this.vatIdNumberCheck = []; //only max
-        this.taxNumberCheck = []; //only max
-        this.fetchedPostalCodes = []; // only max
-        this.fetchedCityNames = []; // only max
+
     }
 
     getCompanyNameCheck() {
@@ -116,6 +104,7 @@ export class AddressParser {
 
             this.w3wAddressCheck = this.w3wAddressCheck.concat(this.checkW3ws(input));
 
+
             this.homepageCheck = this.homepageCheck.concat(this.checkHomepage(input));
 
             this.emailsCheck = this.emailsCheck.concat(this.checkMails(input));
@@ -140,12 +129,11 @@ export class AddressParser {
 
             this.taxNumberCheck = this.taxNumberCheck.concat(this.checkTaxNumber(input));
 
-            
-            addressObject = new Address(this.companyNamesCheck,this.postalCodeCheck,this.streetsCheck,this.citysCheck,this.homepageCheck,this.w3wAddressCheck,this.emailsCheck,this.phoneNumbersCheck,this.faxNumbersCheck,this.contactPersonsCheck,this.companyRegistrationNumberCheck,this.vatIdNumberCheck,this.taxNumberCheck)
-
         });
+
+        addressObject = new Address(this.filterResults(this.companyNamesCheck), this.filterResults(this.postalCodeCheck), this.filterResults(this.streetsCheck), this.filterResults(this.citysCheck), this.filterResults(this.homepageCheck), this.filterResults(this.w3wAddressCheck), this.filterResults(this.emailsCheck), this.filterResults(this.phoneNumbersCheck), this.filterResults(this.faxNumbersCheck), this.filterResults(this.contactPersonsCheck), this.filterResults(this.companyRegistrationNumberCheck), this.filterResults(this.vatIdNumberCheck), this.filterResults(this.taxNumberCheck))
         console.log(addressObject);
-        
+
         return addressObject;
 
     }
@@ -599,8 +587,20 @@ export class AddressParser {
 
                     // Falls nach einer Nummer ein Wort kommt, wird die bisher gespeicherte Nummer ausgegeben
                     if (fullNumber.trim().length >= 6 && probability != 0) {
-                        // tempFax.push(new CheckResult("faxNumber", inputLineWords[i - 1], probability));
-                        tempFax.push(new CheckResult("faxNumber", fullNumber, probability));
+                        // Faxnummern einheitliche Schreibweise setzen
+                        if (inputLineWords[i - 1].startsWith("0") || inputLineWords[i - 1].startsWith("(0")) {
+                            tempPhone.push(new CheckResult("faxNumber", inputLineWords[i - 1].replace("0", "+49"), probability));
+
+                        } else {
+                            tempPhone.push(new CheckResult("faxNumber", inputLineWords[i - 1], probability));
+                        }
+
+                        if (fullNumber.startsWith("0") || fullNumber.startsWith("(0")) {
+                            tempPhone.push(new CheckResult("faxNumber", fullNumber.replace("0", "+49"), probability));
+
+                        } else {
+                            tempPhone.push(new CheckResult("faxNumber", fullNumber, probability));
+                        }
                     }
                     fullNumber = "";
                     continue words;
@@ -618,6 +618,7 @@ export class AddressParser {
                     return tempFax;
                 }
             }
+            
             // Checkt ob die gesamt länge der Nummer zu groß ist
             if (inputLineWords[i].length + fullNumber.length < 20) {
                 fullNumber += inputLineWords[i];
@@ -637,8 +638,12 @@ export class AddressParser {
         }
 
         if (fullNumber.trim().length != 0 && probability != 0) {
+            if (fullNumber.startsWith("0") || fullNumber.startsWith("(0")) {
+                tempFax.push(new CheckResult("faxNumber", fullNumber.replace("0", "+49"), probability));
 
-            tempFax.push(new CheckResult("faxNumber", fullNumber, probability));
+            } else {
+                tempFax.push(new CheckResult("faxNumber", fullNumber, probability));
+            }
         }
 
         return tempFax;
@@ -658,20 +663,20 @@ export class AddressParser {
         let inputLineWords = inputLine.split(" ");
         fullUnformattedNumber = inputLine;
         let probability = 0;
-        let stringBlacklist = "abcdefghijklmnopqrstuvwxyzäöü@#$!%^&*_={}[]|;:<>,?";
-        const blacklist = stringBlacklist.split("");
+        const whiteList = ("0123456789+/- ()[].");
 
         words: for (let i = 0; i < inputLineWords.length; i++) {
 
-            // Checkt ob das Wort Buchstaben usw. enthält
-            for (let b = 0; b < blacklist.length; b++) {
 
-                // Überprüfen, ob die Eingabe einer Nummer entspricht
-                if (inputLineWords[i].includes(blacklist[b])) {
+            let inputLineChars = inputLineWords[i].split("");
+
+            for (let index = 0; index < inputLineChars.length; index++) {
+
+                // Überprüfen, ob die Eingabe keiner Nummer entspricht
+                if (!whiteList.includes(inputLineChars[index])) {
 
                     // Falls nach einer Nummer ein Wort kommt, wird die bisher gespeicherte Nummer ausgegeben
                     if (fullNumber.trim().length >= 6 && probability != 0) {
-
                         // Telefonnummer einheitliche Schreibweise setzen
                         if (inputLineWords[i - 1].startsWith("0") || inputLineWords[i - 1].startsWith("(0")) {
                             tempPhone.push(new CheckResult("phoneNumber", inputLineWords[i - 1].replace("0", "+49"), probability));
@@ -686,7 +691,6 @@ export class AddressParser {
                         } else {
                             tempPhone.push(new CheckResult("phoneNumber", fullNumber, probability));
                         }
-
                     }
                     fullNumber = "";
                     continue words;
@@ -734,7 +738,6 @@ export class AddressParser {
                 }
 
             }
-
         }
 
         if (tmpFullNum > 5) {
@@ -1224,10 +1227,8 @@ export class AddressParser {
         let tempTax = [];
         let inputLineWords = inputLine.toLowerCase().split(" ");
         let probability = 0;
-        const whiteList = "0123456789+/-";
+        const whiteList = "0123456789/";
         const numbers = "0123456789"
-
-
 
         wordloop: for (let index = 0; index < inputLineWords.length; index++) {
             const element = inputLineWords[index];
@@ -1250,39 +1251,33 @@ export class AddressParser {
                 } else {
                     probability += 10;
                 }
+            }
 
-                // Checkt ob folgendes Format vorliegt: 123/4567/9876
-                if (numbers.includes(wordChars[i])) {
-                    if (numbers.includes(wordChars[i + 1])) {
-                        if (numbers.includes(wordChars[i + 2])) {
-                            if (wordChars[i + 3] === "/") {
-                                if (numbers.includes(wordChars[i + 4])) {
-                                    if (numbers.includes(wordChars[i + 5])) {
-                                        if (numbers.includes(wordChars[i + 6])) {
-                                            if (numbers.includes(wordChars[i + 7])) {
-                                                if (wordChars[i + 8] === "/") {
-                                                    if (numbers.includes(wordChars[i + 9])) {
-                                                        if (numbers.includes(wordChars[i + 10])) {
-                                                            if (numbers.includes(wordChars[i + 11])) {
-                                                                if (numbers.includes(wordChars[i + 12])) {
-                                                                    probability+=50;
-                                                                    tempTax.push(new CheckResult("companyTax", inputLineWords[index], probability));
-                                                                }
-                                                            }
-                                                        }
-                                                    }
-                                                }
-                                            }
-                                        }
-                                    }
-                                }
-                            }
-                        }
+            // Checkt ob folgendes Format vorliegt: 123/4567/9876
+            let tempWord = element.split("/");
+            let tempCount = 0;
+
+            if (tempWord.length == 3 && tempWord[0].length == 3 && tempWord[1].length == 4 && tempWord[2].length == 4) {
+                probability += 20;
+            }
+
+            tempWord.forEach(element => {
+
+                element.split("").forEach(chars => {
+
+                    if (numbers.includes(chars)) {
+                        probability += 30;
+                        tempCount++;
+                    } else {
+                        return tempTax
                     }
-                }
+                });
+            });
+
+            if (tempCount == 11) {
+                tempTax.push(new CheckResult("companyTax", inputLineWords[index], probability));
             }
         }
-
         return tempTax;
     }
 
@@ -1295,5 +1290,20 @@ export class AddressParser {
         name = name.toLowerCase();
         // Überprüfe, ob alle Zeichen in der Variable im germanNamesWhitelist Array enthalten sind
         return name.split('').every(char => germanNamesWhitelist.includes(char));
+    }
+
+    filterResults(Array) {
+        let tempArray = [];
+
+        // neuen Array mit elementen befüllen die eine größerer Wkeit als die Übergebne haben
+        Array.forEach(element => {
+            if (element.probability >= this.outputPercentage) {
+                if (element.probability > 100) {
+                    element.probability = 100;
+                }
+                tempArray.push(element);
+            }
+        });
+        return tempArray;
     }
 }
