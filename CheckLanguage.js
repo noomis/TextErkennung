@@ -1,4 +1,6 @@
 import { AddressParser } from "./AddressParser.js";
+import { detect } from 'https://cdn.jsdelivr.net/npm/tinyld@1.3.0/dist/tinyld.normal.browser.js'
+
 
 export class CheckLanguage {
     language = [];
@@ -6,8 +8,7 @@ export class CheckLanguage {
     parseLanguage(input) {
         let inputLine = input.replaceAll("\n", " ");
 
-        this.language = this.language.concat(this.checkLanguage(inputLine));
-        return this.language;
+        return detect(inputLine);
     }
 
     checkLanguage(inputLine) {
