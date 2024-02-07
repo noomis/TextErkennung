@@ -8,13 +8,11 @@ Ich benutze diese Methode dann weiter.
 # TODO
 
 - [ ] Telefonnummern keine Blacklist sondern Whitelist
-- [ ] Land anhand Parametern in der Eingabe erkennen
 - [ ] Kommentare
 - [ ] Deutsch, Niederländisch, Englisch
-
-- [ ] index setter in AddressParser auslagern
 - [ ] Methode fürs erkennen der Sprache  aus der Eingabe
 - [ ] Output values percentage egal
+
 ----------
 
 - [x] Wenn nur eine Nummer im Text ist dann wahrscheinlicher eine Tel Nummer
@@ -31,3 +29,4 @@ Ich benutze diese Methode dann weiter.
 - [x] companyName wenn mit www. beginnt oder/und mit .de endet nicht ausgeben 
 - [x] Ausgabe für Steuernummer, Handelsregisternummer, Ländername
 - [x] JSON direkt darein nicht doppelt
+- [x] index setter in AddressParser auslagern
