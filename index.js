@@ -1,7 +1,7 @@
 import { Address } from "./Address.js";
 import { AddressParser } from "./AddressParser.js";
 import { FetchData } from "./fetchData.js";
-
+import { CheckLanguage } from "./checkLanguage.js";
 let timeoutId;
 
 let fetchData = new FetchData;
@@ -13,17 +13,17 @@ document.getElementById("slider").addEventListener("input", printResult);
 
 function printResult() {
     $(".delete").remove();
-    
+    let input = document.getElementById("text").value;
+    let languageChecker = new CheckLanguage();
+    languageChecker = languageChecker.parseLanguage(input);
     let outputPercentage = $("#slider")[0].value;
-    let mainParser = new AddressParser(NULL,outputPercentage);
+    let mainParser = new AddressParser(languageChecker,outputPercentage);
 
     $("#probValue").text("Treffer Wahrscheinlichkeit: " + outputPercentage + "%");
 
     clearTimeout(timeoutId);
 
     timeoutId = setTimeout(() => {
-
-        let input = document.getElementById("text").value;
 
         if (input != "") { // Nur ausführen wenn Eingabe nicht leer ist
 
@@ -86,7 +86,7 @@ function randomImpressum() {
 
     let Impressen = [];
 
-    Impressen.push('geoCapture GmbH\nRheiner Str. 3\nD-48496 Hopsten \nTelefon: +49 5458 936668-0\nTelefax: +49 5458 936668-28 \nE-Mail: info@geocapture.de\nWebsite: www.geocapture.de\n\nwhat3words Position:  ///zeugt.zutreffen.wissen\n\nGerichtsstand:\nAmtsgericht Steinfurt HRB 12637\nGeschäftsführer: Friedhelm Brügge\nFinanzamt Steinfurt 327/5770/7451\nUSt.-IdNr. DE276689377');
+    Impressen.push('geoCapture GmbH\nRheiner Str. 3\nD-48496 Hopsten\nTelefon: +49 5458 936668-0\nTelefax: +49 5458 936668-28\nE-Mail: info@geocapture.de\nWebsite: www.geocapture.de\n\nwhat3words Position:  ///zeugt.zutreffen.wissen\n\nGerichtsstand:\nAmtsgericht Steinfurt HRB 12637\nGeschäftsführer: Friedhelm Brügge\nFinanzamt Steinfurt 327/5770/7451\nUSt.-IdNr. DE276689377');
     Impressen.push('IMPRESSUM\n\nAngaben gemäß § 5 TMG:\n\nSiering Straßenbau GmbH\nRheiner Straße 2\n///abgesprochen.teichrose.milchprodukt\nwww.siering-hopsten.com\n48496 Hopsten\n\nVertreten durch:\n\nJörg Siering, Dipl.-Bau.-Ing., Wirtsch.-Ing. (FH)\nDipl.-Bau-Ing. (FH) Marc Borgmann\n\nKontakt:\n\nTelefon:\t 05458/9312-0\nTelefax:\t 05458/9312-55\nE-Mail:\t info@siering-hopsten.de');
     Impressen.push('WEINCONTOR WIESBADEN\nHans-Jürgen Becker\nTaunusstr. 5\n65183 Wiesbaden\nTel.: 0611-1746652\nFax: 0611-1746653\nemail: selection@weincontor-wiesbaden.de\nHomepage: www.weincontor-wiesbaden.de\n\nOEFFNUNGSZEITEN\nMontag - Freitag 11-19 Uhr\nSamstag 10-16 Uhr\nSA im Dezember 10-18 Uhr\n\nw3w-Adresse Eingang: ///kaiser.sonst.bisher');
     Impressen.push('Impressum\nHerausgeber der Seite\nGemeinde Hopsten\nBunte Straße 35\n48496 Hopsten\n\nTelefon: 05458 9325 0\nTelefax: 05458 9325 93\n\nE-Mail: info@hopsten.de\nDE-Mail: postfach@hopsten.de-mail.de\n\nDie Gemeinde Hopsten ist eine Körperschaft des öffentlichen Rechts.\nSie wird vertreten durch den Bürgermeister Ludger Kleine-Harmeyer (Kontaktdaten siehe oben)\n\nPresserechtliche Verantwortung und Vertretungsberechtigter gem. § 5 Telemediengesetz TMG bzw. inhaltlich Verantwortlich § 55 II Rundfunkstaatsvertrag RStV:');

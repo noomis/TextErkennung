@@ -111,6 +111,7 @@ export class AddressParser {
     parseText(input) {
         let inputLines = input.split("\n");
         let addressObject;
+        console.log(this.language);
         inputLines.forEach(input => {
 
             this.w3wAddressCheck = this.w3wAddressCheck.concat(this.checkW3ws(input));
@@ -233,7 +234,7 @@ export class AddressParser {
         //alle wörter klein und in neuen array
         let inputLineWords = inputLine.toLowerCase().split(" ");
         let tempUrl = [];
-        let knownTLD = ["com", "net", "org", "de", "eu", "at", "ch", "nl", "pl", "fr", "es", "info", "name", "email", "co", "biz"];
+        let knownTLD = ["com", "net", "org", "de", "eu", "at", "ch", "nl", "pl", "fr", "es", "info", "name", "email", "co", "biz", "uk"];
 
         //for-Schleife die alle Worte vom Input durchläuft
         for (let i = 0; i < inputLineWords.length; i++) {
@@ -289,11 +290,12 @@ export class AddressParser {
                 tempUrl.push(new CheckResult("homepage", element, probability));
             }
         }
+
         return tempUrl;
     }
 
     checkMails(inputLine) {
-        let knownTLD = ["com", "net", "org", "de", "eu", "at", "ch", "nl", "pl", "fr", "es", "info", "name", "email", "co", "biz"];
+        let knownTLD = ["com", "net", "org", "de", "eu", "at", "ch", "nl", "pl", "fr", "es", "info", "name", "email", "co", "biz", "uk"];
         let tempMails = [];
         inputLine = inputLine.toLowerCase();
         let inputLineWords = inputLine.split(" ");

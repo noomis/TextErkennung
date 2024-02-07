@@ -1,10 +1,6 @@
 export class FetchData {
     fetchedPostalCodes = []; 
     fetchedCityNames = [];
-    constructor() {
-        this.fetchedPostalCodes = []; 
-        this.fetchedCityNames = []; 
-    }
 
     async fetchCityData() {
         let tempAllPostalCodes = [];
