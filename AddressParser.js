@@ -1262,7 +1262,7 @@ export class AddressParser {
                 });
             });
 
-            console.log(tempCount);
+          
             if (tempCount == 11) {
                 tempTax.push(new CheckResult("companyTax", inputLineWords[index], probability));
             }
