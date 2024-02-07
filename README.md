@@ -11,10 +11,10 @@ Ich benutze diese Methode dann weiter.
 - [ ] Kommentare
 - [ ] Deutsch, Niederländisch, Englisch
 - [ ] Methode fürs erkennen der Sprache  aus der Eingabe
-- [ ] Output values percentage egal
 
 ----------
 
+- [x] Output values percentage egal
 - [x] Wenn nur eine Nummer im Text ist dann wahrscheinlicher eine Tel Nummer
 - [x] Ausgabe nicht kleingeschrieben ausgeben
 - [x] PLZ und Ort unabhängig voneinander
