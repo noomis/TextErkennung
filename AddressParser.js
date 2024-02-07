@@ -1215,10 +1215,8 @@ export class AddressParser {
         let tempTax = [];
         let inputLineWords = inputLine.toLowerCase().split(" ");
         let probability = 0;
-        const whiteList = "0123456789+/-";
+        const whiteList = "0123456789/";
         const numbers = "0123456789"
-
-
 
         wordloop: for (let index = 0; index < inputLineWords.length; index++) {
             const element = inputLineWords[index];
@@ -1292,7 +1290,7 @@ export class AddressParser {
         let tempArray = [];
 
         Array.forEach(element => {
-            
+
             if (element.probability > this.outputPercentage) {
 
                 if (element.probability > 100) {
