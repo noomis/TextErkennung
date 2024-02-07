@@ -20,6 +20,7 @@ export class AddressParser {
     fetchedCityNames = []; // only max
 
     constructor(language = null, outputPercentage) {
+
         if (!language) {
             language = "German"
         } else {
@@ -29,21 +30,7 @@ export class AddressParser {
         
         this.outputPercentage = outputPercentage;
 
-        this.companyNamesCheck = []; // only max
-        this.streetsCheck = []; // only max
-        this.postalCodeCheck = [];
-        this.citysCheck = []; //
-        this.homepageCheck = []; // only max
-        this.w3wAddressCheck = []; // only max
-        this.emailsCheck = [];
-        this.phoneNumbersCheck = [];
-        this.faxNumbersCheck = [];
-        this.contactPersonsCheck = [];
-        this.companyRegistrationNumberCheck = []; //only max
-        this.vatIdNumberCheck = []; //only max
-        this.taxNumberCheck = []; //only max
-        this.fetchedPostalCodes = []; // only max
-        this.fetchedCityNames = []; // only max
+
     }
 
     getCompanyNameCheck() {
