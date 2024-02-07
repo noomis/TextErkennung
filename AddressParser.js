@@ -1290,9 +1290,7 @@ export class AddressParser {
         let tempArray = [];
 
         Array.forEach(element => {
-
-            if (element.probability > this.outputPercentage) {
-
+            if (element.probability >= this.outputPercentage) {
                 if (element.probability > 100) {
                     element.probability = 100;
                 }
