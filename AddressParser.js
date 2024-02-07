@@ -1239,39 +1239,28 @@ export class AddressParser {
                 } else {
                     probability += 10;
                 }
-
-                // Checkt ob folgendes Format vorliegt: 123/4567/9876
-                if (numbers.includes(wordChars[i])) {
-                    if (numbers.includes(wordChars[i + 1])) {
-                        if (numbers.includes(wordChars[i + 2])) {
-                            if (wordChars[i + 3] === "/") {
-                                if (numbers.includes(wordChars[i + 4])) {
-                                    if (numbers.includes(wordChars[i + 5])) {
-                                        if (numbers.includes(wordChars[i + 6])) {
-                                            if (numbers.includes(wordChars[i + 7])) {
-                                                if (wordChars[i + 8] === "/") {
-                                                    if (numbers.includes(wordChars[i + 9])) {
-                                                        if (numbers.includes(wordChars[i + 10])) {
-                                                            if (numbers.includes(wordChars[i + 11])) {
-                                                                if (numbers.includes(wordChars[i + 12])) {
-                                                                    probability += 50;
-                                                                    tempTax.push(new CheckResult("companyTax", inputLineWords[index], probability));
-                                                                }
-                                                            }
-                                                        }
-                                                    }
-                                                }
-                                            }
-                                        }
-                                    }
-                                }
-                            }
-                        }
-                    }
-                }
             }
-        }
 
+            // Checkt ob folgendes Format vorliegt: 123/4567/9876
+            let tempWord = element.split("/");
+
+            if (tempWord.length == 3 && tempWord[0].length == 3 && tempWord[1].length == 4 && tempWord[2].length == 4) {
+                probability += 20;
+            }
+
+            tempWord.forEach(element => {
+
+                element.split("").forEach(chars => {
+
+                    if (numbers.includes(chars)) {
+                        probability += 30;
+                        tempTax.push(new CheckResult("companyTax", element, probability));
+                    } else {
+                        return tempTax
+                    }
+                });
+            });
+        }
         return tempTax;
     }
 
