@@ -1,5 +1,5 @@
 import { AddressParser } from "./AddressParser.js";
-import { detect } from 'https://cdn.jsdelivr.net/npm/tinyld@1.3.0/dist/tinyld.normal.browser.js'
+import {franc, francAll} from 'https://esm.sh/franc@6?bundle'
 
 
 export class CheckLanguage {
@@ -8,7 +8,7 @@ export class CheckLanguage {
     parseLanguage(input) {
         let inputLine = input.replaceAll("\n", " ");
 
-        return detect(inputLine);
+        return franc(inputLine);
     }
 
     checkLanguage(inputLine) {
