@@ -590,7 +590,6 @@ export class AddressParser {
 
                     // Falls nach einer Nummer ein Wort kommt, wird die bisher gespeicherte Nummer ausgegeben
                     if (fullNumber.trim().length >= 6 && probability != 0) {
-                        // tempFax.push(new CheckResult("faxNumber", inputLineWords[i - 1], probability));
                         tempFax.push(new CheckResult("faxNumber", fullNumber, probability));
                     }
                     fullNumber = "";
@@ -649,20 +648,22 @@ export class AddressParser {
         let inputLineWords = inputLine.split(" ");
         fullUnformattedNumber = inputLine;
         let probability = 0;
-        let stringBlacklist = "abcdefghijklmnopqrstuvwxyzäöü@#$!%^&*_={}[]|;:<>,?";
-        const blacklist = stringBlacklist.split("");
+        // let stringBlacklist = "abcdefghijklmnopqrstuvwxyzäöü@#$!%^&*_={}[]|;:<>,?";
+        // const blacklist = stringBlacklist.split("");
+        const whiteList = ("0123456789+/-");
 
         words: for (let i = 0; i < inputLineWords.length; i++) {
 
-            // Checkt ob das Wort Buchstaben usw. enthält
-            for (let b = 0; b < blacklist.length; b++) {
 
-                // Überprüfen, ob die Eingabe einer Nummer entspricht
-                if (inputLineWords[i].includes(blacklist[b])) {
+            let inputLineChars = inputLineWords[i].split("");
+
+            for (let index = 0; index < inputLineChars.length; index++) {
+
+                // Überprüfen, ob die Eingabe keiner Nummer entspricht
+                if (!whiteList.includes(inputLineChars[index])) {
 
                     // Falls nach einer Nummer ein Wort kommt, wird die bisher gespeicherte Nummer ausgegeben
                     if (fullNumber.trim().length >= 6 && probability != 0) {
-
                         // Telefonnummer einheitliche Schreibweise setzen
                         if (inputLineWords[i - 1].startsWith("0") || inputLineWords[i - 1].startsWith("(0")) {
                             tempPhone.push(new CheckResult("phoneNumber", inputLineWords[i - 1].replace("0", "+49"), probability));
@@ -677,12 +678,45 @@ export class AddressParser {
                         } else {
                             tempPhone.push(new CheckResult("phoneNumber", fullNumber, probability));
                         }
-
                     }
                     fullNumber = "";
                     continue words;
                 }
             }
+
+
+
+            // // Checkt ob das Wort Buchstaben usw. enthält
+            // for (let b = 0; b < blacklist.length; b++) {
+
+            //     // Überprüfen, ob die Eingabe einer Nummer entspricht
+            //     if (inputLineWords[i].includes(blacklist[b])) {
+
+            //         // Falls nach einer Nummer ein Wort kommt, wird die bisher gespeicherte Nummer ausgegeben
+            //         if (fullNumber.trim().length >= 6 && probability != 0) {
+
+            //             // Telefonnummer einheitliche Schreibweise setzen
+            //             if (inputLineWords[i - 1].startsWith("0") || inputLineWords[i - 1].startsWith("(0")) {
+            //                 tempPhone.push(new CheckResult("phoneNumber", inputLineWords[i - 1].replace("0", "+49"), probability));
+
+            //             } else {
+            //                 tempPhone.push(new CheckResult("phoneNumber", inputLineWords[i - 1], probability));
+            //             }
+
+            //             if (fullNumber.startsWith("0") || fullNumber.startsWith("(0")) {
+            //                 tempPhone.push(new CheckResult("phoneNumber", fullNumber.replace("0", "+49"), probability));
+
+            //             } else {
+            //                 tempPhone.push(new CheckResult("phoneNumber", fullNumber, probability));
+            //             }
+
+            //         }
+            //         fullNumber = "";
+            //         continue words;
+            //     }
+            // }
+
+
 
             // Checkt ob vor der nummer z.B. Fon steht
             if (i !== 0) {
@@ -1262,7 +1296,6 @@ export class AddressParser {
                 });
             });
 
-            console.log(tempCount);
             if (tempCount == 11) {
                 tempTax.push(new CheckResult("companyTax", inputLineWords[index], probability));
             }
@@ -1284,6 +1317,7 @@ export class AddressParser {
     filterResults(Array) {
         let tempArray = [];
 
+        // neuen Array mit elementen befüllen die eine größerer Wkeit als die Übergebne haben
         Array.forEach(element => {
             if (element.probability >= this.outputPercentage) {
                 if (element.probability > 100) {
