@@ -1,20 +1,15 @@
 
 
-## LUKE SPECIAL TODO
-- [x] Bitte implementiere eine Methode in Addressparser mit dem Namen "filterResults", die zwei Parameter annimmt: ein Array von Zahlen und einen Prozentsatzwert. Die Methode soll jedes Element im Array überprüfen und nur die Werte zurückgeben, die mindestens dem Prozentwert entsprechen, den du als Parameter übergibst. Diese passenden Werte sollen als neues Array zurückgegeben werden.
-
-Ich benutze diese Methode dann weiter.
-
 # TODO
 
 - [ ] Telefonnummern keine Blacklist sondern Whitelist
 - [ ] Kommentare
 - [ ] Deutsch, Niederländisch, Englisch
 - [ ] Methode fürs erkennen der Sprache  aus der Eingabe
-- [ ] Output values percentage egal
 
 ----------
 
+- [x] Output values percentage egal
 - [x] Wenn nur eine Nummer im Text ist dann wahrscheinlicher eine Tel Nummer
 - [x] Ausgabe nicht kleingeschrieben ausgeben
 - [x] PLZ und Ort unabhängig voneinander
