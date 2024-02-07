@@ -1,24 +1,25 @@
 import { AddressParser } from "./AddressParser.js";
-import { detect } from 'https://cdn.jsdelivr.net/npm/tinyld@1.3.0/dist/tinyld.normal.browser.js'
+import { franc } from 'https://esm.sh/franc@6?bundle'
 
 
 export class CheckLanguage {
-    language = [];
+    language = "";
 
     parseLanguage(input) {
         let inputLine = input.replaceAll("\n", " ");
-
-        return detect(inputLine);
+        this.language = this.checkLanguage(inputLine);
+        return this.language;
     }
 
     checkLanguage(inputLine) {
-        let possibleLanguage = [];
+        let possibleLanguage = "";
         let addressParser = new AddressParser();
         let email = addressParser.checkMails(inputLine);
         let inputWords = inputLine.split(" ");
         let germanProbability = 0;
         let dutchProbability = 0;
         let englishProbability = 0;
+        let languageDetection = franc(inputLine);
 
         for (let index = 0; index < email.length; index++) {
             const element = email[index].value;
@@ -66,7 +67,7 @@ export class CheckLanguage {
                 englishProbability += 20;
             }
 
-            if (element.startsWith("UK-") || element.startsWith("UK")) {
+            if (element.startsWith("UK-") || element.startsWith("GB") || element.startsWith("UK")) {
                 englishProbability += 20
             }
             
@@ -75,15 +76,30 @@ export class CheckLanguage {
             }
         }
 
+        if (languageDetection == "deu"); {
+            germanProbability +=30;
+        }
+
+        if (languageDetection == "eng"); {
+            englishProbability +=30;
+        }
+
+        if (languageDetection == "nld"); {
+            dutchProbability +=30;
+        }
+
         if (germanProbability > dutchProbability && germanProbability > englishProbability) {
-            possibleLanguage.push("german");
+            possibleLanguage = "ger";
         }
+
         if (dutchProbability > germanProbability && dutchProbability > englishProbability) {
-            possibleLanguage.push("dutch");
+            possibleLanguage = "nl";
         }
+
         if (englishProbability > dutchProbability && englishProbability > germanProbability) {
-            possibleLanguage.push("english");
+            possibleLanguage = "en";
         }
+
         return possibleLanguage;
     }
 }
