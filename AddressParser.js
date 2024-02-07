@@ -616,6 +616,7 @@ export class AddressParser {
                     return tempFax;
                 }
             }
+            
             // Checkt ob die gesamt länge der Nummer zu groß ist
             if (inputLineWords[i].length + fullNumber.length < 20) {
                 fullNumber += inputLineWords[i];
@@ -735,7 +736,6 @@ export class AddressParser {
                 }
 
             }
-
         }
 
         if (tmpFullNum > 5) {
