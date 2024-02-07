@@ -643,8 +643,6 @@ export class AddressParser {
         let inputLineWords = inputLine.split(" ");
         fullUnformattedNumber = inputLine;
         let probability = 0;
-        // let stringBlacklist = "abcdefghijklmnopqrstuvwxyzäöü@#$!%^&*_={}[]|;:<>,?";
-        // const blacklist = stringBlacklist.split("");
         const whiteList = ("0123456789+/-");
 
         words: for (let i = 0; i < inputLineWords.length; i++) {
