@@ -16,10 +16,10 @@ function printResult() {
     let input = document.getElementById("text").value;
     let languageChecker = new CheckLanguage();
 
-    console.log('languageChecker: ', languageChecker.parseLanguage(input));
-    
+    let language = languageChecker.parseLanguage(input);
+
     let outputPercentage = $("#slider")[0].value;
-    let mainParser = new AddressParser(languageChecker,outputPercentage);
+    let mainParser = new AddressParser(language, outputPercentage);
 
     $("#probValue").text("Treffer Wahrscheinlichkeit: " + outputPercentage + "%");
 
@@ -49,7 +49,7 @@ function printResult() {
             addressObject.outputMaxValues("taxNumber", 0);
 
             document.getElementById('exportJSON').addEventListener('click', function () {
-            addressObject.exportJson(this);
+                addressObject.exportJson(this);
             });
         }
 

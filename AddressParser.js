@@ -26,9 +26,10 @@ export class AddressParser {
             language = "German"
         } else {
             this.language = language;
+            console.log(language);
         }
 
-
+        
         this.outputPercentage = outputPercentage;
 
 
@@ -99,7 +100,6 @@ export class AddressParser {
     parseText(input) {
         let inputLines = input.split("\n");
         let addressObject;
-        console.log(this.language);
         inputLines.forEach(input => {
 
             this.w3wAddressCheck = this.w3wAddressCheck.concat(this.checkW3ws(input));
@@ -130,7 +130,7 @@ export class AddressParser {
 
         });
 
-        addressObject = new Address(this.filterResults(this.companyNamesCheck), this.filterResults(this.postalCodeCheck), this.filterResults(this.streetsCheck), this.filterResults(this.citysCheck), this.filterResults(this.homepageCheck), this.filterResults(this.w3wAddressCheck), this.filterResults(this.emailsCheck), this.filterResults(this.phoneNumbersCheck), this.filterResults(this.faxNumbersCheck), this.filterResults(this.contactPersonsCheck), this.filterResults(this.companyRegistrationNumberCheck), this.filterResults(this.vatIdNumberCheck), this.filterResults(this.taxNumberCheck))
+        addressObject = new Address(this.filterResults(this.companyNamesCheck), this.filterResults(this.postalCodeCheck), this.filterResults(this.streetsCheck), this.filterResults(this.citysCheck), this.filterResults(this.homepageCheck), this.filterResults(this.w3wAddressCheck), this.filterResults(this.emailsCheck), this.filterResults(this.phoneNumbersCheck), this.filterResults(this.faxNumbersCheck), this.filterResults(this.contactPersonsCheck), this.filterResults(this.companyRegistrationNumberCheck), this.filterResults(this.vatIdNumberCheck), this.filterResults(this.taxNumberCheck),this.language)
         console.log(addressObject);
 
         return addressObject;
@@ -540,7 +540,6 @@ export class AddressParser {
                 if ((nameObject.value === tripleName || nameObject.value === tempInputWord + " " + wordAfterClean) && nameObject.probability > probability) {
                     probability = 0;
                 } else if ((nameObject.value === tripleName || nameObject.value === tempInputWord + " " + wordAfterClean) && nameObject.probability <= probability) {
-                    console.log(nameObject);
                     existingObjects.splice(index, 1);
                 }
             });
@@ -1303,7 +1302,6 @@ export class AddressParser {
                     element.probability = 100;
                 }
                 if (this.checkForDuplicates(tempArray, element)) { // element wird nur hinzugefügt wenn es nicht schon existiert (keine Dopplungen)
-                    console.log('checkForDuplicates(array,element): ', this.checkForDuplicates(array, element));
 
                     tempArray.push(element);
                 }

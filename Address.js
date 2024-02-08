@@ -1,6 +1,6 @@
 export class Address {
 
-    constructor(_companyName,_postalCode,_street,_city,_homepage,_w3wAddress,_emails,_phoneNumbers,_faxNumbers,_contactPersons,_companyRegistrationNumber,_vatIdNumber,_taxNumber) {
+    constructor(_companyName,_postalCode,_street,_city,_homepage,_w3wAddress,_emails,_phoneNumbers,_faxNumbers,_contactPersons,_companyRegistrationNumber,_vatIdNumber,_taxNumber,_language) {
         this.companyName = _companyName;
         this.postalCode = _postalCode;
         this.street = _street;
@@ -14,6 +14,11 @@ export class Address {
         this.companyRegistrationNumber = _companyRegistrationNumber;
         this.vatIdNumber = _vatIdNumber;
         this.taxNumber = _taxNumber;
+        this.language = _language;
+    }
+
+    getLanguage(){
+        return this.language;
     }
 
     getCompanyName() {
@@ -265,6 +270,7 @@ export class Address {
     exportJson(el) {
 
         let jsonObject = {
+            language: this.getLanguage(),
             companyName: this.getCompanyName(),
             homepage: this.getHomepage(),
             contactPerson: this.getContactPersons(),
