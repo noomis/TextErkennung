@@ -1255,28 +1255,31 @@ export class AddressParser {
 
             // Checkt ob folgendes Format vorliegt: 123/4567/9876
             let tempWord = element.split("/");
+            console.log(tempWord);
             let tempCount = 0;
-
+            console.log(tempWord);
             if (tempWord.length == 3 && tempWord[0].length == 3 && tempWord[1].length == 4 && tempWord[2].length == 4) {
                 probability += 20;
-            }
 
-            tempWord.forEach(element => {
+                tempWord.forEach(element => {
 
-                element.split("").forEach(chars => {
-
-                    if (numbers.includes(chars)) {
-                        probability += 30;
-                        tempCount++;
-                    } else {
-                        return tempTax
-                    }
+                    element.split("").forEach(chars => {
+    
+                        if (numbers.includes(chars)) {
+                            probability += 30;
+                            tempCount++;
+                        } else {
+                            return tempTax
+                        }
+                    });
                 });
-            });
-
-            if (tempCount == 11) {
-                tempTax.push(new CheckResult("companyTax", inputLineWords[index], probability));
+    
+                if (tempCount == 11) {
+                    tempTax.push(new CheckResult("companyTax", inputLineWords[index], probability));
+                }
             }
+
+    
         }
         return tempTax;
     }
