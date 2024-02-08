@@ -1,19 +1,5 @@
 export class Address {
 
-    companyName = [];
-    postalCode = [];
-    street = [];
-    city = [];
-    homepage = [];
-    w3wAddress = [];
-    emails = [];
-    phoneNumbers = [];
-    faxNumbers = [];
-    contactPersons = [];
-    companyRegistrationNumber = [];
-    vatIdNumber = [];
-    taxNumber = [];
-
     constructor(_companyName,_postalCode,_street,_city,_homepage,_w3wAddress,_emails,_phoneNumbers,_faxNumbers,_contactPersons,_companyRegistrationNumber,_vatIdNumber,_taxNumber) {
         this.companyName = _companyName;
         this.postalCode = _postalCode;

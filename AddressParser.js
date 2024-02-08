@@ -1302,8 +1302,8 @@ export class AddressParser {
                 if (element.probability > 100) {
                     element.probability = 100;
                 }
-                if (this.checkForDuplicates(tempArray,element)) {
-                console.log('checkForDuplicates(array,element): ', this.checkForDuplicates(array,element));
+                if (this.checkForDuplicates(tempArray, element)) { // element wird nur hinzugefügt wenn es nicht schon existiert (keine Dopplungen)
+                    console.log('checkForDuplicates(array,element): ', this.checkForDuplicates(array, element));
 
                     tempArray.push(element);
                 }
@@ -1312,14 +1312,14 @@ export class AddressParser {
         return tempArray;
     }
 
-    checkForDuplicates(array,object) {
+    checkForDuplicates(array, object) {
         for (let index = 0; index < array.length; index++) {
             const element = array[index];
 
-            if (element.value === object.value) {
+            if (element.value === object.value) { // Wenn das Objekt mit dem selben Wert bereits existiert wird false returned
                 return false;
             }
-            
+
         }
         return true;
     }
