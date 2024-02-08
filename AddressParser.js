@@ -98,8 +98,7 @@ export class AddressParser {
 
 
     parseText(input) {
-        let inputLines = input.split("\n");
-        let addressObject;
+        let inputLines = input.split("\n"); // Eingabe nach Zeilen aufteilen
         inputLines.forEach(input => {
 
             this.w3wAddressCheck = this.w3wAddressCheck.concat(this.checkW3ws(input));
@@ -130,7 +129,8 @@ export class AddressParser {
 
         });
 
-        addressObject = new Address(this.filterResults(this.companyNamesCheck), this.filterResults(this.postalCodeCheck), this.filterResults(this.streetsCheck), this.filterResults(this.citysCheck), this.filterResults(this.homepageCheck), this.filterResults(this.w3wAddressCheck), this.filterResults(this.emailsCheck), this.filterResults(this.phoneNumbersCheck), this.filterResults(this.faxNumbersCheck), this.filterResults(this.contactPersonsCheck), this.filterResults(this.companyRegistrationNumberCheck), this.filterResults(this.vatIdNumberCheck), this.filterResults(this.taxNumberCheck),this.language)
+        // Address Object wird erstellt den Informationen, die mindestens der vorgebenen Wahrscheinlichkeit entsprechen
+        let addressObject = new Address(this.filterResults(this.companyNamesCheck), this.filterResults(this.postalCodeCheck), this.filterResults(this.streetsCheck), this.filterResults(this.citysCheck), this.filterResults(this.homepageCheck), this.filterResults(this.w3wAddressCheck), this.filterResults(this.emailsCheck), this.filterResults(this.phoneNumbersCheck), this.filterResults(this.faxNumbersCheck), this.filterResults(this.contactPersonsCheck), this.filterResults(this.companyRegistrationNumberCheck), this.filterResults(this.vatIdNumberCheck), this.filterResults(this.taxNumberCheck),this.language)
         console.log(addressObject);
 
         return addressObject;
@@ -1255,9 +1255,7 @@ export class AddressParser {
 
             // Checkt ob folgendes Format vorliegt: 123/4567/9876
             let tempWord = element.split("/");
-            console.log(tempWord);
             let tempCount = 0;
-            console.log(tempWord);
             if (tempWord.length == 3 && tempWord[0].length == 3 && tempWord[1].length == 4 && tempWord[2].length == 4) {
                 probability += 20;
 

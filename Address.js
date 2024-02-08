@@ -155,7 +155,7 @@ export class Address {
         }
 
         $("#" + html_id).val(""); //feld clearen
-        let firstvalue = 0;
+        let firstvalue = true;
         for (let index = 0; index < objectArray.length; index++) {
             let object = objectArray[index];
             // if (object !== undefined) {
@@ -163,7 +163,7 @@ export class Address {
             let outputPercentage = $("#slider")[0].value; //Prozentzahl vom Input des Schiebereglers 
             //wenn Slider-Wahrscheinlichkeit kleiner oder gleich dem des Wertes im Array entspricht ausgeben
             if (outputPercentage <= object.probability) {
-                if (firstvalue == 0) {
+                if (firstvalue) {
                     $("#" + html_id).val(object.value).hide().fadeIn(fadeTime); // setzen des ersten Wertes in vorhandenes Feld
                 }
                 else {
@@ -174,7 +174,7 @@ export class Address {
                     $("#" + new_id).after(newObject);
                     $("#id" + index + new_id).val(object.value).hide().fadeIn(fadeTime);
                 }
-                firstvalue++;
+                firstvalue = false;;
             }
             // }
         }
