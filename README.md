@@ -2,10 +2,8 @@
 
 # TODO
 
-- [ ] Telefonnummern keine Blacklist sondern Whitelist
 - [ ] Kommentare
 - [ ] Deutsch, Niederländisch, Englisch
-- [ ] Methode fürs erkennen der Sprache  aus der Eingabe
 
 ----------
 
@@ -25,3 +23,5 @@
 - [x] Ausgabe für Steuernummer, Handelsregisternummer, Ländername
 - [x] JSON direkt darein nicht doppelt
 - [x] index setter in AddressParser auslagern
+- [x] Telefonnummern keine Blacklist sondern Whitelist
+- [x] Methode fürs erkennen der Sprache  aus der Eingabe
