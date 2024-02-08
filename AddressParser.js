@@ -1293,18 +1293,34 @@ export class AddressParser {
         return name.split('').every(char => germanNamesWhitelist.includes(char));
     }
 
-    filterResults(Array) {
+    filterResults(array) {
         let tempArray = [];
 
         // neuen Array mit elementen befüllen die eine größerer Wkeit als die Übergebne haben
-        Array.forEach(element => {
+        array.forEach(element => {
             if (element.probability >= this.outputPercentage) {
                 if (element.probability > 100) {
                     element.probability = 100;
                 }
-                tempArray.push(element);
+                if (this.checkForDuplicates(tempArray,element)) {
+                console.log('checkForDuplicates(array,element): ', this.checkForDuplicates(array,element));
+
+                    tempArray.push(element);
+                }
             }
         });
         return tempArray;
+    }
+
+    checkForDuplicates(array,object) {
+        for (let index = 0; index < array.length; index++) {
+            const element = array[index];
+
+            if (element.value === object.value) {
+                return false;
+            }
+            
+        }
+        return true;
     }
 }
