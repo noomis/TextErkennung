@@ -754,11 +754,13 @@ export class AddressParser {
         let tempStreet = [];
         let inputLineWords = inputLine.toLowerCase().split(" ");
         let probability = 0;
-        let streetNames = ["str.", "stra", "weg", "allee", "gasse", "ring", "platz", "promenade", "chaussee", "boulevard", "stieg", "pfad", "feld", "kamp", "berg", "wiesen", "hof", "lanen", "pleinen", "grachten", "singels", "hoven"];
+        let streetNames = ["str.", "stra", "weg", "allee", "gasse", "ring", "platz", "pfad", "feld", "hof", "berg"];
+
+        let restStreetNames = ["promenade", "chaussee", "boulevard", "stieg", "kamp", "wiesen", "lanen", "pleinen", "grachten", "singels", "hoven"];
+
         let stringBlacklist = "abcdefghijklmnopqrstuvwxyzäöü@#$!%^&*_={}[]|;:<>,?";
         let stringStreetBeginnings = ["an der", "zu den", "in der", "in den", "im ", "auf den", "auf der", "am ", "an den", "auf dem", "zur "];
         const blacklist = stringBlacklist.split("");
-        const whiteList = ("0123456789+/-");
         let num = 0;
         let fullStreetName = "";
         let fullStreetNameClear = "";
