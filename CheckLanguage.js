@@ -4,11 +4,30 @@ import { franc } from 'https://esm.sh/franc@6?bundle'
 
 export class CheckLanguage {
     language = "";
+    languages = [];
 
     parseLanguage(input) {
         let inputLine = input.replaceAll("\n", " ");
         this.language = this.checkLanguage(inputLine);
         return this.language;
+    }
+
+    findMostProbableLanguage() {
+            
+
+        let maxProbability = -1; // Start with a value lower than any probability
+        let mostProbableLanguage;
+    
+        // Iterate through the languages array
+        this.languages.forEach(language => {
+            if (language.languageProbability > maxProbability) {
+                maxProbability = language.languageProbability;
+                mostProbableLanguage = language;
+
+            }
+        });
+        
+        return mostProbableLanguage;
     }
 
     checkLanguage(inputLine) {
@@ -19,6 +38,9 @@ export class CheckLanguage {
         let germanProbability = 0;
         let dutchProbability = 0;
         let englishProbability = 0;
+        
+        let language;
+
         let languageDetection = franc(inputLine);
 
         for (let index = 0; index < email.length; index++) {
@@ -76,6 +98,13 @@ export class CheckLanguage {
             }
         }
 
+       
+
+        
+        
+ 
+
+
         if (languageDetection == "deu"); {
             germanProbability +=30;
         }
@@ -88,18 +117,38 @@ export class CheckLanguage {
             dutchProbability +=30;
         }
 
-        if (germanProbability > dutchProbability && germanProbability > englishProbability) {
-            possibleLanguage = "ger";
-        }
 
-        if (dutchProbability > germanProbability && dutchProbability > englishProbability) {
-            possibleLanguage = "nl";
-        }
 
-        if (englishProbability > dutchProbability && englishProbability > germanProbability) {
-            possibleLanguage = "en";
+         this.languages.push(        
+           language = {
+          languageName: "nl",
+          languageProbability: dutchProbability,
         }
+        );
+
+        this.languages.push(        
+           language = {
+          languageName: "eng",
+          languageProbability: englishProbability,
+        }
+        );
+
+        this.languages.push(        
+            language = {
+           languageName: "de",
+           languageProbability: germanProbability,
+         }
+         );
+
+
+       // Call the function to find the most probable language
+
+
+
+        possibleLanguage = this.findMostProbableLanguage();
 
         return possibleLanguage;
     }
+
+    
 }
