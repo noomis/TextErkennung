@@ -674,14 +674,13 @@ function checkPhone(inputLine) {
 
     if (fullNumber.trim().length != 0 && prob != 0) {
         console.log(fullNumber + ": ist mit " + prob + "% Wahrscheinlichkeit eine Telefonnummer");
-        telValue.push(fullNumber);
-        telProbability.push(prob);
+        checkPhone(fullNumber);
     }
 
     if (tmpFullNum > 5) {
         fullUnformattedNumber = fullUnformattedNumber.trim();
         if (fullUnformattedNumber.length > 10) {
-
+            console.log(fullUnformattedNumber);
             checkPhone(fullUnformattedNumber);
         }
     }
