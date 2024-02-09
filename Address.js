@@ -180,9 +180,9 @@ export class Address {
         }
     }
 
-    outputMaxValues(html_id, fadeTime) {
+    outputMaxValues(html_id) {
         $("#" + html_id).val(""); //feld clearen
-
+        let fadeTime = 0;
         let objectArray = [];
         switch (html_id) {
             case "w3w":
