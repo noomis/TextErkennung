@@ -94,40 +94,40 @@ export class CheckLanguage {
                 englishProbability += 10;
             }
         }
-
-        if (languageDetection == "deu"); {
-            germanProbability += 30;
-        }
-
-        if (languageDetection == "eng"); {
-            englishProbability += 30;
-        }
-
-        if (languageDetection == "nld"); {
-            dutchProbability += 30;
-        }
-
-        this.languages.push(
-            language = {
-                languageName: "nl",
-                languageProbability: dutchProbability,
+        if (inputLine !== "") {
+            if (languageDetection == "deu"); {
+                germanProbability += 30;
             }
-        );
 
-        this.languages.push(
-            language = {
-                languageName: "eng",
-                languageProbability: englishProbability,
+            if (languageDetection == "eng"); {
+                englishProbability += 30;
             }
-        );
 
-        this.languages.push(
-            language = {
-                languageName: "de",
-                languageProbability: germanProbability,
+            if (languageDetection == "nld"); {
+                dutchProbability += 30;
             }
-        );
 
+            this.languages.push(
+                language = {
+                    languageName: "nl",
+                    languageProbability: dutchProbability,
+                }
+            );
+
+            this.languages.push(
+                language = {
+                    languageName: "eng",
+                    languageProbability: englishProbability,
+                }
+            );
+
+            this.languages.push(
+                language = {
+                    languageName: "de",
+                    languageProbability: germanProbability,
+                }
+            );
+        }
         // Call the function to find the most probable language
 
         possibleLanguage = this.findMostProbableLanguage();
