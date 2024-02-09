@@ -1,7 +1,6 @@
 import { AddressParser } from "./AddressParser.js";
 import { franc } from 'https://esm.sh/franc@6?bundle'
 
-
 export class CheckLanguage {
     language = "";
     languages = [];
@@ -13,20 +12,18 @@ export class CheckLanguage {
     }
 
     findMostProbableLanguage() {
-            
 
         let maxProbability = -1; // Start with a value lower than any probability
         let mostProbableLanguage;
-    
+
         // Iterate through the languages array
         this.languages.forEach(language => {
             if (language.languageProbability > maxProbability) {
                 maxProbability = language.languageProbability;
                 mostProbableLanguage = language;
-
             }
         });
-        
+
         return mostProbableLanguage;
     }
 
@@ -38,7 +35,7 @@ export class CheckLanguage {
         let germanProbability = 0;
         let dutchProbability = 0;
         let englishProbability = 0;
-        
+
         let language;
 
         let languageDetection = franc(inputLine);
@@ -79,7 +76,7 @@ export class CheckLanguage {
             if (element.startsWith("NL-") || element.startsWith("NL")) {
                 dutchProbability += 20
             }
-            
+
             if (element.startsWith("+31")) {
                 dutchProbability += 10;
             }
@@ -92,63 +89,51 @@ export class CheckLanguage {
             if (element.startsWith("UK-") || element.startsWith("GB") || element.startsWith("UK")) {
                 englishProbability += 20
             }
-            
+
             if (element.startsWith("+44")) {
                 englishProbability += 10;
             }
         }
 
-       
-
-        
-        
- 
-
-
         if (languageDetection == "deu"); {
-            germanProbability +=30;
+            germanProbability += 30;
         }
 
         if (languageDetection == "eng"); {
-            englishProbability +=30;
+            englishProbability += 30;
         }
 
         if (languageDetection == "nld"); {
-            dutchProbability +=30;
+            dutchProbability += 30;
         }
 
-
-
-         this.languages.push(        
-           language = {
-          languageName: "nl",
-          languageProbability: dutchProbability,
-        }
-        );
-
-        this.languages.push(        
-           language = {
-          languageName: "eng",
-          languageProbability: englishProbability,
-        }
-        );
-
-        this.languages.push(        
+        this.languages.push(
             language = {
-           languageName: "de",
-           languageProbability: germanProbability,
-         }
-         );
+                languageName: "nl",
+                languageProbability: dutchProbability,
+            }
+        );
 
+        this.languages.push(
+            language = {
+                languageName: "eng",
+                languageProbability: englishProbability,
+            }
+        );
 
-       // Call the function to find the most probable language
+        this.languages.push(
+            language = {
+                languageName: "de",
+                languageProbability: germanProbability,
+            }
+        );
 
-
+        // Call the function to find the most probable language
 
         possibleLanguage = this.findMostProbableLanguage();
 
         return possibleLanguage;
     }
 
-    
+
 }
