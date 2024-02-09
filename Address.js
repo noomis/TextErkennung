@@ -155,26 +155,26 @@ export class Address {
         }
 
         $("#" + html_id).val(""); //feld clearen
-        let firstvalue = true;
+        let firstValue = true;
         for (let index = 0; index < objectArray.length; index++) {
             let object = objectArray[index];
             // if (object !== undefined) {
-            let new_id = object.name;
+            let newId = object.name;
             let outputPercentage = $("#slider")[0].value; //Prozentzahl vom Input des Schiebereglers 
             //wenn Slider-Wahrscheinlichkeit kleiner oder gleich dem des Wertes im Array entspricht ausgeben
             if (outputPercentage <= object.probability) {
-                if (firstvalue) {
+                if (firstValue) {
                     $("#" + html_id).val(object.value).hide().fadeIn(fadeTime); // setzen des ersten Wertes in vorhandenes Feld
                 }
                 else {
                     //Neuerstellung und Implementierung von Feldern bei mehreren Telefonnummern
                     let newObject = document.createElement("input");
-                    newObject.id = "id" + index + new_id;
+                    newObject.id = "id" + index + newId;
                     newObject.classList.add("delete");
-                    $("#" + new_id).after(newObject);
-                    $("#id" + index + new_id).val(object.value).hide().fadeIn(fadeTime);
+                    $("#" + newId).after(newObject);
+                    $("#id" + index + newId).val(object.value).hide().fadeIn(fadeTime);
                 }
-                firstvalue = false;;
+                firstValue = false;;
             }
             // }
         }
