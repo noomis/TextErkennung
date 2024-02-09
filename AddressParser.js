@@ -1053,7 +1053,7 @@ export class AddressParser {
                     }
                 }
             }
-
+            
             for (let a = 0; a < inputLineWords.length; a++) {
                 const element = inputLineWords[a].toLowerCase();
 
