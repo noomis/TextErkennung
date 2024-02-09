@@ -17,7 +17,7 @@
 - [ ] registration number
 - [ ] vat id number
 - [ ] tax number
-
+-------------
 
 - [ ] Kommentare
 - [ ] Deutsch, Niederländisch, Englisch
