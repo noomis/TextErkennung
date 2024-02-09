@@ -587,10 +587,7 @@ export class AddressParser {
                     if (fullNumber.trim().length >= 6 && probability != 0) {
                         // Faxnummern einheitliche Schreibweise setzen
                         if (inputLineWords[i - 1].startsWith("0") || inputLineWords[i - 1].startsWith("(0")) {
-                            tempFax.push(new CheckResult("faxNumber", inputLineWords[i - 1].replace("0", "+49"), probability));
-
-                        } else {
-                            tempFax.push(new CheckResult("faxNumber", inputLineWords[i - 1], probability));
+                            tempFax.push(new CheckResult("faxNumber", fullNumber.replace("0", "+49"), probability));
                         }
 
                         if (fullNumber.startsWith("0") || fullNumber.startsWith("(0")) {
@@ -675,19 +672,22 @@ export class AddressParser {
 
                     // Falls nach einer Nummer ein Wort kommt, wird die bisher gespeicherte Nummer ausgegeben
                     if (fullNumber.trim().length >= 6 && probability != 0) {
+                        console.log(fullNumber);
                         // Telefonnummer einheitliche Schreibweise setzen
                         if (inputLineWords[i - 1].startsWith("0") || inputLineWords[i - 1].startsWith("(0")) {
-                            tempPhone.push(new CheckResult("phoneNumber", inputLineWords[i - 1].replace("0", "+49"), probability));
+                            tempPhone.push(new CheckResult("phoneNumber", fullNumber.replace("0", "+49"), probability));
+                            continue words;
 
-                        } else {
-                            tempPhone.push(new CheckResult("phoneNumber", inputLineWords[i - 1], probability));
                         }
 
                         if (fullNumber.startsWith("0") || fullNumber.startsWith("(0")) {
                             tempPhone.push(new CheckResult("phoneNumber", fullNumber.replace("0", "+49"), probability));
+                            continue words;
 
                         } else {
                             tempPhone.push(new CheckResult("phoneNumber", fullNumber, probability));
+                            continue words;
+
                         }
                     }
                     fullNumber = "";
