@@ -3,8 +3,8 @@
 # TODO
 
 ## Internationalisierung:
-1. [x] Email
-1.  [x] Homepage
+- [x] Email
+- [x] Homepage
 - [x] language
 - [ ] CompanyName
 - [ ] PostalCode
