@@ -18,9 +18,13 @@ export class CheckLanguage {
 
         // Iterate through the languages array
         this.languages.forEach(language => {
+
             if (language.languageProbability > maxProbability) {
                 maxProbability = language.languageProbability;
                 mostProbableLanguage = language;
+                if (language.languageProbability > 100) {
+                    language.languageProbability = 100;
+                }
             }
         });
 
