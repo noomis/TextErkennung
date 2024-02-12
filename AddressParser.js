@@ -143,7 +143,6 @@ export class AddressParser {
         inputLine = inputLine.toLowerCase();
         let probability = 0;
         const whiteList = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ./".split("");
-        console.log(whiteList);
 
         words: for (let i = 0; i < inputLineWords.length; i++) {
             let countDot = 0;
@@ -574,7 +573,7 @@ export class AddressParser {
         let inputLineWords = inputLine.split(" ");
         let probability = 0;
         const whiteList = ("0123456789+/- ()[].");
-        let languageAreaCode = "";
+        let languageAreaCodeDE = "+49";
 
         words: for (let i = 0; i < inputLineWords.length; i++) {
             let inputLineChars = inputLineWords[i].split("");
@@ -587,8 +586,12 @@ export class AddressParser {
                     // Falls nach einer Nummer ein Wort kommt, wird die bisher gespeicherte Nummer ausgegeben
                     if (fullNumber.trim().length >= 6 && probability != 0) {
                         // Faxnummern einheitliche Schreibweise setzen
+                        // if (inputLineWords[i - 1].startsWith("0") || inputLineWords[i - 1].startsWith("(0")) {
+                        //     tempFax.push(new CheckResult("faxNumber", fullNumber.replace("0", "+49"), probability));
+                        // }
+
                         if (inputLineWords[i - 1].startsWith("0") || inputLineWords[i - 1].startsWith("(0")) {
-                            tempFax.push(new CheckResult("faxNumber", fullNumber.replace("0", "+49"), probability));
+                            tempFax.push(new CheckResult("faxNumber", fullNumber.replace("0", languageAreaCodeDE), probability));
                         }
 
                         if (fullNumber.startsWith("0") || fullNumber.startsWith("(0")) {
