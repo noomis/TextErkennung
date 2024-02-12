@@ -24,15 +24,12 @@ export class AddressParser {
 
         if (!language) {
             language = "German"
+            
         } else {
             this.language = language;
             console.log(language);
         }
-
-
         this.outputPercentage = outputPercentage;
-
-
     }
 
     getCompanyNameCheck() {
@@ -1263,7 +1260,7 @@ export class AddressParser {
             if (probability > 100) {
                 probability = 100;
             }
-            
+
             //Objekt Erstellung / Output
             if (probability > 0) {
                 tempTax.push(new CheckResult("vatIdNumber", elementClear, probability));
@@ -1361,13 +1358,13 @@ export class AddressParser {
     }
 
     checkForDuplicates(array, object) {
+
         for (let index = 0; index < array.length; index++) {
             const element = array[index];
 
             if (element.value === object.value) { // Wenn das Objekt mit dem selben Wert bereits existiert wird false returned
                 return false;
             }
-
         }
         return true;
     }
