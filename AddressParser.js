@@ -142,6 +142,8 @@ export class AddressParser {
         let inputLineWords = inputLine.split(" ");
         inputLine = inputLine.toLowerCase();
         let probability = 0;
+        const whiteList = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ./".split("");
+        console.log(whiteList);
 
         words: for (let i = 0; i < inputLineWords.length; i++) {
             let countDot = 0;
@@ -149,10 +151,10 @@ export class AddressParser {
 
             // Für jeden Buchstaben von dem aktullen Wort den Ascii Code berechnen
             for (let index = 0; index < lineChars.length; index++) {
-                let charAsciiCode = lineChars[index].charCodeAt(0);
+                // let charAsciiCode = lineChars[index].charCodeAt(0);
 
-                // Überprüfen, ob die Buchstaben valide sind indem sie (A-Z, a-z, ., /) entsprechen
-                if (!(charAsciiCode >= 65 && charAsciiCode <= 90 || charAsciiCode >= 97 && charAsciiCode <= 122 || charAsciiCode == 46 || charAsciiCode == 47)) {
+                // Überprüfen, ob die Buchstaben valide sind indem sie der Liste entsprechen
+                if (!whiteList.includes(lineChars[index])){
 
                     // Bei einem Link zur w3w Adresse, den Verzeichnis Pfad der Url herausnehmen und damit weiter durchlaufen
                     if (inputLineWords[i].includes("https://what3words.com/") || inputLineWords[i].includes("https://w3w.co/")) {
@@ -672,7 +674,7 @@ export class AddressParser {
 
                     // Falls nach einer Nummer ein Wort kommt, wird die bisher gespeicherte Nummer ausgegeben
                     if (fullNumber.trim().length >= 6 && probability != 0) {
-                        
+
                         // Telefonnummer einheitliche Schreibweise setzen
                         if (inputLineWords[i - 1].startsWith("0") || inputLineWords[i - 1].startsWith("(0")) {
                             tempPhone.push(new CheckResult("phoneNumber", fullNumber.replace("0", "+49"), probability));
@@ -754,14 +756,14 @@ export class AddressParser {
         let inputLineWords = inputLine.toLowerCase().split(" ");
         let probability = 0;
         let streetNames;
-        let streetNamesDE = ["str.", "stra", "weg", "allee", "gasse", "ring", "platz", "pfad", "feld", "hof", "berg"];
-        let streetNamesNL = ["straat", "weg", "hof", "straat", "pad", "burg", "plein", "hoven"];
-        let streetNamesEN = ["road", "street", "avenue", "lane", "boulevard", "way", "alley", "hill", "lane"];
+        const streetNamesDE = ["str.", "stra", "weg", "allee", "gasse", "ring", "platz", "pfad", "feld", "hof", "berg"];
+        const streetNamesNL = ["straat", "weg", "hof", "straat", "pad", "burg", "plein", "hoven"];
+        const streetNamesEN = ["road", "street", "avenue", "lane", "boulevard", "way", "alley", "hill", "lane"];
         // let restStreetNames = ["promenade", "chaussee", "boulevard", "stieg", "kamp", "wiesen", "lanen", "grachten", "singels"];
         let stringStreetBeginnings;
-        let stringStreetBeginningsDE = ["an der", "zu den", "in der", "in den", "im ", "auf den", "auf der", "am ", "an den", "auf dem", "zur "];
-        let stringStreetBeginningsNL = ["de", "het"];
-        let stringStreetBeginningsEN = ["Maple", "lake", "river"];
+        const stringStreetBeginningsDE = ["an der", "zu den", "in der", "in den", "im ", "auf den", "auf der", "am ", "an den", "auf dem", "zur "];
+        const stringStreetBeginningsNL = ["de", "het"];
+        const stringStreetBeginningsEN = ["Maple", "lake", "river"];
         const whiteList = "abcdefghijklmnopqrstuvwxyz".split("");
         let num = 0;
         let fullStreetName = "";
