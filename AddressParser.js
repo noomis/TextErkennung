@@ -756,10 +756,12 @@ export class AddressParser {
         let streetNames;
         let streetNamesDE = ["str.", "stra", "weg", "allee", "gasse", "ring", "platz", "pfad", "feld", "hof", "berg"];
         let streetNamesNL = ["straat", "weg", "hof", "straat", "pad", "burg", "plein", "hoven"];
+        let streetNamesEN = ["road", "street", "avenue", "lane", "boulevard", "way", "alley", "hill", "lane"];
         // let restStreetNames = ["promenade", "chaussee", "boulevard", "stieg", "kamp", "wiesen", "lanen", "grachten", "singels"];
         let stringStreetBeginnings;
         let stringStreetBeginningsDE = ["an der", "zu den", "in der", "in den", "im ", "auf den", "auf der", "am ", "an den", "auf dem", "zur "];
         let stringStreetBeginningsNL = ["de", "het"];
+        let stringStreetBeginningsEN = ["Maple", "lake", "river"];
         const whiteList = "abcdefghijklmnopqrstuvwxyz".split("");
         let num = 0;
         let fullStreetName = "";
@@ -778,8 +780,8 @@ export class AddressParser {
                 break;
 
             case "eng":
-                streetNames = streetNamesDE;
-                stringStreetBeginnings = stringStreetBeginningsDE;
+                streetNames = streetNamesEN;
+                stringStreetBeginnings = stringStreetBeginningsEN;
                 break;
 
             default:
