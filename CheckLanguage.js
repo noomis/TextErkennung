@@ -12,8 +12,8 @@ export class CheckLanguage {
     }
 
     findMostProbableLanguage() {
-
-        let maxProbability = -1; // Start with a value lower than any probability
+        // Start with a value lower than any probability
+        let maxProbability = -1; 
         let mostProbableLanguage;
 
         // Iterate through the languages array
@@ -27,7 +27,6 @@ export class CheckLanguage {
                 }
             }
         });
-
         return mostProbableLanguage;
     }
 
@@ -39,19 +38,20 @@ export class CheckLanguage {
         let germanProbability = 0;
         let dutchProbability = 0;
         let englishProbability = 0;
-
         let language;
-
         let languageDetection = franc(inputLine);
 
         for (let index = 0; index < email.length; index++) {
             const element = email[index].value;
+
             if (element.endsWith(".de")) {
                 germanProbability += 20;
             }
+
             if (element.endsWith(".nl")) {
                 dutchProbability += 20;
             }
+
             if (element.endsWith(".uk")) {
                 englishProbability += 20;
             }
@@ -59,6 +59,7 @@ export class CheckLanguage {
 
         for (let index = 0; index < inputWords.length; index++) {
             const element = inputWords[index];
+
             //checken ob deutsche keywords im input enthalten sind, um die Wahrscheinlichkeit für DE zu erhöhen
             if (element.includes("www.") && element.endsWith(".de")) {
                 germanProbability += 20;
@@ -99,6 +100,7 @@ export class CheckLanguage {
             }
         }
         if (inputLine !== "") {
+
             if (languageDetection == "deu"); {
                 germanProbability += 30;
             }
@@ -133,11 +135,8 @@ export class CheckLanguage {
             );
         }
         // Call the function to find the most probable language
-
         possibleLanguage = this.findMostProbableLanguage();
 
         return possibleLanguage;
     }
-
-
 }
