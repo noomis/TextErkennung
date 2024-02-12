@@ -24,7 +24,7 @@ export class AddressParser {
 
         if (!language) {
             language = "German"
-            
+
         } else {
             this.language = language;
             console.log(language);
@@ -654,7 +654,7 @@ export class AddressParser {
 
         if (fullNumber.trim().length != 0 && probability != 0) {
             if (fullNumber.startsWith("0") || fullNumber.startsWith("(0")) {
-                tempFax.push(new CheckResult("faxNumber", fullNumber.replace("0", "+49"), probability));
+                tempFax.push(new CheckResult("faxNumber", fullNumber.replace("0", languageAreaCode), probability));
 
             } else {
                 tempFax.push(new CheckResult("faxNumber", fullNumber, probability));
@@ -670,15 +670,36 @@ export class AddressParser {
         if (inputLine.length < 10) {
             return tempPhone;
         }
-
         let fullNumber = "";
         let fullUnformattedNumber = "";
-
         inputLine = inputLine.toLowerCase();
         let inputLineWords = inputLine.split(" ");
         fullUnformattedNumber = inputLine;
         let probability = 0;
         const whiteList = ("0123456789+/- ()[].");
+        let languageAreaCode = "";
+        const languageAreaCodeDE = "+49";
+        const languageAreaCodeNL = "+31";
+        const languageAreaCodeEN = "+44";
+        // TODO nummern für innerhalb erkennen z.B. London 020 anstatt 0
+
+        // Auswahl der passenden Vorwahl nach der erkannten Sprache
+        switch (this.language.languageName) {
+            case "de":
+                languageAreaCode = languageAreaCodeDE;
+                break;
+
+            case "nl":
+                languageAreaCode = languageAreaCodeNL;
+                break;
+
+            case "eng":
+                languageAreaCode = languageAreaCodeEN;
+                break;
+
+            default:
+                break;
+        }
 
         words: for (let i = 0; i < inputLineWords.length; i++) {
 
@@ -695,12 +716,12 @@ export class AddressParser {
 
                         // Telefonnummer einheitliche Schreibweise setzen
                         if (inputLineWords[i - 1].startsWith("0") || inputLineWords[i - 1].startsWith("(0")) {
-                            tempPhone.push(new CheckResult("phoneNumber", fullNumber.replace("0", "+49"), probability));
+                            tempPhone.push(new CheckResult("phoneNumber", fullNumber.replace("0", languageAreaCode), probability));
                             continue words;
                         }
 
                         if (fullNumber.startsWith("0") || fullNumber.startsWith("(0")) {
-                            tempPhone.push(new CheckResult("phoneNumber", fullNumber.replace("0", "+49"), probability));
+                            tempPhone.push(new CheckResult("phoneNumber", fullNumber.replace("0", languageAreaCode), probability));
                             continue words;
 
                         } else {
@@ -747,10 +768,10 @@ export class AddressParser {
 
         if (fullNumber.trim().length != 0 && probability != 0) {
 
-            if (fullNumber.startsWith("+49") || fullNumber.startsWith("0") || fullNumber.startsWith("(0") || fullNumber.startsWith("(+49")) {
+            if (fullNumber.startsWith(languageAreaCode) || fullNumber.startsWith("0") || fullNumber.startsWith("(0") || fullNumber.startsWith("(" + languageAreaCode)) {
 
                 if (fullNumber.startsWith("0") || fullNumber.startsWith("(0")) {
-                    tempPhone.push(new CheckResult("phoneNumber", fullNumber.replace("0", "+49"), probability));
+                    tempPhone.push(new CheckResult("phoneNumber", fullNumber.replace("0", languageAreaCode), probability));
 
                 } else {
                     tempPhone.push(new CheckResult("phoneNumber", fullNumber, probability));
