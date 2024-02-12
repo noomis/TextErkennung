@@ -753,17 +753,38 @@ export class AddressParser {
         let tempStreet = [];
         let inputLineWords = inputLine.toLowerCase().split(" ");
         let probability = 0;
-        let streetNames = ["str.", "stra", "weg", "allee", "gasse", "ring", "platz", "pfad", "feld", "hof", "berg"];
-
-        let restStreetNames = ["promenade", "chaussee", "boulevard", "stieg", "kamp", "wiesen", "lanen", "pleinen", "grachten", "singels", "hoven"];
-
-        let stringBlacklist = "abcdefghijklmnopqrstuvwxyzäöü@#$!%^&*_={}[]|;:<>,?";
-        let stringStreetBeginnings = ["an der", "zu den", "in der", "in den", "im ", "auf den", "auf der", "am ", "an den", "auf dem", "zur "];
-        const blacklist = stringBlacklist.split("");
+        let streetNames;
+        let streetNamesDE = ["str.", "stra", "weg", "allee", "gasse", "ring", "platz", "pfad", "feld", "hof", "berg"];
+        let streetNamesNL = ["straat", "weg", "hof", "straat", "pad", "burg", "plein", "hoven"];
+        // let restStreetNames = ["promenade", "chaussee", "boulevard", "stieg", "kamp", "wiesen", "lanen", "grachten", "singels"];
+        let stringStreetBeginnings;
+        let stringStreetBeginningsDE = ["an der", "zu den", "in der", "in den", "im ", "auf den", "auf der", "am ", "an den", "auf dem", "zur "];
+        let stringStreetBeginningsNL = ["de", "het"];
+        const whiteList = "abcdefghijklmnopqrstuvwxyz".split("");
         let num = 0;
         let fullStreetName = "";
         let fullStreetNameClear = "";
-        let houseNumber = 0;
+
+        // Auswahl des passenden Arrays nach der erkannten Sprache
+        switch (this.language.languageName) {
+            case "de":
+                streetNames = streetNamesDE;
+                stringStreetBeginnings = stringStreetBeginningsDE;
+                break;
+
+            case "nl":
+                streetNames = streetNamesNL;
+                stringStreetBeginnings = stringStreetBeginningsNL;
+                break;
+
+            case "eng":
+                streetNames = streetNamesDE;
+                stringStreetBeginnings = stringStreetBeginningsDE;
+                break;
+
+            default:
+                break;
+        }
 
         words: for (let i = 0; i < inputLineWords.length; i++) {
 
@@ -779,14 +800,17 @@ export class AddressParser {
                         let wordAfter = inputLineWords[i + 1].toLowerCase();
 
                         // checkt ob nach der Straße eine Hausnummer kommt
-                        for (let b = 0; b < blacklist.length; b++) {
-                            if (inputLineWords[i + 1].includes(blacklist[b])) {
+                        for (let b = 0; b < inputLineWords[i + 1].length; b++) {
+
+                            if (whiteList.includes(inputLineWords[i + 1][b])) {
                                 num++;
                             }
                         }
 
+                        console.log(num);
                         if (num == 0) {
                             probability += 20;
+
                             if (wordAfter.length > 0 && wordAfter.length < 3) {
                                 probability += 20;
                             } else if (wordAfter.length < 5) {
@@ -801,7 +825,7 @@ export class AddressParser {
 
                                     for (let a = 0; a < 26; a++) {
 
-                                        if (word2After == blacklist[a]) {
+                                        if (word2After == whiteList[a]) {
                                             probability += 5;
                                         }
                                     }
@@ -813,25 +837,11 @@ export class AddressParser {
                         if (num == 1) {
                             probability += 30;
 
-                            for (let z = 0; z < inputLineWords[i + 1].length - 1; z++) {
-
-                                for (let b = 0; b < blacklist.length; b++) {
-                                    // checkt, ob alle char Werte bis auf der letzte Nummer sind
-
-                                    if (inputLineWords[i + 1][z].includes(blacklist[b])) {
-                                        houseNumber++;
-                                    }
-                                }
-                            }
-
                             // checkt, ob der letzte char Wert ein Buchstabe ist
-                            if (houseNumber == 0) {
+                            for (let alphabet = 0; alphabet < 26; alphabet++) {
 
-                                for (let alphabet = 0; alphabet < 26; alphabet++) {
-
-                                    if (inputLineWords[i + 1][(inputLineWords[i + 1].length) - 1] == blacklist[alphabet]) {
-                                        probability += 15;
-                                    }
+                                if (inputLineWords[i + 1][(inputLineWords[i + 1].length) - 1] == whiteList[alphabet]) {
+                                    probability += 15;
                                 }
                             }
                         }
@@ -843,8 +853,7 @@ export class AddressParser {
         // überprüft den Fall, wenn die Adresse mit z.b. an der ... anfängt
         for (let p = 0; p < stringStreetBeginnings.length; p++) {
 
-            if (inputLine.includes(stringStreetBeginnings[p])) {
-
+            if (inputLine.toLowerCase().includes(stringStreetBeginnings[p])) {
                 fullStreetName = inputLine.toLowerCase();
                 fullStreetNameClear = inputLine;
                 probability += 10;
@@ -853,6 +862,7 @@ export class AddressParser {
                 words: for (let m = 0; m < inputLineWords.length; m++) {
 
                     if (matchingWords.length == 1) {
+
                         if (inputLineWords[m] == matchingWords[0]) {
                             // continue
                         } else {
@@ -870,16 +880,18 @@ export class AddressParser {
 
                     if (m + 2 < inputLineWords.length) {
                         let word2After = inputLineWords[m + 2].toLowerCase();
-                        // checkt ob nach der Straße eine Hausnummer kommt
-                        for (let b = 0; b < blacklist.length; b++) {
 
-                            if (inputLineWords[m + 2].includes(blacklist[b])) {
+                        // checkt ob nach der Straße eine Hausnummer kommt
+                        for (let b = 0; b < inputLineWords[m + 2].length; b++) {
+
+                            if (whiteList.includes(inputLineWords[m + 2][b])) {
                                 num++;
                             }
                         }
 
                         if (num == 0) {
                             probability += 25;
+
                             if (word2After.length > 0 && word2After.length < 3) {
                                 probability += 25;
                             } else if (word2After.length < 5) {
@@ -889,9 +901,12 @@ export class AddressParser {
                             // checkt, ob nach der Hausnummer ein Buchstaben Zusatz kommt
                             if (m + 3 < inputLineWords.length) {
                                 let word3After = inputLineWords[m + 3].toLowerCase();
+
                                 if (word3After.length == 1) {
+
                                     for (let a = 0; a < 26; a++) {
-                                        if (word3After == blacklist[a]) {
+
+                                        if (word3After == whiteList[a]) {
                                             probability += 5;
                                         }
                                     }
@@ -902,25 +917,11 @@ export class AddressParser {
                         if (num == 1) {
                             probability += 35;
 
-                            for (let z = 0; z < inputLineWords[m + 2].length - 1; z++) {
-
-                                for (let b = 0; b < blacklist.length; b++) {
-
-                                    // checkt, ob alle char Werte bis auf der letzte Nummer sind
-                                    if (inputLineWords[m + 2][z].includes(blacklist[b])) {
-                                        houseNumber++;
-                                    }
-                                }
-                            }
-
                             // checkt, ob der letzte char Wert ein Buchstabe ist
-                            if (houseNumber == 0) {
-                                for (let alphabet = 0; alphabet < 26; alphabet++) {
+                            for (let alphabet = 0; alphabet < 26; alphabet++) {
 
-                                    if (inputLineWords[m + 2][(inputLineWords[m + 2].length) - 1] == blacklist[alphabet]) {
-
-                                        probability += 25;
-                                    }
+                                if (inputLineWords[m + 2][(inputLineWords[m + 2].length) - 1] == whiteList[alphabet]) {
+                                    probability += 25;
                                 }
                             }
                         }
@@ -934,7 +935,6 @@ export class AddressParser {
         }
 
         if (fullStreetName.trim().length != 0 && probability != 0) {
-
             tempStreet.push(new CheckResult("street", fullStreetNameClear, probability));
         }
 
