@@ -573,7 +573,29 @@ export class AddressParser {
         let inputLineWords = inputLine.split(" ");
         let probability = 0;
         const whiteList = ("0123456789+/- ()[].");
-        let languageAreaCodeDE = "+49";
+        let languageAreaCode = "";
+        const languageAreaCodeDE = "+49";
+        const languageAreaCodeNL = "+31";
+        const languageAreaCodeEN = "+44";
+        // TODO nummern für innerhalb erkennen z.B. London 020 anstatt 0
+
+        // Auswahl der passenden Vorwahl nach der erkannten Sprache
+        switch (this.language.languageName) {
+            case "de":
+                languageAreaCode = languageAreaCodeDE;
+                break;
+
+            case "nl":
+                languageAreaCode = languageAreaCodeNL;
+                break;
+
+            case "eng":
+                languageAreaCode = languageAreaCodeEN;
+                break;
+
+            default:
+                break;
+        }
 
         words: for (let i = 0; i < inputLineWords.length; i++) {
             let inputLineChars = inputLineWords[i].split("");
@@ -585,17 +607,14 @@ export class AddressParser {
 
                     // Falls nach einer Nummer ein Wort kommt, wird die bisher gespeicherte Nummer ausgegeben
                     if (fullNumber.trim().length >= 6 && probability != 0) {
+                        
                         // Faxnummern einheitliche Schreibweise setzen
-                        // if (inputLineWords[i - 1].startsWith("0") || inputLineWords[i - 1].startsWith("(0")) {
-                        //     tempFax.push(new CheckResult("faxNumber", fullNumber.replace("0", "+49"), probability));
-                        // }
-
                         if (inputLineWords[i - 1].startsWith("0") || inputLineWords[i - 1].startsWith("(0")) {
-                            tempFax.push(new CheckResult("faxNumber", fullNumber.replace("0", languageAreaCodeDE), probability));
+                            tempFax.push(new CheckResult("faxNumber", fullNumber.replace("0", languageAreaCode), probability));
                         }
 
                         if (fullNumber.startsWith("0") || fullNumber.startsWith("(0")) {
-                            tempFax.push(new CheckResult("faxNumber", fullNumber.replace("0", "+49"), probability));
+                            tempFax.push(new CheckResult("faxNumber", fullNumber.replace("0", languageAreaCode), probability));
 
                         } else {
                             tempFax.push(new CheckResult("faxNumber", fullNumber, probability));
