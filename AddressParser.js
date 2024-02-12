@@ -574,6 +574,7 @@ export class AddressParser {
         let inputLineWords = inputLine.split(" ");
         let probability = 0;
         const whiteList = ("0123456789+/- ()[].");
+        let languageAreaCode = "";
 
         words: for (let i = 0; i < inputLineWords.length; i++) {
             let inputLineChars = inputLineWords[i].split("");
@@ -677,7 +678,6 @@ export class AddressParser {
                         if (inputLineWords[i - 1].startsWith("0") || inputLineWords[i - 1].startsWith("(0")) {
                             tempPhone.push(new CheckResult("phoneNumber", fullNumber.replace("0", "+49"), probability));
                             continue words;
-
                         }
 
                         if (fullNumber.startsWith("0") || fullNumber.startsWith("(0")) {
@@ -698,6 +698,7 @@ export class AddressParser {
             // Checkt ob vor der nummer z.B. Fon steht
             if (i !== 0) {
                 let wordBefore = inputLineWords[i - 1].toLowerCase();
+                
                 if (wordBefore.includes("fon") || wordBefore.includes("tel") || wordBefore.includes("mobil") || wordBefore.includes("handy")) {
                     probability += 70;
                 }
@@ -727,7 +728,9 @@ export class AddressParser {
         }
 
         if (fullNumber.trim().length != 0 && probability != 0) {
+
             if (fullNumber.startsWith("+49") || fullNumber.startsWith("0") || fullNumber.startsWith("(0") || fullNumber.startsWith("(+49")) {
+
                 if (fullNumber.startsWith("0") || fullNumber.startsWith("(0")) {
                     tempPhone.push(new CheckResult("phoneNumber", fullNumber.replace("0", "+49"), probability));
 
@@ -742,7 +745,6 @@ export class AddressParser {
             fullUnformattedNumber = fullUnformattedNumber.trim();
 
             if (fullUnformattedNumber.length > 10) {
-
                 tempPhone = tempPhone.concat(this.checkPhone(fullUnformattedNumber));
             }
         }
