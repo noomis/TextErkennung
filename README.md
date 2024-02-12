@@ -8,7 +8,7 @@
 - [x] language
 - [ ] CompanyName
 - [ ] PostalCode
-- [ ] Street
+- [x] Street
 - [ ] City
 - [ ] W3W
 - [ ] Phone
