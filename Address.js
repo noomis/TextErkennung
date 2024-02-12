@@ -180,9 +180,9 @@ export class Address {
         }
     }
 
-    outputMaxValues(html_id, fadeTime) {
+    outputMaxValues(html_id) {
         $("#" + html_id).val(""); //feld clearen
-
+        let fadeTime = 0;
         let objectArray = [];
         switch (html_id) {
             case "w3w":
@@ -273,12 +273,12 @@ export class Address {
             language: this.getLanguage(),
             companyName: this.getCompanyName(),
             homepage: this.getHomepage(),
-            contactPerson: this.getContactPersons(),
-            email: this.getEmails(),
+            contactPersons: this.getContactPersons(),
+            emails: this.getEmails(),
             street: this.getStreet(),
-            phone: this.getPhoneNumbers(),
-            fax: this.getFaxNumbers(),
-            zip: this.getPostalCode(),
+            phoneNumbers: this.getPhoneNumbers(),
+            faxNumbers: this.getFaxNumbers(),
+            postalCode: this.getPostalCode(),
             city: this.getCity(),
             w3w: this.getW3wAddress(),
             registrationNumber: this.getRegistrationNumber(),
