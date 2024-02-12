@@ -607,7 +607,7 @@ export class AddressParser {
 
                     // Falls nach einer Nummer ein Wort kommt, wird die bisher gespeicherte Nummer ausgegeben
                     if (fullNumber.trim().length >= 6 && probability != 0) {
-                        
+
                         // Faxnummern einheitliche Schreibweise setzen
                         if (inputLineWords[i - 1].startsWith("0") || inputLineWords[i - 1].startsWith("(0")) {
                             tempFax.push(new CheckResult("faxNumber", fullNumber.replace("0", languageAreaCode), probability));
@@ -1192,6 +1192,7 @@ export class AddressParser {
         let probability = 0;
         let tempInputWords = inputLine.split(" ");
         let elementReplaced;
+
         //checken, ob es mit DE startet und dann DE replacen für den onlyNumbers Array
         for (let index = 0; index < tempInputWords.length; index++) {
             const element = tempInputWords[index].toLowerCase();
@@ -1200,6 +1201,7 @@ export class AddressParser {
             }
         }
         const onlyNumbers = tempInputWords.filter(element => !isNaN(element));
+
         //onlyNumbers Array wird auf Zahlen mit ausschließlich 9 Ziffern begrenzt  
         for (let a = 0; a < onlyNumbers.length; a++) {
             const el = onlyNumbers[a];
@@ -1207,10 +1209,12 @@ export class AddressParser {
                 onlyNumbers.splice(a, 1);
             }
         }
+
         //checken, ob vor dem element ein string mit bestimmten Keyword steht und ob element mit de startet
         for (let index = 0; index < inputLineWords.length; index++) {
             const elementClear = inputLineWords[index];
             const element = inputLineWords[index].toLowerCase();
+
             if (element.startsWith("de")) {
                 // Extrahiere die letzten beiden Zeichen des Elements
                 const lastTwoCharacters = element.slice(-2);
@@ -1230,28 +1234,36 @@ export class AddressParser {
             }
             if (index !== 0) {
                 wordBefore = inputLineWords[index - 1].toLowerCase();
+
                 if (wordBefore.includes("ust.-idnr.") || wordBefore.includes("umsatzsteuer-id")) {
                     probability += 70;
+
                 } else if (wordBefore.includes("fon") || wordBefore.includes("fax")) {
                     probability = 0;
                 }
             }
+
             //checken, ob das element eine 9 stellige Zahl ist und ob verbotene keywords davorstehen
             for (let i = 0; i < onlyNumbers.length; i++) {
                 const e = onlyNumbers[i];
+
                 if (e == elementReplaced && elementReplaced.length == 9) {
                     probability += 40;
+
                     if (index !== 0) {
+
                         if (wordBefore.includes("fon") || wordBefore.includes("fax")) {
                             probability = 0;
                         }
                     }
                 }
             }
+
             //Rundungen
             if (probability > 100) {
                 probability = 100;
             }
+            
             //Objekt Erstellung / Output
             if (probability > 0) {
                 tempTax.push(new CheckResult("vatIdNumber", elementClear, probability));
