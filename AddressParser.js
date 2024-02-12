@@ -687,7 +687,6 @@ export class AddressParser {
                         } else {
                             tempPhone.push(new CheckResult("phoneNumber", fullNumber, probability));
                             continue words;
-
                         }
                     }
                     fullNumber = "";
@@ -698,7 +697,7 @@ export class AddressParser {
             // Checkt ob vor der nummer z.B. Fon steht
             if (i !== 0) {
                 let wordBefore = inputLineWords[i - 1].toLowerCase();
-                
+
                 if (wordBefore.includes("fon") || wordBefore.includes("tel") || wordBefore.includes("mobil") || wordBefore.includes("handy")) {
                     probability += 70;
                 }
