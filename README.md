@@ -10,7 +10,7 @@
 - [ ] PostalCode
 - [x] Street
 - [ ] City
-- [ ] W3W
+- [x] W3W
 - [ ] Phone
 - [ ] Fax
 - [ ] Contact Persons
