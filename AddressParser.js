@@ -149,9 +149,7 @@ export class AddressParser {
             let countDot = 0;
             let lineChars = inputLineWords[i].split("");
 
-            // Für jeden Buchstaben von dem aktullen Wort den Ascii Code berechnen
             for (let index = 0; index < lineChars.length; index++) {
-                // let charAsciiCode = lineChars[index].charCodeAt(0);
 
                 // Überprüfen, ob die Buchstaben valide sind indem sie der Liste entsprechen
                 if (!whiteList.includes(lineChars[index])){
