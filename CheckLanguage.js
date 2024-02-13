@@ -43,6 +43,7 @@ export class CheckLanguage {
         let language;
 
         let languageDetection = franc(inputLine);
+        console.log(languageDetection);
 
         for (let index = 0; index < email.length; index++) {
             const element = email[index].value;
