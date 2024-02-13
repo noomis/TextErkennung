@@ -101,15 +101,15 @@ export class CheckLanguage {
         }
         if (inputLine !== "") {
 
-            if (languageDetection == "deu"); {
+            if (languageDetection == "deu") {
                 germanProbability += 30;
             }
 
-            if (languageDetection == "eng"); {
+            if (languageDetection == "eng") {
                 englishProbability += 20;
             }
 
-            if (languageDetection == "nld"); {
+            if (languageDetection == "nld") {
                 dutchProbability += 20;
             }
 
