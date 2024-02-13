@@ -19,11 +19,12 @@ export class AddressParser {
     fetchedPostalCodes = []; // only max
     fetchedCityNames = []; // only max
     outputPercentage = 0;
+    language = "";
 
     constructor(language = null, outputPercentage) {
 
         if (!language) {
-            language = "German"
+            this.language = "de"
 
         } else {
             this.language = language;
@@ -428,7 +429,7 @@ export class AddressParser {
 
         const companyTypeDutch = [
             "eenmanszaak", "Eenm.",
-            "besloten vennootschap", "BV",
+            "besloten vennootschap", "BV", "B.V.",
             "naamloze vennootschap", "NV",
             "vennootschap onder firma", "VOF",
             "commanditaire vennootschap", "CV",
@@ -459,25 +460,32 @@ export class AddressParser {
         let companyType;
         let companyKeyWords;
 
-        switch (this.language) {
+        switch (this.language.languageName) {
+            
             case "de":
+                console.log('language: ', this.language);
+
                 companyType = companyTypeGerman;
                 companyKeyWords = companyKeyWordsGerman;
                 break;
             case "eng":
                 companyType = companyTypeEnglish;
                 companyKeyWords = companyKeyWordsEnglish;
+                console.log('language: ', this.language);
+
                 break;
             
             case "nl":
                 companyType = companyTypeDutch;
                 companyKeyWords = companyKeyWordsDutch;
+                console.log('language: ', this.language);
+
                 break;
 
-            default:
-                companyType = companyTypeGerman;
-                companyKeyWords = companyKeyWordsGerman;
+
         }
+
+        
 
         wordLoop: for (let index = 0; index < inputLineWords.length; index++) {
             const element = inputLineWords[index];
@@ -496,8 +504,9 @@ export class AddressParser {
                 }
             }
 
-            companyType.forEach(unternehmensform => {
-                if (element == unternehmensform) {
+            companyType.forEach(e => {
+                
+                if (element == e) {
                     wordProb += 50;
                 }
             });
@@ -876,16 +885,16 @@ export class AddressParser {
         let tempStreet = [];
         let inputLineWords = inputLine.toLowerCase().split(" ");
         let probability = 0;
-        let streetNames;
         const streetNamesDE = ["str.", "stra", "weg", "allee", "gasse", "ring", "platz", "pfad", "feld", "hof", "berg"];
         const streetNamesNL = ["straat", "weg", "hof", "straat", "pad", "burg", "plein", "hoven"];
         const streetNamesEN = ["road", "street", "avenue", "lane", "boulevard", "way", "alley", "hill", "lane"];
         // let restStreetNames = ["promenade", "chaussee", "boulevard", "stieg", "kamp", "wiesen", "lanen", "grachten", "singels"];
-        let stringStreetBeginnings;
         const stringStreetBeginningsDE = ["an der", "zu den", "in der", "in den", "im ", "auf den", "auf der", "am ", "an den", "auf dem", "zur "];
         const stringStreetBeginningsNL = ["de", "het"];
         const stringStreetBeginningsEN = ["Maple", "lake", "river"];
         const whiteList = "abcdefghijklmnopqrstuvwxyz".split("");
+        let streetNames = streetNamesDE;
+        let stringStreetBeginnings = stringStreetBeginningsDE;
         let num = 0;
         let fullStreetName = "";
         let fullStreetNameClear = "";
@@ -1068,24 +1077,54 @@ export class AddressParser {
     checkPostalCode(inputLine) {
 
         let tempPostalCode = [];
+        let inputLineWordsClear = inputLine.split(" ");
         inputLine = inputLine.toLowerCase();
         let inputLineWords = inputLine.split(" ");
         let city = 0;
         let cityName = 0;
         let probability = 0;
         let wordAfter;
+        let postalCodeLength = 0;
+        let oneLetterKey = "";
+        let twoLetterKey = "";
+        const whiteList = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z'];
+
+
+        // Auswahl der passenden Vorwahl nach der erkannten Sprache
+        switch (this.language.languageName) {
+            case "de":
+                postalCodeLength = 5;
+                oneLetterKey = "d";
+                twoLetterKey = "de";
+                break;
+
+            case "nl":
+                postalCodeLength = 6;
+                oneLetterKey = "n";
+                twoLetterKey = "nl";
+                break;
+
+            case "eng":
+                postalCodeLength = 5;
+                oneLetterKey = "uk";
+                twoLetterKey = "gb";
+                break;
+
+            default:
+                break;
+        }
 
         //wenn element mit d-/de- startet wird dieses entfernt
         for (let a = 0; a < inputLineWords.length; a++) {
             const element = inputLineWords[a];
 
-            if (element.startsWith("d-")) {
-                inputLineWords[a] = element.replace("d-", "");
+            if (element.startsWith(oneLetterKey + "-")) {
+                inputLineWords[a] = element.replace(oneLetterKey + "-", "");
                 probability += 10;
             }
 
-            if (element.startsWith("de-")) {
-                inputLineWords[a] = element.replace("de-", "");
+            if (element.startsWith(twoLetterKey + "-")) {
+                inputLineWords[a] = element.replace(twoLetterKey + "-", "");
                 probability += 10;
             }
 
@@ -1098,51 +1137,91 @@ export class AddressParser {
                 }
             }
         }
-        //neuer Array nur mit 5 Stelligen Zahlen 
-        const onlyNumbers = inputLineWords.filter(element => !isNaN(element));
 
-        for (let a = 0; a < onlyNumbers.length; a++) {
-            const element = onlyNumbers[a];
+        if (this.language.languageName === "de") {
 
-            if (element.length !== 5) {
-                onlyNumbers.splice(a, 1);
-            }
-        }
-        //check ob elements im json enthalten sind und somit eine Stadt matchen
-        zipLoop: for (let i = 0; i < onlyNumbers.length; i++) {
-            const element = onlyNumbers[i];
+            //neuer Array nur mit 5 Stelligen Zahlen 
+            const onlyNumbers = inputLineWords.filter(element => !isNaN(element));
 
-            if (this.fetchedPostalCodes.includes(element)) {
-                probability += 60;
-                city = this.fetchedPostalCodes.indexOf(element);
-                cityName = this.fetchedCityNames[city];
+            for (let a = 0; a < onlyNumbers.length; a++) {
+                const element = onlyNumbers[a];
 
-                //check ob Wort nach dem zip Code der Stadt entspricht die im json eingetragen ist
-                if (inputLineWords[i + 1] !== undefined) {
-                    wordAfter = inputLineWords[i + 1];
-
-                    if (cityName.toLowerCase().includes(wordAfter)) {
-                        probability += 30;
-                    }
-
-                    if (wordAfter.includes(cityName.toLowerCase())) {
-                        probability = 100;
-                    }
+                if (element.length !== postalCodeLength) {
+                    onlyNumbers.splice(a, 1);
                 }
             }
+            //check ob elements im json enthalten sind und somit eine Stadt matchen
+            zipLoop: for (let i = 0; i < onlyNumbers.length; i++) {
+                const element = onlyNumbers[i];
 
-            //output
-            if (probability > 100) {
-                probability = 100;
+                if (this.fetchedPostalCodes.includes(element)) {
+                    probability += 60;
+                    city = this.fetchedPostalCodes.indexOf(element);
+                    cityName = this.fetchedCityNames[city];
+
+                    //check ob Wort nach dem zip Code der Stadt entspricht die im json eingetragen ist
+                    if (inputLineWords[i + 1] !== undefined) {
+                        wordAfter = inputLineWords[i + 1];
+
+                        if (cityName.toLowerCase().includes(wordAfter)) {
+                            probability += 30;
+                        }
+
+                        if (wordAfter.includes(cityName.toLowerCase())) {
+                            probability = 100;
+                        }
+                    }
+                }
+
+                //output
+                if (probability > 100) {
+                    probability = 100;
+                }
+
+                if (probability > 0 && element.length === postalCodeLength) {
+                    tempPostalCode.push(new CheckResult("postalCode", element, probability));
+
+                } else {
+                    continue zipLoop;
+                }
+
             }
+        }
+        if (this.language.languageName === "nl") {
 
-            if (probability > 0 && element.length === 5) {
-                tempPostalCode.push(new CheckResult("postalCode", element, probability));
+            //neuer Array nur mit 4 stelligen Zahlen 
+            const onlyNumbers = inputLineWords.filter(element => !isNaN(element) && (element.length === 4 || whiteList.includes(element)));
 
-            } else {
-                continue zipLoop;
+            zipLoop: for (let i = 0; i < inputLineWords.length; i++) {
+                const element = inputLineWords[i];
+                for (let a = 0; a < onlyNumbers.length; a++) {
+                    const e = onlyNumbers[a];
+                }
+        
+                if (element.length === 4 && onlyNumbers.includes(element)) {
+                    probability += 20;
+                    if (inputLineWordsClear[i + 1] !== undefined) {
+                        wordAfter = inputLineWordsClear[i + 1];
+                        if (wordAfter.length === 2 && this.checkCorrectName(wordAfter)) {
+                            probability += 40
+                        }
+                    }
+
+                }
+
+                //output
+                if (probability > 100) {
+                    probability = 100;
+                }
+
+                if (probability > 0 && element.length === 4) {
+                    tempPostalCode.push(new CheckResult("postalCode", element + wordAfter, probability));
+
+                } else {
+                    continue zipLoop;
+                }
+
             }
-
         }
         return tempPostalCode;
     }
