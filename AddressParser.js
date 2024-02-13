@@ -449,35 +449,35 @@ export class AddressParser {
         inputLine = inputLine.toLowerCase();
         let inputLineWords = inputLine.split(" ");
 
-        let companyType;
-        let companyKeyWords;
+        let companyType = companyTypeGerman;
+        let companyKeyWords = companyKeyWordsGerman;
 
         switch (this.language.languageName) {
-            
+
             case "de":
                 console.log('language: ', this.language);
-
                 companyType = companyTypeGerman;
                 companyKeyWords = companyKeyWordsGerman;
                 break;
+
             case "eng":
                 companyType = companyTypeEnglish;
                 companyKeyWords = companyKeyWordsEnglish;
                 console.log('language: ', this.language);
-
                 break;
-            
+
             case "nl":
                 companyType = companyTypeDutch;
                 companyKeyWords = companyKeyWordsDutch;
                 console.log('language: ', this.language);
-
                 break;
 
+            default:
+                break;
 
         }
 
-        
+
 
         wordLoop: for (let index = 0; index < inputLineWords.length; index++) {
             const element = inputLineWords[index];
@@ -497,7 +497,7 @@ export class AddressParser {
             }
 
             companyType.forEach(e => {
-                
+
                 if (element == e) {
                     wordProb += 50;
                 }
@@ -796,7 +796,7 @@ export class AddressParser {
                             tempPhone.push(new CheckResult("phoneNumber", fullNumber.replace("0", languageAreaCode), probability));
                             continue words;
                         }
-                        
+
                         if (fullNumber.startsWith("00") || fullNumber.startsWith("(00")) {
                             tempPhone.push(new CheckResult("phoneNumber", fullNumber.replace("00", "+"), probability));
                             continue words;
@@ -1189,7 +1189,7 @@ export class AddressParser {
                 for (let a = 0; a < onlyNumbers.length; a++) {
                     const e = onlyNumbers[a];
                 }
-        
+
                 if (element.length === 4 && onlyNumbers.includes(element)) {
                     probability += 20;
                     if (inputLineWordsClear[i + 1] !== undefined) {
