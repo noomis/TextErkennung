@@ -13,7 +13,7 @@
 - [x] W3W
 - [x] Phone
 - [x] Fax
-- [ ] Contact Persons
+- [x] Contact Persons
 - [ ] registration number
 - [ ] vat id number
 - [x] tax number
