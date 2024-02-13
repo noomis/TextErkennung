@@ -242,10 +242,19 @@ export class AddressParser {
             if (element.includes("://")) {
                 probability += 10;
             }
+            //checken, wie viele Punkte im array enthalten sind, um unzulässige urls rauszufischen
+            const dots = element.split(".");
 
             if (element.includes("www.")) {
-                probability += 80;
+                probability += 30;
+                if (dots.length > 2) {
+                    probability += 40
+                }
             }
+            if (dots.length <= 2) {
+                probability = 0;
+            }
+
 
             if (i !== 0) {
                 let wordBefore = inputLineWords[i - 1].toLowerCase();
@@ -468,7 +477,7 @@ export class AddressParser {
                 companyType = companyTypeEnglish;
                 companyKeyWords = companyKeyWordsEnglish;
                 break;
-            
+
             case "nl":
                 companyType = companyTypeDutch;
                 companyKeyWords = companyKeyWordsDutch;
@@ -795,7 +804,7 @@ export class AddressParser {
                             tempPhone.push(new CheckResult("phoneNumber", fullNumber.replace("0", languageAreaCode), probability));
                             continue words;
                         }
-                        
+
                         if (fullNumber.startsWith("00") || fullNumber.startsWith("(00")) {
                             tempPhone.push(new CheckResult("phoneNumber", fullNumber.replace("00", "+"), probability));
                             continue words;
@@ -1075,6 +1084,7 @@ export class AddressParser {
         let cityName = 0;
         let probability = 0;
         let wordAfter;
+        let wordBefore;
         let postalCodeLength = 0;
         let oneLetterKey = "";
         let twoLetterKey = "";
@@ -1178,6 +1188,7 @@ export class AddressParser {
 
             }
         }
+
         if (this.language.languageName === "nl") {
 
             //neuer Array nur mit 4 stelligen Zahlen 
@@ -1185,10 +1196,7 @@ export class AddressParser {
 
             zipLoop: for (let i = 0; i < inputLineWords.length; i++) {
                 const element = inputLineWords[i];
-                for (let a = 0; a < onlyNumbers.length; a++) {
-                    const e = onlyNumbers[a];
-                }
-        
+
                 if (element.length === 4 && onlyNumbers.includes(element)) {
                     probability += 20;
                     if (inputLineWordsClear[i + 1] !== undefined) {
@@ -1197,7 +1205,6 @@ export class AddressParser {
                             probability += 40
                         }
                     }
-
                 }
 
                 //output
@@ -1206,7 +1213,7 @@ export class AddressParser {
                 }
 
                 if (probability > 0 && element.length === 4) {
-                    tempPostalCode.push(new CheckResult("postalCode", element + wordAfter, probability));
+                    tempPostalCode.push(new CheckResult("postalCode", element + " " + wordAfter, probability));
 
                 } else {
                     continue zipLoop;
@@ -1214,6 +1221,39 @@ export class AddressParser {
 
             }
         }
+
+        if (this.language.languageName === "uk") {
+
+            //neuer Array nur mit 4 stelligen Zahlen 
+            // const onlyNumbers = inputLineWords.filter(element => !isNaN(element) && (element.length === 4 || whiteList.includes(element)));
+
+            zipLoop: for (let i = 0; i < inputLineWords.length; i++) {
+                const element = inputLineWords[i];
+
+                if (element.length === 3) {
+                    probability += 20;
+                    if (inputLineWordsClear[i - 1] !== undefined) {
+                        wordBefore = inputLineWordsClear[i - 1];
+                        if ((wordBefore.length > 2 && wordBefore.length < 4) && whiteList.includes(wordBefore)) {
+                            probability += 40
+                        }
+                    }
+                }
+
+                //output
+                if (probability > 100) {
+                    probability = 100;
+                }
+
+                if (probability > 0 && element.length === 4) {
+                    tempPostalCode.push(new CheckResult("postalCode", element + " " + wordBefore, probability));
+
+                } else {
+                    continue zipLoop;
+                }
+            }
+        }
+        
         return tempPostalCode;
     }
 
