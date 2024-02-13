@@ -405,7 +405,53 @@ export class AddressParser {
             "gemeinde"
         ];
 
+        const companyTypeEnglish = [
+            "sole proprietorship", "Sole Prop.",
+            "limited liability company", "LLC",
+            "corporation", "Corp.",
+            "general partnership", "Gen. Partn.",
+            "limited partnership", "Ltd. Partn.",
+            "civil law partnership", "CLP",
+            "limited", "Ltd.",
+            "entrepreneurial company", "EC",
+            "sole trader", "Sole Trader",
+            "private limited company", "PLC",
+            "public limited company", "PLC",
+            "general partnership", "Gen. Partn.",
+            "limited partnership", "Ltd. Partn.",
+            "civil law partnership", "CLP",
+            "limited", "Ltd.",
+            "entrepreneurial company", "EC",
+            "non-profit association", "Non-Profit Assoc.",
+            "municipality", "Muni"
+        ];
+
+        const companyTypeDutch = [
+            "eenmanszaak", "Eenm.",
+            "besloten vennootschap", "BV",
+            "naamloze vennootschap", "NV",
+            "vennootschap onder firma", "VOF",
+            "commanditaire vennootschap", "CV",
+            "maatschap", "Maatschap",
+            "limited", "Limited",
+            "ondernemerschap", "Ondernemerschap",
+            "eenmanszaak", "Eenm.",
+            "besloten vennootschap", "BV",
+            "naamloze vennootschap", "NV",
+            "vennootschap onder firma", "VOF",
+            "commanditaire vennootschap", "CV",
+            "maatschap", "Maatschap",
+            "limited", "Limited",
+            "ondernemerschap", "Ondernemerschap",
+            "non-profit organisatie", "Non-Profit Org.",
+            "gemeente", "Gemeente"
+        ];
+        
+
         const companyKeyWords = ['metzgerei', 'computer', 'lackierer', 'tiefbau', 'feuerwehr', 'elektro', 'weincontor', 'weinimport', 'gerüstbau', 'hochbau', 'auto', 'galabau', 'elektriker', 'technik', 'tischlerei', 'reinigungsdienst', 'bauunternehmen', 'autohaus', 'schreinerei', 'friseursalon', 'fliesenleger', 'steuerberater', 'gartenbau', 'heizungsbau', 'sanitärinstallateur', 'baustoffhandel', 'werbeagentur', 'architekturbüro', 'edv-dienstleister', 'druckerei', 'holzbau', 'metallbau', 'malerbetrieb', 'versicherungsmakler', 'schuhgeschäft', 'buchhandlung', 'konditorei', 'baeckerei', 'elektronikladen', 'schneider', 'juwelier', 'haustierbedarf', 'blumenladen', 'optiker', 'hörgeräteakustik', 'spielwarengeschäft', 'fahrschule', 'küchenstudio', 'reisebüro', 'sportgeschäft', 'tankstelle', 'schuhmacher', 'taschengeschäft', 'dachdecker', 'zimmerei', 'fußpflege', 'druckerei', 'fahrradladen', 'elektrogroßhandel', 'lebensmittelmarkt', 'möbelhaus', 'uhrengeschäft', 'solaranlagen', 'baumaschinenverleih', 'tattoostudio', 'hundesalon', 'dönerimbiss', 'bauchladen', 'tauchschule', 'sonnenstudio', 'fotostudio', 'teppichreinigung', 'musikschule', 'modedesigner', 'yogastudio', 'autowerkstatt', 'haustechnik', 'teppichhandel', 'saunaanlagen', 'angelgeschäft', 'schlüsseldienst', 'gitarrenbau', 'fischzucht', 'hochzeitsplanung', 'hutgeschäft', 'schwimmbadtechnik', 'spielzeughersteller', 'hörbuchverlag', 'treppenbau', 'kanzlei', 'autovermietung', 'schraubenhandel', 'apotheken', 'schädlingsbekämpfung', 'vinothek', 'saftladen', 'computerladen', 'spielothek', 'elektronikmarkt', 'kindergarten', 'tanzschule', 'mietkoch', 'papierhandel', 'uhrenwerkstatt', 'stoffgeschäft', 'handyshop', 'kochschule', 'modellbau', 'goldschmied', 'floristik', 'brautmoden', 'schausteller', 'wassersport', 'segelschule', 'surfschule', 'angeln', 'haushaltswaren', 'kinderschuhladen', 'brennholzhandel', 'kaminbau', 'fotograf', 'gärtnerei', 'bioladen', 'schuhreparatur', 'mietrechtsschutz', 'müllentsorgung', 'baumschule', 'schwimmbadbau', 'catering', 'beauty-salon', 'biogasanlage', 'datenrettung', 'zeltverleih', 'videoproduktion', 'teppichhandel', 'tontechnik', 'wäscherei', 'tischlerei', 'teigwarenhersteller', 'touristik', 'taschenhersteller', 'stickerei', 'segelmacher', 'schwimmbadtechnik', 'segway-verleih', 'rolladenbau', 'reinigungsdienst', 'reiseveranstalter', 'rechtsanwalt', 'reifenservice', 'regalsysteme', 'pizzabringdienst', 'pflanzenhandel', 'pediküre', 'patisserie', 'partyservice', 'parkettverleger', 'papiergroßhandel', 'outdoorladen', 'online-marketing', 'optikergeschäft', 'orthopädietechnik', 'ölhandel', 'obstgroßhandel', 'nähmaschinenreparatur', 'motorradwerkstatt', 'mosaikleger', 'möbeltransport', 'modellflug', 'modellbahn', 'mobilfunk', 'möbeltischlerei', 'milchhandel', 'mietwagen', 'metallhandel', 'massagestudio', 'markisenbau', 'maniküre', 'malermeister', 'malerbetrieb', 'makler', 'luftaufnahmen', 'lkw-vermietung', 'lkw-werkstatt', 'logistik', 'lebensmittelhandel', 'landwirtschaft', 'lampenladen', 'laminatverleger', 'kühlhaus', 'küchenplanung', 'küchenstudio', 'küchenmontage', 'kosmetikinstitut', 'konditorei', 'kochstudio', 'kiosk', 'kinderbetreuung', 'kindermode', 'kinderzahnarzt', 'kinderarzt', 'kinderwunschzentrum', 'kinderkrippe', 'kinderpsychologe', 'kinesiologie', 'kimono-shop', 'kino', 'kiosk', 'kirchenmusik', 'kirchengemeinde', 'kiteschule', 'kletterhalle', 'konditorei', 'kosmetikstudio', 'krankenhaus', 'kunsthandel', 'kunstschule', 'kunststoffverarbeitung', 'künstleragentur', 'küchenstudio', 'kutschenverleih', 'labordienst', 'lackiererei', 'landgasthof', 'landwirtschaft', 'lebensberatung', 'lebensmittelgroßhandel', 'lebensmittelhandel', 'lebensmittelhersteller', 'lederwaren', 'lehrer', 'lerntherapie', 'lingerie-shop', 'logistikunternehmen', 'lottoladen', 'luxusuhren', 'makler', 'marketingagentur', 'massagepraxis', 'möbelhaus', 'müllabfuhr', 'müllentsorgung', 'müllverwertung', 'museum', 'musikgeschäft', 'musiklehrer', 'musikschule', 'musikstudio', 'nagelstudio', 'nahrungsergänzung', 'naturheilpraxis', 'neurologe', 'notar', 'nudelhersteller', 'ölhandel', 'obsthof', 'optiker', 'orthopäde', 'orthopädieschuhtechnik', 'packaging-design', 'papiergroßhandel', 'partyservice', 'personalberatung', 'pfandhaus', 'pflegeheim', 'pflasterarbeiten', 'pflanzenhandel', 'pflegedienst', 'physiotherapie', 'pianohaus', 'pilzzucht', 'pizza-lieferdienst', 'planungsbüro', 'polsterer', 'pr-agentur', 'pralinenhersteller', 'private-krankenversicherung', 'privatschule', 'psychiater', 'psychologe', 'psychosoziale-beratung', 'puppentheater', 'putzfrau', 'radiosender', 'rechtsanwalt', 'rechtsanwältin', 'reifenservice', 'reinigungsservice', 'reiseagentur', 'reisebüro', 'reiseveranstalter', 'reiseversicherung', 'reitsportgeschäft', 'relaxsessel', 'rentenberatung', 'restaurant', 'restauration', 'retail-design', 'rezepturenentwicklung', 'rollstuhlbau', 'rückentraining', 'saftbar', 'schauspieler', 'schlüsseldienst', 'schneiderei', 'schnittblumen', 'schokoladenhersteller', 'schornsteinfeger', 'schreibwarenhandel', 'schreinerei', 'schrottentsorgung', 'schuhgeschäft', 'schuldnerberatung', 'schwimmbadtechnik', 'schwimmschule', 'segelbootverleih', 'segelflugplatz', 'segelschule', 'sehenswürdigkeit', 'sekretariatsservice', 'selbsthilfegruppe', 'seniorendienstleistung', 'seniorenheim', 'seniorenpflege', 'shisha-bar', 'shopfitting', 'sicherheitsdienst', 'siedlungswasserwirtschaft', 'solaranlagen', 'sonnenstudio', 'sozialamt', 'sozialberatung', 'sozialdienst', 'sozialkaufhaus', 'sozialpädagogik', 'sozialpsychiatrischer-dienst', 'sozialstation', 'sozialtherapie', 'spedition', 'spielhalle', 'spielplatzbau', 'spielzeugladen', 'sportanlagenbau', 'sportartikelhersteller', 'sportgeschäft', 'sportlerheim', 'sportsbar', 'sportverein', 'stadtführung', 'stahlbau', 'staubsaugervertretung', 'steuerberatung', 'steuerberater', 'steuerfachangestellter', 'stoffgeschäft', 'straßenbau', 'stuckateur', 'studentenwohnheim', 'studienberatung', 'subunternehmen', 'supermarkt', 'sushi-bar', 'tanzschule', 'tapetenhandel', 'tattooentfernung', 'tattoostudio', 'tauchschule', 'taxiunternehmen', 'teichbau', 'teigwarenhersteller', 'telemarketing', 'telekommunikationsunternehmen', 'textildruck', 'textilveredelung', 'textilgroßhandel', 'textilhandel', 'theater', 'theaterkasse', 'theaterwerkstatt', 'therapeut', 'tierarzt', 'tierbestattung', 'tierfutterhandel', 'tierpension', 'tierpsychologie', 'tierschutzverein', 'tischlerei', 'tofuhersteller', 'tonstudio', 'touristikunternehmen', 'toyota-händler', 'traditionsunternehmen', 'trainingszentrum', 'transportunternehmen', 'treppenbau', 'trockenbau', 'trockenfrüchtehandel', 'trockenreinigung', 'trödelmarkt', 'tuningwerkstatt', 'uhrengeschäft', 'uhrenhandel', 'uhrenreparatur', 'uhrenwerkstatt', 'umzugsunternehmen', 'unternehmensberater', 'unternehmerverband', 'unterwäschehersteller', 'urlaubsbauernhof', 'us-car-vermietung', 'us-car-werkstatt', 'us-import', 'us-restaurant', 'us-shop', 'us-sportwagenvermietung', 'us-truck-vermietung', 'us-truck-werkstatt', 'us-tuning', 'uscar-handel', 'uscar-händler', 'uscar-import', 'uscar-reparatur', 'uscar-restauration', 'uscar-tuning'];
+        const companyKeyWordsDutch = ['slagerij', 'computer', 'schilder', 'grondwerken', 'brandweer', 'elektrisch', 'wijnhandel', 'wijnimport', 'steigerbouw', 'bouw', 'auto', 'tuinaanleg', 'elektricien', 'technologie', 'timmerwerk', 'bakkerij', 'reclame', 'meubelmaker', 'dakdekker', 'loodgieter', 'advocaat', 'accountant', 'fotograaf', 'architect', 'loods', 'makelaar', 'kapper', 'schoonheidsspecialist', 'supermarkt', 'boekhandel', 'opticien', 'tandarts', 'apotheek', 'fietsenwinkel', 'juwelier', 'reisbureau', 'restaurant', 'cafetaria', 'snackbar', 'hotel', 'bar', 'catering', 'bouwmarkt', 'dierenwinkel', 'plantenkwekerij', 'zagerij', 'transportbedrijf', 'drukkerij', 'uitgeverij', 'verzekering', 'bank', 'garage', 'tankstation', 'reparatie', 'installatie', 'schrijnwerkerij', 'verlichting', 'verwarming', 'sanitair', 'schilderij', 'kunstgalerij', 'museum', 'theater', 'bioscoop', 'concertzaal', 'evenementenlocatie', 'recreatiepark', 'pretpark', 'zoo', 'botanische tuin', 'sporthal', 'fitnesscentrum', 'zwembad', 'tennisbaan', 'golfbaan', 'voetbalveld', 'basketbalveld', 'volleybalveld', 'sportschool', 'yogastudio', 'pilatesstudio', 'dansstudio', 'muziekschool', 'taalschool', 'universiteit', 'hogeschool', 'basisschool', 'kinderopvang', 'peuterspeelzaal', 'speelgoedwinkel', 'kinderkleding', 'babywinkel', 'zwangerschapswinkel', 'kraamzorg', 'verloskundige', 'fysiopraktijk', 'chiropractor', 'thuiszorg', 'verpleeghuis', 'ziekenhuis', 'huisarts', 'dierenarts', 'dierenopvang', 'dierenartspraktijk', 'trimsalon', 'hondenuitlaatservice', 'supermarkt', 'boekhandel', 'opticien', 'tandarts', 'apotheek', 'fietsenwinkel', 'juwelier', 'reisbureau', 'restaurant', 'cafetaria', 'snackbar', 'hotel', 'bar', 'catering', 'bouwmarkt', 'dierenwinkel', 'plantenkwekerij', 'zagerij', 'transportbedrijf', 'drukkerij', 'uitgeverij', 'verzekering', 'bank', 'garage', 'tankstation', 'reparatie', 'installatie', 'schrijnwerkerij', 'verlichting', 'verwarming', 'sanitair', 'schilderij', 'kunstgalerij', 'museum', 'theater', 'bioscoop', 'concertzaal', 'evenementenlocatie', 'recreatiepark', 'pretpark', 'zoo', 'botanische tuin', 'sporthal', 'fitnesscentrum', 'zwembad', 'tennisbaan', 'golfbaan', 'voetbalveld', 'basketbalveld', 'volleybalveld', 'sportschool', 'yogastudio', 'pilatesstudio', 'dansstudio', 'muziekschool', 'taalschool', 'universiteit', 'hogeschool', 'basisschool', 'kinderopvang', 'peuterspeelzaal', 'speelgoedwinkel', 'kinderkleding', 'babywinkel', 'zwangerschapswinkel', 'kraamzorg', 'verloskundige', 'fysiopraktijk', 'chiropractor', 'thuiszorg', 'verpleeghuis', 'ziekenhuis', 'huisarts', 'dierenarts', 'dierenopvang', 'dierenartspraktijk', 'trimsalon', 'hondenuitlaatservice'];
+
+        console.log(companyKeyWordsDutch.length);
         let inputLineClear = inputLine;
         inputLine = inputLine.toLowerCase();
         let inputLineWords = inputLine.split(" ");
@@ -1061,7 +1107,7 @@ export class AddressParser {
                 probability = 100;
             }
 
-            if (probability > 0) {
+            if (probability > 0 && element.length === 5) {
                 tempPostalCode.push(new CheckResult("postalCode", element, probability));
 
             } else {

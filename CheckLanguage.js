@@ -40,6 +40,7 @@ export class CheckLanguage {
         let englishProbability = 0;
         let language;
         let languageDetection = franc(inputLine);
+        console.log(languageDetection);
 
         for (let index = 0; index < email.length; index++) {
             const element = email[index].value;
@@ -106,11 +107,11 @@ export class CheckLanguage {
             }
 
             if (languageDetection == "eng"); {
-                englishProbability += 30;
+                englishProbability += 20;
             }
 
             if (languageDetection == "nld"); {
-                dutchProbability += 30;
+                dutchProbability += 20;
             }
 
             this.languages.push(
