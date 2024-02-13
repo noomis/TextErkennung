@@ -656,7 +656,10 @@ export class AddressParser {
                             tempFax.push(new CheckResult("faxNumber", fullNumber.replace("0", languageAreaCode), probability));
                         }
 
-                        if (fullNumber.startsWith("0") || fullNumber.startsWith("(0")) {
+                        if (fullNumber.startsWith("00") || fullNumber.startsWith("(00")) {
+                            tempFax.push(new CheckResult("faxNumber", fullNumber.replace("00", "+"), probability));
+
+                        } else if (fullNumber.startsWith("0") || fullNumber.startsWith("(0")) {
                             tempFax.push(new CheckResult("faxNumber", fullNumber.replace("0", languageAreaCode), probability));
 
                         } else {
@@ -691,15 +694,19 @@ export class AddressParser {
                 probability += 10;
             }
         }
-
         let tmpFullNum = fullNumber;
         tmpFullNum = tmpFullNum.replaceAll("+", "").replaceAll("/", "").replaceAll("-", "").replaceAll(".", "");
+
         if (tmpFullNum.length > 5 && tmpFullNum.length < 33) {
             probability += 10;
         }
 
         if (fullNumber.trim().length != 0 && probability != 0) {
-            if (fullNumber.startsWith("0") || fullNumber.startsWith("(0")) {
+
+            if (fullNumber.startsWith("00") || fullNumber.startsWith("(00")) {
+                tempFax.push(new CheckResult("faxNumber", fullNumber.replace("00", "+"), probability));
+
+            } else if (fullNumber.startsWith("0") || fullNumber.startsWith("(0")) {
                 tempFax.push(new CheckResult("faxNumber", fullNumber.replace("0", languageAreaCode), probability));
 
             } else {
@@ -829,7 +836,6 @@ export class AddressParser {
                 } else {
                     tempPhone.push(new CheckResult("phoneNumber", fullNumber, probability));
                 }
-
             }
         }
 
