@@ -1,7 +1,7 @@
 import { Address } from "./Address.js";
 import { AddressParser } from "./AddressParser.js";
 import { FetchData } from "./fetchData.js";
-import { CheckLanguage } from "./checkLanguage.js";
+import { CheckLanguage } from "./CheckLanguage.js";
 let timeoutId;
 
 let fetchData = new FetchData;
