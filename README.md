@@ -2,6 +2,23 @@
 
 # TODO
 
+## Internationalisierung:
+- [x] Email
+- [x] Homepage
+- [x] language
+- [ ] CompanyName
+- [ ] PostalCode
+- [x] Street
+- [ ] City
+- [x] W3W
+- [x] Phone
+- [x] Fax
+- [ ] Contact Persons
+- [ ] registration number
+- [ ] vat id number
+- [ ] tax number
+-------------
+
 - [ ] Kommentare
 - [ ] Deutsch, Niederländisch, Englisch
 
