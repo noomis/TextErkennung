@@ -19,11 +19,12 @@ export class AddressParser {
     fetchedPostalCodes = []; // only max
     fetchedCityNames = []; // only max
     outputPercentage = 0;
+    language = "";
 
     constructor(language = null, outputPercentage) {
 
         if (!language) {
-            language = "German"
+            this.language = "de"
 
         } else {
             this.language = language;
@@ -415,45 +416,37 @@ export class AddressParser {
         ];
 
         const companyTypeEnglish = [
-            "sole proprietorship", "Sole Prop.",
-            "limited liability company", "LLC",
-            "corporation", "Corp.",
-            "general partnership", "Gen. Partn.",
-            "limited partnership", "Ltd. Partn.",
-            "civil law partnership", "CLP",
-            "limited", "Ltd.",
-            "entrepreneurial company", "EC",
-            "sole trader", "Sole Trader",
-            "private limited company", "PLC",
-            "public limited company", "PLC",
-            "general partnership", "Gen. Partn.",
-            "limited partnership", "Ltd. Partn.",
-            "civil law partnership", "CLP",
-            "limited", "Ltd.",
-            "entrepreneurial company", "EC",
-            "non-profit association", "Non-Profit Assoc.",
-            "municipality", "Muni"
+            "sole proprietorship", "sole prop.",
+            "limited liability company", "llc",
+            "corporation", "corp.",
+            "general partnership", "gen. partn.",
+            "limited partnership", "ltd. partn.",
+            "civil law partnership", "clp",
+            "limited", "ltd.",
+            "entrepreneurial company", "ec",
+            "sole trader", "sole trader",
+            "private limited company", "plc",
+            "public limited company", "plc",
+            "non-profit association", "non-profit assoc.",
+            "municipality", "muni"
         ];
 
         const companyTypeDutch = [
-            "eenmanszaak", "Eenm.",
-            "besloten vennootschap", "BV",
-            "naamloze vennootschap", "NV",
-            "vennootschap onder firma", "VOF",
-            "commanditaire vennootschap", "CV",
-            "maatschap", "Maatschap",
-            "limited", "Limited",
-            "ondernemerschap", "Ondernemerschap",
-            "eenmanszaak", "Eenm.",
-            "besloten vennootschap", "BV",
-            "naamloze vennootschap", "NV",
-            "vennootschap onder firma", "VOF",
-            "commanditaire vennootschap", "CV",
-            "maatschap", "Maatschap",
-            "limited", "Limited",
-            "ondernemerschap", "Ondernemerschap",
-            "non-profit organisatie", "Non-Profit Org.",
-            "gemeente", "Gemeente"
+            "eenmanszaak", "eenm.",
+            "besloten vennootschap", "bv", "b.v.",
+            "naamloze vennootschap", "nv",
+            "vennootschap onder firma", "vof",
+            "commanditaire vennootschap", "cv",
+            "maatschap", "maatschap",
+            "limited", "limited",
+            "ondernemerschap", "ondernemerschap",
+            "eenmanszaak", "eenm.",
+            "besloten vennootschap", "bv",
+            "naamloze vennootschap", "nv",
+            "vennootschap onder firma", "vof",
+            "commanditaire vennootschap", "cv",
+            "non-profit organisatie", "non-profit org.",
+            "gemeente", "gemeente"
         ];
 
 
@@ -465,28 +458,35 @@ export class AddressParser {
         inputLine = inputLine.toLowerCase();
         let inputLineWords = inputLine.split(" ");
 
-        let companyType;
-        let companyKeyWords;
+        let companyType = companyTypeGerman;
+        let companyKeyWords = companyKeyWordsGerman;
 
-        switch (this.language) {
+        switch (this.language.languageName) {
+
             case "de":
+                console.log('language: ', this.language);
                 companyType = companyTypeGerman;
                 companyKeyWords = companyKeyWordsGerman;
                 break;
+
             case "eng":
                 companyType = companyTypeEnglish;
                 companyKeyWords = companyKeyWordsEnglish;
+                console.log('language: ', this.language);
                 break;
 
             case "nl":
                 companyType = companyTypeDutch;
                 companyKeyWords = companyKeyWordsDutch;
+                console.log('language: ', this.language);
                 break;
 
             default:
-                companyType = companyTypeGerman;
-                companyKeyWords = companyKeyWordsGerman;
+                break;
+
         }
+
+
 
         wordLoop: for (let index = 0; index < inputLineWords.length; index++) {
             const element = inputLineWords[index];
@@ -505,8 +505,9 @@ export class AddressParser {
                 }
             }
 
-            companyType.forEach(unternehmensform => {
-                if (element == unternehmensform) {
+            companyType.forEach(e => {
+
+                if (element == e) {
                     wordProb += 50;
                 }
             });
@@ -885,16 +886,16 @@ export class AddressParser {
         let tempStreet = [];
         let inputLineWords = inputLine.toLowerCase().split(" ");
         let probability = 0;
-        let streetNames;
         const streetNamesDE = ["str.", "stra", "weg", "allee", "gasse", "ring", "platz", "pfad", "feld", "hof", "berg"];
         const streetNamesNL = ["straat", "weg", "hof", "straat", "pad", "burg", "plein", "hoven"];
         const streetNamesEN = ["road", "street", "avenue", "lane", "boulevard", "way", "alley", "hill", "lane"];
         // let restStreetNames = ["promenade", "chaussee", "boulevard", "stieg", "kamp", "wiesen", "lanen", "grachten", "singels"];
-        let stringStreetBeginnings;
         const stringStreetBeginningsDE = ["an der", "zu den", "in der", "in den", "im ", "auf den", "auf der", "am ", "an den", "auf dem", "zur "];
         const stringStreetBeginningsNL = ["de", "het"];
         const stringStreetBeginningsEN = ["Maple", "lake", "river"];
         const whiteList = "abcdefghijklmnopqrstuvwxyz".split("");
+        let streetNames = streetNamesDE;
+        let stringStreetBeginnings = stringStreetBeginningsDE;
         let num = 0;
         let fullStreetName = "";
         let fullStreetNameClear = "";
@@ -1196,7 +1197,10 @@ export class AddressParser {
 
             zipLoop: for (let i = 0; i < inputLineWords.length; i++) {
                 const element = inputLineWords[i];
-
+                for (let a = 0; a < onlyNumbers.length; a++) {
+                    const e = onlyNumbers[a];
+                }
+        
                 if (element.length === 4 && onlyNumbers.includes(element)) {
                     probability += 20;
                     if (inputLineWordsClear[i + 1] !== undefined) {
@@ -1379,7 +1383,7 @@ export class AddressParser {
             if (index !== 0) {
                 wordBefore = inputLineWords[index - 1].toLowerCase();
 
-                if (wordBefore.startsWith("hrb") || wordBefore.startsWith("hra") || wordBefore.startsWith("hr") || wordBefore.startsWith("hrg") || wordBefore.startsWith("hrm")) {
+                if (wordBefore.startsWith("hrb") || wordBefore.startsWith("hra") || wordBefore.startsWith("hrg") || wordBefore.startsWith("hrm")) {
                     probability = +50;
                 }
             }
