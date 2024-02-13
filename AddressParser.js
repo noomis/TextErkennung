@@ -1354,16 +1354,49 @@ export class AddressParser {
         let inputLineWords = inputLine.toLowerCase().split(" ");
         let probability = 0;
         const whiteList = "0123456789/";
-        const numbers = "0123456789"
+        const numbers = "0123456789";
+        const keywordDE = "finanzamt";
+        const keywordNL = "belastingkantoor";
+        const keywordEN = "tax office";
+        let keyword = keywordDE;
+
+        // Auswahl des passenden Keyword für die Sprache
+        switch (this.language.languageName) {
+            case "de":
+                keyword = keywordDE;
+                break;
+
+            case "nl":
+                keyword = keywordNL;
+                break;
+
+            case "eng":
+                keyword = keywordEN;
+                break;
+
+            default:
+                break;
+        }
 
         wordloop: for (let index = 0; index < inputLineWords.length; index++) {
             const element = inputLineWords[index];
             const wordChars = element.split("");
 
-            if (element === "finanzamt") {
+            if (element === keyword) {
                 probability += 30;
 
                 this.fetchedCityNames.forEach(element => {
+                    if (element === inputLineWords[index + 1]) {
+                        probability += 40;
+                    }
+                });
+
+                // wenn die Sprache englisch ist, da das keyword zwei Wörter sind
+            } else if (element === keyword.split(" ")[0] && inputLineWords[index + 1] !== 0 && inputLineWords[index + 1] === keyword.split(" ")[1]) {
+                probability += 30;
+
+                this.fetchedCityNames.forEach(element => {
+
                     if (element === inputLineWords[index + 1]) {
                         probability += 40;
                     }
@@ -1390,13 +1423,13 @@ export class AddressParser {
                     element.split("").forEach(chars => {
 
                         if (numbers.includes(chars)) {
-                            probability += 30;
                             tempCount++;
                         } else {
                             return tempTax
                         }
                     });
                 });
+                probability += 10;
 
                 if (tempCount == 11) {
                     tempTax.push(new CheckResult("companyTax", inputLineWords[index], probability));
