@@ -106,11 +106,11 @@ export class CheckLanguage {
             }
 
             if (languageDetection == "eng"); {
-                englishProbability += 30;
+                englishProbability += 20;
             }
 
             if (languageDetection == "nld"); {
-                dutchProbability += 30;
+                dutchProbability += 20;
             }
 
             this.languages.push(

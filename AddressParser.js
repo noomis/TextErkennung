@@ -1054,7 +1054,7 @@ export class AddressParser {
                 probability = 100;
             }
 
-            if (probability > 0) {
+            if (probability > 0 && element.length === 5) {
                 tempPostalCode.push(new CheckResult("postalCode", element, probability));
 
             } else {
