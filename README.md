@@ -16,7 +16,7 @@
 - [ ] Contact Persons
 - [ ] registration number
 - [ ] vat id number
-- [ ] tax number
+- [x] tax number
 -------------
 
 - [ ] Kommentare
