@@ -148,7 +148,7 @@ export class AddressParser {
             for (let index = 0; index < lineChars.length; index++) {
 
                 // Überprüfen, ob die Buchstaben valide sind indem sie der Liste entsprechen
-                if (!whiteList.includes(lineChars[index])){
+                if (!whiteList.includes(lineChars[index])) {
 
                     // Bei einem Link zur w3w Adresse, den Verzeichnis Pfad der Url herausnehmen und damit weiter durchlaufen
                     if (inputLineWords[i].includes("https://what3words.com/") || inputLineWords[i].includes("https://w3w.co/")) {
@@ -719,8 +719,12 @@ export class AddressParser {
                             tempPhone.push(new CheckResult("phoneNumber", fullNumber.replace("0", languageAreaCode), probability));
                             continue words;
                         }
+                        
+                        if (fullNumber.startsWith("00") || fullNumber.startsWith("(00")) {
+                            tempPhone.push(new CheckResult("phoneNumber", fullNumber.replace("00", "+"), probability));
+                            continue words;
 
-                        if (fullNumber.startsWith("0") || fullNumber.startsWith("(0")) {
+                        } else if (fullNumber.startsWith("0") || fullNumber.startsWith("(0")) {
                             tempPhone.push(new CheckResult("phoneNumber", fullNumber.replace("0", languageAreaCode), probability));
                             continue words;
 
@@ -770,7 +774,10 @@ export class AddressParser {
 
             if (fullNumber.startsWith(languageAreaCode) || fullNumber.startsWith("0") || fullNumber.startsWith("(0") || fullNumber.startsWith("(" + languageAreaCode)) {
 
-                if (fullNumber.startsWith("0") || fullNumber.startsWith("(0")) {
+                if (fullNumber.startsWith("00") || fullNumber.startsWith("(00")) {
+                    tempPhone.push(new CheckResult("phoneNumber", fullNumber.replace("00", "+"), probability));
+
+                } else if (fullNumber.startsWith("0") || fullNumber.startsWith("(0")) {
                     tempPhone.push(new CheckResult("phoneNumber", fullNumber.replace("0", languageAreaCode), probability));
 
                 } else {
@@ -1095,7 +1102,7 @@ export class AddressParser {
                     }
                 }
             }
-            
+
             for (let a = 0; a < inputLineWords.length; a++) {
                 const element = inputLineWords[a].toLowerCase();
 
