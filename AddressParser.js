@@ -407,45 +407,37 @@ export class AddressParser {
         ];
 
         const companyTypeEnglish = [
-            "sole proprietorship", "Sole Prop.",
-            "limited liability company", "LLC",
-            "corporation", "Corp.",
-            "general partnership", "Gen. Partn.",
-            "limited partnership", "Ltd. Partn.",
-            "civil law partnership", "CLP",
-            "limited", "Ltd.",
-            "entrepreneurial company", "EC",
-            "sole trader", "Sole Trader",
-            "private limited company", "PLC",
-            "public limited company", "PLC",
-            "general partnership", "Gen. Partn.",
-            "limited partnership", "Ltd. Partn.",
-            "civil law partnership", "CLP",
-            "limited", "Ltd.",
-            "entrepreneurial company", "EC",
-            "non-profit association", "Non-Profit Assoc.",
-            "municipality", "Muni"
+            "sole proprietorship", "sole prop.",
+            "limited liability company", "llc",
+            "corporation", "corp.",
+            "general partnership", "gen. partn.",
+            "limited partnership", "ltd. partn.",
+            "civil law partnership", "clp",
+            "limited", "ltd.",
+            "entrepreneurial company", "ec",
+            "sole trader", "sole trader",
+            "private limited company", "plc",
+            "public limited company", "plc",
+            "non-profit association", "non-profit assoc.",
+            "municipality", "muni"
         ];
 
         const companyTypeDutch = [
-            "eenmanszaak", "Eenm.",
-            "besloten vennootschap", "BV", "B.V.",
-            "naamloze vennootschap", "NV",
-            "vennootschap onder firma", "VOF",
-            "commanditaire vennootschap", "CV",
-            "maatschap", "Maatschap",
-            "limited", "Limited",
-            "ondernemerschap", "Ondernemerschap",
-            "eenmanszaak", "Eenm.",
-            "besloten vennootschap", "BV",
-            "naamloze vennootschap", "NV",
-            "vennootschap onder firma", "VOF",
-            "commanditaire vennootschap", "CV",
-            "maatschap", "Maatschap",
-            "limited", "Limited",
-            "ondernemerschap", "Ondernemerschap",
-            "non-profit organisatie", "Non-Profit Org.",
-            "gemeente", "Gemeente"
+            "eenmanszaak", "eenm.",
+            "besloten vennootschap", "bv", "b.v.",
+            "naamloze vennootschap", "nv",
+            "vennootschap onder firma", "vof",
+            "commanditaire vennootschap", "cv",
+            "maatschap", "maatschap",
+            "limited", "limited",
+            "ondernemerschap", "ondernemerschap",
+            "eenmanszaak", "eenm.",
+            "besloten vennootschap", "bv",
+            "naamloze vennootschap", "nv",
+            "vennootschap onder firma", "vof",
+            "commanditaire vennootschap", "cv",
+            "non-profit organisatie", "non-profit org.",
+            "gemeente", "gemeente"
         ];
 
 
