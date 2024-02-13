@@ -11,8 +11,8 @@
 - [x] Street
 - [ ] City
 - [x] W3W
-- [ ] Phone
-- [ ] Fax
+- [x] Phone
+- [x] Fax
 - [ ] Contact Persons
 - [ ] registration number
 - [ ] vat id number
