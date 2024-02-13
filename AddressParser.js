@@ -1269,7 +1269,7 @@ export class AddressParser {
             if (index !== 0) {
                 wordBefore = inputLineWords[index - 1].toLowerCase();
 
-                if (wordBefore.startsWith("hrb") || wordBefore.startsWith("hra") || wordBefore.startsWith("hr") || wordBefore.startsWith("hrg") || wordBefore.startsWith("hrm")) {
+                if (wordBefore.startsWith("hrb") || wordBefore.startsWith("hra") || wordBefore.startsWith("hrg") || wordBefore.startsWith("hrm")) {
                     probability = +50;
                 }
             }
