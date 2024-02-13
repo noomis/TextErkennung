@@ -13,8 +13,8 @@ export class CheckLanguage {
 
     findMostProbableLanguage() {
         // Start with a value lower than any probability
-        let maxProbability = -1; 
-        let mostProbableLanguage;
+        let maxProbability = 1; 
+        let mostProbableLanguage = "de";
 
         // Iterate through the languages array
         this.languages.forEach(language => {
@@ -40,6 +40,7 @@ export class CheckLanguage {
         let englishProbability = 0;
         let language;
         let languageDetection = franc(inputLine);
+        console.log('languageDetection: ', languageDetection);
 
         for (let index = 0; index < email.length; index++) {
             const element = email[index].value;
@@ -136,7 +137,7 @@ export class CheckLanguage {
         }
         // Call the function to find the most probable language
         possibleLanguage = this.findMostProbableLanguage();
-
+        console.log('possibleLanguage: ', possibleLanguage);
         return possibleLanguage;
     }
 }
