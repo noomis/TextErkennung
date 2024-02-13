@@ -19,11 +19,12 @@ export class AddressParser {
     fetchedPostalCodes = []; // only max
     fetchedCityNames = []; // only max
     outputPercentage = 0;
+    language = "";
 
     constructor(language = null, outputPercentage) {
 
         if (!language) {
-            language = "German"
+            this.language = "de"
 
         } else {
             this.language = language;
@@ -428,7 +429,7 @@ export class AddressParser {
 
         const companyTypeDutch = [
             "eenmanszaak", "Eenm.",
-            "besloten vennootschap", "BV",
+            "besloten vennootschap", "BV", "B.V.",
             "naamloze vennootschap", "NV",
             "vennootschap onder firma", "VOF",
             "commanditaire vennootschap", "CV",
@@ -459,25 +460,32 @@ export class AddressParser {
         let companyType;
         let companyKeyWords;
 
-        switch (this.language) {
+        switch (this.language.languageName) {
+            
             case "de":
+                console.log('language: ', this.language);
+
                 companyType = companyTypeGerman;
                 companyKeyWords = companyKeyWordsGerman;
                 break;
             case "eng":
                 companyType = companyTypeEnglish;
                 companyKeyWords = companyKeyWordsEnglish;
+                console.log('language: ', this.language);
+
                 break;
             
             case "nl":
                 companyType = companyTypeDutch;
                 companyKeyWords = companyKeyWordsDutch;
+                console.log('language: ', this.language);
+
                 break;
 
-            default:
-                companyType = companyTypeGerman;
-                companyKeyWords = companyKeyWordsGerman;
+
         }
+
+        
 
         wordLoop: for (let index = 0; index < inputLineWords.length; index++) {
             const element = inputLineWords[index];
@@ -496,8 +504,9 @@ export class AddressParser {
                 }
             }
 
-            companyType.forEach(unternehmensform => {
-                if (element == unternehmensform) {
+            companyType.forEach(e => {
+                
+                if (element == e) {
                     wordProb += 50;
                 }
             });
@@ -876,16 +885,16 @@ export class AddressParser {
         let tempStreet = [];
         let inputLineWords = inputLine.toLowerCase().split(" ");
         let probability = 0;
-        let streetNames;
         const streetNamesDE = ["str.", "stra", "weg", "allee", "gasse", "ring", "platz", "pfad", "feld", "hof", "berg"];
         const streetNamesNL = ["straat", "weg", "hof", "straat", "pad", "burg", "plein", "hoven"];
         const streetNamesEN = ["road", "street", "avenue", "lane", "boulevard", "way", "alley", "hill", "lane"];
         // let restStreetNames = ["promenade", "chaussee", "boulevard", "stieg", "kamp", "wiesen", "lanen", "grachten", "singels"];
-        let stringStreetBeginnings;
         const stringStreetBeginningsDE = ["an der", "zu den", "in der", "in den", "im ", "auf den", "auf der", "am ", "an den", "auf dem", "zur "];
         const stringStreetBeginningsNL = ["de", "het"];
         const stringStreetBeginningsEN = ["Maple", "lake", "river"];
         const whiteList = "abcdefghijklmnopqrstuvwxyz".split("");
+        let streetNames = streetNamesDE;
+        let stringStreetBeginnings = stringStreetBeginningsDE;
         let num = 0;
         let fullStreetName = "";
         let fullStreetNameClear = "";
