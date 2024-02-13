@@ -31,7 +31,6 @@ export class CheckLanguage {
     }
 
     checkLanguage(inputLine) {
-        debugger;
         let possibleLanguage = "";
         let addressParser = new AddressParser();
         let email = addressParser.checkMails(inputLine);
