@@ -13,10 +13,10 @@
 - [x] W3W
 - [x] Phone
 - [x] Fax
-- [ ] Contact Persons
+- [x] Contact Persons
 - [ ] registration number
 - [ ] vat id number
-- [ ] tax number
+- [x] tax number
 -------------
 
 - [ ] Kommentare
