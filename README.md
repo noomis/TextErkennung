@@ -2,11 +2,11 @@
 
 # TODO
 
-## Internationalisierung:
+## Internationalisierung (Deutsch, Niederländisch, Englisch) :
 - [x] Email
 - [x] Homepage
 - [x] language
-- [ ] CompanyName
+- [x] CompanyName
 - [ ] PostalCode
 - [x] Street
 - [ ] City
@@ -20,7 +20,6 @@
 -------------
 
 - [ ] Kommentare
-- [ ] Deutsch, Niederländisch, Englisch
 
 ----------
 
