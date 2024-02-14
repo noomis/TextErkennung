@@ -6,7 +6,7 @@
 - [x] Email
 - [x] Homepage
 - [x] language
-- [ ] CompanyName
+- [x] CompanyName
 - [ ] PostalCode
 - [x] Street
 - [ ] City
