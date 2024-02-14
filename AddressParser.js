@@ -422,7 +422,7 @@ export class AddressParser {
             "general partnership", "gen. partn.",
             "limited partnership", "ltd. partn.",
             "civil law partnership", "clp",
-            "limited", "ltd.",
+            "limited", "ltd",
             "entrepreneurial company", "ec",
             "sole trader", "sole trader",
             "private limited company", "plc",
@@ -1302,7 +1302,6 @@ export class AddressParser {
         cityLoop: for (let i = 0; i < inputLineWords.length; i++) {
             const element = inputLineWords[i].toLowerCase().replaceAll(",", "");
             const elementClear = inputLineWords[i].replaceAll(",", "").replaceAll(".","");
-            console.log(element);
             probability = 0;
             if (cityNamesArray.includes(element)) {
                 probability += 60;
@@ -1487,7 +1486,7 @@ export class AddressParser {
         let tempInputWords = inputLine.split(" ");
         let elementReplaced;
         let vatIdCountryCode = "de";
-        let vatKeywordsNL = ["btw-nr.", "omzetbelastingnummer"];
+        let vatKeywordsNL = ["btw-nr", "omzetbelastingnummer"];
         let vatKeywordsGB = ["vat no.", "vat number"];
         let vatKeywordsDE = ["ust.-idnr.", "umsatzsteuer-id"];
         let vatKeywords = vatKeywordsDE;
