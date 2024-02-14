@@ -1432,6 +1432,7 @@ export class AddressParser {
                         probability += 20;
                     }
                     tempRegistrationNumber.push(new CheckResult("registrationNumber", wordAfter.replaceAll(",", "").replaceAll(".", ""), probability));
+                    return tempRegistrationNumber;
                 }
                 // auch überprüfen ob die Ausgabe eine Nummer ist, nur ein wort vorher
             } else if (!isNaN(element)) {
