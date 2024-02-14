@@ -9,7 +9,7 @@
 - [x] CompanyName
 - [x] PostalCode
 - [x] Street
-- [ ] City
+- [x] City
 - [x] W3W
 - [x] Phone
 - [x] Fax
