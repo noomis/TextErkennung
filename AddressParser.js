@@ -464,7 +464,6 @@ export class AddressParser {
         switch (this.language.languageName) {
 
             case "de":
-                console.log('language: ', this.language);
                 companyType = companyTypeGerman;
                 companyKeyWords = companyKeyWordsGerman;
                 break;
@@ -472,13 +471,11 @@ export class AddressParser {
             case "eng":
                 companyType = companyTypeEnglish;
                 companyKeyWords = companyKeyWordsEnglish;
-                console.log('language: ', this.language);
                 break;
 
             case "nl":
                 companyType = companyTypeDutch;
                 companyKeyWords = companyKeyWordsDutch;
-                console.log('language: ', this.language);
                 break;
 
             default:
