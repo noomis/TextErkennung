@@ -7,7 +7,7 @@
 - [x] Homepage
 - [x] language
 - [x] CompanyName
-- [ ] PostalCode
+- [x] PostalCode
 - [x] Street
 - [ ] City
 - [x] W3W
