@@ -1286,7 +1286,7 @@ export class AddressParser {
             case "eng":
                 cityNamesArray = ukCityArray;
                 countryCode = "uk";
-                secondCountryCode = "uk"
+                secondCountryCode = "gb"
                 break;
 
             default:
@@ -1300,8 +1300,9 @@ export class AddressParser {
 
         //check ob elements im json enthalten sind und somit eine Stadt matchen
         cityLoop: for (let i = 0; i < inputLineWords.length; i++) {
-            const element = inputLineWords[i].toLowerCase();
-            const elementClear = inputLineWords[i];
+            const element = inputLineWords[i].toLowerCase().replaceAll(",", "");
+            const elementClear = inputLineWords[i].replaceAll(",", "").replaceAll(".","");
+            console.log(element);
             probability = 0;
             if (cityNamesArray.includes(element)) {
                 probability += 60;
@@ -1317,14 +1318,14 @@ export class AddressParser {
             }
 
             for (let a = 0; a < inputLineWords.length; a++) {
-                const element = inputLineWords[a].toLowerCase();
+                const element = inputLineWords[a].toLowerCase().replaceAll(",", "");
 
-                if (element.startsWith("d-")) {
+                if (element.startsWith(secondCountryCode + "-")) {
                     inputLineWords[a] = element.replace(secondCountryCode + "-", "");
                     probability += 10;
                 }
 
-                if (element.startsWith("de-")) {
+                if (element.startsWith(countryCode + "-")) {
                     inputLineWords[a] = element.replace(countryCode + "-", "");
                     probability += 10;
                 }
@@ -1335,11 +1336,17 @@ export class AddressParser {
                     || element.endsWith("brück")
                     || element.endsWith("burg")
                     || element.endsWith("furt")
-                    || element.endsWith("kirchen")) {
+                    || element.endsWith("kirchen")
+                    || element.endsWith("chester")
+                    || element.endsWith("borough")
+                    || element.endsWith("mouth")
+                    || element.endsWith("bury")
+                    || element.endsWith("wick")) {
                     probability += 20;
                 }
 
             }
+
             //check ob Wort nach dem zip Code der Stadt entspricht die im json eingetragen ist
             if (inputLineWords[i - 1] !== undefined) {
                 wordBefore = inputLineWords[i - 1].toLowerCase();
@@ -1532,7 +1539,6 @@ export class AddressParser {
             if (element.startsWith(vatIdCountryCode)) {
                 // Extrahiere die letzten beiden Zeichen des Elements
                 const lastTwoCharacters = element.slice(-9);
-                console.log('lastTwoCharacters: ', lastTwoCharacters);
 
                 // Überprüfe, ob die letzten neun Zeichen Zahlen sind
                 if (!isNaN(lastTwoCharacters)) {
