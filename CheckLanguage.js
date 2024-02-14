@@ -40,7 +40,6 @@ export class CheckLanguage {
         let englishProbability = 0;
         let language;
         let languageDetection = franc(inputLine);
-        console.log('languageDetection: ', languageDetection);
 
         for (let index = 0; index < email.length; index++) {
             const element = email[index].value;
