@@ -2,7 +2,7 @@
 
 # TODO
 
-## Internationalisierung:
+## Internationalisierung (Deutsch, Niederländisch, Englisch) :
 - [x] Email
 - [x] Homepage
 - [x] language
@@ -20,7 +20,6 @@
 -------------
 
 - [ ] Kommentare
-- [ ] Deutsch, Niederländisch, Englisch
 
 ----------
 
