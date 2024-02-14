@@ -1432,6 +1432,7 @@ export class AddressParser {
                         probability += 20;
                     }
                     tempRegistrationNumber.push(new CheckResult("registrationNumber", wordAfter.replaceAll(",", "").replaceAll(".", ""), probability));
+                    return tempRegistrationNumber;
                 }
                 // auch überprüfen ob die Ausgabe eine Nummer ist, nur ein wort vorher
             } else if (!isNaN(element)) {
@@ -1514,7 +1515,7 @@ export class AddressParser {
                 const lastTwoCharacters = element.slice(-9);
                 console.log('lastTwoCharacters: ', lastTwoCharacters);
 
-                // Überprüfe, ob die letzten beiden Zeichen Zahlen sind
+                // Überprüfe, ob die letzten neun Zeichen Zahlen sind
                 if (!isNaN(lastTwoCharacters)) {
                     // Entferne "de" aus dem Element
                     elementReplaced = element.replace(vatIdCountryCode, "");
