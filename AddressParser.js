@@ -422,7 +422,7 @@ export class AddressParser {
             "general partnership", "gen. partn.",
             "limited partnership", "ltd. partn.",
             "civil law partnership", "clp",
-            "limited", "ltd",
+            "limited", "ltd", "ltd.",
             "entrepreneurial company", "ec",
             "sole trader", "sole trader",
             "private limited company", "plc",
