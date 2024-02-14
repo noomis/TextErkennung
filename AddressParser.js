@@ -1376,7 +1376,7 @@ export class AddressParser {
         let wordBefore;
         const keywordsDE = ["hrb", "hra", "hrg", "hrm", "handelsregisternummer"];
         const keywordsNL = ["kvk", "handelsregisternummer"];
-        const keywordsEN = [""];
+        const keywordsEN = ["crn", "brn", "cin", "bn", "in", "registration"];
         let keywords = keywordsDE;
 
         // Auswahl des passenden Arrays
@@ -1414,7 +1414,7 @@ export class AddressParser {
             }
 
             // wenn nach einem keyword noch nummer folgt, das nächste wort nehmen
-            if (element.includes("nummer")) {
+            if (element.includes("nummer") || element.includes("number")) {
 
                 if (index < inputLineWords.length - 1) {
                     const wordAfter = inputLineWords[index + 1].toLowerCase();
