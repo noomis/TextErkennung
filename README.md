@@ -15,7 +15,7 @@
 - [x] Fax
 - [x] Contact Persons
 - [x] registration number
-- [ ] vat id number
+- [x] vat id number
 - [x] tax number
 -------------
 
