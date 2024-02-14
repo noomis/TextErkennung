@@ -1197,15 +1197,13 @@ export class AddressParser {
 
             zipLoop: for (let i = 0; i < inputLineWords.length; i++) {
                 const element = inputLineWords[i];
-                for (let a = 0; a < onlyNumbers.length; a++) {
-                    const e = onlyNumbers[a];
-                }
-        
+
+                //check, ob element eine 4 stellige Zahl ist 
                 if (element.length === 4 && onlyNumbers.includes(element)) {
                     probability += 20;
                     if (inputLineWordsClear[i + 1] !== undefined) {
                         wordAfter = inputLineWordsClear[i + 1];
-                        if (wordAfter.length === 2 && this.checkCorrectName(wordAfter)) {
+                        if (wordAfter.length === 2 && this.checkCorrectName(wordAfter)) { //check, ob das Wort nach dem Element 2 Zeichen lang ist nur aus Buchstaben erkannt wird
                             probability += 40
                         }
                     }
@@ -1226,20 +1224,22 @@ export class AddressParser {
             }
         }
 
-        if (this.language.languageName === "uk") {
-
-            //neuer Array nur mit 4 stelligen Zahlen 
-            // const onlyNumbers = inputLineWords.filter(element => !isNaN(element) && (element.length === 4 || whiteList.includes(element)));
+        if (this.language.languageName === "eng") {
 
             zipLoop: for (let i = 0; i < inputLineWords.length; i++) {
                 const element = inputLineWords[i];
+                const elementClear = inputLineWordsClear[i];
+                const firstLetter = parseInt(element.charAt(0), 10);
+                const secondLetter = element.charAt(1);
+                const thirdLetter = element.charAt(2);
 
-                if (element.length === 3) {
-                    probability += 20;
+                //checken, ob das erste Zeichen eine Zahl ist, das zweite Zeichen eine Buchstabe ist, check ob das dritte Zeichen eine Buchstabe ist und das element genau 3 Zeichen lang ist
+                if (element.length === 3 && !isNaN(firstLetter) && isNaN(secondLetter) && isNaN(thirdLetter)) {
+                    probability += 40;
                     if (inputLineWordsClear[i - 1] !== undefined) {
                         wordBefore = inputLineWordsClear[i - 1];
-                        if ((wordBefore.length > 2 && wordBefore.length < 4) && whiteList.includes(wordBefore)) {
-                            probability += 40
+                        if ((wordBefore.length >= 2 && wordBefore.length <= 4)) { //check, ob das Wort vorher den UK-PLZ Kriterien entspricht  
+                            probability += 30
                         }
                     }
                 }
@@ -1249,15 +1249,15 @@ export class AddressParser {
                     probability = 100;
                 }
 
-                if (probability > 0 && element.length === 4) {
-                    tempPostalCode.push(new CheckResult("postalCode", element + " " + wordBefore, probability));
+                if (probability > 0 && element.length === 3) {
+                    tempPostalCode.push(new CheckResult("postalCode", wordBefore + " " + elementClear, probability));
 
                 } else {
                     continue zipLoop;
                 }
             }
         }
-        
+
         return tempPostalCode;
     }
 
