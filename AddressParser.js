@@ -1414,18 +1414,18 @@ export class AddressParser {
                 });
             }
 
-            // wenn nach einem keyword noch nummer folgt, das nächste wort nehmen
-            if (element.includes("nummer") || element.includes("number")) {
+            // wenn nach einem keyword noch nummer folgt, das nächste wort nehmen nur nach zahlen überprüfen, wenn keywords enthalten sind
+            if (element.includes("nummer") || element.includes("number") && probability == 80) {
 
                 if (index < inputLineWords.length - 1) {
                     const wordAfter = inputLineWords[index + 1].toLowerCase();
 
                     // überprüfen ob die Ausgabe eine Nummer ist
-                    if (isNaN(wordAfter)) {
+                    if (isNaN(wordAfter) && probability == 80) {
                         continue words;
 
                     } else {
-                        probability += 20;
+                        probability += 25;
                     }
                     tempRegistrationNumber.push(new CheckResult("registrationNumber", wordAfter.replaceAll(",", "").replaceAll(".", ""), probability));
                     return tempRegistrationNumber;
