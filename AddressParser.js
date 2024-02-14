@@ -1483,7 +1483,7 @@ export class AddressParser {
         let vatKeywordsNL = ["btw-nr.", "omzetbelastingnummer"];
         let vatKeywordsGB = ["vat no.", "vat number"];
         let vatKeywordsDE = ["ust.-idnr.", "umsatzsteuer-id"];
-        let vatKeywords;
+        let vatKeywords = vatKeywordsDE;
 
         switch (this.language.languageName) {
 
