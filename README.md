@@ -7,14 +7,14 @@
 - [x] Homepage
 - [x] language
 - [x] CompanyName
-- [ ] PostalCode
+- [x] PostalCode
 - [x] Street
 - [ ] City
 - [x] W3W
 - [x] Phone
 - [x] Fax
 - [x] Contact Persons
-- [ ] registration number
+- [x] registration number
 - [ ] vat id number
 - [x] tax number
 -------------

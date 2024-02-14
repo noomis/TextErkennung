@@ -1379,8 +1379,30 @@ export class AddressParser {
         let inputLineWords = inputLine.split(" ");
         let probability = 0;
         let wordBefore;
+        const keywordsDE = ["hrb", "hra", "hrg", "hrm", "handelsregisternummer"];
+        const keywordsNL = ["kvk", "handelsregisternummer"];
+        const keywordsEN = ["crn", "brn", "cin", "bn", "in", "registration"];
+        let keywords = keywordsDE;
 
-        for (let index = 0; index < inputLineWords.length; index++) {
+        // Auswahl des passenden Arrays
+        switch (this.language.languageName) {
+            case "de":
+                keywords = keywordsDE;
+                break;
+
+            case "nl":
+                keywords = keywordsNL;
+                break;
+
+            case "eng":
+                keywords = keywordsEN;
+                break;
+
+            default:
+                break;
+        }
+
+        words: for (let index = 0; index < inputLineWords.length; index++) {
             const element = inputLineWords[index];
             probability = 0;
 
@@ -1388,14 +1410,40 @@ export class AddressParser {
             if (index !== 0) {
                 wordBefore = inputLineWords[index - 1].toLowerCase();
 
-                if (wordBefore.startsWith("hrb") || wordBefore.startsWith("hra") || wordBefore.startsWith("hrg") || wordBefore.startsWith("hrm")) {
-                    probability = +50;
+                keywords.forEach(keyword => {
+
+                    if (wordBefore.startsWith(keyword)) {
+                        probability += 80;
+                    }
+                });
+            }
+
+            // wenn nach einem keyword noch nummer folgt, das nächste wort nehmen
+            if (element.includes("nummer") || element.includes("number")) {
+
+                if (index < inputLineWords.length - 1) {
+                    const wordAfter = inputLineWords[index + 1].toLowerCase();
+
+                    // überprüfen ob die Ausgabe eine Nummer ist
+                    if (isNaN(wordAfter)) {
+                        continue words;
+
+                    } else {
+                        probability += 20;
+                    }
+                    tempRegistrationNumber.push(new CheckResult("registrationNumber", wordAfter.replaceAll(",", "").replaceAll(".", ""), probability));
                 }
+                // auch überprüfen ob die Ausgabe eine Nummer ist, nur ein wort vorher
+            } else if (!isNaN(element)) {
+                probability += 20;
+            } else {
+                continue words;
             }
 
             if (probability > 100) {
                 probability = 100;
             }
+
             //Objekt Erstellung / Output            
             if (probability > 0) {
                 tempRegistrationNumber.push(new CheckResult("registrationNumber", element.replaceAll(",", "").replaceAll(".", ""), probability));
