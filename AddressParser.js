@@ -1483,10 +1483,10 @@ export class AddressParser {
             const element = inputLineWords[index].toLowerCase();
 
             if (element.startsWith("de")) {
-                // Extrahiere die letzten beiden Zeichen des Elements
-                const lastTwoCharacters = element.slice(-2);
+                // Extrahiere die letzten neun Zeichen des Elements
+                const lastTwoCharacters = element.slice(-9);
 
-                // Überprüfe, ob die letzten beiden Zeichen Zahlen sind
+                // Überprüfe, ob die letzten neun Zeichen Zahlen sind
                 if (!isNaN(lastTwoCharacters)) {
                     // Entferne "de" aus dem Element
                     elementReplaced = element.replace("de", "");
