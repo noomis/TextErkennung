@@ -1,6 +1,6 @@
 export class Address {
 
-    constructor(_companyName, _postalCode, _street, _city, _homepage, _w3wAddress, _emails, _phoneNumbers, _faxNumbers, _contactPersons, _companyRegistrationNumber, _vatIdNumber, _taxNumber, _language) {
+    constructor(_companyName,_postalCode,_street,_city,_homepage,_w3wAddress,_emails,_phoneNumbers,_faxNumbers,_contactPersons,_companyRegistrationNumber,_vatIdNumber,_taxNumber,_language) {
         this.companyName = _companyName;
         this.postalCode = _postalCode;
         this.street = _street;
@@ -17,7 +17,7 @@ export class Address {
         this.language = _language;
     }
 
-    getLanguage() {
+    getLanguage(){
         return this.language;
     }
 
@@ -154,11 +154,11 @@ export class Address {
                 break;
         }
 
+        $("#" + html_id).val(""); //feld clearen
         let firstValue = true;
         for (let index = 0; index < objectArray.length; index++) {
             let object = objectArray[index];
             let newId = object.name;
-            //wenn Slider-Wahrscheinlichkeit kleiner oder gleich dem des Wertes im Array entspricht ausgeben
                 if (firstValue) {
                     $("#" + html_id).val(object.value).hide().fadeIn(fadeTime); // setzen des ersten Wertes in vorhandenes Feld
                 }
@@ -175,6 +175,7 @@ export class Address {
     }
 
     outputMaxValues(html_id) {
+        $("#" + html_id).val(""); //feld clearen
         let fadeTime = 0;
         let objectArray = [];
         switch (html_id) {
@@ -223,9 +224,9 @@ export class Address {
         }
 
         let maxValue = this.findMaxPercentage(objectArray);
-        //Output ins HTML
-        $("#" + html_id).val(maxValue.value).hide().fadeIn(fadeTime);
 
+            $("#" + html_id).val(maxValue.value).hide().fadeIn(fadeTime);
+        
     }
 
     findMaxPercentage(Array) {
