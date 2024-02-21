@@ -138,7 +138,6 @@ export class CheckLanguage {
         }
         // Call the function to find the most probable language
         possibleLanguage = this.findMostProbableLanguage();
-        console.log('possibleLanguage: ', possibleLanguage);
         return possibleLanguage;
     }
 }
