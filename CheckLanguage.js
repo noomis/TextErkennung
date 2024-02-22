@@ -13,15 +13,16 @@ export class CheckLanguage {
 
     findMostProbableLanguage() {
         // Start with a value lower than any probability
-        let maxProbability = 1; 
+        let maxProbability = 1;
         let mostProbableLanguage = "de";
 
         // Iterate through the languages array
         this.languages.forEach(language => {
-
+            //check welche Language am Wahrscheinlichsten ist
             if (language.languageProbability > maxProbability) {
                 maxProbability = language.languageProbability;
                 mostProbableLanguage = language;
+                //rundungen um nicht über 100% zu sein
                 if (language.languageProbability > 100) {
                     language.languageProbability = 100;
                 }
@@ -39,8 +40,9 @@ export class CheckLanguage {
         let dutchProbability = 0;
         let englishProbability = 0;
         let language;
+        //Funktionions Aufruf externer Library (Franc) 
         let languageDetection = franc(inputLine);
-
+        //checken, ob die email mit gewisser TLD endet um Land genauer zu bestimmen
         for (let index = 0; index < email.length; index++) {
             const element = email[index].value;
 
@@ -100,7 +102,7 @@ export class CheckLanguage {
             }
         }
         if (inputLine !== "") {
-
+            //Library stellt anhand geschriebenen Textes die Sprache fest und gibt dann Prozente 
             if (languageDetection == "deu") {
                 germanProbability += 30;
             }
@@ -112,7 +114,7 @@ export class CheckLanguage {
             if (languageDetection == "nld") {
                 dutchProbability += 20;
             }
-
+            //push der Sprache mit Probability in den Array
             this.languages.push(
                 language = {
                     languageName: "nl",
@@ -136,7 +138,6 @@ export class CheckLanguage {
         }
         // Call the function to find the most probable language
         possibleLanguage = this.findMostProbableLanguage();
-        console.log('possibleLanguage: ', possibleLanguage);
         return possibleLanguage;
     }
 }
