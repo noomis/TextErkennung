@@ -172,7 +172,7 @@ export class AddressParser {
                 continue;
             }
 
-            // bei genau zwei Punkten die Zeile dannach aufteilen und die länge der einezelenen Wörter überprüfen
+            // bei zwei Punkten die Zeile dannach aufteilen und die länge der einezelenen Wörter überprüfen
             if (countDot == 2) {
                 let wordLength = inputLineWords[i].split(".");
 
@@ -190,14 +190,14 @@ export class AddressParser {
                 continue;
             }
 
-            // überprüfen ob 2 Punkte
+            // überprüfen ob 2 Punkte vorhanden sind
             if (countDot == 2) {
                 probability += 20;
             }
 
             if (i !== 0) {
                 let wordBefore = inputLineWords[i - 1].toLowerCase();
-                // Checkt ob vor der w3w z.B. w3w steht.
+                // Checkt ob vor der w3w-Adresse z.B. w3w steht.
                 if (wordBefore.includes("w3w") || wordBefore.includes("what 3 words") || wordBefore.includes("what3words") ||
                     wordBefore.includes("position") || wordBefore.includes("///")) {
                     probability += 15;
@@ -888,10 +888,9 @@ export class AddressParser {
         const stringStreetBeginningsEN = ["Maple", "lake", "river"];
         const whiteList = "abcdefghijklmnopqrstuvwxyz".split("");
         let streetNames = streetNamesDE;
-        // const blackListCompanyTypeDE = "";
-        // TODO blacklist ändern und mit ganzer Zeile vergleichen
         let blackList = ["@", "mail", "www.", "https", "http"];
-        let blackListCompanyTypeDE = [   // deutsche Unternehmensformen
+        // deutsche Unternehmensformen
+        let blackListCompanyTypeDE = [
             "einzelunternehmen",
             "gesellschaft mit beschränkter haftung",
             "aktiengesellschaft",
@@ -910,8 +909,8 @@ export class AddressParser {
             "ug",
             "e.v.",
             "gemeinde"];
-
-        const blackListCompanyTypeEN = [    // englische Unternehmensformen
+        // englische Unternehmensformen
+        const blackListCompanyTypeEN = [
             "sole proprietorship", "sole prop.",
             "limited liability company", "llc",
             "corporation", "corp.",
@@ -926,8 +925,8 @@ export class AddressParser {
             "non-profit association", "non-profit assoc.",
             "municipality", "muni"
         ];
-
-        const blackListCompanyTypeNL = [ // niederländische Unternehmensformen
+        // niederländische Unternehmensformen
+        const blackListCompanyTypeNL = [
             "eenmanszaak", "eenm.",
             "besloten vennootschap", "bv", "b.v.",
             "naamloze vennootschap", "nv",
@@ -944,7 +943,6 @@ export class AddressParser {
             "non-profit organisatie", "non-profit org.",
             "gemeente", "gemeente"
         ];
-
         let stringStreetBeginnings = stringStreetBeginningsDE;
         let num = 0;
         let fullStreetName = "";
@@ -976,7 +974,7 @@ export class AddressParser {
 
         words: for (let i = 0; i < inputLineWords.length; i++) {
 
-            // Checkt ob das aktuelle Wort einer Unternehmensform entspricht
+            // Checkt ob das aktuelle Wort einer Unternehmensform entspricht und diese überspringen
             for (let index = 0; index < blackList.length; index++) {
                 const e = blackList[index];
 
@@ -985,7 +983,7 @@ export class AddressParser {
                 }
             }
 
-            // Zeile nach Keywords durchsuchen
+            // Zeile nach Keywords durchsuchen wie straße usw.
             for (let sNames = 0; sNames < streetNames.length; sNames++) {
 
                 if (inputLineWords[i].includes(streetNames[sNames])) {
@@ -1061,19 +1059,18 @@ export class AddressParser {
 
                 words: for (let m = 0; m < inputLineWords.length; m++) {
 
+                    // wenn der Vergleich, ob ein Satz mit etwas startet dessen Keyword mehr als nur ein Wort lang ist
                     if (matchingWords.length == 1) {
 
-                        if (inputLineWords[m] == matchingWords[0]) {
-                            // continue
-                        } else {
+                        // das Wort ermittlen, welches aus der Zeile mit dem Keyword matcht
+                        if (!inputLineWords[m] == matchingWords[0]) {
                             continue words;
                         }
 
                     } else {
 
-                        if (inputLineWords[m] == matchingWords[1] && inputLineWords[m - 1] == matchingWords[0]) {
-                            // continue
-                        } else {
+                        // das Wort ermittlen, welches aus der Zeile mit dem Keyword matcht
+                        if (!(inputLineWords[m] == matchingWords[1] && inputLineWords[m - 1] == matchingWords[0])) {
                             continue words;
                         }
                     }
