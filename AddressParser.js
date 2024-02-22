@@ -484,8 +484,6 @@ export class AddressParser {
 
         }
 
-
-
         wordLoop: for (let index = 0; index < inputLineWords.length; index++) {
             const element = inputLineWords[index];
 
@@ -517,10 +515,7 @@ export class AddressParser {
             }
         });
 
-
-            tempCheckCompanyNames.push(new CheckResult("companyName", inputLineClear, wordProb));
-        
-
+        tempCheckCompanyNames.push(new CheckResult("companyName", inputLineClear, wordProb));
         return tempCheckCompanyNames;
     }
 
@@ -641,7 +636,7 @@ export class AddressParser {
         return tempNames;
     }
 
-    checkFax(inputLine) { 
+    checkFax(inputLine) {
         let tempFax = [];
         let fullNumber = "";
         inputLine = inputLine.toLowerCase();
@@ -893,6 +888,63 @@ export class AddressParser {
         const stringStreetBeginningsEN = ["Maple", "lake", "river"];
         const whiteList = "abcdefghijklmnopqrstuvwxyz".split("");
         let streetNames = streetNamesDE;
+        // const blackListCompanyTypeDE = "";
+        // TODO blacklist ändern und mit ganzer Zeile vergleichen
+        let blackList = ["@", "mail", "www.", "https", "http"];
+        let blackListCompanyTypeDE = [   // deutsche Unternehmensformen
+            "einzelunternehmen",
+            "gesellschaft mit beschränkter haftung",
+            "aktiengesellschaft",
+            "offene handelsgesellschaft",
+            "kommanditgesellschaft",
+            "gesellschaft bürgerlichen rechts",
+            "limited",
+            "unternehmergesellschaft",
+            "e.k.",
+            "gmbh",
+            "ag",
+            "ohg",
+            "kg",
+            "gbr",
+            "ltd.",
+            "ug",
+            "e.v.",
+            "gemeinde"];
+
+        const blackListCompanyTypeEN = [    // englische Unternehmensformen
+            "sole proprietorship", "sole prop.",
+            "limited liability company", "llc",
+            "corporation", "corp.",
+            "general partnership", "gen. partn.",
+            "limited partnership", "ltd. partn.",
+            "civil law partnership", "clp",
+            "limited", "ltd", "ltd.",
+            "entrepreneurial company", "ec",
+            "sole trader", "sole trader",
+            "private limited company", "plc",
+            "public limited company", "plc",
+            "non-profit association", "non-profit assoc.",
+            "municipality", "muni"
+        ];
+
+        const blackListCompanyTypeNL = [ // niederländische Unternehmensformen
+            "eenmanszaak", "eenm.",
+            "besloten vennootschap", "bv", "b.v.",
+            "naamloze vennootschap", "nv",
+            "vennootschap onder firma", "vof",
+            "commanditaire vennootschap", "cv",
+            "maatschap", "maatschap",
+            "limited", "limited",
+            "ondernemerschap", "ondernemerschap",
+            "eenmanszaak", "eenm.",
+            "besloten vennootschap", "bv",
+            "naamloze vennootschap", "nv",
+            "vennootschap onder firma", "vof",
+            "commanditaire vennootschap", "cv",
+            "non-profit organisatie", "non-profit org.",
+            "gemeente", "gemeente"
+        ];
+
         let stringStreetBeginnings = stringStreetBeginningsDE;
         let num = 0;
         let fullStreetName = "";
@@ -903,16 +955,19 @@ export class AddressParser {
             case "de":
                 streetNames = streetNamesDE;
                 stringStreetBeginnings = stringStreetBeginningsDE;
+                blackList = blackList.concat(blackListCompanyTypeDE);
                 break;
 
             case "nl":
                 streetNames = streetNamesNL;
                 stringStreetBeginnings = stringStreetBeginningsNL;
+                blackList = blackList.concat(blackListCompanyTypeNL);
                 break;
 
             case "eng":
                 streetNames = streetNamesEN;
                 stringStreetBeginnings = stringStreetBeginningsEN;
+                blackList = blackList.concat(blackListCompanyTypeEN);
                 break;
 
             default:
@@ -920,6 +975,15 @@ export class AddressParser {
         }
 
         words: for (let i = 0; i < inputLineWords.length; i++) {
+
+            // Checkt ob das aktuelle Wort einer Unternehmensform entspricht
+            for (let index = 0; index < blackList.length; index++) {
+                const e = blackList[index];
+
+                if (inputLineWords[i].includes(e)) {
+                    return tempStreet;
+                }
+            }
 
             // Zeile nach Keywords durchsuchen
             for (let sNames = 0; sNames < streetNames.length; sNames++) {
@@ -1520,7 +1584,7 @@ export class AddressParser {
                 break;
 
             default:
-                break; 
+                break;
 
         }
 
