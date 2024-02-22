@@ -395,7 +395,7 @@ export class AddressParser {
         let wordProb = 0; // Treffer Wahrscheinlichkeit
         let tempCheckCompanyNames = [];
         const knownTLD = ["com", "net", "org", "de", "eu", "at", "ch", "nl", "pl", "fr", "es", "info", "name", "email", "co", "biz"];
-        const companyTypeGerman = [
+        const companyTypeGerman = [ // deutsche Unternehmensformen
             "einzelunternehmen",
             "gesellschaft mit beschränkter haftung",
             "aktiengesellschaft",
@@ -416,7 +416,7 @@ export class AddressParser {
             "gemeinde"
         ];
 
-        const companyTypeEnglish = [
+        const companyTypeEnglish = [    // englische Unternehmensformen
             "sole proprietorship", "sole prop.",
             "limited liability company", "llc",
             "corporation", "corp.",
@@ -432,7 +432,7 @@ export class AddressParser {
             "municipality", "muni"
         ];
 
-        const companyTypeDutch = [
+        const companyTypeDutch = [ // niederländische Unternehmensformen
             "eenmanszaak", "eenm.",
             "besloten vennootschap", "bv", "b.v.",
             "naamloze vennootschap", "nv",
@@ -462,7 +462,7 @@ export class AddressParser {
         let companyType = companyTypeGerman;
         let companyKeyWords = companyKeyWordsGerman;
 
-        switch (this.language.languageName) {
+        switch (this.language.languageName) {   // je nach Land die jeweiligen Arrays festlegen
 
             case "de":
                 companyType = companyTypeGerman;
@@ -489,21 +489,21 @@ export class AddressParser {
         wordLoop: for (let index = 0; index < inputLineWords.length; index++) {
             const element = inputLineWords[index];
 
-            if (element.includes('@')) { // Checkt String mit @ beginnt
+            if (element.includes('@')) { // Checkt ob String mit @ beginnt
                 return tempCheckCompanyNames;
             }
 
-            if (element.includes('(at)')) { // Checkt String mit @ beginnt
+            if (element.includes('(at)')) { // Checkt ob String mit @ beginnt
                 return tempCheckCompanyNames;
             }
             for (let i = 0; i < knownTLD.length; i++) {
                 const el = knownTLD[i];
-                if (element.startsWith("www.") && element.endsWith(el)) {
+                if (element.startsWith("www.") && element.endsWith(el)) { // checkt ob das aktulle Wort eine URL ist
                     return tempCheckCompanyNames;
                 }
             }
 
-            companyType.forEach(e => {
+            companyType.forEach(e => { // Checkt ob das aktuelle Wort einer Unternehmensform entspricht
 
                 if (element == e) {
                     wordProb += 50;
@@ -511,16 +511,15 @@ export class AddressParser {
             });
         }
 
-        companyKeyWords.forEach(element => {
+        companyKeyWords.forEach(element => { // Checkt ob das aktuelle Wort einem Company Keyword entspricht z.B. Malerei, Straßenbau usw.
             if (inputLine.includes(element)) {
                 wordProb += 50;
             }
         });
 
-        if (wordProb >= 50) {
 
             tempCheckCompanyNames.push(new CheckResult("companyName", inputLineClear, wordProb));
-        }
+        
 
         return tempCheckCompanyNames;
     }
@@ -642,7 +641,7 @@ export class AddressParser {
         return tempNames;
     }
 
-    checkFax(inputLine) {
+    checkFax(inputLine) { 
         let tempFax = [];
         let fullNumber = "";
         inputLine = inputLine.toLowerCase();
@@ -767,7 +766,6 @@ export class AddressParser {
         const languageAreaCodeDE = "+49";
         const languageAreaCodeNL = "+31";
         const languageAreaCodeEN = "+44";
-        // TODO nummern für innerhalb erkennen z.B. London 020 anstatt 0
 
         // Auswahl der passenden Vorwahl nach der erkannten Sprache
         switch (this.language.languageName) {
@@ -787,14 +785,14 @@ export class AddressParser {
                 break;
         }
 
-        words: for (let i = 0; i < inputLineWords.length; i++) {
+        words: for (let i = 0; i < inputLineWords.length; i++) { // for Schleife zum durchlaufen aller Wörter in der übergebenen Zeile
 
 
             let inputLineChars = inputLineWords[i].split("");
 
-            for (let index = 0; index < inputLineChars.length; index++) {
+            for (let index = 0; index < inputLineChars.length; index++) { // for Schleife zum durchlaufen aller Character im aktuellen Wort
 
-                // Überprüfen, ob die Eingabe keiner Nummer entspricht
+                // Überprüfen, ob die Eingabe einer Nummer entspricht
                 if (!whiteList.includes(inputLineChars[index])) {
 
                     // Falls nach einer Nummer ein Wort kommt, wird die bisher gespeicherte Nummer ausgegeben
@@ -1499,6 +1497,7 @@ export class AddressParser {
         let vatKeywordsDE = ["ust.-idnr.", "umsatzsteuer-id"];
         let vatKeywords = vatKeywordsDE;
 
+        // Auswahl des Keyword Arrays nach Sprache
         switch (this.language.languageName) {
 
             case "de":
@@ -1517,7 +1516,7 @@ export class AddressParser {
                 break;
 
             default:
-                break;
+                break; 
 
         }
 
@@ -1714,7 +1713,7 @@ export class AddressParser {
         // neuen Array mit elementen befüllen die eine größerer Wkeit als die Übergebne haben
         array.forEach(element => {
             if (element.probability >= this.outputPercentage) {
-                if (element.probability > 100) {
+                if (element.probability > 100) { // Setzt alle Wahrscheinlichkeiten > 100% auf 100% runter
                     element.probability = 100;
                 }
                 if (this.checkForDuplicates(tempArray, element)) { // element wird nur hinzugefügt wenn es nicht schon existiert (keine Dopplungen)
