@@ -926,7 +926,11 @@ export class AddressParser {
                 if (inputLineWords[i].includes(streetNames[sNames])) {
                     fullStreetName = inputLine.toLowerCase();
                     fullStreetNameClear = inputLine;
-                    probability += 40;
+
+                    // wenn zwei keywords in einer zeile vorkommen wird nur einer angerechnet
+                    if (probability < 40) {
+                        probability += 40;
+                    }
 
                     if (i + 1 < inputLineWords.length) {
                         let wordAfter = inputLineWords[i + 1].toLowerCase();
