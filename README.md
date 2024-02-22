@@ -19,7 +19,6 @@
 - [x] tax number
 -------------
 
-- [ ] Kommentare
 
 ----------
 
@@ -41,3 +40,4 @@
 - [x] index setter in AddressParser auslagern
 - [x] Telefonnummern keine Blacklist sondern Whitelist
 - [x] Methode fürs erkennen der Sprache  aus der Eingabe
+- [x] Kommentare
