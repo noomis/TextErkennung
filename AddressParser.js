@@ -1477,7 +1477,7 @@ export class AddressParser {
             }
 
             //Objekt Erstellung / Output            
-            if (probability > 0) {
+            if (probability > 0 && element.length == 5) {
                 tempRegistrationNumber.push(new CheckResult("registrationNumber", element.replaceAll(",", "").replaceAll(".", ""), probability));
             }
         }
