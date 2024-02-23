@@ -24,7 +24,8 @@ export class AddressParser {
     constructor(language = null, outputPercentage) {
 
         if (!language) {
-            this.language = "de" //default language = "de"
+            //default language = "de"
+            this.language = "de"
 
         } else {
             this.language = language;
@@ -96,7 +97,8 @@ export class AddressParser {
 
 
     parseText(input) {
-        let inputLines = input.split("\n"); // Eingabe nach Zeilen aufteilen
+        //Split input by lines
+        let inputLines = input.split("\n");
         inputLines.forEach(input => {
 
             this.w3wAddressCheck = this.w3wAddressCheck.concat(this.checkW3ws(input));
@@ -127,7 +129,7 @@ export class AddressParser {
 
         });
 
-        // Address Object wird erstellt den Informationen, die mindestens der vorgebenen Wahrscheinlichkeit entsprechen
+        //Address Object is created with information that at least corresponds to the specified probability
         let addressObject = new Address(this.filterResults(this.companyNamesCheck), this.filterResults(this.postalCodeCheck), this.filterResults(this.streetsCheck), this.filterResults(this.citysCheck), this.filterResults(this.homepageCheck), this.filterResults(this.w3wAddressCheck), this.filterResults(this.emailsCheck), this.filterResults(this.phoneNumbersCheck), this.filterResults(this.faxNumbersCheck), this.filterResults(this.contactPersonsCheck), this.filterResults(this.companyRegistrationNumberCheck), this.filterResults(this.vatIdNumberCheck), this.filterResults(this.taxNumberCheck), this.language)
         console.log(addressObject);
 
@@ -148,10 +150,10 @@ export class AddressParser {
 
             for (let index = 0; index < lineChars.length; index++) {
 
-                // Überprüfen, ob die Buchstaben valide sind indem sie der Liste entsprechen
+                //Check if the letters are valid by matching the list
                 if (!whiteList.includes(lineChars[index])) {
 
-                    // Bei einem Link zur w3w Adresse, den Verzeichnis Pfad der Url herausnehmen und damit weiter durchlaufen
+                    //For a link to the w3w address, remove the directory path of the url and continue through with the rest of it
                     if (inputLineWords[i].includes("https://what3words.com/") || inputLineWords[i].includes("https://w3w.co/")) {
                         let w3wUrl = inputLineWords[i].split("/");
                         inputLineWords[i] = w3wUrl[w3wUrl.length - 1];
@@ -167,12 +169,12 @@ export class AddressParser {
                 }
             }
 
-            // Url ausschließen
+            //exclude url
             if (inputLineWords[i].includes("www")) {
                 continue;
             }
 
-            // bei zwei Punkten die Zeile dannach aufteilen und die länge der einezelenen Wörter überprüfen
+            //If there are two points, then split the line and check the length of the individual words
             if (countDot == 2) {
                 let wordLength = inputLineWords[i].split(".");
 
@@ -180,7 +182,7 @@ export class AddressParser {
                     if (wordLength[t].length < 2) {
                         return tempW3w;
 
-                        // Max länge eines w3w Wortes
+                        //Max length of a w3w word
                     } else if (wordLength[t].length <= 24) {
                         probability += 20;
                     }
@@ -190,14 +192,14 @@ export class AddressParser {
                 continue;
             }
 
-            // überprüfen ob 2 Punkte vorhanden sind
+            //check if there are 2 points in the word
             if (countDot == 2) {
                 probability += 20;
             }
 
             if (i !== 0) {
                 let wordBefore = inputLineWords[i - 1].toLowerCase();
-                // Checkt ob vor der w3w-Adresse z.B. w3w steht.
+                //Checks whether the w3w address is preceded by w3w, for example.
                 if (wordBefore.includes("w3w") || wordBefore.includes("what 3 words") || wordBefore.includes("what3words") ||
                     wordBefore.includes("position") || wordBefore.includes("///")) {
                     probability += 15;
@@ -215,27 +217,29 @@ export class AddressParser {
     }
 
     checkHomepage(inputLine) {
-        //alle wörter klein und in neuen array
+        //all words to lowercase and in new array addden
         let inputLineWords = inputLine.toLowerCase().split(" ");
         let tempUrl = [];
         let knownTLD = ["com", "net", "org", "de", "eu", "at", "ch", "nl", "pl", "fr", "es", "info", "name", "email", "co", "biz", "uk"];
 
-        //for-Schleife die alle Worte vom Input durchläuft
+        //for loop that loops through all words from the input
         for (let i = 0; i < inputLineWords.length; i++) {
             const element = inputLineWords[i];
             let probability = 0;
 
             for (const tld of knownTLD) {
-                if (element.endsWith("." + tld || element.endsWith("." + tld + "/"))) { //increase prob if element endsWith known Top Level Domain
+                //increase prob if element endsWith known Top Level Domain
+                if (element.endsWith("." + tld || element.endsWith("." + tld + "/"))) {
                     probability += 20;
                 }
 
-                if (element.includes("." + tld)) { //increase prob if element includes known Top Level Domain
+                //increase prob if element includes known Top Level Domain
+                if (element.includes("." + tld)) {
                     probability += 10;
                 }
             }
 
-            //überprüfung ob gewisse Kriterien erfüllt sind
+            //check whether certain criteria are met
             if (element.startsWith("http")) {
                 probability += 30;
             }
@@ -243,7 +247,7 @@ export class AddressParser {
             if (element.includes("://")) {
                 probability += 10;
             }
-            //checken, wie viele Punkte im array enthalten sind, um unzulässige urls rauszufischen
+            //check how many points are in the array to filter out invalid URLs
             const dots = element.split(".");
 
             if (element.includes("www.")) {
@@ -252,8 +256,9 @@ export class AddressParser {
                     probability += 40
                 }
             }
-            //falls keine bzw. nur 1 Punkt im Array enthalten ist, wird die prob auf 0 gesetzt.
+            //if there are no or only 1 point in the array, the prob is set to 0.
             if (dots.length <= 2) {
+                //TODO veilleicht auch returnen?
                 probability = 0;
             }
 
@@ -261,17 +266,17 @@ export class AddressParser {
             if (i !== 0) {
                 let wordBefore = inputLineWords[i - 1].toLowerCase();
 
-                // Checkt ob vor der URL bestimmte Keywords stehen
+                //Checks whether certain keywords appear before the URL
                 if (wordBefore.includes("url") || wordBefore.includes("website") || wordBefore.includes("homepage") || wordBefore.includes("internet")) {
                     probability += 20;
                 }
             }
-            //checken, ob gewisse unerlaubt begriffe im element enthalten sind
+            //check whether certain illegal terms are contained in the element
             if (element.includes("ö") || element.includes("ü") || element.includes("ß") || element.includes("ä") || element.includes("@") || element.includes("(at)")) {
                 return tempUrl;
             }
 
-            //Runden
+            //round
             if (probability > 100) {
                 probability = 100;
             }
@@ -279,7 +284,7 @@ export class AddressParser {
             if (probability < 0) {
                 probability = 0;
             }
-            //Ausgabe-Objekt erstellen bei elementen mit mehr als 0 %
+            //Create output object for elements with more than 0%
             if (probability > 0) {
                 tempUrl.push(new CheckResult("homepage", element, probability));
             }
@@ -295,69 +300,80 @@ export class AddressParser {
         let inputLineWords = inputLine.split(" ");
 
         wordLoop: for (let index = 0; index < inputLineWords.length; index++) {
-            let wordProb = 0; // Treffer Wahrscheinlichkeit
-            let atHit = []; // Anzahl von @ im String
-            let dotHit = []; //  Anzahl von . im String
-            let hasTLD = false; //  hat TLD Domain
+            let wordProb = 0; //Hit probability
+            let atHit = []; //Number of @ in the string
+            let dotHit = []; // Number of . in the string
+            let hasTLD = false; // hat TLD Domain
 
             const element = inputLineWords[index];
-            let wordChars = element.split("");  //Splittet jedes Wort in einzelne Chars
+            //Splits each word into individual chars
+            let wordChars = element.split("");
 
+            //Checks whether TLD exists
             knownTLD.forEach(tld => {
-                if (element.endsWith("." + tld)) {  // Checkt ob TLD vorhanden ist
+                if (element.endsWith("." + tld)) {
                     hasTLD = true;
                 }
             });
 
-            if (element.startsWith('@')) { // Checkt String mit @ beginnt
+            //Checks if string starting with @
+            if (element.startsWith('@')) {
                 continue wordLoop;
             } else {
                 wordProb += 5;
             }
 
-            if (element.startsWith('.')) { // Checkt String mit @ beginnt
+            //Checks if string starting with @
+            if (element.startsWith('.')) {
                 continue wordLoop;
             } else {
                 wordProb += 5;
             }
 
-            if (element.length < 6) {   // Checkt ob mindestens 6 Zeichen vorhanden sind
+            //Checks whether there are at least 6 characters
+            if (element.length < 6) {
                 continue wordLoop;
             } else {
                 wordProb += 10;
             }
 
-            charLoop: for (let i = 0; i < wordChars.length; i++) {  // Schleife um jeden Character eines Wortes zu durchlaufen
+            //Loop to iterate through each character of a word
+            charLoop: for (let i = 0; i < wordChars.length; i++) {
                 const element = wordChars[i];
 
                 if (element === "@" || (wordChars[i] == "(" && wordChars[i + 1] == "a" && wordChars[i + 2] == "t" && wordChars[i + 3] == ")" || (wordChars[i] == "[" && wordChars[i + 1] == "a" && wordChars[i + 2] == "t" && wordChars[i + 3] == "]"))) {  // countet @
                     atHit.push(i);
                 }
 
-                if (element === ".") {  // countet .
+                // counts dots
+                if (element === ".") {
                     dotHit.push(i);
 
-                    if (wordChars[i + 1] === ".") {  // verhindert aufeinander folgende Punkte.
+                    //prevents consecutive points.
+                    if (wordChars[i + 1] === ".") {
                         continue wordLoop;
                     }
                 }
             }
 
-            if (atHit.length !== 1) {   // checkt ob genau ein @ vorhanden ist.
+            //checks whether exactly one @ is present.
+            if (atHit.length !== 1) {
                 continue wordLoop;
             } else {
                 wordProb += 25;
             }
 
-            if (dotHit.length == 0) {   // checkt ob mindestens ein Punkt vorhanden ist.
+            //checks whether at least one point is present.
+            if (dotHit.length == 0) {   
                 continue wordLoop;
             } else {
                 wordProb += 5;
             }
 
-            if (dotHit.length > 1) {    // Checkt ob die local domain mindestens 2 Zeichen lang ist.
+            //TODO continue comments change to english
+            //Checks whether the local domain is at least 2 characters long.
+            if (dotHit.length > 1) {   
                 if (dotHit[dotHit.length - 1] - atHit[0] < 3) {
-
                     continue wordLoop;
 
                 } else {
@@ -1589,7 +1605,7 @@ export class AddressParser {
             const element = tempInputWords[index].toLowerCase();
             if (element.startsWith(vatIdCountryCode)) {
                 tempInputWords[index] = element.replace(vatIdCountryCode, "");
-                probability +=10;
+                probability += 10;
             }
         }
         const onlyNumbers = tempInputWords.filter(element => !isNaN(element));
