@@ -883,7 +883,6 @@ export class AddressParser {
         const streetNamesDE = ["str.", "stra", "weg", "allee", "gasse", "ring", "platz", "pfad", "feld", "hof", "berg"];
         const streetNamesNL = ["straat", "weg", "hof", "straat", "pad", "burg", "plein", "hoven"];
         const streetNamesEN = ["road", "street", "avenue", "lane", "boulevard", "way", "alley", "hill", "lane"];
-        // let restStreetNames = ["promenade", "chaussee", "boulevard", "stieg", "kamp", "wiesen", "lanen", "grachten", "singels"];
         const stringStreetBeginningsDE = ["an der", "zu den", "in der", "in den", "im ", "auf den", "auf der", "am ", "an den", "auf dem", "zur "];
         const stringStreetBeginningsNL = ["de", "het"];
         const stringStreetBeginningsEN = ["Maple", "lake", "river"];
