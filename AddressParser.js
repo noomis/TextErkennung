@@ -1082,7 +1082,7 @@ export class AddressParser {
                         // checkt ob nach der Straße eine Hausnummer kommt
                         for (let b = 0; b < inputLineWords[m + 2].length; b++) {
 
-                            if (whiteList.includes(inputLineWords[m + 2][b])) {
+                            if (!whiteList.includes(inputLineWords[m + 2][b])) {
                                 num++;
                             }
                         }
