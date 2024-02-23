@@ -514,7 +514,8 @@ export class AddressParser {
                 wordProb += 50;
             }
         });
-
+        inputLineClear = inputLineClear.replace('Name', ''); // Entfernt den Titel "Name" aus z.B. SelectLine 
+        console.log('inputLineClear: ', inputLineClear);
         tempCheckCompanyNames.push(new CheckResult("companyName", inputLineClear, wordProb));
         return tempCheckCompanyNames;
     }
@@ -1132,6 +1133,8 @@ export class AddressParser {
         }
 
         if (fullStreetName.trim().length != 0 && probability != 0) {
+            fullStreetNameClear = fullStreetNameClear.replace('Straße', ''); // Entfernt den Titel "Name" aus z.B. SelectLine 
+
             tempStreet.push(new CheckResult("street", fullStreetNameClear, probability));
         }
 
