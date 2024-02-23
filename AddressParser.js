@@ -1424,8 +1424,9 @@ export class AddressParser {
 
                 const onlyNumbers = inputLineWords.filter(element => !isNaN(element));
                 const onlyFiveDigitNumbers = onlyNumbers.filter(element => element.length === 5 && element >= 10000 && element <= 99999);
-
-                if (onlyFiveDigitNumbers.includes(wordBefore)) {
+                if (postalCode.includes(wordBefore)) {
+                    probability += 30;
+                } else if (onlyFiveDigitNumbers.includes(wordBefore)) {
                     probability += 20;
                 }
 
@@ -1434,9 +1435,7 @@ export class AddressParser {
                     probability = 15;
                 }
 
-                if (postalCode.includes(wordBefore)) {
-                    probability += 30;
-                }
+
             }
             //checken, ob citys bereits ein Objekt haben, um Doppelungen zu vermeiden
             //hier um InLine Dopplungen rauzufiltern
