@@ -59,7 +59,6 @@ function printResult() {
 
 document.getElementById("random").addEventListener("click", randomImprint);
 
-
 window.addEventListener("load", async () => {
 
     // (A) GET HTML ELEMENTS
