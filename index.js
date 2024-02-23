@@ -101,7 +101,7 @@ function randomImprint() {
 
     if (i <= imprint.length - 1) {
         document.getElementById("text").value = imprint[i];
-
+        
     } else {
         i = 0;
         document.getElementById("text").value = imprint[i];
