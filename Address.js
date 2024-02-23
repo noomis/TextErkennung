@@ -253,7 +253,6 @@ export class Address {
         return highestPercentage;
     }
 
-
     exportJson(el) {
 
         let jsonObject = {
@@ -283,5 +282,4 @@ export class Address {
         el.setAttribute("href", dataUri);
         el.setAttribute("download", "data.json");
     }
-
 }
