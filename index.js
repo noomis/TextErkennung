@@ -27,7 +27,7 @@ function printResult() {
 
     timeoutId = setTimeout(() => {
 
-        if (input != "") { // Nur ausführen wenn Eingabe nicht leer ist
+        if (input != "") { // Only execute if input is not empty
 
             mainParser.setAllPostalCodes(fetchData.getAllPostalCodes());
             mainParser.setCityNames(fetchData.getCityNames());
