@@ -1133,8 +1133,6 @@ export class AddressParser {
         }
 
         if (fullStreetName.trim().length != 0 && probability != 0) {
-            fullStreetNameClear = fullStreetNameClear.replace('Straße', ''); // Entfernt den Titel "Name" aus z.B. SelectLine 
-
             tempStreet.push(new CheckResult("street", fullStreetNameClear, probability));
         }
 
