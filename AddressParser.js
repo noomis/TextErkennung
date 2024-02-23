@@ -988,7 +988,6 @@ export class AddressParser {
             for (let sNames = 0; sNames < streetNames.length; sNames++) {
 
                 if (inputLineWords[i].includes(streetNames[sNames])) {
-                    debugger;
                     fullStreetName = inputLine.toLowerCase();
                     fullStreetNameClear = inputLine;
 
