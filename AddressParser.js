@@ -1556,7 +1556,7 @@ export class AddressParser {
         let tempInputWords = inputLine.split(" ");
         let elementReplaced;
         let vatIdCountryCode = "de";
-        let vatKeywordsNL = ["btw-nr", "omzetbelastingnummer"];
+        let vatKeywordsNL = ["btw-nr", "omzetbelastingnummer", "vat", "btw-nummer"];
         let vatKeywordsGB = ["vat no.", "vat number"];
         let vatKeywordsDE = ["ust.-idnr.", "umsatzsteuer-id"];
         let vatKeywords = vatKeywordsDE;
@@ -1589,6 +1589,7 @@ export class AddressParser {
             const element = tempInputWords[index].toLowerCase();
             if (element.startsWith(vatIdCountryCode)) {
                 tempInputWords[index] = element.replace(vatIdCountryCode, "");
+                probability +=10;
             }
         }
         const onlyNumbers = tempInputWords.filter(element => !isNaN(element));
