@@ -129,7 +129,7 @@ export class AddressParser {
 
         });
 
-        //Address Object is created with information that at least corresponds to the specified probability
+        // Address Object wird erstellt den Informationen, die mindestens der vorgebenen Wahrscheinlichkeit entsprechen
         let addressObject = new Address(this.filterResults(this.companyNamesCheck), this.filterResults(this.postalCodeCheck), this.filterResults(this.streetsCheck), this.filterResults(this.citysCheck), this.filterResults(this.homepageCheck), this.filterResults(this.w3wAddressCheck), this.filterResults(this.emailsCheck), this.filterResults(this.phoneNumbersCheck), this.filterResults(this.faxNumbersCheck), this.filterResults(this.contactPersonsCheck), this.filterResults(this.companyRegistrationNumberCheck), this.filterResults(this.vatIdNumberCheck), this.filterResults(this.taxNumberCheck), this.language)
         console.log(addressObject);
 
@@ -1797,7 +1797,7 @@ export class AddressParser {
                 if (element.probability > 100) { // Setzt alle Wahrscheinlichkeiten > 100% auf 100% runter
                     element.probability = 100;
                 }
-                if (this.checkForDuplicates(tempArray, element)) { // element wird nur hinzugefügt wenn es nicht schon existiert (keine Dopplungen)
+                if (this.checkForDuplicates(tempArray, element)) { // element is only added if it does not already exist (no duplicates)
 
                     tempArray.push(element);
                 }
