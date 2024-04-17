@@ -1439,6 +1439,7 @@ export class AddressParser {
             default:
                 break;
         }
+
         //array to lowercase, um mit element zu vergleichen
         for (let a = 0; a < cityNamesArray.length; a++) {
             const element = cityNamesArray[a];
@@ -1464,6 +1465,7 @@ export class AddressParser {
                     }
                 }
             }
+
             //falls ein Länderpräfix vor den Wort steht wird dieser Entfernt und gibt Prozente 
             for (let a = 0; a < inputLineWords.length; a++) {
                 const element = inputLineWords[a].toLowerCase().replaceAll(",", "");
@@ -1515,12 +1517,12 @@ export class AddressParser {
                     probability = 15;
                 }
 
-
             }
             //checken, ob citys bereits ein Objekt haben, um Doppelungen zu vermeiden
             //hier um InLine Dopplungen rauzufiltern
             let existingObjects = this.citysCheck;
             let inlineExistingObjects = tempCity;
+
             inlineExistingObjects.forEach((cityObject, index) => {
                 if (cityObject.value.toLowerCase() === elementClear.toLowerCase() && cityObject.probability > probability) {
                     probability = 0;
@@ -1528,6 +1530,7 @@ export class AddressParser {
                     inlineExistingObjects.splice(index, 1);
                 }
             });
+
             //hier um generelle Dopplungen rauzufiltern
             existingObjects.forEach((cityObject, index) => {
                 if (cityObject.value.toLowerCase() === elementClear.toLowerCase() && cityObject.probability > probability) {
@@ -1549,6 +1552,7 @@ export class AddressParser {
             }
 
         }
+        
         return tempCity;
     }
 
