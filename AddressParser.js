@@ -114,12 +114,12 @@ export class AddressParser {
         });
 
         //Address Object is created with information that at least corresponds to the specified probability
-        let addressObject = new Address(this.filterResults(this.companyNamesCheck), this.filterResults(this.postalCodeCheck), 
-        this.filterResults(this.streetsCheck), this.filterResults(this.citysCheck), this.filterResults(this.homepageCheck), 
-        this.filterResults(this.w3wAddressCheck), this.filterResults(this.emailsCheck), this.filterResults(this.phoneNumbersCheck), 
-        this.filterResults(this.faxNumbersCheck), this.filterResults(this.contactPersonsCheck), 
-        this.filterResults(this.companyRegistrationNumberCheck), this.filterResults(this.vatIdNumberCheck), 
-        this.filterResults(this.taxNumberCheck), this.language)
+        let addressObject = new Address(this.filterResults(this.companyNamesCheck), this.filterResults(this.postalCodeCheck),
+            this.filterResults(this.streetsCheck), this.filterResults(this.citysCheck), this.filterResults(this.homepageCheck),
+            this.filterResults(this.w3wAddressCheck), this.filterResults(this.emailsCheck), this.filterResults(this.phoneNumbersCheck),
+            this.filterResults(this.faxNumbersCheck), this.filterResults(this.contactPersonsCheck),
+            this.filterResults(this.companyRegistrationNumberCheck), this.filterResults(this.vatIdNumberCheck),
+            this.filterResults(this.taxNumberCheck), this.language)
         console.log(addressObject);
 
         return addressObject;
@@ -213,7 +213,7 @@ export class AddressParser {
         let knownTLD = ["com", "net", "org", "de", "eu", "at", "ch", "nl", "pl", "fr", "es", "info", "name", "email", "co", "biz", "uk"];
 
         //for loop that loops through all words from the input
-        wordLoop:for (let i = 0; i < inputLineWords.length; i++) {
+        wordLoop: for (let i = 0; i < inputLineWords.length; i++) {
             const element = inputLineWords[i];
             let probability = 0;
 
@@ -239,7 +239,7 @@ export class AddressParser {
             }
             //check how many points are in the array to filter out invalid URLs
             const dots = element.split(".");
-            
+
             if (element.includes("www.")) {
                 probability += 30;
                 if (dots.length > 2) {
@@ -249,7 +249,7 @@ export class AddressParser {
 
             //if there are no or only 1 point in the array, the prob is set to 0.
             if (dots.length <= 2) {
-                continue wordLoop; 
+                continue wordLoop;
             }
 
             if (i !== 0) {
