@@ -2,6 +2,7 @@ import { Address } from "./Address.js";
 import { AddressParser } from "./AddressParser.js";
 import { FetchData } from "./fetchData.js";
 import { CheckLanguage } from "./CheckLanguage.js";
+
 let timeoutId;
 
 let fetchData = new FetchData;
@@ -15,12 +16,9 @@ function printResult() {
     $(".delete").remove();
     let input = document.getElementById("text").value;
     let languageChecker = new CheckLanguage();
-
     let language = languageChecker.parseLanguage(input);
-
     let outputPercentage = $("#slider")[0].value;
     let mainParser = new AddressParser(language, outputPercentage);
-
     $("#probValue").text("Treffer Wahrscheinlichkeit: " + outputPercentage + "%");
 
     clearTimeout(timeoutId);
