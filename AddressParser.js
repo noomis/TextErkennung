@@ -1491,6 +1491,7 @@ export class AddressParser {
                     inputLineWords[a] = element.replace(countryCode + "-", "");
                     probability += 10;
                 }
+                
                 //bei bestimmten regelmäßigen Endungen von Städten gewisse Probability geben
                 if (
                     element.endsWith("berg")
@@ -1509,7 +1510,6 @@ export class AddressParser {
                 ) {
                     probability += 20;
                 }
-
             }
 
             //check ob Wort nach dem zip Code der Stadt entspricht die im json eingetragen ist
@@ -1528,8 +1528,8 @@ export class AddressParser {
                     || wordBefore.toLowerCase().includes("finanzamt")) {
                     probability = 15;
                 }
-
             }
+
             //checken, ob citys bereits ein Objekt haben, um Doppelungen zu vermeiden
             //hier um InLine Dopplungen rauzufiltern
             let existingObjects = this.citysCheck;
@@ -1551,10 +1551,12 @@ export class AddressParser {
                     existingObjects.splice(index, 1);
                 }
             });
+
             //output
             if (probability > 100) {
                 probability = 100;
             }
+
             //Ausgabe-Objekt Erstellung, wenn Prob größer 0 und das Element nur erlaubte Wörter enthält
             if (probability > 0 && this.checkCorrectName(elementClear)) {
                 tempCity.push(new CheckResult("city", elementClear, probability));
@@ -1564,7 +1566,7 @@ export class AddressParser {
             }
 
         }
-        
+
         return tempCity;
     }
 
