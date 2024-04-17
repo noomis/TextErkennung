@@ -1438,6 +1438,7 @@ export class AddressParser {
             default:
                 break;
         }
+
         //array to lowercase, um mit element zu vergleichen
         for (let a = 0; a < cityNamesArray.length; a++) {
             const element = cityNamesArray[a];
@@ -1463,6 +1464,7 @@ export class AddressParser {
                     }
                 }
             }
+
             //falls ein Länderpräfix vor den Wort steht wird dieser Entfernt und gibt Prozente 
             for (let a = 0; a < inputLineWords.length; a++) {
                 const element = inputLineWords[a].toLowerCase().replaceAll(",", "");
@@ -1476,6 +1478,7 @@ export class AddressParser {
                     inputLineWords[a] = element.replace(countryCode + "-", "");
                     probability += 10;
                 }
+
                 //bei bestimmten regelmäßigen Endungen von Städten gewisse Probability geben
                 if (
                     element.endsWith("berg")
@@ -1494,15 +1497,14 @@ export class AddressParser {
                 ) {
                     probability += 20;
                 }
-
             }
 
             //check ob Wort nach dem zip Code der Stadt entspricht die im json eingetragen ist
             if (inputLineWords[i - 1] !== undefined) {
                 wordBefore = inputLineWords[i - 1].toLowerCase();
-
                 const onlyNumbers = inputLineWords.filter(element => !isNaN(element));
                 const onlyFiveDigitNumbers = onlyNumbers.filter(element => element.length === 5 && element >= 10000 && element <= 99999);
+
                 if (postalCode.includes(wordBefore)) {
                     probability += 30;
                 } else if (onlyFiveDigitNumbers.includes(wordBefore)) {
@@ -1513,32 +1515,47 @@ export class AddressParser {
                     || wordBefore.toLowerCase().includes("finanzamt")) {
                     probability = 15;
                 }
-
-
             }
+
             //checken, ob citys bereits ein Objekt haben, um Doppelungen zu vermeiden
             //hier um InLine Dopplungen rauzufiltern
             let existingObjects = this.citysCheck;
             let inlineExistingObjects = tempCity;
             inlineExistingObjects.forEach((cityObject, index) => {
-                if (cityObject.value.toLowerCase() === elementClear.toLowerCase() && cityObject.probability > probability) {
+                if (
+                    cityObject.value.toLowerCase() === elementClear.toLowerCase() 
+                    && cityObject.probability > probability
+                ) {
                     probability = 0;
-                } else if (cityObject.value.toLowerCase() === elementClear.toLowerCase() && cityObject.probability <= probability) {
+                } else if (
+                    cityObject.value.toLowerCase() === elementClear.toLowerCase() 
+                    && cityObject.probability <= probability
+                ) {
                     inlineExistingObjects.splice(index, 1);
                 }
             });
+
             //hier um generelle Dopplungen rauzufiltern
             existingObjects.forEach((cityObject, index) => {
-                if (cityObject.value.toLowerCase() === elementClear.toLowerCase() && cityObject.probability > probability) {
+
+                if (
+                    cityObject.value.toLowerCase() === elementClear.toLowerCase() 
+                    && cityObject.probability > probability
+                ) {
                     probability = 0;
-                } else if (cityObject.value.toLowerCase() === elementClear.toLowerCase() && cityObject.probability <= probability) {
+                } else if (
+                    cityObject.value.toLowerCase() === elementClear.toLowerCase() 
+                    && cityObject.probability <= probability
+                ) {
                     existingObjects.splice(index, 1);
                 }
             });
+
             //output
             if (probability > 100) {
                 probability = 100;
             }
+
             //Ausgabe-Objekt Erstellung, wenn Prob größer 0 und das Element nur erlaubte Wörter enthält
             if (probability > 0 && this.checkCorrectName(elementClear)) {
                 tempCity.push(new CheckResult("city", elementClear, probability));
@@ -1546,7 +1563,6 @@ export class AddressParser {
             } else {
                 continue cityLoop;
             }
-
         }
         return tempCity;
     }
