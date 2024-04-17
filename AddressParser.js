@@ -1458,7 +1458,7 @@ export class AddressParser {
             default:
                 break;
         }
-
+        
         //array to lowercase, um mit element zu vergleichen
         for (let a = 0; a < cityNamesArray.length; a++) {
             const element = cityNamesArray[a];
@@ -1522,9 +1522,9 @@ export class AddressParser {
             //check ob Wort nach dem zip Code der Stadt entspricht die im json eingetragen ist
             if (inputLineWords[i - 1] !== undefined) {
                 wordBefore = inputLineWords[i - 1].toLowerCase();
-
                 const onlyNumbers = inputLineWords.filter(element => !isNaN(element));
                 const onlyFiveDigitNumbers = onlyNumbers.filter(element => element.length === 5 && element >= 10000 && element <= 99999);
+
                 if (postalCode.includes(wordBefore)) {
                     probability += 30;
                 } else if (onlyFiveDigitNumbers.includes(wordBefore)) {
@@ -1543,18 +1543,31 @@ export class AddressParser {
             let inlineExistingObjects = tempCity;
 
             inlineExistingObjects.forEach((cityObject, index) => {
-                if (cityObject.value.toLowerCase() === elementClear.toLowerCase() && cityObject.probability > probability) {
+                if (
+                    cityObject.value.toLowerCase() === elementClear.toLowerCase() 
+                    && cityObject.probability > probability
+                ) {
                     probability = 0;
-                } else if (cityObject.value.toLowerCase() === elementClear.toLowerCase() && cityObject.probability <= probability) {
+                } else if (
+                    cityObject.value.toLowerCase() === elementClear.toLowerCase() 
+                    && cityObject.probability <= probability
+                ) {
                     inlineExistingObjects.splice(index, 1);
                 }
             });
 
             //hier um generelle Dopplungen rauzufiltern
             existingObjects.forEach((cityObject, index) => {
-                if (cityObject.value.toLowerCase() === elementClear.toLowerCase() && cityObject.probability > probability) {
+
+                if (
+                    cityObject.value.toLowerCase() === elementClear.toLowerCase() 
+                    && cityObject.probability > probability
+                ) {
                     probability = 0;
-                } else if (cityObject.value.toLowerCase() === elementClear.toLowerCase() && cityObject.probability <= probability) {
+                } else if (
+                    cityObject.value.toLowerCase() === elementClear.toLowerCase() 
+                    && cityObject.probability <= probability
+                ) {
                     existingObjects.splice(index, 1);
                 }
             });
@@ -1571,7 +1584,6 @@ export class AddressParser {
             } else {
                 continue cityLoop;
             }
-
         }
 
         return tempCity;
