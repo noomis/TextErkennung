@@ -29,6 +29,7 @@ export class AddressParser {
             this.language = language;
             console.log(language);
         }
+
         this.outputPercentage = outputPercentage;
     }
 
@@ -57,7 +58,6 @@ export class AddressParser {
     }
 
     getEmailsCheck() {
-
         return this.emailsCheck;
     }
 
@@ -98,35 +98,27 @@ export class AddressParser {
         let inputLines = input.split("\n");
         inputLines.forEach(input => {
             this.w3wAddressCheck = this.w3wAddressCheck.concat(this.checkW3ws(input));
-
             this.homepageCheck = this.homepageCheck.concat(this.checkHomepage(input));
-
             this.emailsCheck = this.emailsCheck.concat(this.checkMails(input));
-
             this.companyNamesCheck = this.companyNamesCheck.concat(this.checkCompanyNames(input));
-
             this.contactPersonsCheck = this.contactPersonsCheck.concat(this.checkContactPersons(input));
-
             this.faxNumbersCheck = this.faxNumbersCheck.concat(this.checkFax(input));
-
             this.phoneNumbersCheck = this.phoneNumbersCheck.concat(this.checkPhone(input));
-
             this.streetsCheck = this.streetsCheck.concat(this.checkStreets(input));
-
             this.postalCodeCheck = this.postalCodeCheck.concat(this.checkPostalCode(input));
-
             this.citysCheck = this.citysCheck.concat(this.checkCity(input));
-
             this.companyRegistrationNumberCheck = this.companyRegistrationNumberCheck.concat(this.checkCompanyRegistrationNumber(input));
-
             this.vatIdNumberCheck = this.vatIdNumberCheck.concat(this.checkVatIdNumber(input));
-
             this.taxNumberCheck = this.taxNumberCheck.concat(this.checkTaxNumber(input));
-
         });
 
         //Address Object is created with information that at least corresponds to the specified probability
-        let addressObject = new Address(this.filterResults(this.companyNamesCheck), this.filterResults(this.postalCodeCheck), this.filterResults(this.streetsCheck), this.filterResults(this.citysCheck), this.filterResults(this.homepageCheck), this.filterResults(this.w3wAddressCheck), this.filterResults(this.emailsCheck), this.filterResults(this.phoneNumbersCheck), this.filterResults(this.faxNumbersCheck), this.filterResults(this.contactPersonsCheck), this.filterResults(this.companyRegistrationNumberCheck), this.filterResults(this.vatIdNumberCheck), this.filterResults(this.taxNumberCheck), this.language)
+        let addressObject = new Address(this.filterResults(this.companyNamesCheck), this.filterResults(this.postalCodeCheck), 
+        this.filterResults(this.streetsCheck), this.filterResults(this.citysCheck), this.filterResults(this.homepageCheck), 
+        this.filterResults(this.w3wAddressCheck), this.filterResults(this.emailsCheck), this.filterResults(this.phoneNumbersCheck), 
+        this.filterResults(this.faxNumbersCheck), this.filterResults(this.contactPersonsCheck), 
+        this.filterResults(this.companyRegistrationNumberCheck), this.filterResults(this.vatIdNumberCheck), 
+        this.filterResults(this.taxNumberCheck), this.language)
         console.log(addressObject);
 
         return addressObject;
