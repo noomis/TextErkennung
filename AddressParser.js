@@ -113,12 +113,12 @@ export class AddressParser {
         });
 
         //Address Object is created with information that at least corresponds to the specified probability
-        let addressObject = new Address(this.filterResults(this.companyNamesCheck), this.filterResults(this.postalCodeCheck), 
-        this.filterResults(this.streetsCheck), this.filterResults(this.citysCheck), this.filterResults(this.homepageCheck), 
-        this.filterResults(this.w3wAddressCheck), this.filterResults(this.emailsCheck), this.filterResults(this.phoneNumbersCheck), 
-        this.filterResults(this.faxNumbersCheck), this.filterResults(this.contactPersonsCheck), 
-        this.filterResults(this.companyRegistrationNumberCheck), this.filterResults(this.vatIdNumberCheck), 
-        this.filterResults(this.taxNumberCheck), this.language)
+        let addressObject = new Address(this.filterResults(this.companyNamesCheck), this.filterResults(this.postalCodeCheck),
+            this.filterResults(this.streetsCheck), this.filterResults(this.citysCheck), this.filterResults(this.homepageCheck),
+            this.filterResults(this.w3wAddressCheck), this.filterResults(this.emailsCheck), this.filterResults(this.phoneNumbersCheck),
+            this.filterResults(this.faxNumbersCheck), this.filterResults(this.contactPersonsCheck),
+            this.filterResults(this.companyRegistrationNumberCheck), this.filterResults(this.vatIdNumberCheck),
+            this.filterResults(this.taxNumberCheck), this.language)
         console.log(addressObject);
 
         return addressObject;
@@ -1551,7 +1551,6 @@ export class AddressParser {
                 wordBefore = inputLineWords[index - 1].toLowerCase();
 
                 keywords.forEach(keyword => {
-
                     if (wordBefore.startsWith(keyword)) {
                         probability += 80;
                     }
@@ -1559,8 +1558,11 @@ export class AddressParser {
             }
 
             // wenn nach einem keyword noch nummer folgt, das nächste wort nehmen nur nach zahlen überprüfen, wenn keywords enthalten sind
-            if (element.includes("nummer") || element.includes("number") && probability == 80) {
-
+            if (
+                element.includes("nummer")
+                || element.includes("number")
+                && probability == 80
+            ) {
                 if (index < inputLineWords.length - 1) {
                     const wordAfter = inputLineWords[index + 1].toLowerCase();
 
@@ -1571,7 +1573,13 @@ export class AddressParser {
                     } else {
                         probability += 25;
                     }
-                    tempRegistrationNumber.push(new CheckResult("registrationNumber", wordAfter.replaceAll(",", "").replaceAll(".", ""), probability));
+
+                    tempRegistrationNumber.push(new CheckResult(
+                        "registrationNumber",
+                        wordAfter.replaceAll(",", "").replaceAll(".", ""),
+                        probability,
+                    ));
+
                     return tempRegistrationNumber;
                 }
                 // auch überprüfen ob die Ausgabe eine Nummer ist, nur ein wort vorher
@@ -1586,10 +1594,18 @@ export class AddressParser {
             }
 
             //Objekt Erstellung / Output            
-            if (probability > 0 && element.length == 5) {
-                tempRegistrationNumber.push(new CheckResult("registrationNumber", element.replaceAll(",", "").replaceAll(".", ""), probability));
+            if (
+                probability > 0
+                && element.length == 5
+            ) {
+                tempRegistrationNumber.push(new CheckResult(
+                    "registrationNumber",
+                    element.replaceAll(",", "").replaceAll(".", ""),
+                    probability,
+                ));
             }
         }
+        
         return tempRegistrationNumber;
     }
 
