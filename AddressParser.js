@@ -146,12 +146,10 @@ export class AddressParser {
                         let w3wUrl = inputLineWords[i].split("/");
                         inputLineWords[i] = w3wUrl[w3wUrl.length - 1];
                         lineChars = inputLineWords[i].split("");
-
                     } else {
                         continue words;
                     }
                 }
-
                 if (lineChars[index] == ".") {
                     countDot++;
                 }
@@ -175,7 +173,6 @@ export class AddressParser {
                         probability += 20;
                     }
                 }
-
             } else {
                 continue;
             }
@@ -188,8 +185,13 @@ export class AddressParser {
             if (i !== 0) {
                 let wordBefore = inputLineWords[i - 1].toLowerCase();
                 //Checks whether the w3w address is preceded by w3w, for example.
-                if (wordBefore.includes("w3w") || wordBefore.includes("what 3 words") || wordBefore.includes("what3words") ||
-                    wordBefore.includes("position") || wordBefore.includes("///")) {
+                if (
+                    wordBefore.includes("w3w")
+                    || wordBefore.includes("what 3 words")
+                    || wordBefore.includes("what3words")
+                    || wordBefore.includes("position")
+                    || wordBefore.includes("///")
+                ) {
                     probability += 15;
                 }
             }
@@ -211,7 +213,7 @@ export class AddressParser {
         let knownTLD = ["com", "net", "org", "de", "eu", "at", "ch", "nl", "pl", "fr", "es", "info", "name", "email", "co", "biz", "uk"];
 
         //for loop that loops through all words from the input
-        for (let i = 0; i < inputLineWords.length; i++) {
+        wordLoop:for (let i = 0; i < inputLineWords.length; i++) {
             const element = inputLineWords[i];
             let probability = 0;
 
@@ -237,20 +239,18 @@ export class AddressParser {
             }
             //check how many points are in the array to filter out invalid URLs
             const dots = element.split(".");
-
+            
             if (element.includes("www.")) {
                 probability += 30;
                 if (dots.length > 2) {
                     probability += 40
                 }
             }
-            
+
             //if there are no or only 1 point in the array, the prob is set to 0.
             if (dots.length <= 2) {
-                //TODO veilleicht auch returnen?
-                probability = 0;
+                continue wordLoop; 
             }
-
 
             if (i !== 0) {
                 let wordBefore = inputLineWords[i - 1].toLowerCase();
@@ -353,7 +353,7 @@ export class AddressParser {
             }
 
             //checks whether at least one point is present.
-            if (dotHit.length == 0) {   
+            if (dotHit.length == 0) {
                 continue wordLoop;
             } else {
                 wordProb += 5;
@@ -361,7 +361,7 @@ export class AddressParser {
 
             //TODO continue comments change to english
             //Checks whether the local domain is at least 2 characters long.
-            if (dotHit.length > 1) {   
+            if (dotHit.length > 1) {
                 if (dotHit[dotHit.length - 1] - atHit[0] < 3) {
                     continue wordLoop;
 
@@ -756,6 +756,7 @@ export class AddressParser {
         if (inputLine.length < 10) {
             return tempPhone;
         }
+
         let fullNumber = "";
         let fullUnformattedNumber = "";
         inputLine = inputLine.toLowerCase();
@@ -788,7 +789,6 @@ export class AddressParser {
 
         words: for (let i = 0; i < inputLineWords.length; i++) { // for Schleife zum durchlaufen aller Wörter in der übergebenen Zeile
 
-
             let inputLineChars = inputLineWords[i].split("");
 
             for (let index = 0; index < inputLineChars.length; index++) { // for Schleife zum durchlaufen aller Character im aktuellen Wort
@@ -800,16 +800,25 @@ export class AddressParser {
                     if (fullNumber.trim().length >= 6 && probability != 0) {
 
                         // Telefonnummer einheitliche Schreibweise setzen
-                        if (inputLineWords[i - 1].startsWith("0") || inputLineWords[i - 1].startsWith("(0")) {
+                        if (
+                            inputLineWords[i - 1].startsWith("0")
+                            || inputLineWords[i - 1].startsWith("(0")
+                        ) {
                             tempPhone.push(new CheckResult("phoneNumber", fullNumber.replace("0", languageAreaCode), probability));
                             continue words;
                         }
 
-                        if (fullNumber.startsWith("00") || fullNumber.startsWith("(00")) {
+                        if (
+                            fullNumber.startsWith("00")
+                            || fullNumber.startsWith("(00")
+                        ) {
                             tempPhone.push(new CheckResult("phoneNumber", fullNumber.replace("00", "+"), probability));
                             continue words;
 
-                        } else if (fullNumber.startsWith("0") || fullNumber.startsWith("(0")) {
+                        } else if (
+                            fullNumber.startsWith("0")
+                            || fullNumber.startsWith("(0")
+                        ) {
                             tempPhone.push(new CheckResult("phoneNumber", fullNumber.replace("0", languageAreaCode), probability));
                             continue words;
 
@@ -818,6 +827,7 @@ export class AddressParser {
                             continue words;
                         }
                     }
+
                     fullNumber = "";
                     continue words;
                 }
@@ -827,7 +837,11 @@ export class AddressParser {
             if (i !== 0) {
                 let wordBefore = inputLineWords[i - 1].toLowerCase();
 
-                if (wordBefore.includes("fon") || wordBefore.includes("tel") || wordBefore.includes("mobil") || wordBefore.includes("handy")) {
+                if (wordBefore.includes("fon")
+                    || wordBefore.includes("tel")
+                    || wordBefore.includes("mobil")
+                    || wordBefore.includes("handy")
+                ) {
                     probability += 70;
                 }
 
@@ -844,25 +858,44 @@ export class AddressParser {
 
             let tmpFullNum = fullNumber;
             tmpFullNum = tmpFullNum.replaceAll("+", "").replaceAll("/", "").replaceAll("-", "").replaceAll(".", "");
-            if (tmpFullNum.length > 5 && tmpFullNum.length < 20) {
+
+            if (
+                tmpFullNum.length > 5
+                && tmpFullNum.length < 20
+            ) {
                 probability += 30;
             }
         }
 
         let tmpFullNum = fullNumber;
         tmpFullNum = tmpFullNum.replaceAll("+", "").replaceAll("/", "").replaceAll("-", "").replaceAll(".", "");
-        if (tmpFullNum.length > 5 && tmpFullNum.length < 20) {
+
+        if (
+            tmpFullNum.length > 5
+            && tmpFullNum.length < 20
+        ) {
             probability += 30;
         }
 
-        if (fullNumber.trim().length != 0 && probability != 0) {
-
-            if (fullNumber.startsWith(languageAreaCode) || fullNumber.startsWith("0") || fullNumber.startsWith("(0") || fullNumber.startsWith("(" + languageAreaCode)) {
-
-                if (fullNumber.startsWith("00") || fullNumber.startsWith("(00")) {
+        if (
+            fullNumber.trim().length != 0
+            && probability != 0
+        ) {
+            if (
+                fullNumber.startsWith(languageAreaCode)
+                || fullNumber.startsWith("0")
+                || fullNumber.startsWith("(0")
+                || fullNumber.startsWith("(" + languageAreaCode)
+            ) {
+                if (
+                    fullNumber.startsWith("00")
+                    || fullNumber.startsWith("(00")
+                ) {
                     tempPhone.push(new CheckResult("phoneNumber", fullNumber.replace("00", "+"), probability));
 
-                } else if (fullNumber.startsWith("0") || fullNumber.startsWith("(0")) {
+                } else if (fullNumber.startsWith("0")
+                    || fullNumber.startsWith("(0")
+                ) {
                     tempPhone.push(new CheckResult("phoneNumber", fullNumber.replace("0", languageAreaCode), probability));
 
                 } else {
@@ -878,6 +911,7 @@ export class AddressParser {
                 tempPhone = tempPhone.concat(this.checkPhone(fullUnformattedNumber));
             }
         }
+
         return tempPhone;
     }
 

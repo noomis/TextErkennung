@@ -1,6 +1,16 @@
 export class Address {
 
-    constructor(_companyName,_postalCode,_street,_city,_homepage,_w3wAddress,_emails,_phoneNumbers,_faxNumbers,_contactPersons,_companyRegistrationNumber,_vatIdNumber,_taxNumber,_language) {
+    constructor(
+        _companyName,
+        _postalCode,
+        _street,_city,
+        _homepage,_w3wAddress,
+        _emails,_phoneNumbers,
+        _faxNumbers,_contactPersons,
+        _companyRegistrationNumber,
+        _vatIdNumber,_taxNumber,
+        _language,
+    ) {
         this.companyName = _companyName;
         this.postalCode = _postalCode;
         this.street = _street;
@@ -17,7 +27,7 @@ export class Address {
         this.language = _language;
     }
 
-    getLanguage(){
+    getLanguage() {
         return this.language;
     }
 
@@ -156,13 +166,14 @@ export class Address {
 
         $("#" + html_id).val(""); //feld clearen
         let firstValue = true;
+
         for (let index = 0; index < objectArray.length; index++) {
             let object = objectArray[index];
             let newId = object.name;
+
                 if (firstValue) {
                     $("#" + html_id).val(object.value).hide().fadeIn(fadeTime); // setzen des ersten Wertes in vorhandenes Feld
-                }
-                else {
+                } else {
                     //Neuerstellung und Implementierung von Feldern bei mehreren Telefonnummern
                     let newObject = document.createElement("input");
                     newObject.id = "id" + index + newId;
@@ -170,6 +181,7 @@ export class Address {
                     $("#" + newId).after(newObject);
                     $("#id" + index + newId).val(object.value).hide().fadeIn(fadeTime);
                 }
+
                 firstValue = false;;
         }
     }
@@ -178,6 +190,7 @@ export class Address {
         $("#" + html_id).val(""); //feld clearen
         let fadeTime = 0;
         let objectArray = [];
+
         switch (html_id) {
             case "w3w":
                 objectArray = objectArray.concat(this.getW3wAddress());
@@ -224,27 +237,24 @@ export class Address {
         }
 
         let maxValue = this.findMaxPercentage(objectArray);
-
-            $("#" + html_id).val(maxValue.value).hide().fadeIn(fadeTime);
+        $("#" + html_id).val(maxValue.value).hide().fadeIn(fadeTime);
         
     }
 
-    findMaxPercentage(Array) {
+    findMaxPercentage(array) {
         let object = {
             probability: 1,
         }
 
         let highestPercentage = object;
 
-
         // Gebe null für leere Arrays zurück
-        if (Array.length == 0) {
+        if (array.length == 0) {
             return;
         }
 
         // Objekt mit der höhsten Wahrscheinlichkeit returnen
-        Array.forEach(element => {
-
+        array.forEach(element => {
             if (element.probability > highestPercentage.probability) {
                 highestPercentage = element;
             }
@@ -254,7 +264,6 @@ export class Address {
     }
 
     exportJson(el) {
-
         let jsonObject = {
             language: this.getLanguage(),
             companyName: this.getCompanyName(),
