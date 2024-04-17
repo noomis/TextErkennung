@@ -1293,7 +1293,6 @@ export class AddressParser {
                 } else {
                     continue zipLoop;
                 }
-
             }
         }
 
@@ -1327,7 +1326,6 @@ export class AddressParser {
                 } else {
                     continue zipLoop;
                 }
-
             }
         }
 
@@ -1345,7 +1343,7 @@ export class AddressParser {
                     probability += 40;
                     if (inputLineWordsClear[i - 1] !== undefined) {
                         wordBefore = inputLineWordsClear[i - 1];
-                        if ((wordBefore.length >= 2 && wordBefore.length <= 4)) { //check, ob das Wort vorher den UK-PLZ Kriterien entspricht  
+                        if (wordBefore.length >= 2 && wordBefore.length <= 4) { //check, ob das Wort vorher den UK-PLZ Kriterien entspricht  
                             probability += 30
                         }
                     }
@@ -1441,7 +1439,8 @@ export class AddressParser {
                     probability += 10;
                 }
                 //bei bestimmten regelmäßigen Endungen von Städten gewisse Probability geben
-                if (element.endsWith("berg")
+                if (
+                    element.endsWith("berg")
                     || element.endsWith("stadt")
                     || element.endsWith("stedt")
                     || element.endsWith("ingen")
@@ -1453,7 +1452,8 @@ export class AddressParser {
                     || element.endsWith("borough")
                     || element.endsWith("mouth")
                     || element.endsWith("bury")
-                    || element.endsWith("wick")) {
+                    || element.endsWith("wick")
+                ) {
                     probability += 20;
                 }
 
