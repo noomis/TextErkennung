@@ -589,20 +589,23 @@ export class AddressParser {
                 wordBefore = inputLineWords[i - 1].toLowerCase();
 
                 if (
-                wordBefore.includes("geschäftsführer") 
-                || wordBefore.includes("ansprechpartner") 
-                || wordBefore.includes("vorstand") 
-                || wordBefore.includes("vorsitzender") 
-                || wordBefore.includes("inhaber") 
-                || wordBefore.includes("dr") && firstName.includes(tempWord) 
-                || wordBefore.includes("prof") 
-                || wordBefore.includes("herr") 
-                || wordBefore.includes("frau") 
-                || wordBefore.includes("verantwortliche") && tempWord !== "nach" 
-                || wordBefore.includes("vertreter")
+                    wordBefore.includes("geschäftsführer") 
+                    || wordBefore.includes("ansprechpartner") 
+                    || wordBefore.includes("vorstand") 
+                    || wordBefore.includes("vorsitzender") 
+                    || wordBefore.includes("inhaber") 
+                    || wordBefore.includes("dr") && firstName.includes(tempWord) 
+                    || wordBefore.includes("prof") 
+                    || wordBefore.includes("herr") 
+                    || wordBefore.includes("frau") 
+                    || wordBefore.includes("verantwortliche") && tempWord !== "nach" 
+                    || wordBefore.includes("vertreter")
                 ) {
                     probability += 40;
-                } else if (wordBefore.includes("firmenname") || wordBefore.includes("umsatzsteuer-identifikationsnummer")) {
+                } else if (wordBefore.includes(
+                    "firmenname") 
+                    || wordBefore.includes("umsatzsteuer-identifikationsnummer"
+                )) {
                     return tempNames;
                 }
             }
