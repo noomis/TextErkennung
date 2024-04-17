@@ -15,7 +15,6 @@ export class AddressParser {
     companyRegistrationNumberCheck = []; //only max
     vatIdNumberCheck = []; //only max
     taxNumberCheck = []; //only max
-
     fetchedPostalCodes = []; // only max
     fetchedCityNames = []; // only max
     outputPercentage = 0;
@@ -26,7 +25,6 @@ export class AddressParser {
         if (!language) {
             //default language = "de"
             this.language = "de"
-
         } else {
             this.language = language;
             console.log(language);
@@ -95,12 +93,10 @@ export class AddressParser {
         this.fetchedCityNames = this.fetchedCityNames.concat(_cityNames);
     }
 
-
     parseText(input) {
         //Split input by lines
         let inputLines = input.split("\n");
         inputLines.forEach(input => {
-
             this.w3wAddressCheck = this.w3wAddressCheck.concat(this.checkW3ws(input));
 
             this.homepageCheck = this.homepageCheck.concat(this.checkHomepage(input));
@@ -124,7 +120,6 @@ export class AddressParser {
             this.companyRegistrationNumberCheck = this.companyRegistrationNumberCheck.concat(this.checkCompanyRegistrationNumber(input));
 
             this.vatIdNumberCheck = this.vatIdNumberCheck.concat(this.checkVatIdNumber(input));
-
 
             this.taxNumberCheck = this.taxNumberCheck.concat(this.checkTaxNumber(input));
 
@@ -225,7 +220,7 @@ export class AddressParser {
         let knownTLD = ["com", "net", "org", "de", "eu", "at", "ch", "nl", "pl", "fr", "es", "info", "name", "email", "co", "biz", "uk"];
 
         //for loop that loops through all words from the input
-        wordLoop:for (let i = 0; i < inputLineWords.length; i++) {
+        wordLoop: for (let i = 0; i < inputLineWords.length; i++) {
             const element = inputLineWords[i];
             let probability = 0;
 
@@ -251,7 +246,7 @@ export class AddressParser {
             }
             //check how many points are in the array to filter out invalid URLs
             const dots = element.split(".");
-            
+
             if (element.includes("www.")) {
                 probability += 30;
                 if (dots.length > 2) {
@@ -261,7 +256,7 @@ export class AddressParser {
 
             //if there are no or only 1 point in the array, the prob is set to 0.
             if (dots.length <= 2) {
-                continue wordLoop; 
+                continue wordLoop;
             }
 
             if (i !== 0) {
@@ -305,7 +300,6 @@ export class AddressParser {
             let atHit = []; //Number of @ in the string
             let dotHit = []; // Number of . in the string
             let hasTLD = false; // hat TLD Domain
-
             const element = inputLineWords[index];
             //Splits each word into individual chars
             let wordChars = element.split("");
@@ -342,7 +336,17 @@ export class AddressParser {
             charLoop: for (let i = 0; i < wordChars.length; i++) {
                 const element = wordChars[i];
 
-                if (element === "@" || (wordChars[i] == "(" && wordChars[i + 1] == "a" && wordChars[i + 2] == "t" && wordChars[i + 3] == ")" || (wordChars[i] == "[" && wordChars[i + 1] == "a" && wordChars[i + 2] == "t" && wordChars[i + 3] == "]"))) {  // countet @
+                if (
+                    element === "@"
+                    || (wordChars[i] == "("
+                        && wordChars[i + 1] == "a"
+                        && wordChars[i + 2] == "t"
+                        && wordChars[i + 3] == ")"
+                        || (wordChars[i] == "["
+                            && wordChars[i + 1] == "a"
+                            && wordChars[i + 2] == "t"
+                            && wordChars[i + 3] == "]"))
+                ) {  // countet @
                     atHit.push(i);
                 }
 
@@ -376,11 +380,10 @@ export class AddressParser {
             if (dotHit.length > 1) {
                 if (dotHit[dotHit.length - 1] - atHit[0] < 3) {
                     continue wordLoop;
-
                 } else {
                     wordProb += 10;
                 }
-            } else if (dotHit.length == 1) {  // Checkt ob die local domain mindestens 2 Zeichen lang ist.
+            } else if (dotHit.length == 1) { // Checkt ob die local domain mindestens 2 Zeichen lang ist.
                 if (dotHit[0] - atHit[0] < 3) {
                     continue wordLoop;
                 } else {
@@ -388,7 +391,7 @@ export class AddressParser {
                 }
             }
 
-            if (hasTLD === false) {         // checkt ob eine TLD vorhanden ist.
+            if (hasTLD === false) { // checkt ob eine TLD vorhanden ist.
                 continue wordLoop;
             } else {
                 wordProb += 20;
@@ -400,7 +403,6 @@ export class AddressParser {
                     wordProb += 20;
                 }
             }
-
 
             tempMails.push(new CheckResult("mail", inputLineWords[index], wordProb));
         }
