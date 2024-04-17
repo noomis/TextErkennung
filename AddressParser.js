@@ -157,12 +157,10 @@ export class AddressParser {
                         let w3wUrl = inputLineWords[i].split("/");
                         inputLineWords[i] = w3wUrl[w3wUrl.length - 1];
                         lineChars = inputLineWords[i].split("");
-
                     } else {
                         continue words;
                     }
                 }
-
                 if (lineChars[index] == ".") {
                     countDot++;
                 }
@@ -186,7 +184,6 @@ export class AddressParser {
                         probability += 20;
                     }
                 }
-
             } else {
                 continue;
             }
@@ -199,12 +196,17 @@ export class AddressParser {
             if (i !== 0) {
                 let wordBefore = inputLineWords[i - 1].toLowerCase();
                 //Checks whether the w3w address is preceded by w3w, for example.
-                if (wordBefore.includes("w3w") || wordBefore.includes("what 3 words") || wordBefore.includes("what3words") ||
-                    wordBefore.includes("position") || wordBefore.includes("///")) {
+                if (
+                wordBefore.includes("w3w") 
+                || wordBefore.includes("what 3 words") 
+                || wordBefore.includes("what3words")
+                ||wordBefore.includes("position") 
+                || wordBefore.includes("///")
+            ) {
                     probability += 15;
                 }
             }
-
+            
             if (inputLineWords[i].startsWith("///")) {
                 probability += 5;
             }
@@ -817,6 +819,7 @@ export class AddressParser {
                         }
 
                         if (fullNumber.startsWith("00") || fullNumber.startsWith("(00")) {
+                            
                             tempPhone.push(new CheckResult("phoneNumber", fullNumber.replace("00", "+"), probability));
                             continue words;
 
