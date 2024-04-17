@@ -134,7 +134,6 @@ export class AddressParser {
         console.log(addressObject);
 
         return addressObject;
-
     }
 
     checkW3ws(inputLine) {
@@ -256,6 +255,7 @@ export class AddressParser {
                     probability += 40
                 }
             }
+            
             //if there are no or only 1 point in the array, the prob is set to 0.
             if (dots.length <= 2) {
                 //TODO veilleicht auch returnen?
