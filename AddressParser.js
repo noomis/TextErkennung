@@ -1823,16 +1823,19 @@ export class AddressParser {
 
         // neuen Array mit elementen befüllen die eine größerer Wkeit als die Übergebne haben
         array.forEach(element => {
+
             if (element.probability >= this.outputPercentage) {
+
                 if (element.probability > 100) { // Setzt alle Wahrscheinlichkeiten > 100% auf 100% runter
                     element.probability = 100;
                 }
-                if (this.checkForDuplicates(tempArray, element)) { // element is only added if it does not already exist (no duplicates)
 
+                if (this.checkForDuplicates(tempArray, element)) { // element is only added if it does not already exist (no duplicates)
                     tempArray.push(element);
                 }
             }
         });
+        
         return tempArray;
     }
 
