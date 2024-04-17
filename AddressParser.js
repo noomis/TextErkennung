@@ -113,12 +113,22 @@ export class AddressParser {
         });
 
         //Address Object is created with information that at least corresponds to the specified probability
-        let addressObject = new Address(this.filterResults(this.companyNamesCheck), this.filterResults(this.postalCodeCheck),
-            this.filterResults(this.streetsCheck), this.filterResults(this.citysCheck), this.filterResults(this.homepageCheck),
-            this.filterResults(this.w3wAddressCheck), this.filterResults(this.emailsCheck), this.filterResults(this.phoneNumbersCheck),
-            this.filterResults(this.faxNumbersCheck), this.filterResults(this.contactPersonsCheck),
-            this.filterResults(this.companyRegistrationNumberCheck), this.filterResults(this.vatIdNumberCheck),
-            this.filterResults(this.taxNumberCheck), this.language)
+        let addressObject = new Address(
+            this.filterResults(this.companyNamesCheck), 
+            this.filterResults(this.postalCodeCheck),
+            this.filterResults(this.streetsCheck), 
+            this.filterResults(this.citysCheck), 
+            this.filterResults(this.homepageCheck),
+            this.filterResults(this.w3wAddressCheck), 
+            this.filterResults(this.emailsCheck), 
+            this.filterResults(this.phoneNumbersCheck),
+            this.filterResults(this.faxNumbersCheck), 
+            this.filterResults(this.contactPersonsCheck),
+            this.filterResults(this.companyRegistrationNumberCheck), 
+            this.filterResults(this.vatIdNumberCheck),
+            this.filterResults(this.taxNumberCheck), 
+            this.language
+        )
         console.log(addressObject);
 
         return addressObject;
@@ -565,8 +575,19 @@ export class AddressParser {
             if (i !== 0) {
                 wordBefore = inputLineWords[i - 1].toLowerCase();
 
-                if (wordBefore.includes("geschäftsführer") || wordBefore.includes("ansprechpartner") || wordBefore.includes("vorstand") || wordBefore.includes("vorsitzender") || wordBefore.includes("inhaber") || wordBefore.includes("dr") && firstName.includes(tempWord) ||
-                    wordBefore.includes("prof") || wordBefore.includes("herr") || wordBefore.includes("frau") || wordBefore.includes("verantwortliche") && tempWord !== "nach" || wordBefore.includes("vertreter")) {
+                if (
+                wordBefore.includes("geschäftsführer") 
+                || wordBefore.includes("ansprechpartner") 
+                || wordBefore.includes("vorstand") 
+                || wordBefore.includes("vorsitzender") 
+                || wordBefore.includes("inhaber") 
+                || wordBefore.includes("dr") && firstName.includes(tempWord) 
+                || wordBefore.includes("prof") 
+                || wordBefore.includes("herr") 
+                || wordBefore.includes("frau") 
+                || wordBefore.includes("verantwortliche") && tempWord !== "nach" 
+                || wordBefore.includes("vertreter")
+                ) {
                     probability += 40;
                 } else if (wordBefore.includes("firmenname") || wordBefore.includes("umsatzsteuer-identifikationsnummer")) {
                     return tempNames;
@@ -609,17 +630,34 @@ export class AddressParser {
             let inlineExistingObjects = tempNames;
             let existingObjects = this.contactPersonsCheck;
             inlineExistingObjects.forEach((nameObject, index) => {
-                if (nameObject.value === tripleName || nameObject.value === tempInputWord + " " + wordAfterClean && nameObject.probability > probability) {
+                if (
+                    nameObject.value === tripleName 
+                    || nameObject.value === tempInputWord + " " + wordAfterClean && nameObject.probability > probability
+                ) {
                     probability = 0;
-                } else if (nameObject.value === tripleName || nameObject.value === tempInputWord + " " + wordAfterClean && nameObject.probability <= probability) {
+                } else if (
+                    nameObject.value === tripleName 
+                    || nameObject.value === tempInputWord + " " + wordAfterClean && nameObject.probability <= probability
+                ) {
                     inlineExistingObjects.splice(index, 1);
                 }
             });
             //hier um generelle Dopplungen rauzufiltern
             existingObjects.forEach((nameObject, index) => {
-                if ((nameObject.value === tripleName || nameObject.value === tempInputWord + " " + wordAfterClean) && nameObject.probability > probability) {
+                if (
+                    (
+                        nameObject.value === tripleName || nameObject.value === tempInputWord + " " + wordAfterClean
+                    ) 
+                    && nameObject.probability > probability
+                ) {
                     probability = 0;
-                } else if ((nameObject.value === tripleName || nameObject.value === tempInputWord + " " + wordAfterClean) && nameObject.probability <= probability) {
+                } else if (
+                    (
+                        nameObject.value === tripleName 
+                        || nameObject.value === tempInputWord + " " + wordAfterClean
+                    ) 
+                        && nameObject.probability <= probability
+                    ) {
                     existingObjects.splice(index, 1);
                 }
             });
@@ -1593,15 +1631,8 @@ export class AddressParser {
             }
 
             //Objekt Erstellung / Output            
-            if (
-                probability > 0
-                && element.length == 5
-            ) {
-                tempRegistrationNumber.push(new CheckResult(
-                    "registrationNumber",
-                    element.replaceAll(",", "").replaceAll(".", ""),
-                    probability,
-                ));
+            if (probability > 0 && element.length == 5) {
+                tempRegistrationNumber.push(new CheckResult("registrationNumber", element.replaceAll(",", "").replaceAll(".", ""), probability));
             }
         }
         
@@ -1772,8 +1803,7 @@ export class AddressParser {
                 });
 
                 // wenn die Sprache englisch ist, da das keyword zwei Wörter sind
-            } else if (element === keyword.split(" ")[0] && inputLineWords[index + 1] !== 0 
-            && inputLineWords[index + 1] === keyword.split(" ")[1]) {
+            } else if (element === keyword.split(" ")[0] && inputLineWords[index + 1] !== 0 && inputLineWords[index + 1] === keyword.split(" ")[1]) {
                 probability += 30;
 
                 this.fetchedCityNames.forEach(element => {
@@ -1816,7 +1846,6 @@ export class AddressParser {
                     tempTax.push(new CheckResult("companyTax", inputLineWords[index], probability));
                 }
             }
-
 
         }
         return tempTax;
