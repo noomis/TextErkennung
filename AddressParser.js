@@ -114,19 +114,19 @@ export class AddressParser {
 
         //Address Object is created with information that at least corresponds to the specified probability
         let addressObject = new Address(
-            this.filterResults(this.companyNamesCheck), 
+            this.filterResults(this.companyNamesCheck),
             this.filterResults(this.postalCodeCheck),
-            this.filterResults(this.streetsCheck), 
-            this.filterResults(this.citysCheck), 
+            this.filterResults(this.streetsCheck),
+            this.filterResults(this.citysCheck),
             this.filterResults(this.homepageCheck),
-            this.filterResults(this.w3wAddressCheck), 
-            this.filterResults(this.emailsCheck), 
+            this.filterResults(this.w3wAddressCheck),
+            this.filterResults(this.emailsCheck),
             this.filterResults(this.phoneNumbersCheck),
-            this.filterResults(this.faxNumbersCheck), 
+            this.filterResults(this.faxNumbersCheck),
             this.filterResults(this.contactPersonsCheck),
-            this.filterResults(this.companyRegistrationNumberCheck), 
+            this.filterResults(this.companyRegistrationNumberCheck),
             this.filterResults(this.vatIdNumberCheck),
-            this.filterResults(this.taxNumberCheck), 
+            this.filterResults(this.taxNumberCheck),
             this.language
         )
         console.log(addressObject);
@@ -266,22 +266,22 @@ export class AddressParser {
 
                 //Checks whether certain keywords appear before the URL
                 if (
-                wordBefore.includes("url") 
-                || wordBefore.includes("website") 
-                || wordBefore.includes("homepage") 
-                || wordBefore.includes("internet")
-            ) {
+                    wordBefore.includes("url")
+                    || wordBefore.includes("website")
+                    || wordBefore.includes("homepage")
+                    || wordBefore.includes("internet")
+                ) {
                     probability += 20;
                 }
             }
             //check whether certain illegal terms are contained in the element
             if (
-            element.includes("ö") 
-            || element.includes("ü") 
-            || element.includes("ß") 
-            || element.includes("ä") 
-            || element.includes("@") 
-            || element.includes("(at)")
+                element.includes("ö")
+                || element.includes("ü")
+                || element.includes("ß")
+                || element.includes("ä")
+                || element.includes("@")
+                || element.includes("(at)")
             ) {
                 return tempUrl;
             }
@@ -589,17 +589,17 @@ export class AddressParser {
                 wordBefore = inputLineWords[i - 1].toLowerCase();
 
                 if (
-                wordBefore.includes("geschäftsführer") 
-                || wordBefore.includes("ansprechpartner") 
-                || wordBefore.includes("vorstand") 
-                || wordBefore.includes("vorsitzender") 
-                || wordBefore.includes("inhaber") 
-                || wordBefore.includes("dr") && firstName.includes(tempWord) 
-                || wordBefore.includes("prof") 
-                || wordBefore.includes("herr") 
-                || wordBefore.includes("frau") 
-                || wordBefore.includes("verantwortliche") && tempWord !== "nach" 
-                || wordBefore.includes("vertreter")
+                    wordBefore.includes("geschäftsführer")
+                    || wordBefore.includes("ansprechpartner")
+                    || wordBefore.includes("vorstand")
+                    || wordBefore.includes("vorsitzender")
+                    || wordBefore.includes("inhaber")
+                    || wordBefore.includes("dr") && firstName.includes(tempWord)
+                    || wordBefore.includes("prof")
+                    || wordBefore.includes("herr")
+                    || wordBefore.includes("frau")
+                    || wordBefore.includes("verantwortliche") && tempWord !== "nach"
+                    || wordBefore.includes("vertreter")
                 ) {
                     probability += 40;
                 } else if (wordBefore.includes("firmenname") || wordBefore.includes("umsatzsteuer-identifikationsnummer")) {
@@ -636,7 +636,7 @@ export class AddressParser {
 
             //für sauberere Ausgabe
             wordAfterClean = wordAfterClean.replaceAll(",", "").replaceAll("_", "");
-            
+
             //Wahrscheinlichkeitsrundung
             if (probability > 100) {
                 probability = 100;
@@ -649,12 +649,12 @@ export class AddressParser {
 
             inlineExistingObjects.forEach((nameObject, index) => {
                 if (
-                    nameObject.value === tripleName 
+                    nameObject.value === tripleName
                     || nameObject.value === tempInputWord + " " + wordAfterClean && nameObject.probability > probability
                 ) {
                     probability = 0;
                 } else if (
-                    nameObject.value === tripleName 
+                    nameObject.value === tripleName
                     || nameObject.value === tempInputWord + " " + wordAfterClean && nameObject.probability <= probability
                 ) {
                     inlineExistingObjects.splice(index, 1);
@@ -666,17 +666,17 @@ export class AddressParser {
                 if (
                     (
                         nameObject.value === tripleName || nameObject.value === tempInputWord + " " + wordAfterClean
-                    ) 
+                    )
                     && nameObject.probability > probability
                 ) {
                     probability = 0;
                 } else if (
                     (
-                        nameObject.value === tripleName 
+                        nameObject.value === tripleName
                         || nameObject.value === tempInputWord + " " + wordAfterClean
-                    ) 
-                        && nameObject.probability <= probability
-                    ) {
+                    )
+                    && nameObject.probability <= probability
+                ) {
                     existingObjects.splice(index, 1);
                 }
             });
@@ -692,8 +692,8 @@ export class AddressParser {
                             tempNames.push(new CheckResult("contactPerson", name, probability));
                         }
                     }
-          //output bei einem 3er-Namen      
-        } else {
+                    //output bei einem 3er-Namen      
+                } else {
                     if (!tempNames.includes(tripleName) && this.checkCorrectName(tripleName)) {
                         tripleName = tripleName.replaceAll(",", "").replaceAll("_", "");
                         tempNames.push(new CheckResult("contactPerson", tripleName, probability));
@@ -701,7 +701,7 @@ export class AddressParser {
                 }
             }
         }
-        
+
         return tempNames;
     }
 
@@ -743,25 +743,38 @@ export class AddressParser {
 
                 // Überprüfen, ob die Eingabe keiner Nummer entspricht
                 if (!whiteList.includes(inputLineChars[index])) {
-
                     // Falls nach einer Nummer ein Wort kommt, wird die bisher gespeicherte Nummer ausgegeben
                     if (fullNumber.trim().length >= 6 && probability != 0) {
 
                         // Faxnummern einheitliche Schreibweise setzen
                         if (inputLineWords[i - 1].startsWith("0") || inputLineWords[i - 1].startsWith("(0")) {
-                            tempFax.push(new CheckResult("faxNumber", fullNumber.replace("0", languageAreaCode), probability));
+                            tempFax.push(new CheckResult("faxNumber",
+                                fullNumber.replace("0", languageAreaCode),
+                                probability,
+                            ));
                         }
 
                         if (fullNumber.startsWith("00") || fullNumber.startsWith("(00")) {
-                            tempFax.push(new CheckResult("faxNumber", fullNumber.replace("00", "+"), probability));
-
+                            tempFax.push(new CheckResult(
+                                "faxNumber",
+                                fullNumber.replace("00", "+"),
+                                probability,
+                            ));
                         } else if (fullNumber.startsWith("0") || fullNumber.startsWith("(0")) {
-                            tempFax.push(new CheckResult("faxNumber", fullNumber.replace("0", languageAreaCode), probability));
-
+                            tempFax.push(new CheckResult(
+                                "faxNumber",
+                                fullNumber.replace("0", languageAreaCode),
+                                probability,
+                            ));
                         } else {
-                            tempFax.push(new CheckResult("faxNumber", fullNumber, probability));
+                            tempFax.push(new CheckResult(
+                                "faxNumber",
+                                fullNumber,
+                                probability,
+                            ));
                         }
                     }
+                    
                     fullNumber = "";
                     continue words;
                 }
@@ -773,8 +786,12 @@ export class AddressParser {
 
                 if (wordBefore.includes("fax")) {
                     probability += 90;
-
-                } else if (wordBefore.includes("tel") || wordBefore.includes("fon") || wordBefore.includes("mobil") || wordBefore.includes("handy")) {
+                } else if (
+                    wordBefore.includes("tel")
+                    || wordBefore.includes("fon")
+                    || wordBefore.includes("mobil")
+                    || wordBefore.includes("handy")
+                ) {
                     return tempFax;
                 }
             }
@@ -786,10 +803,12 @@ export class AddressParser {
 
             let tmpFullNum = fullNumber;
             tmpFullNum = tmpFullNum.replaceAll("+", "").replaceAll("/", "").replaceAll("-", "").replaceAll(".", "");
+
             if (tmpFullNum.length > 5 && tmpFullNum.length < 33) {
                 probability += 10;
             }
         }
+
         let tmpFullNum = fullNumber;
         tmpFullNum = tmpFullNum.replaceAll("+", "").replaceAll("/", "").replaceAll("-", "").replaceAll(".", "");
 
@@ -797,16 +816,34 @@ export class AddressParser {
             probability += 10;
         }
 
-        if (fullNumber.trim().length != 0 && probability != 0) {
-
-            if (fullNumber.startsWith("00") || fullNumber.startsWith("(00")) {
-                tempFax.push(new CheckResult("faxNumber", fullNumber.replace("00", "+"), probability));
-
-            } else if (fullNumber.startsWith("0") || fullNumber.startsWith("(0")) {
-                tempFax.push(new CheckResult("faxNumber", fullNumber.replace("0", languageAreaCode), probability));
-
+        if (
+            fullNumber.trim().length != 0
+            && probability != 0
+        ) {
+            if (
+                fullNumber.startsWith("00")
+                || fullNumber.startsWith("(00")
+            ) {
+                tempFax.push(new CheckResult(
+                    "faxNumber",
+                    fullNumber.replace("00", "+"),
+                    probability,
+                ));
+            } else if (
+                fullNumber.startsWith("0")
+                || fullNumber.startsWith("(0")
+            ) {
+                tempFax.push(new CheckResult(
+                    "faxNumber",
+                    fullNumber.replace("0", languageAreaCode),
+                    probability,
+                ));
             } else {
-                tempFax.push(new CheckResult("faxNumber", fullNumber, probability));
+                tempFax.push(new CheckResult(
+                    "faxNumber",
+                    fullNumber,
+                    probability,
+                ));
             }
         }
 
@@ -1365,9 +1402,13 @@ export class AddressParser {
                 //check, ob element eine 4 stellige Zahl ist 
                 if (element.length === 4 && onlyNumbers.includes(element)) {
                     probability += 20;
+
                     if (inputLineWordsClear[i + 1] !== undefined) {
                         wordAfter = inputLineWordsClear[i + 1];
-                        if (wordAfter.length === 2 && this.checkCorrectName(wordAfter)) { //check, ob das Wort nach dem Element 2 Zeichen lang ist nur aus Buchstaben erkannt wird
+
+                        if (
+                            wordAfter.length === 2
+                            && this.checkCorrectName(wordAfter)) { //check, ob das Wort nach dem Element 2 Zeichen lang ist nur aus Buchstaben erkannt wird
                             probability += 40
                         }
                     }
@@ -1458,7 +1499,7 @@ export class AddressParser {
             default:
                 break;
         }
-        
+
         //array to lowercase, um mit element zu vergleichen
         for (let a = 0; a < cityNamesArray.length; a++) {
             const element = cityNamesArray[a];
@@ -1544,12 +1585,12 @@ export class AddressParser {
 
             inlineExistingObjects.forEach((cityObject, index) => {
                 if (
-                    cityObject.value.toLowerCase() === elementClear.toLowerCase() 
+                    cityObject.value.toLowerCase() === elementClear.toLowerCase()
                     && cityObject.probability > probability
                 ) {
                     probability = 0;
                 } else if (
-                    cityObject.value.toLowerCase() === elementClear.toLowerCase() 
+                    cityObject.value.toLowerCase() === elementClear.toLowerCase()
                     && cityObject.probability <= probability
                 ) {
                     inlineExistingObjects.splice(index, 1);
@@ -1560,12 +1601,12 @@ export class AddressParser {
             existingObjects.forEach((cityObject, index) => {
 
                 if (
-                    cityObject.value.toLowerCase() === elementClear.toLowerCase() 
+                    cityObject.value.toLowerCase() === elementClear.toLowerCase()
                     && cityObject.probability > probability
                 ) {
                     probability = 0;
                 } else if (
-                    cityObject.value.toLowerCase() === elementClear.toLowerCase() 
+                    cityObject.value.toLowerCase() === elementClear.toLowerCase()
                     && cityObject.probability <= probability
                 ) {
                     existingObjects.splice(index, 1);
@@ -1647,7 +1688,7 @@ export class AddressParser {
                     } else {
                         probability += 25;
                     }
-                    
+
                     tempRegistrationNumber.push(new CheckResult(
                         "registrationNumber",
                         wordAfter.replaceAll(",", "").replaceAll(".", ""),
@@ -1672,7 +1713,7 @@ export class AddressParser {
                 tempRegistrationNumber.push(new CheckResult("registrationNumber", element.replaceAll(",", "").replaceAll(".", ""), probability));
             }
         }
-        
+
         return tempRegistrationNumber;
     }
 
