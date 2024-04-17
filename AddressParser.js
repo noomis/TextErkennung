@@ -265,12 +265,24 @@ export class AddressParser {
                 let wordBefore = inputLineWords[i - 1].toLowerCase();
 
                 //Checks whether certain keywords appear before the URL
-                if (wordBefore.includes("url") || wordBefore.includes("website") || wordBefore.includes("homepage") || wordBefore.includes("internet")) {
+                if (
+                wordBefore.includes("url") 
+                || wordBefore.includes("website") 
+                || wordBefore.includes("homepage") 
+                || wordBefore.includes("internet")
+            ) {
                     probability += 20;
                 }
             }
             //check whether certain illegal terms are contained in the element
-            if (element.includes("ö") || element.includes("ü") || element.includes("ß") || element.includes("ä") || element.includes("@") || element.includes("(at)")) {
+            if (
+            element.includes("ö") 
+            || element.includes("ü") 
+            || element.includes("ß") 
+            || element.includes("ä") 
+            || element.includes("@") 
+            || element.includes("(at)")
+            ) {
                 return tempUrl;
             }
 
