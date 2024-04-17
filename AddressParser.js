@@ -603,9 +603,9 @@ export class AddressParser {
                 ) {
                     probability += 40;
                 } else if (wordBefore.includes(
-                    "firmenname") 
+                    "firmenname")
                     || wordBefore.includes("umsatzsteuer-identifikationsnummer"
-                )) {
+                    )) {
                     return tempNames;
                 }
             }
@@ -777,7 +777,7 @@ export class AddressParser {
                             ));
                         }
                     }
-                    
+
                     fullNumber = "";
                     continue words;
                 }
@@ -995,15 +995,25 @@ export class AddressParser {
                     fullNumber.startsWith("00")
                     || fullNumber.startsWith("(00")
                 ) {
-                    tempPhone.push(new CheckResult("phoneNumber", fullNumber.replace("00", "+"), probability));
-
+                    tempPhone.push(new CheckResult(
+                        "phoneNumber",
+                        fullNumber.replace("00", "+"),
+                        probability,
+                    ));
                 } else if (fullNumber.startsWith("0")
                     || fullNumber.startsWith("(0")
                 ) {
-                    tempPhone.push(new CheckResult("phoneNumber", fullNumber.replace("0", languageAreaCode), probability));
-
+                    tempPhone.push(new CheckResult(
+                        "phoneNumber",
+                        fullNumber.replace("0", languageAreaCode),
+                        probability,
+                    ));
                 } else {
-                    tempPhone.push(new CheckResult("phoneNumber", fullNumber, probability));
+                    tempPhone.push(new CheckResult(
+                        "phoneNumber",
+                        fullNumber,
+                        probability,
+                    ));
                 }
             }
         }
@@ -1295,8 +1305,8 @@ export class AddressParser {
         let postalCodeLength = 0;
         let oneLetterKey = "";
         let twoLetterKey = "";
-        const whiteList = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 
-        'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z'];
+        const whiteList = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L',
+            'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z'];
 
 
         // Auswahl der passenden Vorwahl nach der erkannten Sprache
