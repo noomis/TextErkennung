@@ -125,6 +125,7 @@ export class AddressParser {
 
             this.vatIdNumberCheck = this.vatIdNumberCheck.concat(this.checkVatIdNumber(input));
 
+
             this.taxNumberCheck = this.taxNumberCheck.concat(this.checkTaxNumber(input));
 
         });
@@ -206,7 +207,7 @@ export class AddressParser {
                     probability += 15;
                 }
             }
-            
+
             if (inputLineWords[i].startsWith("///")) {
                 probability += 5;
             }
@@ -224,7 +225,7 @@ export class AddressParser {
         let knownTLD = ["com", "net", "org", "de", "eu", "at", "ch", "nl", "pl", "fr", "es", "info", "name", "email", "co", "biz", "uk"];
 
         //for loop that loops through all words from the input
-        for (let i = 0; i < inputLineWords.length; i++) {
+        wordLoop:for (let i = 0; i < inputLineWords.length; i++) {
             const element = inputLineWords[i];
             let probability = 0;
 
@@ -250,7 +251,7 @@ export class AddressParser {
             }
             //check how many points are in the array to filter out invalid URLs
             const dots = element.split(".");
-
+            
             if (element.includes("www.")) {
                 probability += 30;
                 if (dots.length > 2) {
@@ -260,10 +261,8 @@ export class AddressParser {
             
             //if there are no or only 1 point in the array, the prob is set to 0.
             if (dots.length <= 2) {
-                //TODO veilleicht auch returnen?
-                probability = 0;
+                continue wordLoop; 
             }
-
 
             if (i !== 0) {
                 let wordBefore = inputLineWords[i - 1].toLowerCase();
