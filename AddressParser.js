@@ -819,6 +819,7 @@ export class AddressParser {
     checkPhone(inputLine) {
         let tempPhone = []
 
+        // für rekursiv keine Ahnung frag Simon
         if (inputLine.length < 10) {
             return tempPhone;
         }
