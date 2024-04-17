@@ -18,11 +18,13 @@ export class CheckLanguage {
 
         // Iterate through the languages array
         this.languages.forEach(language => {
+
             //check welche Language am Wahrscheinlichsten ist
             if (language.languageProbability > maxProbability) {
                 maxProbability = language.languageProbability;
                 mostProbableLanguage = language;
                 //rundungen um nicht über 100% zu sein
+                
                 if (language.languageProbability > 100) {
                     language.languageProbability = 100;
                 }
@@ -63,11 +65,17 @@ export class CheckLanguage {
             const element = inputWords[index];
 
             //checken ob deutsche keywords im input enthalten sind, um die Wahrscheinlichkeit für DE zu erhöhen
-            if (element.includes("www.") && element.endsWith(".de")) {
+            if (
+                element.includes("www.")
+                && element.endsWith(".de")
+            ) {
                 germanProbability += 20;
             }
 
-            if (element.startsWith("D-") || element.startsWith("DE")) {
+            if (
+                element.startsWith("D-")
+                || element.startsWith("DE")
+            ) {
                 germanProbability += 20
             }
 
@@ -76,11 +84,17 @@ export class CheckLanguage {
             }
 
             //checken ob niederländische keywords im input enthalten sind, um die Wahrscheinlichkeit für NL zu erhöhen
-            if (element.includes("www.") && element.endsWith(".nl")) {
+            if (
+                element.includes("www.")
+                && element.endsWith(".nl")
+            ) {
                 dutchProbability += 20;
             }
 
-            if (element.startsWith("NL-") || element.startsWith("NL")) {
+            if (
+                element.startsWith("NL-")
+                ||element.startsWith("NL")
+            ) {
                 dutchProbability += 20
             }
 
@@ -89,11 +103,17 @@ export class CheckLanguage {
             }
 
             //checken ob englische keywords im input enthalten sind, um die Wahrscheinlichkeit für UK zu erhöhen
-            if (element.includes("www.") && element.endsWith(".uk")) {
+            if (element.includes("www.")
+                && element.endsWith(".uk")
+            ) {
                 englishProbability += 20;
             }
 
-            if (element.startsWith("UK-") || element.startsWith("GB") || element.startsWith("UK")) {
+            if (
+                element.startsWith("UK-")
+                || element.startsWith("GB")
+                || element.startsWith("UK")
+            ) {
                 englishProbability += 20
             }
 

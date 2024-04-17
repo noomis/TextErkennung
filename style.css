@@ -12,7 +12,6 @@ input {
   width: 270px;
 }
 
-
 .body {
   justify-content: center;
   align-items: center;
@@ -105,7 +104,6 @@ textarea::-webkit-input-placeholder {
 
 }
 
-
 #slider {
   width: 150px;
   padding: 0;
@@ -122,8 +120,6 @@ textarea::-webkit-input-placeholder {
   height: 100%;
   font-family: Arial, Helvetica, sans-serif;
 }
-
-
 
 .left{
   margin-left: auto;
