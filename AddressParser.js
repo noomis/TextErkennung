@@ -1607,11 +1607,10 @@ export class AddressParser {
                     // überprüfen ob die Ausgabe eine Nummer ist
                     if (isNaN(wordAfter) && probability == 80) {
                         continue words;
-
                     } else {
                         probability += 25;
                     }
-
+                    
                     tempRegistrationNumber.push(new CheckResult(
                         "registrationNumber",
                         wordAfter.replaceAll(",", "").replaceAll(".", ""),
@@ -1673,22 +1672,24 @@ export class AddressParser {
 
             default:
                 break;
-
         }
 
         //checken, ob es mit DE startet und dann DE replacen für den onlyNumbers Array
         for (let index = 0; index < tempInputWords.length; index++) {
             const element = tempInputWords[index].toLowerCase();
+
             if (element.startsWith(vatIdCountryCode)) {
                 tempInputWords[index] = element.replace(vatIdCountryCode, "");
                 probability += 10;
             }
         }
+
         const onlyNumbers = tempInputWords.filter(element => !isNaN(element));
 
         //onlyNumbers Array wird auf Zahlen mit ausschließlich 9 Ziffern begrenzt  
         for (let a = 0; a < onlyNumbers.length; a++) {
             const el = onlyNumbers[a];
+
             if (el.length !== 9) {
                 onlyNumbers.splice(a, 1);
             }
@@ -1802,7 +1803,6 @@ export class AddressParser {
                         probability += 40;
                     }
                 });
-
                 // wenn die Sprache englisch ist, da das keyword zwei Wörter sind
             } else if (element === keyword.split(" ")[0] && inputLineWords[index + 1] !== 0 && inputLineWords[index + 1] === keyword.split(" ")[1]) {
                 probability += 30;
@@ -1827,7 +1827,9 @@ export class AddressParser {
             // Checkt ob folgendes Format vorliegt: 123/4567/9876
             let tempWord = element.split("/");
             let tempCount = 0;
-            if (tempWord.length == 3 && tempWord[0].length == 3 && tempWord[1].length == 4 && tempWord[2].length == 4) {
+            if (
+                tempWord.length == 3 && tempWord[0].length == 3 && tempWord[1].length == 4 && tempWord[2].length == 4
+            ) {
                 probability += 20;
 
                 tempWord.forEach(element => {
@@ -1841,6 +1843,7 @@ export class AddressParser {
                         }
                     });
                 });
+
                 probability += 10;
 
                 if (tempCount == 11) {
@@ -1868,16 +1871,19 @@ export class AddressParser {
 
         // neuen Array mit elementen befüllen die eine größerer Wkeit als die Übergebne haben
         array.forEach(element => {
+
             if (element.probability >= this.outputPercentage) {
+
                 if (element.probability > 100) { // Setzt alle Wahrscheinlichkeiten > 100% auf 100% runter
                     element.probability = 100;
                 }
-                if (this.checkForDuplicates(tempArray, element)) { // element is only added if it does not already exist (no duplicates)
 
+                if (this.checkForDuplicates(tempArray, element)) { // element is only added if it does not already exist (no duplicates)
                     tempArray.push(element);
                 }
             }
         });
+
         return tempArray;
     }
 
