@@ -265,12 +265,24 @@ export class AddressParser {
                 let wordBefore = inputLineWords[i - 1].toLowerCase();
 
                 //Checks whether certain keywords appear before the URL
-                if (wordBefore.includes("url") || wordBefore.includes("website") || wordBefore.includes("homepage") || wordBefore.includes("internet")) {
+                if (
+                wordBefore.includes("url") 
+                || wordBefore.includes("website") 
+                || wordBefore.includes("homepage") 
+                || wordBefore.includes("internet")
+            ) {
                     probability += 20;
                 }
             }
             //check whether certain illegal terms are contained in the element
-            if (element.includes("ö") || element.includes("ü") || element.includes("ß") || element.includes("ä") || element.includes("@") || element.includes("(at)")) {
+            if (
+            element.includes("ö") 
+            || element.includes("ü") 
+            || element.includes("ß") 
+            || element.includes("ä") 
+            || element.includes("@") 
+            || element.includes("(at)")
+            ) {
                 return tempUrl;
             }
 
@@ -347,7 +359,8 @@ export class AddressParser {
                         || (wordChars[i] == "["
                             && wordChars[i + 1] == "a"
                             && wordChars[i + 2] == "t"
-                            && wordChars[i + 3] == "]"))
+                            && wordChars[i + 3] == "]"
+                        ))
                 ) {  // countet @
                     atHit.push(i);
                 }
@@ -1438,7 +1451,7 @@ export class AddressParser {
             default:
                 break;
         }
-
+        
         //array to lowercase, um mit element zu vergleichen
         for (let a = 0; a < cityNamesArray.length; a++) {
             const element = cityNamesArray[a];
@@ -1478,7 +1491,6 @@ export class AddressParser {
                     inputLineWords[a] = element.replace(countryCode + "-", "");
                     probability += 10;
                 }
-
                 //bei bestimmten regelmäßigen Endungen von Städten gewisse Probability geben
                 if (
                     element.endsWith("berg")
@@ -1521,6 +1533,7 @@ export class AddressParser {
             //hier um InLine Dopplungen rauzufiltern
             let existingObjects = this.citysCheck;
             let inlineExistingObjects = tempCity;
+
             inlineExistingObjects.forEach((cityObject, index) => {
                 if (
                     cityObject.value.toLowerCase() === elementClear.toLowerCase() 
@@ -1564,6 +1577,7 @@ export class AddressParser {
                 continue cityLoop;
             }
         }
+
         return tempCity;
     }
 
