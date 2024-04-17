@@ -15,7 +15,6 @@ export class AddressParser {
     companyRegistrationNumberCheck = []; //only max
     vatIdNumberCheck = []; //only max
     taxNumberCheck = []; //only max
-
     fetchedPostalCodes = []; // only max
     fetchedCityNames = []; // only max
     outputPercentage = 0;
@@ -26,11 +25,11 @@ export class AddressParser {
         if (!language) {
             //default language = "de"
             this.language = "de"
-
         } else {
             this.language = language;
             console.log(language);
         }
+
         this.outputPercentage = outputPercentage;
     }
 
@@ -59,7 +58,6 @@ export class AddressParser {
     }
 
     getEmailsCheck() {
-
         return this.emailsCheck;
     }
 
@@ -95,43 +93,32 @@ export class AddressParser {
         this.fetchedCityNames = this.fetchedCityNames.concat(_cityNames);
     }
 
-
     parseText(input) {
         //Split input by lines
         let inputLines = input.split("\n");
         inputLines.forEach(input => {
-
             this.w3wAddressCheck = this.w3wAddressCheck.concat(this.checkW3ws(input));
-
             this.homepageCheck = this.homepageCheck.concat(this.checkHomepage(input));
-
             this.emailsCheck = this.emailsCheck.concat(this.checkMails(input));
-
             this.companyNamesCheck = this.companyNamesCheck.concat(this.checkCompanyNames(input));
-
             this.contactPersonsCheck = this.contactPersonsCheck.concat(this.checkContactPersons(input));
-
             this.faxNumbersCheck = this.faxNumbersCheck.concat(this.checkFax(input));
-
             this.phoneNumbersCheck = this.phoneNumbersCheck.concat(this.checkPhone(input));
-
             this.streetsCheck = this.streetsCheck.concat(this.checkStreets(input));
-
             this.postalCodeCheck = this.postalCodeCheck.concat(this.checkPostalCode(input));
-
             this.citysCheck = this.citysCheck.concat(this.checkCity(input));
-
             this.companyRegistrationNumberCheck = this.companyRegistrationNumberCheck.concat(this.checkCompanyRegistrationNumber(input));
-
             this.vatIdNumberCheck = this.vatIdNumberCheck.concat(this.checkVatIdNumber(input));
-
-
             this.taxNumberCheck = this.taxNumberCheck.concat(this.checkTaxNumber(input));
-
         });
 
         //Address Object is created with information that at least corresponds to the specified probability
-        let addressObject = new Address(this.filterResults(this.companyNamesCheck), this.filterResults(this.postalCodeCheck), this.filterResults(this.streetsCheck), this.filterResults(this.citysCheck), this.filterResults(this.homepageCheck), this.filterResults(this.w3wAddressCheck), this.filterResults(this.emailsCheck), this.filterResults(this.phoneNumbersCheck), this.filterResults(this.faxNumbersCheck), this.filterResults(this.contactPersonsCheck), this.filterResults(this.companyRegistrationNumberCheck), this.filterResults(this.vatIdNumberCheck), this.filterResults(this.taxNumberCheck), this.language)
+        let addressObject = new Address(this.filterResults(this.companyNamesCheck), this.filterResults(this.postalCodeCheck),
+            this.filterResults(this.streetsCheck), this.filterResults(this.citysCheck), this.filterResults(this.homepageCheck),
+            this.filterResults(this.w3wAddressCheck), this.filterResults(this.emailsCheck), this.filterResults(this.phoneNumbersCheck),
+            this.filterResults(this.faxNumbersCheck), this.filterResults(this.contactPersonsCheck),
+            this.filterResults(this.companyRegistrationNumberCheck), this.filterResults(this.vatIdNumberCheck),
+            this.filterResults(this.taxNumberCheck), this.language)
         console.log(addressObject);
 
         return addressObject;
@@ -225,7 +212,7 @@ export class AddressParser {
         let knownTLD = ["com", "net", "org", "de", "eu", "at", "ch", "nl", "pl", "fr", "es", "info", "name", "email", "co", "biz", "uk"];
 
         //for loop that loops through all words from the input
-        wordLoop:for (let i = 0; i < inputLineWords.length; i++) {
+        wordLoop: for (let i = 0; i < inputLineWords.length; i++) {
             const element = inputLineWords[i];
             let probability = 0;
 
@@ -251,7 +238,7 @@ export class AddressParser {
             }
             //check how many points are in the array to filter out invalid URLs
             const dots = element.split(".");
-            
+
             if (element.includes("www.")) {
                 probability += 30;
                 if (dots.length > 2) {
@@ -261,7 +248,7 @@ export class AddressParser {
 
             //if there are no or only 1 point in the array, the prob is set to 0.
             if (dots.length <= 2) {
-                continue wordLoop; 
+                continue wordLoop;
             }
 
             if (i !== 0) {
@@ -305,7 +292,6 @@ export class AddressParser {
             let atHit = []; //Number of @ in the string
             let dotHit = []; // Number of . in the string
             let hasTLD = false; // hat TLD Domain
-
             const element = inputLineWords[index];
             //Splits each word into individual chars
             let wordChars = element.split("");
@@ -342,7 +328,17 @@ export class AddressParser {
             charLoop: for (let i = 0; i < wordChars.length; i++) {
                 const element = wordChars[i];
 
-                if (element === "@" || (wordChars[i] == "(" && wordChars[i + 1] == "a" && wordChars[i + 2] == "t" && wordChars[i + 3] == ")" || (wordChars[i] == "[" && wordChars[i + 1] == "a" && wordChars[i + 2] == "t" && wordChars[i + 3] == "]"))) {  // countet @
+                if (
+                    element === "@"
+                    || (wordChars[i] == "("
+                        && wordChars[i + 1] == "a"
+                        && wordChars[i + 2] == "t"
+                        && wordChars[i + 3] == ")"
+                        || (wordChars[i] == "["
+                            && wordChars[i + 1] == "a"
+                            && wordChars[i + 2] == "t"
+                            && wordChars[i + 3] == "]"))
+                ) {  // countet @
                     atHit.push(i);
                 }
 
@@ -376,11 +372,10 @@ export class AddressParser {
             if (dotHit.length > 1) {
                 if (dotHit[dotHit.length - 1] - atHit[0] < 3) {
                     continue wordLoop;
-
                 } else {
                     wordProb += 10;
                 }
-            } else if (dotHit.length == 1) {  // Checkt ob die local domain mindestens 2 Zeichen lang ist.
+            } else if (dotHit.length == 1) { // Checkt ob die local domain mindestens 2 Zeichen lang ist.
                 if (dotHit[0] - atHit[0] < 3) {
                     continue wordLoop;
                 } else {
@@ -388,7 +383,7 @@ export class AddressParser {
                 }
             }
 
-            if (hasTLD === false) {         // checkt ob eine TLD vorhanden ist.
+            if (hasTLD === false) { // checkt ob eine TLD vorhanden ist.
                 continue wordLoop;
             } else {
                 wordProb += 20;
@@ -400,7 +395,6 @@ export class AddressParser {
                     wordProb += 20;
                 }
             }
-
 
             tempMails.push(new CheckResult("mail", inputLineWords[index], wordProb));
         }
@@ -532,7 +526,6 @@ export class AddressParser {
             }
         });
         inputLineClear = inputLineClear.replace('Name', ''); // Entfernt den Titel "Name" aus z.B. SelectLine 
-        console.log('inputLineClear: ', inputLineClear);
         tempCheckCompanyNames.push(new CheckResult("companyName", inputLineClear, wordProb));
         return tempCheckCompanyNames;
     }
@@ -1585,7 +1578,6 @@ export class AddressParser {
                 wordBefore = inputLineWords[index - 1].toLowerCase();
 
                 keywords.forEach(keyword => {
-
                     if (wordBefore.startsWith(keyword)) {
                         probability += 80;
                     }
@@ -1593,8 +1585,11 @@ export class AddressParser {
             }
 
             // wenn nach einem keyword noch nummer folgt, das nächste wort nehmen nur nach zahlen überprüfen, wenn keywords enthalten sind
-            if (element.includes("nummer") || element.includes("number") && probability == 80) {
-
+            if (
+                element.includes("nummer")
+                || element.includes("number")
+                && probability == 80
+            ) {
                 if (index < inputLineWords.length - 1) {
                     const wordAfter = inputLineWords[index + 1].toLowerCase();
 
@@ -1605,9 +1600,13 @@ export class AddressParser {
                     } else {
                         probability += 25;
                     }
-                    tempRegistrationNumber.push(
-                        new CheckResult("registrationNumber", wordAfter.replaceAll(",", "").replaceAll(".", ""), probability)
-                    );
+
+                    tempRegistrationNumber.push(new CheckResult(
+                        "registrationNumber",
+                        wordAfter.replaceAll(",", "").replaceAll(".", ""),
+                        probability,
+                    ));
+
                     return tempRegistrationNumber;
                 }
                 // auch überprüfen ob die Ausgabe eine Nummer ist, nur ein wort vorher
@@ -1623,11 +1622,10 @@ export class AddressParser {
 
             //Objekt Erstellung / Output            
             if (probability > 0 && element.length == 5) {
-                tempRegistrationNumber.push(
-                    new CheckResult("registrationNumber", element.replaceAll(",", "").replaceAll(".", ""), probability)
-                );
+                tempRegistrationNumber.push(new CheckResult("registrationNumber", element.replaceAll(",", "").replaceAll(".", ""), probability));
             }
         }
+        
         return tempRegistrationNumber;
     }
 
@@ -1795,11 +1793,7 @@ export class AddressParser {
                 });
 
                 // wenn die Sprache englisch ist, da das keyword zwei Wörter sind
-            } else if (
-                element === keyword.split(" ")[0] 
-                && inputLineWords[index + 1] !== 0 
-                && inputLineWords[index + 1] === keyword.split(" ")[1]
-            ) {
+            } else if (element === keyword.split(" ")[0] && inputLineWords[index + 1] !== 0 && inputLineWords[index + 1] === keyword.split(" ")[1]) {
                 probability += 30;
 
                 this.fetchedCityNames.forEach(element => {
