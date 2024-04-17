@@ -1757,7 +1757,8 @@ export class AddressParser {
                 });
 
                 // wenn die Sprache englisch ist, da das keyword zwei Wörter sind
-            } else if (element === keyword.split(" ")[0] && inputLineWords[index + 1] !== 0 && inputLineWords[index + 1] === keyword.split(" ")[1]) {
+            } else if (element === keyword.split(" ")[0] && inputLineWords[index + 1] 
+            !== 0 && inputLineWords[index + 1] === keyword.split(" ")[1]) {
                 probability += 30;
 
                 this.fetchedCityNames.forEach(element => {
