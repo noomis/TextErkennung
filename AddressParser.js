@@ -526,7 +526,6 @@ export class AddressParser {
             }
         });
         inputLineClear = inputLineClear.replace('Name', ''); // Entfernt den Titel "Name" aus z.B. SelectLine 
-        console.log('inputLineClear: ', inputLineClear);
         tempCheckCompanyNames.push(new CheckResult("companyName", inputLineClear, wordProb));
         return tempCheckCompanyNames;
     }
