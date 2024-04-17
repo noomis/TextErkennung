@@ -5,6 +5,7 @@ export class FetchData {
     async fetchCityData() {
         let tempAllPostalCodes = [];
         let tempAllCityNames = [];
+
         //arrays werden auf die Germany-Werte, die im json enthalten sind, gesetzt 
         await fetch('georef-germany-postleitzahl.json')
             .then(response => response.json())
@@ -14,10 +15,11 @@ export class FetchData {
                     tempAllPostalCodes.push(datensatz.name);
                 });
             })
+            
         this.setAllPostalCodes(tempAllPostalCodes);
         this.setCityNames(tempAllCityNames);
-
     }
+
     getAllPostalCodes() {
         return this.fetchedPostalCodes;
     }
@@ -33,5 +35,4 @@ export class FetchData {
     setCityNames(_cityNames) {
         this.fetchedCityNames = this.fetchedCityNames.concat(_cityNames);
     }
-
 }

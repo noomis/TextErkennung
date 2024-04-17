@@ -626,22 +626,27 @@ export class AddressParser {
                     }
                 }
             }
+
             if (inputLineWords[i + 2] !== undefined) {
                 word2After = inputLineWords[i + 2].toLowerCase();
                 if (word2After.includes("stra")) {
                     probability -= 35;
                 }
             }
+
             //für sauberere Ausgabe
             wordAfterClean = wordAfterClean.replaceAll(",", "").replaceAll("_", "");
+            
             //Wahrscheinlichkeitsrundung
             if (probability > 100) {
                 probability = 100;
             }
+
             //checken, ob Namen bereits als Objekte erstellt wurden, um Doppelungen zu vermeiden
             //hier um InLine Dopplungen rauzufiltern
             let inlineExistingObjects = tempNames;
             let existingObjects = this.contactPersonsCheck;
+
             inlineExistingObjects.forEach((nameObject, index) => {
                 if (
                     nameObject.value === tripleName 
@@ -655,6 +660,7 @@ export class AddressParser {
                     inlineExistingObjects.splice(index, 1);
                 }
             });
+
             //hier um generelle Dopplungen rauzufiltern
             existingObjects.forEach((nameObject, index) => {
                 if (
@@ -674,6 +680,7 @@ export class AddressParser {
                     existingObjects.splice(index, 1);
                 }
             });
+
             if (probability > 0) {
                 //output wenn es ein "normaler" Name ist
                 if (tripleName == "") {
@@ -685,9 +692,8 @@ export class AddressParser {
                             tempNames.push(new CheckResult("contactPerson", name, probability));
                         }
                     }
-                }
-                //output bei einem 3er-Namen 
-                else {
+          //output bei einem 3er-Namen      
+        } else {
                     if (!tempNames.includes(tripleName) && this.checkCorrectName(tripleName)) {
                         tripleName = tripleName.replaceAll(",", "").replaceAll("_", "");
                         tempNames.push(new CheckResult("contactPerson", tripleName, probability));
@@ -695,6 +701,7 @@ export class AddressParser {
                 }
             }
         }
+        
         return tempNames;
     }
 
@@ -1492,6 +1499,7 @@ export class AddressParser {
                     inputLineWords[a] = element.replace(countryCode + "-", "");
                     probability += 10;
                 }
+
                 //bei bestimmten regelmäßigen Endungen von Städten gewisse Probability geben
                 if (
                     element.endsWith("berg")
