@@ -1701,7 +1701,10 @@ export class AddressParser {
                     const wordAfter = inputLineWords[index + 1].toLowerCase();
 
                     // überprüfen ob die Ausgabe eine Nummer ist
-                    if (isNaN(wordAfter) && probability == 80) {
+                    if (
+                        isNaN(wordAfter) 
+                        && probability == 80
+                    ) {
                         continue words;
                     } else {
                         probability += 25;
@@ -1727,8 +1730,13 @@ export class AddressParser {
             }
 
             //Objekt Erstellung / Output            
-            if (probability > 0 && element.length == 5) {
-                tempRegistrationNumber.push(new CheckResult("registrationNumber", element.replaceAll(",", "").replaceAll(".", ""), probability));
+            if (
+                probability > 0 
+                && element.length == 5
+            ) {
+                tempRegistrationNumber.push(new CheckResult(
+                    "registrationNumber", element.replaceAll(",", "").replaceAll(".", ""), probability
+                ));
             }
         }
 
@@ -1750,7 +1758,6 @@ export class AddressParser {
 
         // Auswahl des Keyword Arrays nach Sprache
         switch (this.language.languageName) {
-
             case "de":
                 vatIdCountryCode = "de";
                 vatKeywords = vatKeywordsDE;
@@ -1855,6 +1862,7 @@ export class AddressParser {
                 tempTax.push(new CheckResult("vatIdNumber", elementClear, probability));
             }
         }
+
         return tempTax;
     }
 
@@ -1927,8 +1935,12 @@ export class AddressParser {
             // Checkt ob folgendes Format vorliegt: 123/4567/9876
             let tempWord = element.split("/");
             let tempCount = 0;
+
             if (
-                tempWord.length == 3 && tempWord[0].length == 3 && tempWord[1].length == 4 && tempWord[2].length == 4
+                tempWord.length == 3 
+                && tempWord[0].length == 3 
+                && tempWord[1].length == 4 
+                && tempWord[2].length == 4
             ) {
                 probability += 20;
 
@@ -1950,8 +1962,8 @@ export class AddressParser {
                     tempTax.push(new CheckResult("companyTax", inputLineWords[index], probability));
                 }
             }
-
         }
+
         return tempTax;
     }
 
