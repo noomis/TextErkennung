@@ -1558,6 +1558,7 @@ export class AddressParser {
                     probability += 10;
                 }
 
+                // TODO array erstellen und durch loopen
                 //bei bestimmten regelmäßigen Endungen von Städten gewisse Probability geben
                 if (
                     element.endsWith("berg")
