@@ -44,6 +44,7 @@ export class CheckLanguage {
         let language;
         //Funktionions Aufruf externer Library (Franc) 
         let languageDetection = franc(inputLine);
+        
         //checken, ob die email mit gewisser TLD endet um Land genauer zu bestimmen
         for (let index = 0; index < email.length; index++) {
             const element = email[index].value;

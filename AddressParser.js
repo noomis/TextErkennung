@@ -315,6 +315,7 @@ export class AddressParser {
             let dotHit = []; // Number of . in the string
             let hasTLD = false; // hat TLD Domain
             const element = inputLineWords[index];
+
             //Splits each word into individual chars
             let wordChars = element.split("");
 
@@ -352,11 +353,13 @@ export class AddressParser {
 
                 if (
                     element === "@"
-                    || (wordChars[i] == "("
+                    || (
+                        wordChars[i] == "("
                         && wordChars[i + 1] == "a"
                         && wordChars[i + 2] == "t"
                         && wordChars[i + 3] == ")"
-                        || (wordChars[i] == "["
+                        || (
+                            wordChars[i] == "["
                             && wordChars[i + 1] == "a"
                             && wordChars[i + 2] == "t"
                             && wordChars[i + 3] == "]"
