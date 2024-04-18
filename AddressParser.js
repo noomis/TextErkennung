@@ -669,15 +669,13 @@ export class AddressParser {
 
             //hier um generelle Dopplungen rauzufiltern
             existingObjects.forEach((nameObject, index) => {
-                if (
-                    (
+                if ((
                         nameObject.value === tripleName || nameObject.value === tempInputWord + " " + wordAfterClean
                     )
                     && nameObject.probability > probability
                 ) {
                     probability = 0;
-                } else if (
-                    (
+                } else if ((
                         nameObject.value === tripleName
                         || nameObject.value === tempInputWord + " " + wordAfterClean
                     )
@@ -2031,7 +2029,7 @@ export class AddressParser {
                 return false;
             }
         }
-        
+
         return true;
     }
 }
