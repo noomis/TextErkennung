@@ -1350,14 +1350,16 @@ export class AddressParser {
             if (a !== 0) {
                 let wordBefore = inputLineWords[a - 1];
 
-                if (wordBefore.includes("fax") || wordBefore.includes("fon")) {
+                if (
+                    wordBefore.includes("fax") 
+                    || wordBefore.includes("fon")
+                ) {
                     inputLineWords.splice(a, 1);
                 }
             }
         }
 
         if (this.language.languageName === "de") {
-
             // neuer Array nur mit 5 Stelligen Zahlen 
             const onlyNumbers = inputLineWords.filter(element => !isNaN(element));
 
@@ -1368,6 +1370,7 @@ export class AddressParser {
                     onlyNumbers.splice(a, 1);
                 }
             }
+
             // check ob elements im json enthalten sind und somit eine Stadt matchen
             zipLoop: for (let i = 0; i < onlyNumbers.length; i++) {
                 const element = onlyNumbers[i];
@@ -1396,9 +1399,11 @@ export class AddressParser {
                     probability = 100;
                 }
 
-                if (probability > 0 && element.length === postalCodeLength) {
+                if (
+                    probability > 0 
+                    && element.length === postalCodeLength
+                ) {
                     tempPostalCode.push(new CheckResult("postalCode", element, probability));
-
                 } else {
                     continue zipLoop;
                 }
