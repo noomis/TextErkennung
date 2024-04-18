@@ -50,15 +50,12 @@ function printResult() {
                 addressObject.exportJson(this);
             });
         }
-
     }, 500);
-
 }
 
 document.getElementById("random").addEventListener("click", randomImprint);
 
 window.addEventListener("load", async () => {
-
     // (A) GET HTML ELEMENTS
     const hSel = document.getElementById("select"),
         hRes = document.getElementById("text");
@@ -70,7 +67,6 @@ window.addEventListener("load", async () => {
 
     // (C) ON FILE SELECT - IMAGE TO TEXT
     hSel.onchange = async () => {
-
         const res = await worker.recognize(hSel.files[0]);
         hRes.value = res.data.text;
         $("#text").trigger("onkeyup");
@@ -80,6 +76,7 @@ window.addEventListener("load", async () => {
 
 //Testimpressen 
 let i = 0;
+
 function randomImprint() {
     $("#text").height(60);
 
@@ -98,7 +95,6 @@ function randomImprint() {
 
     if (i <= imprint.length - 1) {
         document.getElementById("text").value = imprint[i];
-        
     } else {
         i = 0;
         document.getElementById("text").value = imprint[i];
