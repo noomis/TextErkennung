@@ -136,10 +136,9 @@ export class Address {
     }
 
     outputAllValues(html_id, fadeTime) {
-
         let objectArray = [];
-        switch (html_id) {
 
+        switch (html_id) {
             case "email":
                 objectArray = objectArray.concat(this.getEmails());
                 break;
@@ -238,7 +237,6 @@ export class Address {
 
         let maxValue = this.findMaxPercentage(objectArray);
         $("#" + html_id).val(maxValue.value).hide().fadeIn(fadeTime);
-        
     }
 
     findMaxPercentage(array) {
@@ -255,6 +253,7 @@ export class Address {
 
         // Objekt mit der höhsten Wahrscheinlichkeit returnen
         array.forEach(element => {
+
             if (element.probability > highestPercentage.probability) {
                 highestPercentage = element;
             }
