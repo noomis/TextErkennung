@@ -669,15 +669,13 @@ export class AddressParser {
 
             //hier um generelle Dopplungen rauzufiltern
             existingObjects.forEach((nameObject, index) => {
-                if (
-                    (
+                if ((
                         nameObject.value === tripleName || nameObject.value === tempInputWord + " " + wordAfterClean
                     )
                     && nameObject.probability > probability
                 ) {
                     probability = 0;
-                } else if (
-                    (
+                } else if ((
                         nameObject.value === tripleName
                         || nameObject.value === tempInputWord + " " + wordAfterClean
                     )
@@ -1424,9 +1422,9 @@ export class AddressParser {
                     if (inputLineWordsClear[i + 1] !== undefined) {
                         wordAfter = inputLineWordsClear[i + 1];
 
-                        if (
-                            wordAfter.length === 2
-                            && this.checkCorrectName(wordAfter)) { //check, ob das Wort nach dem Element 2 Zeichen lang ist nur aus Buchstaben erkannt wird
+                        //check, ob das Wort nach dem Element 2 Zeichen lang ist nur aus Buchstaben erkannt wird
+                        if (wordAfter.length === 2 && this.checkCorrectName(wordAfter)) 
+                            { 
                             probability += 40
                         }
                     }
@@ -1750,7 +1748,6 @@ export class AddressParser {
 
         // Auswahl des Keyword Arrays nach Sprache
         switch (this.language.languageName) {
-
             case "de":
                 vatIdCountryCode = "de";
                 vatKeywords = vatKeywordsDE;
@@ -1996,7 +1993,7 @@ export class AddressParser {
                 return false;
             }
         }
-        
+
         return true;
     }
 }
