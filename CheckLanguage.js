@@ -44,7 +44,7 @@ export class CheckLanguage {
         let language;
         //Funktionions Aufruf externer Library (Franc) 
         let languageDetection = franc(inputLine);
-        
+
         //checken, ob die email mit gewisser TLD endet um Land genauer zu bestimmen
         for (let index = 0; index < email.length; index++) {
             const element = email[index].value;
@@ -123,6 +123,7 @@ export class CheckLanguage {
             }
         }
         if (inputLine !== "") {
+            
             //Library stellt anhand geschriebenen Textes die Sprache fest und gibt dann Prozente 
             if (languageDetection == "deu") {
                 germanProbability += 30;
@@ -135,6 +136,7 @@ export class CheckLanguage {
             if (languageDetection == "nld") {
                 dutchProbability += 20;
             }
+
             //push der Sprache mit Probability in den Array
             this.languages.push(
                 language = {
@@ -157,6 +159,7 @@ export class CheckLanguage {
                 }
             );
         }
+
         // Call the function to find the most probable language
         possibleLanguage = this.findMostProbableLanguage();
         return possibleLanguage;
