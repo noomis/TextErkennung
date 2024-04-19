@@ -495,12 +495,10 @@ export class AddressParser {
         let inputLineClear = inputLine;
         inputLine = inputLine.toLowerCase();
         let inputLineWords = inputLine.split(" ");
-
         let companyType = companyTypeGerman;
         let companyKeyWords = companyKeyWordsGerman;
 
         switch (this.language.languageName) {   // je nach Land die jeweiligen Arrays festlegen
-
             case "de":
                 companyType = companyTypeGerman;
                 companyKeyWords = companyKeyWordsGerman;
@@ -518,7 +516,6 @@ export class AddressParser {
 
             default:
                 break;
-
         }
 
         wordLoop: for (let index = 0; index < inputLineWords.length; index++) {
@@ -531,9 +528,14 @@ export class AddressParser {
             if (element.includes('(at)')) { // Checkt ob String mit @ beginnt
                 return tempCheckCompanyNames;
             }
+
             for (let i = 0; i < knownTLD.length; i++) {
                 const el = knownTLD[i];
-                if (element.startsWith("www.") && element.endsWith(el)) { // checkt ob das aktulle Wort eine URL ist
+
+                if (
+                    element.startsWith("www.") 
+                    && element.endsWith(el) // checkt ob das aktulle Wort eine URL ist
+                ) { 
                     return tempCheckCompanyNames;
                 }
             }
@@ -625,7 +627,10 @@ export class AddressParser {
 
                 if (wordAfter.includes("gmbh") || wordAfter.includes("ohg") || wordAfter.includes("e.v.")) {
                     return tempNames;
-                } else if (firstName.includes(wordAfter) && firstName.includes(tempWord)) { //checken ob es ein 3er-Name ist
+                } else if (
+                    firstName.includes(wordAfter) 
+                    && firstName.includes(tempWord) //checken ob es ein 3er-Name ist
+                ) { 
                     if (inputLineWords[i + 2] !== undefined) {
                         word2After = inputLineWords[i + 2];
                         tripleName = tempInputWord + " " + wordAfterClean + " " + word2After;
@@ -692,13 +697,18 @@ export class AddressParser {
                     // checken, ob das Wort vorher nicht auch ein Vorname ist, dann pushen um einen möglichen 3er-Namen nicht doppelt zu erhalten
                     if (!firstName.includes(wordBefore)) {
                         //checken, ob name kein § enthält = edge case
-                        if (!name.includes("§") && this.checkCorrectName(name)) {
+                        if (
+                            !name.includes("§") && this.checkCorrectName(name)
+                        ) {
                             tempNames.push(new CheckResult("contactPerson", name, probability));
                         }
                     }
                     //output bei einem 3er-Namen      
                 } else {
-                    if (!tempNames.includes(tripleName) && this.checkCorrectName(tripleName)) {
+                    if (
+                        !tempNames.includes(tripleName) 
+                        && this.checkCorrectName(tripleName)
+                    ) {
                         tripleName = tripleName.replaceAll(",", "").replaceAll("_", "");
                         tempNames.push(new CheckResult("contactPerson", tripleName, probability));
                     }
@@ -748,7 +758,10 @@ export class AddressParser {
                 // Überprüfen, ob die Eingabe keiner Nummer entspricht
                 if (!whiteList.includes(inputLineChars[index])) {
                     // Falls nach einer Nummer ein Wort kommt, wird die bisher gespeicherte Nummer ausgegeben
-                    if (fullNumber.trim().length >= 6 && probability != 0) {
+                    if (
+                        fullNumber.trim().length >= 6 
+                        && probability != 0
+                    ) {
 
                         // Faxnummern einheitliche Schreibweise setzen
                         if (inputLineWords[i - 1].startsWith("0") || inputLineWords[i - 1].startsWith("(0")) {
@@ -808,7 +821,10 @@ export class AddressParser {
             let tmpFullNum = fullNumber;
             tmpFullNum = tmpFullNum.replaceAll("+", "").replaceAll("/", "").replaceAll("-", "").replaceAll(".", "");
 
-            if (tmpFullNum.length > 5 && tmpFullNum.length < 33) {
+            if (
+                tmpFullNum.length > 5 
+                && tmpFullNum.length < 33
+            ) {
                 probability += 10;
             }
         }
@@ -816,7 +832,10 @@ export class AddressParser {
         let tmpFullNum = fullNumber;
         tmpFullNum = tmpFullNum.replaceAll("+", "").replaceAll("/", "").replaceAll("-", "").replaceAll(".", "");
 
-        if (tmpFullNum.length > 5 && tmpFullNum.length < 33) {
+        if (
+            tmpFullNum.length > 5 
+            && tmpFullNum.length < 33
+        ) {
             probability += 10;
         }
 
@@ -902,7 +921,10 @@ export class AddressParser {
                 if (!whiteList.includes(inputLineChars[index])) {
 
                     // Falls nach einer Nummer ein Wort kommt, wird die bisher gespeicherte Nummer ausgegeben
-                    if (fullNumber.trim().length >= 6 && probability != 0) {
+                    if (
+                        fullNumber.trim().length >= 6 
+                        && probability != 0
+                    ) {
 
                         // Telefonnummer einheitliche Schreibweise setzen
                         if (
@@ -1163,7 +1185,10 @@ export class AddressParser {
                         if (num == 0) {
                             probability += 20;
 
-                            if (wordAfter.length > 0 && wordAfter.length < 3) {
+                            if (
+                                wordAfter.length > 0 
+                                && wordAfter.length < 3
+                            ) {
                                 probability += 20;
                             } else if (wordAfter.length < 5) {
                                 probability += 10;
@@ -1224,7 +1249,9 @@ export class AddressParser {
                     } else {
 
                         // das Wort ermittlen, welches aus der Zeile mit dem Keyword matcht
-                        if (!(inputLineWords[m] == matchingWords[1] && inputLineWords[m - 1] == matchingWords[0])) {
+                        if (
+                            !(inputLineWords[m] == matchingWords[1] && inputLineWords[m - 1] == matchingWords[0])
+                        ) {
                             continue words;
                         }
                     }
@@ -1243,7 +1270,10 @@ export class AddressParser {
                         if (num == 0) {
                             probability += 25;
 
-                            if (word2After.length > 0 && word2After.length < 3) {
+                            if (
+                                word2After.length > 0 
+                                && word2After.length < 3
+                            ) {
                                 probability += 25;
                             } else if (word2After.length < 5) {
                                 probability += 15;
@@ -1281,11 +1311,17 @@ export class AddressParser {
             }
         }
 
-        if (fullStreetName.length < 20 && fullStreetName.length > 10) {
+        if (
+            fullStreetName.length < 20 
+            && fullStreetName.length > 10
+        ) {
             probability += 10;
         }
 
-        if (fullStreetName.trim().length != 0 && probability != 0) {
+        if (
+            fullStreetName.trim().length != 0 
+            && probability != 0
+        ) {
             tempStreet.push(new CheckResult("street", fullStreetNameClear, probability));
         }
 
@@ -1398,7 +1434,10 @@ export class AddressParser {
                     probability = 100;
                 }
 
-                if (probability > 0 && element.length === postalCodeLength) {
+                if (
+                    probability > 0 
+                    && element.length === postalCodeLength
+                ) {
                     tempPostalCode.push(new CheckResult("postalCode", element, probability));
 
                 } else {
@@ -1416,14 +1455,20 @@ export class AddressParser {
                 const element = inputLineWords[i];
 
                 //check, ob element eine 4 stellige Zahl ist 
-                if (element.length === 4 && onlyNumbers.includes(element)) {
+                if (
+                    element.length === 4 
+                    && onlyNumbers.includes(element)
+                ) {
                     probability += 20;
 
                     if (inputLineWordsClear[i + 1] !== undefined) {
                         wordAfter = inputLineWordsClear[i + 1];
 
                         //check, ob das Wort nach dem Element 2 Zeichen lang ist nur aus Buchstaben erkannt wird
-                        if (wordAfter.length === 2 && this.checkCorrectName(wordAfter)) 
+                        if (
+                            wordAfter.length === 2 
+                            && this.checkCorrectName(wordAfter)
+                        ) 
                             { 
                             probability += 40
                         }
@@ -1435,7 +1480,10 @@ export class AddressParser {
                     probability = 100;
                 }
 
-                if (probability > 0 && element.length === 4) {
+                if (
+                    probability > 0 
+                    && element.length === 4
+                ) {
                     tempPostalCode.push(new CheckResult("postalCode", element + " " + wordAfter, probability));
 
                 } else {
@@ -1454,11 +1502,19 @@ export class AddressParser {
                 const thirdLetter = element.charAt(2);
 
                 //checken, ob das erste Zeichen eine Zahl ist, das zweite Zeichen eine Buchstabe ist, check ob das dritte Zeichen eine Buchstabe ist und das element genau 3 Zeichen lang ist
-                if (element.length === 3 && !isNaN(firstLetter) && isNaN(secondLetter) && isNaN(thirdLetter)) {
+                if (
+                    element.length === 3 
+                    && !isNaN(firstLetter) 
+                    && isNaN(secondLetter) 
+                    && isNaN(thirdLetter)
+                ) {
                     probability += 40;
                     if (inputLineWordsClear[i - 1] !== undefined) {
                         wordBefore = inputLineWordsClear[i - 1];
-                        if (wordBefore.length >= 2 && wordBefore.length <= 4) { //check, ob das Wort vorher den UK-PLZ Kriterien entspricht  
+                        if (
+                            wordBefore.length >= 2 
+                            && wordBefore.length <= 4
+                        ) { //check, ob das Wort vorher den UK-PLZ Kriterien entspricht  
                             probability += 30
                         }
                     }
@@ -1469,7 +1525,10 @@ export class AddressParser {
                     probability = 100;
                 }
 
-                if (probability > 0 && element.length === 3) {
+                if (
+                    probability > 0 
+                    && element.length === 3
+                ) {
                     tempPostalCode.push(new CheckResult("postalCode", wordBefore + " " + elementClear, probability));
 
                 } else {
@@ -1636,7 +1695,10 @@ export class AddressParser {
             }
 
             //Ausgabe-Objekt Erstellung, wenn Prob größer 0 und das Element nur erlaubte Wörter enthält
-            if (probability > 0 && this.checkCorrectName(elementClear)) {
+            if (
+                probability > 0 
+                && this.checkCorrectName(elementClear)
+            ) {
                 tempCity.push(new CheckResult("city", elementClear, probability));
 
             } else {
@@ -1839,7 +1901,10 @@ export class AddressParser {
             for (let i = 0; i < onlyNumbers.length; i++) {
                 const e = onlyNumbers[i];
 
-                if (e == elementReplaced && elementReplaced.length == 9) {
+                if (
+                    e == elementReplaced 
+                    && elementReplaced.length == 9
+                ) {
                     probability += 40;
 
                     if (index !== 0) {
