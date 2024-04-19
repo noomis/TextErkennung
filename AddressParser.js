@@ -422,7 +422,10 @@ export class AddressParser {
                 }
             }
 
-            tempMails.push(new CheckResult("mail", inputLineWords[index], wordProb));
+            tempMails.push(new CheckResult("mail",
+                inputLineWords[index],
+                wordProb,
+            ));
         }
 
         return tempMails;
@@ -623,7 +626,10 @@ export class AddressParser {
                     probability += 40;
                 }
 
-                if (wordAfter.includes("gmbh") || wordAfter.includes("ohg") || wordAfter.includes("e.v.")) {
+                if (wordAfter.includes("gmbh")
+                    || wordAfter.includes("ohg")
+                    || wordAfter.includes("e.v.")
+                ) {
                     return tempNames;
                 } else if (firstName.includes(wordAfter) && firstName.includes(tempWord)) { //checken ob es ein 3er-Name ist
                     if (inputLineWords[i + 2] !== undefined) {
@@ -656,12 +662,14 @@ export class AddressParser {
             inlineExistingObjects.forEach((nameObject, index) => {
                 if (
                     nameObject.value === tripleName
-                    || nameObject.value === tempInputWord + " " + wordAfterClean && nameObject.probability > probability
+                    || nameObject.value === tempInputWord + " " + wordAfterClean
+                    && nameObject.probability > probability
                 ) {
                     probability = 0;
                 } else if (
                     nameObject.value === tripleName
-                    || nameObject.value === tempInputWord + " " + wordAfterClean && nameObject.probability <= probability
+                    || nameObject.value === tempInputWord + " " + wordAfterClean
+                    && nameObject.probability <= probability
                 ) {
                     inlineExistingObjects.splice(index, 1);
                 }
@@ -670,15 +678,16 @@ export class AddressParser {
             //hier um generelle Dopplungen rauzufiltern
             existingObjects.forEach((nameObject, index) => {
                 if ((
-                        nameObject.value === tripleName || nameObject.value === tempInputWord + " " + wordAfterClean
-                    )
+                    nameObject.value === tripleName
+                    || nameObject.value === tempInputWord + " " + wordAfterClean
+                )
                     && nameObject.probability > probability
                 ) {
                     probability = 0;
                 } else if ((
-                        nameObject.value === tripleName
-                        || nameObject.value === tempInputWord + " " + wordAfterClean
-                    )
+                    nameObject.value === tripleName
+                    || nameObject.value === tempInputWord + " " + wordAfterClean
+                )
                     && nameObject.probability <= probability
                 ) {
                     existingObjects.splice(index, 1);
@@ -692,15 +701,28 @@ export class AddressParser {
                     // checken, ob das Wort vorher nicht auch ein Vorname ist, dann pushen um einen möglichen 3er-Namen nicht doppelt zu erhalten
                     if (!firstName.includes(wordBefore)) {
                         //checken, ob name kein § enthält = edge case
-                        if (!name.includes("§") && this.checkCorrectName(name)) {
-                            tempNames.push(new CheckResult("contactPerson", name, probability));
+                        if (
+                            !name.includes("§")
+                            && this.checkCorrectName(name)
+                        ) {
+                            tempNames.push(new CheckResult(
+                                "contactPerson",
+                                name,
+                                probability,
+                            ));
                         }
                     }
                     //output bei einem 3er-Namen      
                 } else {
-                    if (!tempNames.includes(tripleName) && this.checkCorrectName(tripleName)) {
+                    if (
+                        !tempNames.includes(tripleName)
+                        && this.checkCorrectName(tripleName)) {
                         tripleName = tripleName.replaceAll(",", "").replaceAll("_", "");
-                        tempNames.push(new CheckResult("contactPerson", tripleName, probability));
+                        tempNames.push(new CheckResult(
+                            "contactPerson",
+                            tripleName,
+                            probability,
+                        ));
                     }
                 }
             }
@@ -748,17 +770,24 @@ export class AddressParser {
                 // Überprüfen, ob die Eingabe keiner Nummer entspricht
                 if (!whiteList.includes(inputLineChars[index])) {
                     // Falls nach einer Nummer ein Wort kommt, wird die bisher gespeicherte Nummer ausgegeben
-                    if (fullNumber.trim().length >= 6 && probability != 0) {
+                    if (
+                        fullNumber.trim().length >= 6
+                        && probability != 0
+                    ) {
 
                         // Faxnummern einheitliche Schreibweise setzen
-                        if (inputLineWords[i - 1].startsWith("0") || inputLineWords[i - 1].startsWith("(0")) {
+                        if (
+                            inputLineWords[i - 1].startsWith("0")
+                            || inputLineWords[i - 1].startsWith("(0")) {
                             tempFax.push(new CheckResult("faxNumber",
                                 fullNumber.replace("0", languageAreaCode),
                                 probability,
                             ));
                         }
 
-                        if (fullNumber.startsWith("00") || fullNumber.startsWith("(00")) {
+                        if (
+                            fullNumber.startsWith("00")
+                            || fullNumber.startsWith("(00")) {
                             tempFax.push(new CheckResult(
                                 "faxNumber",
                                 fullNumber.replace("00", "+"),
@@ -1351,7 +1380,7 @@ export class AddressParser {
                 let wordBefore = inputLineWords[a - 1];
 
                 if (
-                    wordBefore.includes("fax") 
+                    wordBefore.includes("fax")
                     || wordBefore.includes("fon")
                 ) {
                     inputLineWords.splice(a, 1);
@@ -1400,7 +1429,7 @@ export class AddressParser {
                 }
 
                 if (
-                    probability > 0 
+                    probability > 0
                     && element.length === postalCodeLength
                 ) {
                     tempPostalCode.push(new CheckResult("postalCode", element, probability));
@@ -1413,11 +1442,11 @@ export class AddressParser {
         if (this.language.languageName === "nl") {
             // neuer Array nur mit 4 stelligen Zahlen 
             const onlyNumbers = inputLineWords.filter(
-                element => !isNaN(element) 
-                && (
-                    element.length === 4 
-                    || whiteList.includes(element)
-                )
+                element => !isNaN(element)
+                    && (
+                        element.length === 4
+                        || whiteList.includes(element)
+                    )
             );
 
             zipLoop: for (let i = 0; i < inputLineWords.length; i++) {
@@ -1425,7 +1454,7 @@ export class AddressParser {
 
                 // check, ob element eine 4 stellige Zahl ist 
                 if (
-                    element.length === 4 
+                    element.length === 4
                     && onlyNumbers.includes(element)
                 ) {
                     probability += 20;
@@ -1449,7 +1478,7 @@ export class AddressParser {
                 }
 
                 if (
-                    probability > 0 
+                    probability > 0
                     && element.length === 4
                 ) {
                     tempPostalCode.push(new CheckResult("postalCode", element + " " + wordAfter, probability));
@@ -1471,16 +1500,16 @@ export class AddressParser {
                 // checken, ob das erste Zeichen eine Zahl ist, das zweite Zeichen eine Buchstabe ist, check ob das dritte Zeichen eine 
                 // Buchstabe ist und das element genau 3 Zeichen lang ist
                 if (
-                    element.length === 3 
-                    && !isNaN(firstLetter) 
-                    && isNaN(secondLetter) 
+                    element.length === 3
+                    && !isNaN(firstLetter)
+                    && isNaN(secondLetter)
                     && isNaN(thirdLetter)
                 ) {
                     probability += 40;
 
                     if (inputLineWordsClear[i - 1] !== undefined) {
                         wordBefore = inputLineWordsClear[i - 1];
-                        
+
                         if (wordBefore.length >= 2 && wordBefore.length <= 4) { //check, ob das Wort vorher den UK-PLZ Kriterien entspricht  
                             probability += 30
                         }
@@ -1662,7 +1691,7 @@ export class AddressParser {
 
             //Ausgabe-Objekt Erstellung, wenn Prob größer 0 und das Element nur erlaubte Wörter enthält
             if (
-                probability > 0 
+                probability > 0
                 && this.checkCorrectName(elementClear)
             ) {
                 tempCity.push(new CheckResult("city", elementClear, probability));
@@ -1728,7 +1757,7 @@ export class AddressParser {
 
                     // überprüfen ob die Ausgabe eine Nummer ist
                     if (
-                        isNaN(wordAfter) 
+                        isNaN(wordAfter)
                         && probability == 80
                     ) {
                         continue words;
@@ -1757,7 +1786,7 @@ export class AddressParser {
 
             //Objekt Erstellung / Output            
             if (
-                probability > 0 
+                probability > 0
                 && element.length == 5
             ) {
                 tempRegistrationNumber.push(new CheckResult(
@@ -1935,8 +1964,8 @@ export class AddressParser {
                 });
                 // wenn die Sprache englisch ist, da das keyword zwei Wörter sind
             } else if (
-                element === keyword.split(" ")[0] 
-                && inputLineWords[index + 1] !== 0 
+                element === keyword.split(" ")[0]
+                && inputLineWords[index + 1] !== 0
                 && inputLineWords[index + 1] === keyword.split(" ")[1]
             ) {
                 probability += 30;
@@ -1963,9 +1992,9 @@ export class AddressParser {
             let tempCount = 0;
 
             if (
-                tempWord.length == 3 
-                && tempWord[0].length == 3 
-                && tempWord[1].length == 4 
+                tempWord.length == 3
+                && tempWord[0].length == 3
+                && tempWord[1].length == 4
                 && tempWord[2].length == 4
             ) {
                 probability += 20;
