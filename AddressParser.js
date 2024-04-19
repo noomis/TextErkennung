@@ -159,6 +159,7 @@ export class AddressParser {
                         continue words;
                     }
                 }
+
                 if (lineChars[index] == ".") {
                     countDot++;
                 }
@@ -176,8 +177,7 @@ export class AddressParser {
                 for (let t = 0; t < wordLength.length; t++) {
                     if (wordLength[t].length < 2) {
                         return tempW3w;
-
-                        //Max length of a w3w word
+                    //Max length of a w3w word
                     } else if (wordLength[t].length <= 24) {
                         probability += 20;
                     }
@@ -298,7 +298,7 @@ export class AddressParser {
             if (probability < 0) {
                 probability = 0;
             }
-            
+
             //Create output object for elements with more than 0%
             if (probability > 0) {
                 tempUrl.push(new CheckResult("homepage", element, probability));
