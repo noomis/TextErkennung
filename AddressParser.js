@@ -422,7 +422,10 @@ export class AddressParser {
                 }
             }
 
-            tempMails.push(new CheckResult("mail", inputLineWords[index], wordProb));
+            tempMails.push(new CheckResult("mail",
+                inputLineWords[index],
+                wordProb,
+            ));
         }
 
         return tempMails;
@@ -625,7 +628,10 @@ export class AddressParser {
                     probability += 40;
                 }
 
-                if (wordAfter.includes("gmbh") || wordAfter.includes("ohg") || wordAfter.includes("e.v.")) {
+                if (wordAfter.includes("gmbh")
+                    || wordAfter.includes("ohg")
+                    || wordAfter.includes("e.v.")
+                ) {
                     return tempNames;
                 } else if (
                     firstName.includes(wordAfter) 
@@ -661,12 +667,14 @@ export class AddressParser {
             inlineExistingObjects.forEach((nameObject, index) => {
                 if (
                     nameObject.value === tripleName
-                    || nameObject.value === tempInputWord + " " + wordAfterClean && nameObject.probability > probability
+                    || nameObject.value === tempInputWord + " " + wordAfterClean
+                    && nameObject.probability > probability
                 ) {
                     probability = 0;
                 } else if (
                     nameObject.value === tripleName
-                    || nameObject.value === tempInputWord + " " + wordAfterClean && nameObject.probability <= probability
+                    || nameObject.value === tempInputWord + " " + wordAfterClean
+                    && nameObject.probability <= probability
                 ) {
                     inlineExistingObjects.splice(index, 1);
                 }
@@ -675,15 +683,16 @@ export class AddressParser {
             //hier um generelle Dopplungen rauzufiltern
             existingObjects.forEach((nameObject, index) => {
                 if ((
-                        nameObject.value === tripleName || nameObject.value === tempInputWord + " " + wordAfterClean
-                    )
+                    nameObject.value === tripleName
+                    || nameObject.value === tempInputWord + " " + wordAfterClean
+                )
                     && nameObject.probability > probability
                 ) {
                     probability = 0;
                 } else if ((
-                        nameObject.value === tripleName
-                        || nameObject.value === tempInputWord + " " + wordAfterClean
-                    )
+                    nameObject.value === tripleName
+                    || nameObject.value === tempInputWord + " " + wordAfterClean
+                )
                     && nameObject.probability <= probability
                 ) {
                     existingObjects.splice(index, 1);
@@ -698,19 +707,25 @@ export class AddressParser {
                     if (!firstName.includes(wordBefore)) {
                         //checken, ob name kein § enthält = edge case
                         if (
-                            !name.includes("§") && this.checkCorrectName(name)
+                            !name.includes("§")
+                            && this.checkCorrectName(name)
                         ) {
-                            tempNames.push(new CheckResult("contactPerson", name, probability));
+                            tempNames.push(new CheckResult(
+                                "contactPerson",
+                                name,
+                                probability,
+                            ));
                         }
                     }
                     //output bei einem 3er-Namen      
                 } else {
-                    if (
-                        !tempNames.includes(tripleName) 
-                        && this.checkCorrectName(tripleName)
-                    ) {
+                    if (!tempNames.includes(tripleName) && this.checkCorrectName(tripleName)) {
                         tripleName = tripleName.replaceAll(",", "").replaceAll("_", "");
-                        tempNames.push(new CheckResult("contactPerson", tripleName, probability));
+                        tempNames.push(new CheckResult(
+                            "contactPerson",
+                            tripleName,
+                            probability,
+                        ));
                     }
                 }
             }
@@ -758,20 +773,21 @@ export class AddressParser {
                 // Überprüfen, ob die Eingabe keiner Nummer entspricht
                 if (!whiteList.includes(inputLineChars[index])) {
                     // Falls nach einer Nummer ein Wort kommt, wird die bisher gespeicherte Nummer ausgegeben
-                    if (
-                        fullNumber.trim().length >= 6 
-                        && probability != 0
-                    ) {
+                    if (fullNumber.trim().length >= 6 && probability != 0) {
 
                         // Faxnummern einheitliche Schreibweise setzen
-                        if (inputLineWords[i - 1].startsWith("0") || inputLineWords[i - 1].startsWith("(0")) {
+                        if (
+                            inputLineWords[i - 1].startsWith("0")
+                            || inputLineWords[i - 1].startsWith("(0")) {
                             tempFax.push(new CheckResult("faxNumber",
                                 fullNumber.replace("0", languageAreaCode),
                                 probability,
                             ));
                         }
 
-                        if (fullNumber.startsWith("00") || fullNumber.startsWith("(00")) {
+                        if (
+                            fullNumber.startsWith("00")
+                            || fullNumber.startsWith("(00")) {
                             tempFax.push(new CheckResult(
                                 "faxNumber",
                                 fullNumber.replace("00", "+"),
@@ -912,7 +928,6 @@ export class AddressParser {
         }
 
         words: for (let i = 0; i < inputLineWords.length; i++) { // for Schleife zum durchlaufen aller Wörter in der übergebenen Zeile
-
             let inputLineChars = inputLineWords[i].split("");
 
             for (let index = 0; index < inputLineChars.length; index++) { // for Schleife zum durchlaufen aller Character im aktuellen Wort
@@ -941,14 +956,12 @@ export class AddressParser {
                         ) {
                             tempPhone.push(new CheckResult("phoneNumber", fullNumber.replace("00", "+"), probability));
                             continue words;
-
                         } else if (
                             fullNumber.startsWith("0")
                             || fullNumber.startsWith("(0")
                         ) {
                             tempPhone.push(new CheckResult("phoneNumber", fullNumber.replace("0", languageAreaCode), probability));
                             continue words;
-
                         } else {
                             tempPhone.push(new CheckResult("phoneNumber", fullNumber, probability));
                             continue words;
@@ -1059,7 +1072,9 @@ export class AddressParser {
         const streetNamesDE = ["str.", "stra", "weg", "allee", "gasse", "ring", "platz", "pfad", "feld", "hof", "berg"];
         const streetNamesNL = ["straat", "weg", "hof", "straat", "pad", "burg", "plein", "hoven"];
         const streetNamesEN = ["road", "street", "avenue", "lane", "boulevard", "way", "alley", "hill", "lane"];
-        const stringStreetBeginningsDE = ["an der", "zu den", "in der", "in den", "im ", "auf den", "auf der", "am ", "an den", "auf dem", "zur "];
+        const stringStreetBeginningsDE = [
+            "an der", "zu den", "in der", "in den", "im ", "auf den", "auf der", "am ", "an den", "auf dem", "zur "
+        ];
         const stringStreetBeginningsNL = ["de", "het"];
         const stringStreetBeginningsEN = ["Maple", "lake", "river"];
         const whiteList = "abcdefghijklmnopqrstuvwxyz".split("");
@@ -1161,7 +1176,7 @@ export class AddressParser {
 
             // Zeile nach Keywords durchsuchen wie straße usw.
             for (let sNames = 0; sNames < streetNames.length; sNames++) {
-
+                // TODO malte fragen ob die Leerzeile weg kann
                 if (inputLineWords[i].includes(streetNames[sNames])) {
                     fullStreetName = inputLine.toLowerCase();
                     fullStreetNameClear = inputLine;
@@ -1245,13 +1260,10 @@ export class AddressParser {
                         if (!inputLineWords[m] == matchingWords[0]) {
                             continue words;
                         }
-
                     } else {
 
                         // das Wort ermittlen, welches aus der Zeile mit dem Keyword matcht
-                        if (
-                            !(inputLineWords[m] == matchingWords[1] && inputLineWords[m - 1] == matchingWords[0])
-                        ) {
+                        if (!(inputLineWords[m] == matchingWords[1] && inputLineWords[m - 1] == matchingWords[0])) {
                             continue words;
                         }
                     }
@@ -1294,6 +1306,7 @@ export class AddressParser {
                                 }
                             }
                         }
+
                         // checkt den Fall, wenn der Nr. Zusatz nicht mit einem Leerzeichen von der Nr. getrennt ist
                         if (num == 1) {
                             probability += 35;
@@ -1311,10 +1324,7 @@ export class AddressParser {
             }
         }
 
-        if (
-            fullStreetName.length < 20 
-            && fullStreetName.length > 10
-        ) {
+        if (fullStreetName.length < 20 && fullStreetName.length > 10) {
             probability += 10;
         }
 
@@ -1329,7 +1339,6 @@ export class AddressParser {
     }
 
     checkPostalCode(inputLine) {
-
         let tempPostalCode = [];
         let inputLineWordsClear = inputLine.split(" ");
         inputLine = inputLine.toLowerCase();
@@ -1344,7 +1353,6 @@ export class AddressParser {
         let twoLetterKey = "";
         const whiteList = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L',
             'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z'];
-
 
         // Auswahl der passenden Vorwahl nach der erkannten Sprache
         switch (this.language.languageName) {
@@ -1370,7 +1378,7 @@ export class AddressParser {
                 break;
         }
 
-        //wenn element mit d-/de- startet wird dieses entfernt
+        // wenn element mit d-/de- startet wird dieses entfernt
         for (let a = 0; a < inputLineWords.length; a++) {
             const element = inputLineWords[a];
 
@@ -1384,19 +1392,21 @@ export class AddressParser {
                 probability += 10;
             }
 
-            //Falls vor der 5-Stelligen Zahl ein verbotenes Keyword steht wird diese Zahl nicht angegeben 
+            // Falls vor der 5-Stelligen Zahl ein verbotenes Keyword steht wird diese Zahl nicht angegeben 
             if (a !== 0) {
                 let wordBefore = inputLineWords[a - 1];
 
-                if (wordBefore.includes("fax") || wordBefore.includes("fon")) {
+                if (
+                    wordBefore.includes("fax")
+                    || wordBefore.includes("fon")
+                ) {
                     inputLineWords.splice(a, 1);
                 }
             }
         }
 
         if (this.language.languageName === "de") {
-
-            //neuer Array nur mit 5 Stelligen Zahlen 
+            // neuer Array nur mit 5 Stelligen Zahlen 
             const onlyNumbers = inputLineWords.filter(element => !isNaN(element));
 
             for (let a = 0; a < onlyNumbers.length; a++) {
@@ -1406,7 +1416,8 @@ export class AddressParser {
                     onlyNumbers.splice(a, 1);
                 }
             }
-            //check ob elements im json enthalten sind und somit eine Stadt matchen
+
+            // check ob elements im json enthalten sind und somit eine Stadt matchen
             zipLoop: for (let i = 0; i < onlyNumbers.length; i++) {
                 const element = onlyNumbers[i];
 
@@ -1415,7 +1426,7 @@ export class AddressParser {
                     city = this.fetchedPostalCodes.indexOf(element);
                     cityName = this.fetchedCityNames[city];
 
-                    //check ob Wort nach dem zip Code der Stadt entspricht die im json eingetragen ist
+                    // check ob Wort nach dem zip Code der Stadt entspricht die im json eingetragen ist
                     if (inputLineWords[i + 1] !== undefined) {
                         wordAfter = inputLineWords[i + 1];
 
@@ -1429,17 +1440,13 @@ export class AddressParser {
                     }
                 }
 
-                //output
+                // output
                 if (probability > 100) {
                     probability = 100;
                 }
 
-                if (
-                    probability > 0 
-                    && element.length === postalCodeLength
-                ) {
+                if (probability > 0 && element.length === postalCodeLength) {
                     tempPostalCode.push(new CheckResult("postalCode", element, probability));
-
                 } else {
                     continue zipLoop;
                 }
@@ -1447,45 +1454,40 @@ export class AddressParser {
         }
 
         if (this.language.languageName === "nl") {
-
-            //neuer Array nur mit 4 stelligen Zahlen 
-            const onlyNumbers = inputLineWords.filter(element => !isNaN(element) && (element.length === 4 || whiteList.includes(element)));
+            // neuer Array nur mit 4 stelligen Zahlen 
+            const onlyNumbers = inputLineWords.filter(
+                element => !isNaN(element)
+                    && (
+                        element.length === 4
+                        || whiteList.includes(element)
+                    )
+            );
 
             zipLoop: for (let i = 0; i < inputLineWords.length; i++) {
                 const element = inputLineWords[i];
 
                 //check, ob element eine 4 stellige Zahl ist 
-                if (
-                    element.length === 4 
-                    && onlyNumbers.includes(element)
-                ) {
+                if (element.length === 4 && onlyNumbers.includes(element)) {
                     probability += 20;
 
                     if (inputLineWordsClear[i + 1] !== undefined) {
                         wordAfter = inputLineWordsClear[i + 1];
 
                         //check, ob das Wort nach dem Element 2 Zeichen lang ist nur aus Buchstaben erkannt wird
-                        if (
-                            wordAfter.length === 2 
-                            && this.checkCorrectName(wordAfter)
-                        ) 
+                        if (wordAfter.length === 2 && this.checkCorrectName(wordAfter)) 
                             { 
                             probability += 40
                         }
                     }
                 }
 
-                //output
+                // output
                 if (probability > 100) {
                     probability = 100;
                 }
 
-                if (
-                    probability > 0 
-                    && element.length === 4
-                ) {
+                if (probability > 0 && element.length === 4) {
                     tempPostalCode.push(new CheckResult("postalCode", element + " " + wordAfter, probability));
-
                 } else {
                     continue zipLoop;
                 }
@@ -1502,25 +1504,18 @@ export class AddressParser {
                 const thirdLetter = element.charAt(2);
 
                 //checken, ob das erste Zeichen eine Zahl ist, das zweite Zeichen eine Buchstabe ist, check ob das dritte Zeichen eine Buchstabe ist und das element genau 3 Zeichen lang ist
-                if (
-                    element.length === 3 
-                    && !isNaN(firstLetter) 
-                    && isNaN(secondLetter) 
-                    && isNaN(thirdLetter)
-                ) {
+                if (element.length === 3 && !isNaN(firstLetter) && isNaN(secondLetter) && isNaN(thirdLetter)) {
                     probability += 40;
+
                     if (inputLineWordsClear[i - 1] !== undefined) {
                         wordBefore = inputLineWordsClear[i - 1];
-                        if (
-                            wordBefore.length >= 2 
-                            && wordBefore.length <= 4
-                        ) { //check, ob das Wort vorher den UK-PLZ Kriterien entspricht  
+                        if (wordBefore.length >= 2 && wordBefore.length <= 4) { //check, ob das Wort vorher den UK-PLZ Kriterien entspricht  
                             probability += 30
                         }
                     }
                 }
 
-                //output
+                // output
                 if (probability > 100) {
                     probability = 100;
                 }
@@ -1530,7 +1525,6 @@ export class AddressParser {
                     && element.length === 3
                 ) {
                     tempPostalCode.push(new CheckResult("postalCode", wordBefore + " " + elementClear, probability));
-
                 } else {
                     continue zipLoop;
                 }
@@ -1648,8 +1642,10 @@ export class AddressParser {
                     probability += 20;
                 }
 
-                if (wordBefore.toLowerCase().includes("amtsgericht")
-                    || wordBefore.toLowerCase().includes("finanzamt")) {
+                if (
+                    wordBefore.toLowerCase().includes("amtsgericht")
+                    || wordBefore.toLowerCase().includes("finanzamt")
+                ) {
                     probability = 15;
                 }
             }
@@ -1660,6 +1656,7 @@ export class AddressParser {
             let inlineExistingObjects = tempCity;
 
             inlineExistingObjects.forEach((cityObject, index) => {
+
                 if (
                     cityObject.value.toLowerCase() === elementClear.toLowerCase()
                     && cityObject.probability > probability
@@ -1695,12 +1692,8 @@ export class AddressParser {
             }
 
             //Ausgabe-Objekt Erstellung, wenn Prob größer 0 und das Element nur erlaubte Wörter enthält
-            if (
-                probability > 0 
-                && this.checkCorrectName(elementClear)
-            ) {
+            if (probability > 0 && this.checkCorrectName(elementClear)) {
                 tempCity.push(new CheckResult("city", elementClear, probability));
-
             } else {
                 continue cityLoop;
             }
@@ -1763,7 +1756,7 @@ export class AddressParser {
 
                     // überprüfen ob die Ausgabe eine Nummer ist
                     if (
-                        isNaN(wordAfter) 
+                        isNaN(wordAfter)
                         && probability == 80
                     ) {
                         continue words;
@@ -1792,7 +1785,7 @@ export class AddressParser {
 
             //Objekt Erstellung / Output            
             if (
-                probability > 0 
+                probability > 0
                 && element.length == 5
             ) {
                 tempRegistrationNumber.push(new CheckResult(
@@ -1973,8 +1966,8 @@ export class AddressParser {
                 });
                 // wenn die Sprache englisch ist, da das keyword zwei Wörter sind
             } else if (
-                element === keyword.split(" ")[0] 
-                && inputLineWords[index + 1] !== 0 
+                element === keyword.split(" ")[0]
+                && inputLineWords[index + 1] !== 0
                 && inputLineWords[index + 1] === keyword.split(" ")[1]
             ) {
                 probability += 30;
@@ -2001,9 +1994,9 @@ export class AddressParser {
             let tempCount = 0;
 
             if (
-                tempWord.length == 3 
-                && tempWord[0].length == 3 
-                && tempWord[1].length == 4 
+                tempWord.length == 3
+                && tempWord[0].length == 3
+                && tempWord[1].length == 4
                 && tempWord[2].length == 4
             ) {
                 probability += 20;
