@@ -228,7 +228,10 @@ export class AddressParser {
 
             for (const tld of knownTLD) {
                 //increase prob if element endsWith known Top Level Domain
-                if (element.endsWith("." + tld || element.endsWith("." + tld + "/"))) {
+                if (element.endsWith(
+                    "." + tld 
+                    || element.endsWith("." + tld + "/")
+                )) {
                     probability += 20;
                 }
 
@@ -274,6 +277,7 @@ export class AddressParser {
                     probability += 20;
                 }
             }
+
             //check whether certain illegal terms are contained in the element
             if (
                 element.includes("ö")
@@ -294,6 +298,7 @@ export class AddressParser {
             if (probability < 0) {
                 probability = 0;
             }
+            
             //Create output object for elements with more than 0%
             if (probability > 0) {
                 tempUrl.push(new CheckResult("homepage", element, probability));
@@ -418,7 +423,7 @@ export class AddressParser {
 
             if (index !== 0) {
                 let wordBefore = inputLineWords[index - 1].toLowerCase(); // Checkt ob vor der Mail z.B. Mail: steht.
-                
+
                 if (wordBefore.includes("mail")) {
                     wordProb += 20;
                 }
