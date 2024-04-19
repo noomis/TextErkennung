@@ -296,7 +296,11 @@ export class AddressParser {
             }
             //Create output object for elements with more than 0%
             if (probability > 0) {
-                tempUrl.push(new CheckResult("homepage", element, probability));
+                tempUrl.push(new CheckResult(
+                    "homepage",
+                    element,
+                    probability,
+                ));
             }
         }
 
@@ -774,12 +778,13 @@ export class AddressParser {
                         fullNumber.trim().length >= 6
                         && probability != 0
                     ) {
-
                         // Faxnummern einheitliche Schreibweise setzen
                         if (
                             inputLineWords[i - 1].startsWith("0")
-                            || inputLineWords[i - 1].startsWith("(0")) {
-                            tempFax.push(new CheckResult("faxNumber",
+                            || inputLineWords[i - 1].startsWith("(0")
+                        ) {
+                            tempFax.push(new CheckResult(
+                                "faxNumber",
                                 fullNumber.replace("0", languageAreaCode),
                                 probability,
                             ));
@@ -787,13 +792,17 @@ export class AddressParser {
 
                         if (
                             fullNumber.startsWith("00")
-                            || fullNumber.startsWith("(00")) {
+                            || fullNumber.startsWith("(00")
+                        ) {
                             tempFax.push(new CheckResult(
                                 "faxNumber",
                                 fullNumber.replace("00", "+"),
                                 probability,
                             ));
-                        } else if (fullNumber.startsWith("0") || fullNumber.startsWith("(0")) {
+                        } else if (
+                            fullNumber.startsWith("0")
+                            || fullNumber.startsWith("(0")
+                        ) {
                             tempFax.push(new CheckResult(
                                 "faxNumber",
                                 fullNumber.replace("0", languageAreaCode),
@@ -929,16 +938,18 @@ export class AddressParser {
 
                 // Überprüfen, ob die Eingabe einer Nummer entspricht
                 if (!whiteList.includes(inputLineChars[index])) {
-
                     // Falls nach einer Nummer ein Wort kommt, wird die bisher gespeicherte Nummer ausgegeben
                     if (fullNumber.trim().length >= 6 && probability != 0) {
-
                         // Telefonnummer einheitliche Schreibweise setzen
                         if (
                             inputLineWords[i - 1].startsWith("0")
                             || inputLineWords[i - 1].startsWith("(0")
                         ) {
-                            tempPhone.push(new CheckResult("phoneNumber", fullNumber.replace("0", languageAreaCode), probability));
+                            tempPhone.push(new CheckResult(
+                                "phoneNumber",
+                                fullNumber.replace("0", languageAreaCode),
+                                probability,
+                            ));
                             continue words;
                         }
 
@@ -946,18 +957,30 @@ export class AddressParser {
                             fullNumber.startsWith("00")
                             || fullNumber.startsWith("(00")
                         ) {
-                            tempPhone.push(new CheckResult("phoneNumber", fullNumber.replace("00", "+"), probability));
+                            tempPhone.push(new CheckResult(
+                                "phoneNumber",
+                                fullNumber.replace("00", "+"),
+                                probability,
+                            ));
                             continue words;
 
                         } else if (
                             fullNumber.startsWith("0")
                             || fullNumber.startsWith("(0")
                         ) {
-                            tempPhone.push(new CheckResult("phoneNumber", fullNumber.replace("0", languageAreaCode), probability));
+                            tempPhone.push(new CheckResult(
+                                "phoneNumber",
+                                fullNumber.replace("0", languageAreaCode),
+                                probability,
+                            ));
                             continue words;
 
                         } else {
-                            tempPhone.push(new CheckResult("phoneNumber", fullNumber, probability));
+                            tempPhone.push(new CheckResult(
+                                "phoneNumber",
+                                fullNumber,
+                                probability,
+                            ));
                             continue words;
                         }
                     }
@@ -1607,7 +1630,6 @@ export class AddressParser {
                     probability += 10;
                 }
 
-                // TODO array erstellen und durch loopen
                 //bei bestimmten regelmäßigen Endungen von Städten gewisse Probability geben
                 if (
                     element.endsWith("berg")
@@ -1632,7 +1654,11 @@ export class AddressParser {
             if (inputLineWords[i - 1] !== undefined) {
                 wordBefore = inputLineWords[i - 1].toLowerCase();
                 const onlyNumbers = inputLineWords.filter(element => !isNaN(element));
-                const onlyFiveDigitNumbers = onlyNumbers.filter(element => element.length === 5 && element >= 10000 && element <= 99999);
+                const onlyFiveDigitNumbers = onlyNumbers.filter(
+                    element => element.length === 5
+                        && element >= 10000
+                        && element <= 99999
+                );
 
                 if (postalCode.includes(wordBefore)) {
                     probability += 30;

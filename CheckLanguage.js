@@ -123,7 +123,6 @@ export class CheckLanguage {
             }
         }
         if (inputLine !== "") {
-            
             //Library stellt anhand geschriebenen Textes die Sprache fest und gibt dann Prozente 
             if (languageDetection == "deu") {
                 germanProbability += 30;
