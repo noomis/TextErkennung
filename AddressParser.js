@@ -1037,7 +1037,9 @@ export class AddressParser {
         const streetNamesDE = ["str.", "stra", "weg", "allee", "gasse", "ring", "platz", "pfad", "feld", "hof", "berg"];
         const streetNamesNL = ["straat", "weg", "hof", "straat", "pad", "burg", "plein", "hoven"];
         const streetNamesEN = ["road", "street", "avenue", "lane", "boulevard", "way", "alley", "hill", "lane"];
-        const stringStreetBeginningsDE = ["an der", "zu den", "in der", "in den", "im ", "auf den", "auf der", "am ", "an den", "auf dem", "zur "];
+        const stringStreetBeginningsDE = [
+            "an der", "zu den", "in der", "in den", "im ", "auf den", "auf der", "am ", "an den", "auf dem", "zur "
+        ];
         const stringStreetBeginningsNL = ["de", "het"];
         const stringStreetBeginningsEN = ["Maple", "lake", "river"];
         const whiteList = "abcdefghijklmnopqrstuvwxyz".split("");
@@ -1139,7 +1141,7 @@ export class AddressParser {
 
             // Zeile nach Keywords durchsuchen wie straße usw.
             for (let sNames = 0; sNames < streetNames.length; sNames++) {
-
+                // TODO malte fragen ob die Leerzeile weg kann
                 if (inputLineWords[i].includes(streetNames[sNames])) {
                     fullStreetName = inputLine.toLowerCase();
                     fullStreetNameClear = inputLine;
@@ -1163,7 +1165,10 @@ export class AddressParser {
                         if (num == 0) {
                             probability += 20;
 
-                            if (wordAfter.length > 0 && wordAfter.length < 3) {
+                            if (
+                                wordAfter.length > 0 
+                                && wordAfter.length < 3
+                            ) {
                                 probability += 20;
                             } else if (wordAfter.length < 5) {
                                 probability += 10;
@@ -1220,11 +1225,13 @@ export class AddressParser {
                         if (!inputLineWords[m] == matchingWords[0]) {
                             continue words;
                         }
-
                     } else {
 
                         // das Wort ermittlen, welches aus der Zeile mit dem Keyword matcht
-                        if (!(inputLineWords[m] == matchingWords[1] && inputLineWords[m - 1] == matchingWords[0])) {
+                        if (!(
+                            inputLineWords[m] == matchingWords[1] 
+                            && inputLineWords[m - 1] == matchingWords[0]
+                        )) {
                             continue words;
                         }
                     }
@@ -1243,7 +1250,10 @@ export class AddressParser {
                         if (num == 0) {
                             probability += 25;
 
-                            if (word2After.length > 0 && word2After.length < 3) {
+                            if (
+                                word2After.length > 0 
+                                && word2After.length < 3
+                            ) {
                                 probability += 25;
                             } else if (word2After.length < 5) {
                                 probability += 15;
@@ -1264,6 +1274,7 @@ export class AddressParser {
                                 }
                             }
                         }
+
                         // checkt den Fall, wenn der Nr. Zusatz nicht mit einem Leerzeichen von der Nr. getrennt ist
                         if (num == 1) {
                             probability += 35;
@@ -1281,11 +1292,17 @@ export class AddressParser {
             }
         }
 
-        if (fullStreetName.length < 20 && fullStreetName.length > 10) {
+        if (
+            fullStreetName.length < 20
+            && fullStreetName.length > 10
+        ) {
             probability += 10;
         }
 
-        if (fullStreetName.trim().length != 0 && probability != 0) {
+        if (
+            fullStreetName.trim().length != 0 
+            && probability != 0
+        ) {
             tempStreet.push(new CheckResult("street", fullStreetNameClear, probability));
         }
 
