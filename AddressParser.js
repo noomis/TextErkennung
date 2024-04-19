@@ -922,7 +922,6 @@ export class AddressParser {
         }
 
         words: for (let i = 0; i < inputLineWords.length; i++) { // for Schleife zum durchlaufen aller Wörter in der übergebenen Zeile
-
             let inputLineChars = inputLineWords[i].split("");
 
             for (let index = 0; index < inputLineChars.length; index++) { // for Schleife zum durchlaufen aller Character im aktuellen Wort
@@ -948,14 +947,12 @@ export class AddressParser {
                         ) {
                             tempPhone.push(new CheckResult("phoneNumber", fullNumber.replace("00", "+"), probability));
                             continue words;
-
                         } else if (
                             fullNumber.startsWith("0")
                             || fullNumber.startsWith("(0")
                         ) {
                             tempPhone.push(new CheckResult("phoneNumber", fullNumber.replace("0", languageAreaCode), probability));
                             continue words;
-
                         } else {
                             tempPhone.push(new CheckResult("phoneNumber", fullNumber, probability));
                             continue words;
