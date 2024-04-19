@@ -363,7 +363,8 @@ export class AddressParser {
                             && wordChars[i + 1] == "a"
                             && wordChars[i + 2] == "t"
                             && wordChars[i + 3] == "]"
-                        ))
+                        )
+                    )
                 ) {  // countet @
                     atHit.push(i);
                 }
@@ -417,6 +418,7 @@ export class AddressParser {
 
             if (index !== 0) {
                 let wordBefore = inputLineWords[index - 1].toLowerCase(); // Checkt ob vor der Mail z.B. Mail: steht.
+                
                 if (wordBefore.includes("mail")) {
                     wordProb += 20;
                 }
@@ -498,12 +500,10 @@ export class AddressParser {
         let inputLineClear = inputLine;
         inputLine = inputLine.toLowerCase();
         let inputLineWords = inputLine.split(" ");
-
         let companyType = companyTypeGerman;
         let companyKeyWords = companyKeyWordsGerman;
 
         switch (this.language.languageName) {   // je nach Land die jeweiligen Arrays festlegen
-
             case "de":
                 companyType = companyTypeGerman;
                 companyKeyWords = companyKeyWordsGerman;
@@ -521,7 +521,6 @@ export class AddressParser {
 
             default:
                 break;
-
         }
 
         wordLoop: for (let index = 0; index < inputLineWords.length; index++) {
@@ -534,15 +533,20 @@ export class AddressParser {
             if (element.includes('(at)')) { // Checkt ob String mit @ beginnt
                 return tempCheckCompanyNames;
             }
+
             for (let i = 0; i < knownTLD.length; i++) {
                 const el = knownTLD[i];
-                if (element.startsWith("www.") && element.endsWith(el)) { // checkt ob das aktulle Wort eine URL ist
+
+                // checkt ob das aktulle Wort eine URL ist
+                if (
+                    element.startsWith("www.")
+                    && element.endsWith(el)
+                ) {
                     return tempCheckCompanyNames;
                 }
             }
 
             companyType.forEach(e => { // Checkt ob das aktuelle Wort einer Unternehmensform entspricht
-
                 if (element == e) {
                     wordProb += 50;
                 }
@@ -556,6 +560,7 @@ export class AddressParser {
         });
         inputLineClear = inputLineClear.replace('Name', ''); // Entfernt den Titel "Name" aus z.B. SelectLine 
         tempCheckCompanyNames.push(new CheckResult("companyName", inputLineClear, wordProb));
+
         return tempCheckCompanyNames;
     }
 
@@ -600,12 +605,12 @@ export class AddressParser {
                     || wordBefore.includes("vorstand")
                     || wordBefore.includes("vorsitzender")
                     || wordBefore.includes("inhaber")
-                    || wordBefore.includes("dr") 
+                    || wordBefore.includes("dr")
                     && firstName.includes(tempWord)
                     || wordBefore.includes("prof")
                     || wordBefore.includes("herr")
                     || wordBefore.includes("frau")
-                    || wordBefore.includes("verantwortliche") 
+                    || wordBefore.includes("verantwortliche")
                     && tempWord !== "nach"
                     || wordBefore.includes("vertreter")
                 ) {
@@ -633,9 +638,9 @@ export class AddressParser {
                     || wordAfter.includes("e.v.")
                 ) {
                     return tempNames;
-                //checken ob es ein 3er-Name ist
+                    //checken ob es ein 3er-Name ist
                 } else if (
-                    firstName.includes(wordAfter) 
+                    firstName.includes(wordAfter)
                     && firstName.includes(tempWord)
                 ) {
                     if (inputLineWords[i + 2] !== undefined) {
@@ -685,16 +690,16 @@ export class AddressParser {
             //hier um generelle Dopplungen rauzufiltern
             existingObjects.forEach((nameObject, index) => {
                 if ((
-                        nameObject.value === tripleName
-                        || nameObject.value === tempInputWord + " " + wordAfterClean
-                    )
+                    nameObject.value === tripleName
+                    || nameObject.value === tempInputWord + " " + wordAfterClean
+                )
                     && nameObject.probability > probability
                 ) {
                     probability = 0;
                 } else if ((
-                        nameObject.value === tripleName
-                        || nameObject.value === tempInputWord + " " + wordAfterClean
-                    )
+                    nameObject.value === tripleName
+                    || nameObject.value === tempInputWord + " " + wordAfterClean
+                )
                     && nameObject.probability <= probability
                 ) {
                     existingObjects.splice(index, 1);
@@ -1200,7 +1205,7 @@ export class AddressParser {
                             probability += 20;
 
                             if (
-                                wordAfter.length > 0 
+                                wordAfter.length > 0
                                 && wordAfter.length < 3
                             ) {
                                 probability += 20;
@@ -1263,7 +1268,7 @@ export class AddressParser {
 
                         // das Wort ermittlen, welches aus der Zeile mit dem Keyword matcht
                         if (!(
-                            inputLineWords[m] == matchingWords[1] 
+                            inputLineWords[m] == matchingWords[1]
                             && inputLineWords[m - 1] == matchingWords[0]
                         )) {
                             continue words;
@@ -1285,7 +1290,7 @@ export class AddressParser {
                             probability += 25;
 
                             if (
-                                word2After.length > 0 
+                                word2After.length > 0
                                 && word2After.length < 3
                             ) {
                                 probability += 25;
@@ -1334,7 +1339,7 @@ export class AddressParser {
         }
 
         if (
-            fullStreetName.trim().length != 0 
+            fullStreetName.trim().length != 0
             && probability != 0
         ) {
             tempStreet.push(new CheckResult("street", fullStreetNameClear, probability));
