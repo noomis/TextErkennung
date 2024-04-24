@@ -622,7 +622,7 @@ export class AddressParser {
                     || wordBefore.includes("umsatzsteuer-identifikationsnummer")
                 ) {
                     return tempNames;
-                }ö
+                }
             }
 
             tripleName = "";
