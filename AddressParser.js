@@ -177,7 +177,7 @@ export class AddressParser {
                 for (let t = 0; t < wordLength.length; t++) {
                     if (wordLength[t].length < 2) {
                         return tempW3w;
-                    //Max length of a w3w word
+                        //Max length of a w3w word
                     } else if (wordLength[t].length <= 24) {
                         probability += 20;
                     }
@@ -229,7 +229,7 @@ export class AddressParser {
             for (const tld of knownTLD) {
                 //increase prob if element endsWith known Top Level Domain
                 if (element.endsWith(
-                    "." + tld 
+                    "." + tld
                     || element.endsWith("." + tld + "/")
                 )) {
                     probability += 20;
@@ -610,13 +610,11 @@ export class AddressParser {
                     || wordBefore.includes("vorstand")
                     || wordBefore.includes("vorsitzender")
                     || wordBefore.includes("inhaber")
-                    || wordBefore.includes("dr")
-                    && firstName.includes(tempWord)
+                    || (wordBefore.includes("dr") && firstName.includes(tempWord))
                     || wordBefore.includes("prof")
                     || wordBefore.includes("herr")
                     || wordBefore.includes("frau")
-                    || wordBefore.includes("verantwortliche")
-                    && tempWord !== "nach"
+                    || (wordBefore.includes("verantwortliche") && tempWord !== "nach")
                     || wordBefore.includes("vertreter")
                 ) {
                     probability += 40;
@@ -946,7 +944,7 @@ export class AddressParser {
 
                 // Überprüfen, ob die Eingabe einer Nummer entspricht
                 if (!whiteList.includes(inputLineChars[index])) {
-
+                    
                     // Falls nach einer Nummer ein Wort kommt, wird die bisher gespeicherte Nummer ausgegeben
                     if (fullNumber.trim().length >= 6 && probability != 0) {
 
@@ -1045,7 +1043,8 @@ export class AddressParser {
                         fullNumber.replace("00", "+"),
                         probability,
                     ));
-                } else if (fullNumber.startsWith("0")
+                } else if (
+                    fullNumber.startsWith("0")
                     || fullNumber.startsWith("(0")
                 ) {
                     tempPhone.push(new CheckResult(
