@@ -901,7 +901,7 @@ export class AddressParser {
     checkPhone(inputLine) {
         let tempPhone = []
 
-        // für rekursiv keine Ahnung frag Simon
+        //for recursive, no idea, ask Simon
         if (inputLine.length < 10) {
             return tempPhone;
         }
@@ -918,7 +918,7 @@ export class AddressParser {
         const languageAreaCodeNL = "+31";
         const languageAreaCodeEN = "+44";
 
-        // Auswahl der passenden Vorwahl nach der erkannten Sprache
+        //Selection of the appropriate area code according to the recognized language
         switch (this.language.languageName) {
             case "de":
                 languageAreaCode = languageAreaCodeDE;
@@ -936,18 +936,18 @@ export class AddressParser {
                 break;
         }
 
-        words: for (let i = 0; i < inputLineWords.length; i++) { // for Schleife zum durchlaufen aller Wörter in der übergebenen Zeile
+        words: for (let i = 0; i < inputLineWords.length; i++) { //for loop to loop through all words in the passed line
             let inputLineChars = inputLineWords[i].split("");
 
-            for (let index = 0; index < inputLineChars.length; index++) { // for Schleife zum durchlaufen aller Character im aktuellen Wort
+            for (let index = 0; index < inputLineChars.length; index++) { //for loop to loop through all characters in the current word
 
-                // Überprüfen, ob die Eingabe einer Nummer entspricht
+                //Check whether the input corresponds to a number
                 if (!whiteList.includes(inputLineChars[index])) {
                     
-                    // Falls nach einer Nummer ein Wort kommt, wird die bisher gespeicherte Nummer ausgegeben
+                    //If a word comes after a number, the previously saved number is output
                     if (fullNumber.trim().length >= 6 && probability != 0) {
 
-                        // Telefonnummer einheitliche Schreibweise setzen
+                       //Set phone number to consistent spelling
                         if (
                             inputLineWords[i - 1].startsWith("0")
                             || inputLineWords[i - 1].startsWith("(0")
@@ -979,7 +979,7 @@ export class AddressParser {
                 }
             }
 
-            // Checkt ob vor der nummer z.B. Fon steht
+            //Checks whether the number is preceded by, for example, Fon
             if (i !== 0) {
                 let wordBefore = inputLineWords[i - 1].toLowerCase();
 
@@ -996,7 +996,7 @@ export class AddressParser {
                 }
             }
 
-            // Checkt ob die gesamt länge der Nummer zu groß ist
+            //Checks whether the total length of the number is too long
             if (inputLineWords[i].length + fullNumber.length < 17) {
                 fullNumber += inputLineWords[i];
                 fullUnformattedNumber = fullUnformattedNumber.replace(inputLineWords[i], "");
