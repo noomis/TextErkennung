@@ -2067,12 +2067,12 @@ export class AddressParser {
     filterResults(array) {
         let tempArray = [];
 
-        // neuen Array mit elementen befüllen die eine größerer Wkeit als die Übergebne haben
+        //fill the new array with elements that have a greater Prob than the given Prob
         array.forEach(element => {
 
             if (element.probability >= this.outputPercentage) {
 
-                if (element.probability > 100) { // Setzt alle Wahrscheinlichkeiten > 100% auf 100% runter
+                if (element.probability > 100) {//Sets all probabilities > 100% down to 100%
                     element.probability = 100;
                 }
 
@@ -2090,7 +2090,7 @@ export class AddressParser {
         for (let index = 0; index < array.length; index++) {
             const element = array[index];
 
-            if (element.value === object.value) { // Wenn das Objekt mit dem selben Wert bereits existiert wird false returned
+            if (element.value === object.value) { //If the object with the same value already exists, false will be returned
                 return false;
             }
         }
