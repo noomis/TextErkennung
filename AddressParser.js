@@ -177,7 +177,7 @@ export class AddressParser {
                 for (let t = 0; t < wordLength.length; t++) {
                     if (wordLength[t].length < 2) {
                         return tempW3w;
-                    //Max length of a w3w word
+                        //Max length of a w3w word
                     } else if (wordLength[t].length <= 24) {
                         probability += 20;
                     }
@@ -229,7 +229,7 @@ export class AddressParser {
             for (const tld of knownTLD) {
                 //increase prob if element endsWith known Top Level Domain
                 if (element.endsWith(
-                    "." + tld 
+                    "." + tld
                     || element.endsWith("." + tld + "/")
                 )) {
                     probability += 20;
@@ -609,13 +609,11 @@ export class AddressParser {
                     || wordBefore.includes("vorstand")
                     || wordBefore.includes("vorsitzender")
                     || wordBefore.includes("inhaber")
-                    || wordBefore.includes("dr")
-                    && firstName.includes(tempWord)
+                    || (wordBefore.includes("dr") && firstName.includes(tempWord))
                     || wordBefore.includes("prof")
                     || wordBefore.includes("herr")
                     || wordBefore.includes("frau")
-                    || wordBefore.includes("verantwortliche")
-                    && tempWord !== "nach"
+                    || (wordBefore.includes("verantwortliche") && tempWord !== "nach")
                     || wordBefore.includes("vertreter")
                 ) {
                     probability += 40;
@@ -624,7 +622,7 @@ export class AddressParser {
                     || wordBefore.includes("umsatzsteuer-identifikationsnummer")
                 ) {
                     return tempNames;
-                }ö
+                }
             }
 
             tripleName = "";
@@ -903,7 +901,7 @@ export class AddressParser {
     checkPhone(inputLine) {
         let tempPhone = []
 
-        // für rekursiv keine Ahnung frag Simon
+        //for recursive, no idea, ask Simon
         if (inputLine.length < 10) {
             return tempPhone;
         }
@@ -920,7 +918,7 @@ export class AddressParser {
         const languageAreaCodeNL = "+31";
         const languageAreaCodeEN = "+44";
 
-        // Auswahl der passenden Vorwahl nach der erkannten Sprache
+        //Selection of the appropriate area code according to the recognized language
         switch (this.language.languageName) {
             case "de":
                 languageAreaCode = languageAreaCodeDE;
@@ -938,18 +936,18 @@ export class AddressParser {
                 break;
         }
 
-        words: for (let i = 0; i < inputLineWords.length; i++) { // for Schleife zum durchlaufen aller Wörter in der übergebenen Zeile
+        words: for (let i = 0; i < inputLineWords.length; i++) { //for loop to loop through all words in the passed line
             let inputLineChars = inputLineWords[i].split("");
 
-            for (let index = 0; index < inputLineChars.length; index++) { // for Schleife zum durchlaufen aller Character im aktuellen Wort
+            for (let index = 0; index < inputLineChars.length; index++) { //for loop to loop through all characters in the current word
 
-                // Überprüfen, ob die Eingabe einer Nummer entspricht
+                //Check whether the input corresponds to a number
                 if (!whiteList.includes(inputLineChars[index])) {
-
-                    // Falls nach einer Nummer ein Wort kommt, wird die bisher gespeicherte Nummer ausgegeben
+                    
+                    //If a word comes after a number, the previously saved number is output
                     if (fullNumber.trim().length >= 6 && probability != 0) {
 
-                        // Telefonnummer einheitliche Schreibweise setzen
+                       //Set phone number to consistent spelling
                         if (
                             inputLineWords[i - 1].startsWith("0")
                             || inputLineWords[i - 1].startsWith("(0")
@@ -981,7 +979,7 @@ export class AddressParser {
                 }
             }
 
-            // Checkt ob vor der nummer z.B. Fon steht
+            //Checks whether the number is preceded by, for example, Fon
             if (i !== 0) {
                 let wordBefore = inputLineWords[i - 1].toLowerCase();
 
@@ -998,7 +996,7 @@ export class AddressParser {
                 }
             }
 
-            // Checkt ob die gesamt länge der Nummer zu groß ist
+            //Checks whether the total length of the number is too long
             if (inputLineWords[i].length + fullNumber.length < 17) {
                 fullNumber += inputLineWords[i];
                 fullUnformattedNumber = fullUnformattedNumber.replace(inputLineWords[i], "");
@@ -1044,7 +1042,8 @@ export class AddressParser {
                         fullNumber.replace("00", "+"),
                         probability,
                     ));
-                } else if (fullNumber.startsWith("0")
+                } else if (
+                    fullNumber.startsWith("0")
                     || fullNumber.startsWith("(0")
                 ) {
                     tempPhone.push(new CheckResult(
@@ -1269,7 +1268,6 @@ export class AddressParser {
                             continue words;
                         }
                     } else {
-
                         // das Wort ermittlen, welches aus der Zeile mit dem Keyword matcht
                         if (!(
                             inputLineWords[m] == matchingWords[1]
@@ -1284,7 +1282,6 @@ export class AddressParser {
 
                         // checkt ob nach der Straße eine Hausnummer kommt
                         for (let b = 0; b < inputLineWords[m + 2].length; b++) {
-
                             if (!whiteList.includes(inputLineWords[m + 2][b])) {
                                 num++;
                             }
