@@ -407,7 +407,7 @@ export class AddressParser {
                 } else {
                     wordProb += 10;
                 }
-            } else if (dotHit.length == 1) { // Checkt ob die local domain mindestens 2 Zeichen lang ist.
+            } else if (dotHit.length == 1) { //Checks whether the local domain is at least 2 characters long.
                 if (dotHit[0] - atHit[0] < 3) {
                     continue wordLoop;
                 } else {
@@ -415,14 +415,14 @@ export class AddressParser {
                 }
             }
 
-            if (hasTLD === false) { // checkt ob eine TLD vorhanden ist.
+            if (hasTLD === false) { //checks whether a TLD exists.
                 continue wordLoop;
             } else {
                 wordProb += 20;
             }
 
             if (index !== 0) {
-                let wordBefore = inputLineWords[index - 1].toLowerCase(); // Checkt ob vor der Mail z.B. Mail: steht.
+                let wordBefore = inputLineWords[index - 1].toLowerCase(); //Checks whether the email is preceded by, for example, Mail:.
 
                 if (wordBefore.includes("mail")) {
                     wordProb += 20;
@@ -439,10 +439,10 @@ export class AddressParser {
     }
 
     checkCompanyNames(inputLine) {
-        let wordProb = 0; // Treffer Wahrscheinlichkeit
+        let wordProb = 0; //Hit probability
         let tempCheckCompanyNames = [];
         const knownTLD = ["com", "net", "org", "de", "eu", "at", "ch", "nl", "pl", "fr", "es", "info", "name", "email", "co", "biz"];
-        const companyTypeGerman = [ // deutsche Unternehmensformen
+        const companyTypeGerman = [ //German company forms
             "einzelunternehmen",
             "gesellschaft mit beschränkter haftung",
             "aktiengesellschaft",
@@ -463,7 +463,7 @@ export class AddressParser {
             "gemeinde"
         ];
 
-        const companyTypeEnglish = [    // englische Unternehmensformen
+        const companyTypeEnglish = [    //English company forms
             "sole proprietorship", "sole prop.",
             "limited liability company", "llc",
             "corporation", "corp.",
@@ -479,7 +479,7 @@ export class AddressParser {
             "municipality", "muni"
         ];
 
-        const companyTypeDutch = [ // niederländische Unternehmensformen
+        const companyTypeDutch = [ //Dutch company forms
             "eenmanszaak", "eenm.",
             "besloten vennootschap", "bv", "b.v.",
             "naamloze vennootschap", "nv",
@@ -507,7 +507,7 @@ export class AddressParser {
         let companyType = companyTypeGerman;
         let companyKeyWords = companyKeyWordsGerman;
 
-        switch (this.language.languageName) {   // je nach Land die jeweiligen Arrays festlegen
+        switch (this.language.languageName) {   //set the respective arrays depending on the country
             case "de":
                 companyType = companyTypeGerman;
                 companyKeyWords = companyKeyWordsGerman;
@@ -530,18 +530,18 @@ export class AddressParser {
         wordLoop: for (let index = 0; index < inputLineWords.length; index++) {
             const element = inputLineWords[index];
 
-            if (element.includes('@')) { // Checkt ob String mit @ beginnt
+            if (element.includes('@')) { //Checks whether string starts with @
                 return tempCheckCompanyNames;
             }
 
-            if (element.includes('(at)')) { // Checkt ob String mit @ beginnt
+            if (element.includes('(at)')) { //Checks whether string starts with (at)
                 return tempCheckCompanyNames;
             }
 
             for (let i = 0; i < knownTLD.length; i++) {
                 const el = knownTLD[i];
 
-                // checkt ob das aktulle Wort eine URL ist
+                //checks whether the current word is a URL
                 if (
                     element.startsWith("www.")
                     && element.endsWith(el)
@@ -550,19 +550,19 @@ export class AddressParser {
                 }
             }
 
-            companyType.forEach(e => { // Checkt ob das aktuelle Wort einer Unternehmensform entspricht
+            companyType.forEach(e => { //Checks whether the current word corresponds to a company form
                 if (element == e) {
                     wordProb += 50;
                 }
             });
         }
 
-        companyKeyWords.forEach(element => { // Checkt ob das aktuelle Wort einem Company Keyword entspricht z.B. Malerei, Straßenbau usw.
+        companyKeyWords.forEach(element => { //Checks whether the current word corresponds to a company keyword e.g. painting, road construction, etc.
             if (inputLine.includes(element)) {
                 wordProb += 50;
             }
         });
-        inputLineClear = inputLineClear.replace('Name', ''); // Entfernt den Titel "Name" aus z.B. SelectLine 
+        inputLineClear = inputLineClear.replace('Name', ''); //Removes the title "Name" from e.g. SelectLine
         tempCheckCompanyNames.push(new CheckResult("companyName", inputLineClear, wordProb));
 
         return tempCheckCompanyNames;
@@ -580,7 +580,7 @@ export class AddressParser {
         let tempNames = [];
         let wordAfterClean = "";
 
-        //Vor- und Nachname-Array to lower case
+        //First and last name array to lower case
         for (let a = 0; a < firstName.length; a++) {
             firstName[a] = firstName[a].toLowerCase();
         }
@@ -589,7 +589,7 @@ export class AddressParser {
             lastName[a] = lastName[a].toLowerCase();
         }
 
-        //Schleife und check ob das aktuelle Word im Vornamen-Array existiert
+        //Loop and check if the current word exists in the first name array
         for (let i = 0; i < inputLineWords.length; i++) {
             const tempWord = inputLineWords[i].toLowerCase();
             const tempInputWord = inputLineWords[i];
@@ -599,7 +599,7 @@ export class AddressParser {
                 probability += 50;
             }
 
-            //checken ob das Wort vor i, falls es existiert, gewisse Stichworte enthält
+            //check whether the word before i, if it exists, contains certain keywords
             if (i !== 0) {
                 wordBefore = inputLineWords[i - 1].toLowerCase();
 
@@ -627,7 +627,7 @@ export class AddressParser {
 
             tripleName = "";
 
-            //checken ob das Wort nach i mit dem Nachnamen Array matcht 
+            //check whether the word after i matches the last name array
             if (inputLineWords[i + 1] !== undefined) {
                 wordAfter = inputLineWords[i + 1].toLowerCase();
                 wordAfterClean = inputLineWords[i + 1];
@@ -640,7 +640,7 @@ export class AddressParser {
                     || wordAfter.includes("e.v.")
                 ) {
                     return tempNames;
-                    //checken ob es ein 3er-Name ist
+                    //check if it is a triple name
                 } else if (
                     firstName.includes(wordAfter)
                     && firstName.includes(tempWord)
@@ -660,16 +660,16 @@ export class AddressParser {
                 }
             }
 
-            //für sauberere Ausgabe
+            //for cleaner output
             wordAfterClean = wordAfterClean.replaceAll(",", "").replaceAll("_", "");
 
-            //Wahrscheinlichkeitsrundung
+            //probability rounding
             if (probability > 100) {
                 probability = 100;
             }
 
-            //checken, ob Namen bereits als Objekte erstellt wurden, um Doppelungen zu vermeiden
-            //hier um InLine Dopplungen rauzufiltern
+           //check whether names have already been created as objects to avoid duplication
+            //here to filter out InLine duplications
             let inlineExistingObjects = tempNames;
             let existingObjects = this.contactPersonsCheck;
 
@@ -689,7 +689,7 @@ export class AddressParser {
                 }
             });
 
-            //hier um generelle Dopplungen rauzufiltern
+            //here to filter out general duplication
             existingObjects.forEach((nameObject, index) => {
                 if ((
                     nameObject.value === tripleName
@@ -709,12 +709,12 @@ export class AddressParser {
             });
 
             if (probability > 0) {
-                //output wenn es ein "normaler" Name ist
+                //output if it is a "normal" name
                 if (tripleName == "") {
                     let name = tempInputWord + " " + wordAfterClean;
-                    // checken, ob das Wort vorher nicht auch ein Vorname ist, dann pushen um einen möglichen 3er-Namen nicht doppelt zu erhalten
+                    //check whether the word before is also a first name, then push so as not to get a possible triple name twice
                     if (!firstName.includes(wordBefore)) {
-                        //checken, ob name kein § enthält = edge case
+                        //check whether name does not contain a § = edge case
                         if (
                             !name.includes("§")
                             && this.checkCorrectName(name)
@@ -726,7 +726,7 @@ export class AddressParser {
                             ));
                         }
                     }
-                    //output bei einem 3er-Namen      
+                    //output for a 3-name      
                 } else {
                     if (
                         !tempNames.includes(tripleName)
@@ -759,7 +759,7 @@ export class AddressParser {
         const languageAreaCodeEN = "+44";
         // TODO nummern für innerhalb erkennen z.B. London 020 anstatt 0
 
-        // Auswahl der passenden Vorwahl nach der erkannten Sprache
+        //Selection of the appropriate area code according to the recognized language
         switch (this.language.languageName) {
             case "de":
                 languageAreaCode = languageAreaCodeDE;
@@ -782,15 +782,15 @@ export class AddressParser {
 
             for (let index = 0; index < inputLineChars.length; index++) {
 
-                // Überprüfen, ob die Eingabe keiner Nummer entspricht
+                //Check that the input does not correspond to a number
                 if (!whiteList.includes(inputLineChars[index])) {
-                    // Falls nach einer Nummer ein Wort kommt, wird die bisher gespeicherte Nummer ausgegeben
+                    //If a word comes after a number, the previously saved number is output
                     if (
                         fullNumber.trim().length >= 6
                         && probability != 0
                     ) {
 
-                        // Faxnummern einheitliche Schreibweise setzen
+                        // Set fax numbers to have a consistent spelling
                         if (
                             inputLineWords[i - 1].startsWith("0")
                             || inputLineWords[i - 1].startsWith("(0")) {
@@ -828,7 +828,7 @@ export class AddressParser {
                 }
             }
 
-            // Checkt ob vor der nummer z.B. fax steht
+            // Check whether the number is preceded by e.g. fax
             if (i !== 0) {
                 let wordBefore = inputLineWords[i - 1].toLowerCase();
 
@@ -844,7 +844,7 @@ export class AddressParser {
                 }
             }
 
-            // Checkt ob die gesamt länge der Nummer zu groß ist
+           //Checks whether the total length of the number is too long
             if (inputLineWords[i].length + fullNumber.length < 20) {
                 fullNumber += inputLineWords[i];
             }
