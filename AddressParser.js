@@ -1268,7 +1268,6 @@ export class AddressParser {
                             continue words;
                         }
                     } else {
-
                         // das Wort ermittlen, welches aus der Zeile mit dem Keyword matcht
                         if (!(
                             inputLineWords[m] == matchingWords[1]
@@ -1283,7 +1282,6 @@ export class AddressParser {
 
                         // checkt ob nach der Straße eine Hausnummer kommt
                         for (let b = 0; b < inputLineWords[m + 2].length; b++) {
-
                             if (!whiteList.includes(inputLineWords[m + 2][b])) {
                                 num++;
                             }
