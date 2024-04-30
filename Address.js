@@ -171,9 +171,9 @@ export class Address {
             let newId = object.name;
 
                 if (firstValue) {
-                    $("#" + html_id).val(object.value).hide().fadeIn(fadeTime); // setzen des ersten Wertes in vorhandenes Feld
+                    $("#" + html_id).val(object.value).hide().fadeIn(fadeTime); // putting the first value in existing field
                 } else {
-                    //Neuerstellung und Implementierung von Feldern bei mehreren Telefonnummern
+                    //Recreation and implementation of fields for multiple phone numbers
                     let newObject = document.createElement("input");
                     newObject.id = "id" + index + newId;
                     newObject.classList.add("delete");
@@ -186,7 +186,7 @@ export class Address {
     }
 
     outputMaxValues(html_id) {
-        $("#" + html_id).val(""); //feld clearen
+        $("#" + html_id).val(""); //clear html-element
         let fadeTime = 0;
         let objectArray = [];
 
@@ -246,12 +246,12 @@ export class Address {
 
         let highestPercentage = object;
 
-        // Gebe null für leere Arrays zurück
+        // Return null for empty arrays
         if (array.length == 0) {
             return;
         }
 
-        // Objekt mit der höhsten Wahrscheinlichkeit returnen
+        // Return object with the highest probability
         array.forEach(element => {
 
             if (element.probability > highestPercentage.probability) {
