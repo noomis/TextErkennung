@@ -901,7 +901,7 @@ export class AddressParser {
     checkPhone(inputLine) {
         let tempPhone = []
 
-        //for recursive, no idea, ask Simon
+        //check wether the Line is to short to contain a number
         if (inputLine.length < 10) {
             return tempPhone;
         }
@@ -917,6 +917,16 @@ export class AddressParser {
         const languageAreaCodeDE = "+49";
         const languageAreaCodeNL = "+31";
         const languageAreaCodeEN = "+44";
+        let tmpFullNum = fullNumber;
+        tmpFullNum = tmpFullNum
+            .replaceAll("+", "")
+            .replaceAll("/", "")
+            .replaceAll("-", "")
+            .replaceAll(".", "")
+            .replaceAll("(", "")
+            .replaceAll(")", "")
+            .replaceAll("[", "")
+            .replaceAll("]", "");
 
         //Selection of the appropriate area code according to the recognized language
         switch (this.language.languageName) {
@@ -936,14 +946,16 @@ export class AddressParser {
                 break;
         }
 
-        words: for (let i = 0; i < inputLineWords.length; i++) { //for loop to loop through all words in the passed line
+        //for loop to loop through all words in the passed line
+        words: for (let i = 0; i < inputLineWords.length; i++) {
             let inputLineChars = inputLineWords[i].split("");
 
-            for (let index = 0; index < inputLineChars.length; index++) { //for loop to loop through all characters in the current word
+            //for loop to loop through all characters in the current word
+            for (let index = 0; index < inputLineChars.length; index++) {
 
-                //Check whether the input corresponds to a number
+                //Check whether the input does not corresponds to a number and then continue with the next word
                 if (!whiteList.includes(inputLineChars[index])) {
-                    
+
                     //If a word comes after a number, the previously saved number is output
                     if (fullNumber.trim().length >= 6 && probability != 0) {
 
@@ -1002,31 +1014,20 @@ export class AddressParser {
                 fullUnformattedNumber = fullUnformattedNumber.replace(inputLineWords[i], "");
             }
 
-            let tmpFullNum = fullNumber;
-            tmpFullNum = tmpFullNum.replaceAll("+", "").replaceAll("/", "").replaceAll("-", "").replaceAll(".", "");
+            //checks the length after removing all characters wich are not a number
+            tmpFullNum = fullNumber;
 
             if (
-                tmpFullNum.length > 5
+                tmpFullNum.length > 10
                 && tmpFullNum.length < 20
             ) {
                 probability += 30;
             }
         }
 
-        let tmpFullNum = fullNumber;
-        tmpFullNum = tmpFullNum.replaceAll("+", "").replaceAll("/", "").replaceAll("-", "").replaceAll(".", "");
+        if (fullNumber.trim().length != 0 && probability != 0) {
 
-        if (
-            tmpFullNum.length > 5
-            && tmpFullNum.length < 20
-        ) {
-            probability += 30;
-        }
-
-        if (
-            fullNumber.trim().length != 0
-            && probability != 0
-        ) {
+            //Set phone number to consistent spelling
             if (
                 fullNumber.startsWith(languageAreaCode)
                 || fullNumber.startsWith("0")
@@ -1061,7 +1062,7 @@ export class AddressParser {
             }
         }
 
-        if (tmpFullNum > 5) {
+        if (tmpFullNum > 10) {
             fullUnformattedNumber = fullUnformattedNumber.trim();
 
             if (fullUnformattedNumber.length > 10) {
