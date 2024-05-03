@@ -19,11 +19,11 @@ export class CheckLanguage {
         // Iterate through the languages array
         this.languages.forEach(language => {
 
-            //check welche Language am Wahrscheinlichsten ist
+            //check which language is most likely
             if (language.languageProbability > maxProbability) {
                 maxProbability = language.languageProbability;
                 mostProbableLanguage = language;
-                //rundungen um nicht über 100% zu sein
+                //roundings so as not to be over 100%
                 
                 if (language.languageProbability > 100) {
                     language.languageProbability = 100;
@@ -42,10 +42,10 @@ export class CheckLanguage {
         let dutchProbability = 0;
         let englishProbability = 0;
         let language;
-        //Funktionions Aufruf externer Library (Franc) 
+        //Function call of external library (Franc)
         let languageDetection = franc(inputLine);
 
-        //checken, ob die email mit gewisser TLD endet um Land genauer zu bestimmen
+        //check whether the email ends with a certain TLD to determine the country more precisely
         for (let index = 0; index < email.length; index++) {
             const element = email[index].value;
 
@@ -65,7 +65,7 @@ export class CheckLanguage {
         for (let index = 0; index < inputWords.length; index++) {
             const element = inputWords[index];
 
-            //checken ob deutsche keywords im input enthalten sind, um die Wahrscheinlichkeit für DE zu erhöhen
+          //check whether German keywords are included in the input to increase the probability of DE
             if (
                 element.includes("www.")
                 && element.endsWith(".de")
@@ -84,7 +84,7 @@ export class CheckLanguage {
                 germanProbability += 10;
             }
 
-            //checken ob niederländische keywords im input enthalten sind, um die Wahrscheinlichkeit für NL zu erhöhen
+            //check whether Dutch keywords are included in the input to increase the probability of NL
             if (
                 element.includes("www.")
                 && element.endsWith(".nl")
@@ -103,7 +103,7 @@ export class CheckLanguage {
                 dutchProbability += 10;
             }
 
-            //checken ob englische keywords im input enthalten sind, um die Wahrscheinlichkeit für UK zu erhöhen
+            //check whether English keywords are included in the input to increase the probability of UK
             if (element.includes("www.")
                 && element.endsWith(".uk")
             ) {
@@ -123,7 +123,7 @@ export class CheckLanguage {
             }
         }
         if (inputLine !== "") {
-            //Library stellt anhand geschriebenen Textes die Sprache fest und gibt dann Prozente 
+           //Library determines the language based on written text and then gives percentages
             if (languageDetection == "deu") {
                 germanProbability += 30;
             }
@@ -136,7 +136,7 @@ export class CheckLanguage {
                 dutchProbability += 20;
             }
 
-            //push der Sprache mit Probability in den Array
+           //push the language with probability into the array
             this.languages.push(
                 language = {
                     languageName: "nl",
@@ -159,7 +159,7 @@ export class CheckLanguage {
             );
         }
 
-        // Call the function to find the most probable language
+        //Call the function to find the most probable language
         possibleLanguage = this.findMostProbableLanguage();
         return possibleLanguage;
     }
