@@ -999,6 +999,8 @@ export class AddressParser {
                     || wordBefore.includes("tel")
                     || wordBefore.includes("mobil")
                     || wordBefore.includes("handy")
+                    || wordBefore.includes("phone")
+                    || wordBefore.includes("mobiel")
                 ) {
                     probability += 70;
                 }
