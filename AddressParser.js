@@ -1635,8 +1635,7 @@ export class AddressParser {
                     probability += 10;
                 }
 
-                // TODO array erstellen und durch loopen
-                //bei bestimmten regelmäßigen Endungen von Städten gewisse Probability geben
+                //give a certain probability for certain regular endings of cities
                 if (
                     element.endsWith("berg")
                     || element.endsWith("stadt")
@@ -1656,7 +1655,7 @@ export class AddressParser {
                 }
             }
 
-            //check ob Wort nach dem zip Code der Stadt entspricht die im json eingetragen ist
+            //check whether the word after the zip code corresponds to the city entered in the json
             if (inputLineWords[i - 1] !== undefined) {
                 wordBefore = inputLineWords[i - 1].toLowerCase();
                 const onlyNumbers = inputLineWords.filter(element => !isNaN(element));
@@ -1676,8 +1675,8 @@ export class AddressParser {
                 }
             }
 
-            //checken, ob citys bereits ein Objekt haben, um Doppelungen zu vermeiden
-            //hier um InLine Dopplungen rauzufiltern
+            //check whether cities already have an object to avoid duplication
+            //here to filter out InLine duplications
             let existingObjects = this.citysCheck;
             let inlineExistingObjects = tempCity;
 
@@ -1696,7 +1695,7 @@ export class AddressParser {
                 }
             });
 
-            //hier um generelle Dopplungen rauzufiltern
+            //here to filter out general duplication
             existingObjects.forEach((cityObject, index) => {
 
                 if (
@@ -1717,7 +1716,7 @@ export class AddressParser {
                 probability = 100;
             }
 
-            //Ausgabe-Objekt Erstellung, wenn Prob größer 0 und das Element nur erlaubte Wörter enthält
+            //Output object creation if Prob is greater than 0 and the element contains only allowed words
             if (
                 probability > 0
                 && this.checkCorrectName(elementClear)
@@ -1801,7 +1800,7 @@ export class AddressParser {
 
                     return tempRegistrationNumber;
                 }
-                // auch überprüfen ob die Ausgabe eine Nummer ist, nur ein wort vorher
+                //also check if the output is a number, just one word before
             } else if (!isNaN(element)) {
                 probability += 20;
             } else {
@@ -1872,7 +1871,7 @@ export class AddressParser {
 
         const onlyNumbers = tempInputWords.filter(element => !isNaN(element));
 
-        //onlyNumbers Array wird auf Zahlen mit ausschließlich 9 Ziffern begrenzt  
+        //onlyNumbers array is limited to numbers with only 9 digits  
         for (let a = 0; a < onlyNumbers.length; a++) {
             const el = onlyNumbers[a];
 
@@ -1890,7 +1889,7 @@ export class AddressParser {
                 // Extract the last two characters of the element
                 const lastTwoCharacters = element.slice(-2);
 
-                // Überprüfe, ob die letzten neun Zeichen Zahlen sind
+                // Check if the last nine characters are numbers
                 if (!isNaN(lastTwoCharacters)) {
                     // Remove "de" from the element
                     elementReplaced = element.replace(vatIdCountryCode, "");
