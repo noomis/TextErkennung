@@ -907,7 +907,7 @@ export class AddressParser {
         }
 
         let fullNumber = "";
-        let fullUnformattedNumber = "";
+        let fullUnformattedNumber = ""; //
         inputLine = inputLine.toLowerCase();
         let inputLineWords = inputLine.split(" ");
         fullUnformattedNumber = inputLine;
@@ -1741,7 +1741,7 @@ export class AddressParser {
         const keywordsEN = ["crn", "brn", "cin", "bn", "in", "registration"];
         let keywords = keywordsDE;
 
-        // Auswahl des passenden Arrays
+        // Selecting the appropriate array
         switch (this.language.languageName) {
             case "de":
                 keywords = keywordsDE;
@@ -1763,7 +1763,7 @@ export class AddressParser {
             const element = inputLineWords[index];
             probability = 0;
 
-            //checken, ob im word vor dem element ein bestimmtes Keyword/Blacklist-Wort steht
+            //Check whether there is a certain keyword/blacklist word in front of the element in Word
             if (index !== 0) {
                 wordBefore = inputLineWords[index - 1].toLowerCase();
 
@@ -1774,7 +1774,7 @@ export class AddressParser {
                 });
             }
 
-            // wenn nach einem keyword noch nummer folgt, das nächste wort nehmen nur nach zahlen überprüfen, wenn keywords enthalten sind
+            //if a keyword is followed by a number, take the next word only check for numbers if keywords are included
             if (
                 element.includes("nummer")
                 || element.includes("number")
@@ -1783,7 +1783,7 @@ export class AddressParser {
                 if (index < inputLineWords.length - 1) {
                     const wordAfter = inputLineWords[index + 1].toLowerCase();
 
-                    // überprüfen ob die Ausgabe eine Nummer ist
+                    // check whether the output is a number
                     if (
                         isNaN(wordAfter)
                         && probability == 80
@@ -1812,7 +1812,7 @@ export class AddressParser {
                 probability = 100;
             }
 
-            //Objekt Erstellung / Output            
+            //Object creation/output         
             if (
                 probability > 0
                 && element.length == 5
@@ -1839,7 +1839,7 @@ export class AddressParser {
         let vatKeywordsDE = ["ust.-idnr.", "umsatzsteuer-id"];
         let vatKeywords = vatKeywordsDE;
 
-        // Auswahl des Keyword Arrays nach Sprache
+        // Selecting the keyword array by language
         switch (this.language.languageName) {
             case "de":
                 vatIdCountryCode = "de";
@@ -1860,7 +1860,7 @@ export class AddressParser {
                 break;
         }
 
-        //checken, ob es mit DE startet und dann DE replacen für den onlyNumbers Array
+        //check if it starts with DE and then replace DE for the onlyNumbers array
         for (let index = 0; index < tempInputWords.length; index++) {
             const element = tempInputWords[index].toLowerCase();
 
@@ -1881,21 +1881,21 @@ export class AddressParser {
             }
         }
 
-        //checken, ob vor dem element ein string mit bestimmten Keyword steht und ob element mit de startet
+        //check whether there is a string with a certain keyword in front of the element and whether element starts with de
         for (let index = 0; index < inputLineWords.length; index++) {
             const elementClear = inputLineWords[index];
             const element = inputLineWords[index].toLowerCase();
 
             if (element.startsWith(vatIdCountryCode)) {
-                // Extrahiere die letzten beiden Zeichen des Elements
+                // Extract the last two characters of the element
                 const lastTwoCharacters = element.slice(-2);
 
                 // Überprüfe, ob die letzten neun Zeichen Zahlen sind
                 if (!isNaN(lastTwoCharacters)) {
-                    // Entferne "de" aus dem Element
+                    // Remove "de" from the element
                     elementReplaced = element.replace(vatIdCountryCode, "");
 
-                    // Erhöhe die Wahrscheinlichkeit um 15
+                    // Increase the probability by 15
                     probability += 15;
                 } else {
                     elementReplaced = element;
@@ -1906,7 +1906,7 @@ export class AddressParser {
 
             if (index !== 0) {
                 wordBefore = inputLineWords[index - 1].toLowerCase();
-                //checken ob das Wort vorher ein bestimmtes Keyword enthält, um die Probability zu erhöhen bzw. senken.
+                //check whether the word contains a certain keyword beforehand in order to increase or decrease the probability.
                 vatKeywords.forEach(e => {
 
                     if (wordBefore.includes(e)) {
@@ -1919,7 +1919,7 @@ export class AddressParser {
                 }
             }
 
-            //checken, ob das element eine 9 stellige Zahl ist und ob verbotene keywords davorstehen
+            //check whether the element is a 9-digit number and whether there are forbidden keywords in front of it
             for (let i = 0; i < onlyNumbers.length; i++) {
                 const e = onlyNumbers[i];
 
@@ -1935,12 +1935,12 @@ export class AddressParser {
                 }
             }
 
-            //Rundungen
+            //Curving
             if (probability > 100) {
                 probability = 100;
             }
 
-            //Objekt Erstellung / Output
+            //Object creation /output
             if (probability > 0) {
                 tempTax.push(new CheckResult("vatIdNumber", elementClear, probability));
             }
@@ -1960,7 +1960,7 @@ export class AddressParser {
         const keywordEN = "tax office";
         let keyword = keywordDE;
 
-        // Auswahl des passenden Keyword für die Sprache
+        // Selection of the appropriate keyword for the language
         switch (this.language.languageName) {
             case "de":
                 keyword = keywordDE;
@@ -1990,7 +1990,7 @@ export class AddressParser {
                         probability += 40;
                     }
                 });
-                // wenn die Sprache englisch ist, da das keyword zwei Wörter sind
+                // if the language is English, because the keyword is two words
             } else if (
                 element === keyword.split(" ")[0]
                 && inputLineWords[index + 1] !== 0
@@ -2015,7 +2015,7 @@ export class AddressParser {
                 }
             }
 
-            // Checkt ob folgendes Format vorliegt: 123/4567/9876
+            // Check whether the following format is present: 123/4567/9876
             let tempWord = element.split("/");
             let tempCount = 0;
 
@@ -2057,7 +2057,7 @@ export class AddressParser {
             'ä', 'ö', 'ü', 'ß', '-', ' '
         ];
         name = name.toLowerCase();
-        // Überprüfe, ob alle Zeichen in der Variable im germanNamesWhitelist Array enthalten sind
+        //Check whether all characters in the variable are contained in the germanNamesWhitelist array
         return name.split('').every(char => germanNamesWhitelist.includes(char));
     }
 
