@@ -1365,7 +1365,7 @@ export class AddressParser {
         const whiteList = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L',
             'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z'];
 
-        // Auswahl der passenden Vorwahl nach der erkannten Sprache
+        // Selection of the appropriate area code according to the recognized language
         switch (this.language.languageName) {
             case "de":
                 postalCodeLength = 5;
@@ -1389,7 +1389,7 @@ export class AddressParser {
                 break;
         }
 
-        // wenn element mit d-/de- startet wird dieses entfernt
+        //if element starts with d-/de-this is removed
         for (let a = 0; a < inputLineWords.length; a++) {
             const element = inputLineWords[a];
 
@@ -1403,7 +1403,7 @@ export class AddressParser {
                 probability += 10;
             }
 
-            // Falls vor der 5-Stelligen Zahl ein verbotenes Keyword steht wird diese Zahl nicht angegeben 
+            //If there is a forbidden keyword in front of the 5-digit number, this number will not be given
             if (a !== 0) {
                 let wordBefore = inputLineWords[a - 1];
 
@@ -1417,7 +1417,7 @@ export class AddressParser {
         }
 
         if (this.language.languageName === "de") {
-            // neuer Array nur mit 5 Stelligen Zahlen 
+           //new array with only 5 digit numbers
             const onlyNumbers = inputLineWords.filter(element => !isNaN(element));
 
             for (let a = 0; a < onlyNumbers.length; a++) {
@@ -1428,7 +1428,7 @@ export class AddressParser {
                 }
             }
 
-            // check ob elements im json enthalten sind und somit eine Stadt matchen
+            //check whether elements are contained in the json and therefore match a city
             zipLoop: for (let i = 0; i < onlyNumbers.length; i++) {
                 const element = onlyNumbers[i];
 
@@ -1437,7 +1437,7 @@ export class AddressParser {
                     city = this.fetchedPostalCodes.indexOf(element);
                     cityName = this.fetchedCityNames[city];
 
-                    // check ob Wort nach dem zip Code der Stadt entspricht die im json eingetragen ist
+                   //check whether the word after the zip code corresponds to the city entered in the json
                     if (inputLineWords[i + 1] !== undefined) {
                         wordAfter = inputLineWords[i + 1];
 
@@ -1468,7 +1468,7 @@ export class AddressParser {
         }
 
         if (this.language.languageName === "nl") {
-            // neuer Array nur mit 4 stelligen Zahlen 
+            //new array with only 4 digit numbers
             const onlyNumbers = inputLineWords.filter(
                 element => !isNaN(element)
                     && (
@@ -1480,7 +1480,7 @@ export class AddressParser {
             zipLoop: for (let i = 0; i < inputLineWords.length; i++) {
                 const element = inputLineWords[i];
 
-                // check, ob element eine 4 stellige Zahl ist 
+                //check whether element is a 4-digit number
                 if (
                     element.length === 4
                     && onlyNumbers.includes(element)
@@ -1490,7 +1490,7 @@ export class AddressParser {
                     if (inputLineWordsClear[i + 1] !== undefined) {
                         wordAfter = inputLineWordsClear[i + 1];
 
-                        // check, ob das Wort nach dem Element 2 Zeichen lang ist nur aus Buchstaben erkannt wird
+                        //check whether the word after the element is 2 characters long and is only recognized from letters
                         if (
                             wordAfter.length === 2
                             && this.checkCorrectName(wordAfter)
@@ -1525,8 +1525,8 @@ export class AddressParser {
                 const secondLetter = element.charAt(1);
                 const thirdLetter = element.charAt(2);
 
-                // checken, ob das erste Zeichen eine Zahl ist, das zweite Zeichen eine Buchstabe ist, check ob das dritte Zeichen eine 
-                // Buchstabe ist und das element genau 3 Zeichen lang ist
+               //check whether the first character is a number, the second character is a letter, check whether the third character is a
+                //is a letter and the element is exactly 3 characters long
                 if (
                     element.length === 3
                     && !isNaN(firstLetter)
@@ -1538,7 +1538,7 @@ export class AddressParser {
                     if (inputLineWordsClear[i - 1] !== undefined) {
                         wordBefore = inputLineWordsClear[i - 1];
 
-                        if (wordBefore.length >= 2 && wordBefore.length <= 4) { //check, ob das Wort vorher den UK-PLZ Kriterien entspricht  
+                        if (wordBefore.length >= 2 && wordBefore.length <= 4) { //check whether the word meets the UK postcode criteria beforehand
                             probability += 30
                         }
                     }
