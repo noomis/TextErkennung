@@ -907,10 +907,10 @@ export class AddressParser {
         }
 
         let fullNumber = "";
-        let fullUnformattedNumber = ""; //
+        let fullLeftOverNumber = "";
         inputLine = inputLine.toLowerCase();
         let inputLineWords = inputLine.split(" ");
-        fullUnformattedNumber = inputLine;
+        fullLeftOverNumber = inputLine;
         let probability = 0;
         const whiteList = ("0123456789+/- ()[].");
         let languageAreaCode = "";
@@ -1011,7 +1011,7 @@ export class AddressParser {
             //Checks whether the total length of the number is too long
             if (inputLineWords[i].length + fullNumber.length < 17) {
                 fullNumber += inputLineWords[i];
-                fullUnformattedNumber = fullUnformattedNumber.replace(inputLineWords[i], "");
+                fullLeftOverNumber = fullLeftOverNumber.replace(inputLineWords[i], "");
             }
 
             //checks the length after removing all characters wich are not a number
@@ -1063,10 +1063,10 @@ export class AddressParser {
         }
 
         if (tmpFullNum > 10) {
-            fullUnformattedNumber = fullUnformattedNumber.trim();
+            fullLeftOverNumber = fullLeftOverNumber.trim();
 
-            if (fullUnformattedNumber.length > 10) {
-                tempPhone = tempPhone.concat(this.checkPhone(fullUnformattedNumber));
+            if (fullLeftOverNumber.length > 10) {
+                tempPhone = tempPhone.concat(this.checkPhone(fullLeftOverNumber));
             }
         }
 
