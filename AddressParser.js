@@ -757,6 +757,16 @@ export class AddressParser {
         const languageAreaCodeDE = "+49";
         const languageAreaCodeNL = "+31";
         const languageAreaCodeEN = "+44";
+        let tmpFullNum = fullNumber;
+        tmpFullNum = tmpFullNum
+            .replaceAll("+", "")
+            .replaceAll("/", "")
+            .replaceAll("-", "")
+            .replaceAll(".", "")
+            .replaceAll("(", "")
+            .replaceAll(")", "")
+            .replaceAll("[", "")
+            .replaceAll("]", "");
         // TODO nummern für innerhalb erkennen z.B. London 020 anstatt 0
 
         //Selection of the appropriate area code according to the recognized language
@@ -791,18 +801,14 @@ export class AddressParser {
                     ) {
 
                         // Set fax numbers to have a consistent spelling
-                        if (
-                            inputLineWords[i - 1].startsWith("0")
-                            || inputLineWords[i - 1].startsWith("(0")) {
+                        if (inputLineWords[i - 1].startsWith("0") || inputLineWords[i - 1].startsWith("(0")) {
                             tempFax.push(new CheckResult("faxNumber",
                                 fullNumber.replace("0", languageAreaCode),
                                 probability,
                             ));
                         }
 
-                        if (
-                            fullNumber.startsWith("00")
-                            || fullNumber.startsWith("(00")) {
+                        if(fullNumber.startsWith("00") || fullNumber.startsWith("(00")) {
                             tempFax.push(new CheckResult(
                                 "faxNumber",
                                 fullNumber.replace("00", "+"),
@@ -839,6 +845,8 @@ export class AddressParser {
                     || wordBefore.includes("fon")
                     || wordBefore.includes("mobil")
                     || wordBefore.includes("handy")
+                    || wordBefore.includes("phone")
+                    || wordBefore.includes("mobiel")
                 ) {
                     return tempFax;
                 }
@@ -849,38 +857,21 @@ export class AddressParser {
                 fullNumber += inputLineWords[i];
             }
 
-            let tmpFullNum = fullNumber;
-            tmpFullNum = tmpFullNum.replaceAll("+", "").replaceAll("/", "").replaceAll("-", "").replaceAll(".", "");
+            tmpFullNum = fullNumber;
 
-            if (tmpFullNum.length > 5 && tmpFullNum.length < 33) {
+            if (tmpFullNum.length > 10 && tmpFullNum.length < 33) {
                 probability += 10;
             }
         }
 
-        let tmpFullNum = fullNumber;
-        tmpFullNum = tmpFullNum.replaceAll("+", "").replaceAll("/", "").replaceAll("-", "").replaceAll(".", "");
-
-        if (tmpFullNum.length > 5 && tmpFullNum.length < 33) {
-            probability += 10;
-        }
-
-        if (
-            fullNumber.trim().length != 0
-            && probability != 0
-        ) {
-            if (
-                fullNumber.startsWith("00")
-                || fullNumber.startsWith("(00")
-            ) {
+        if (fullNumber.trim().length != 0 && probability != 0) {
+            if (fullNumber.startsWith("00") || fullNumber.startsWith("(00")) {
                 tempFax.push(new CheckResult(
                     "faxNumber",
                     fullNumber.replace("00", "+"),
                     probability,
                 ));
-            } else if (
-                fullNumber.startsWith("0")
-                || fullNumber.startsWith("(0")
-            ) {
+            } else if (fullNumber.startsWith("0") || fullNumber.startsWith("(0")) {
                 tempFax.push(new CheckResult(
                     "faxNumber",
                     fullNumber.replace("0", languageAreaCode),
@@ -907,10 +898,10 @@ export class AddressParser {
         }
 
         let fullNumber = "";
-        let fullUnformattedNumber = ""; //
+        let fullLeftOverNumber = "";
         inputLine = inputLine.toLowerCase();
         let inputLineWords = inputLine.split(" ");
-        fullUnformattedNumber = inputLine;
+        fullLeftOverNumber = inputLine;
         let probability = 0;
         const whiteList = ("0123456789+/- ()[].");
         let languageAreaCode = "";
@@ -960,24 +951,15 @@ export class AddressParser {
                     if (fullNumber.trim().length >= 6 && probability != 0) {
 
                        //Set phone number to consistent spelling
-                        if (
-                            inputLineWords[i - 1].startsWith("0")
-                            || inputLineWords[i - 1].startsWith("(0")
-                        ) {
+                        if (inputLineWords[i - 1].startsWith("0") || inputLineWords[i - 1].startsWith("(0")) {
                             tempPhone.push(new CheckResult("phoneNumber", fullNumber.replace("0", languageAreaCode), probability));
                             continue words;
                         }
 
-                        if (
-                            fullNumber.startsWith("00")
-                            || fullNumber.startsWith("(00")
-                        ) {
+                        if (fullNumber.startsWith("00") || fullNumber.startsWith("(00")) {
                             tempPhone.push(new CheckResult("phoneNumber", fullNumber.replace("00", "+"), probability));
                             continue words;
-                        } else if (
-                            fullNumber.startsWith("0")
-                            || fullNumber.startsWith("(0")
-                        ) {
+                        } else if (fullNumber.startsWith("0") || fullNumber.startsWith("(0")) {
                             tempPhone.push(new CheckResult("phoneNumber", fullNumber.replace("0", languageAreaCode), probability));
                             continue words;
                         } else {
@@ -999,6 +981,8 @@ export class AddressParser {
                     || wordBefore.includes("tel")
                     || wordBefore.includes("mobil")
                     || wordBefore.includes("handy")
+                    || wordBefore.includes("phone")
+                    || wordBefore.includes("mobiel")
                 ) {
                     probability += 70;
                 }
@@ -1011,7 +995,7 @@ export class AddressParser {
             //Checks whether the total length of the number is too long
             if (inputLineWords[i].length + fullNumber.length < 17) {
                 fullNumber += inputLineWords[i];
-                fullUnformattedNumber = fullUnformattedNumber.replace(inputLineWords[i], "");
+                fullLeftOverNumber = fullLeftOverNumber.replace(inputLineWords[i], "");
             }
 
             //checks the length after removing all characters wich are not a number
@@ -1063,10 +1047,10 @@ export class AddressParser {
         }
 
         if (tmpFullNum > 10) {
-            fullUnformattedNumber = fullUnformattedNumber.trim();
+            fullLeftOverNumber = fullLeftOverNumber.trim();
 
-            if (fullUnformattedNumber.length > 10) {
-                tempPhone = tempPhone.concat(this.checkPhone(fullUnformattedNumber));
+            if (fullLeftOverNumber.length > 10) {
+                tempPhone = tempPhone.concat(this.checkPhone(fullLeftOverNumber));
             }
         }
 

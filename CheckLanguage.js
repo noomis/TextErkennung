@@ -122,19 +122,20 @@ export class CheckLanguage {
                 englishProbability += 10;
             }
         }
+        
         if (inputLine !== "") {
            //Library determines the language based on written text and then gives percentages
-            if (languageDetection == "deu") {
-                germanProbability += 30;
-            }
+            // if (languageDetection == "deu") {
+            //     germanProbability += 30;
+            // }
 
-            if (languageDetection == "eng") {
-                englishProbability += 20;
-            }
+            // if (languageDetection == "eng") {
+            //     englishProbability += 20;
+            // }
 
-            if (languageDetection == "nld") {
-                dutchProbability += 20;
-            }
+            // if (languageDetection == "nld") {
+            //     dutchProbability += 20;
+            // }
 
            //push the language with probability into the array
             this.languages.push(
