@@ -1168,7 +1168,6 @@ export class AddressParser {
 
             // Search row for keywords like street etc.
             for (let sNames = 0; sNames < streetNames.length; sNames++) {
-                // TODO malte fragen ob die Leerzeile weg kann
                 if (inputLineWords[i].includes(streetNames[sNames])) {
                     fullStreetName = inputLine.toLowerCase();
                     fullStreetNameClear = inputLine;
