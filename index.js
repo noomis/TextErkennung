@@ -10,14 +10,12 @@ fetchData.fetchCityData();
 
 document.getElementById("text").addEventListener("input", printResult);
 
-document.getElementById("slider").addEventListener("input", printResult);
-
 function printResult() {
     $(".delete").remove();
     let input = document.getElementById("text").value;
     let languageChecker = new CheckLanguage();
     let language = languageChecker.parseLanguage(input);
-    let outputPercentage = $("#slider")[0].value;
+    let outputPercentage = 50;
     let mainParser = new AddressParser(language, outputPercentage);
     $("#probValue").text("Treffer Wahrscheinlichkeit: " + outputPercentage + "%");
 
