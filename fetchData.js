@@ -35,4 +35,6 @@ export class FetchData {
     setCityNames(_cityNames) {
         this.fetchedCityNames = this.fetchedCityNames.concat(_cityNames);
     }
+    
 }
+
