@@ -399,7 +399,6 @@ export class AddressParser {
                 wordProb += 5;
             }
 
-            //TODO continue comments change to english
             //Checks whether the local domain is at least 2 characters long.
             if (dotHit.length > 1) {
                 if (dotHit[dotHit.length - 1] - atHit[0] < 3) {
