@@ -919,23 +919,23 @@ export class AddressParser {
         const languageAreaCodeEN = "+44";
         let tmpFullNum = fullNumber;
         tmpFullNum = tmpFullNum
-            .replaceAll("+", "")
+            .replaceAll("+", "")                                                     
             .replaceAll("/", "")
             .replaceAll("-", "")
             .replaceAll(".", "")
             .replaceAll("(", "")
             .replaceAll(")", "")
             .replaceAll("[", "")
-            .replaceAll("]", "");
+            .replaceAll("]", "");                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                          
 
         //Selection of the appropriate area code according to the recognized language
         switch (this.language.languageName) {
             case "de":
                 languageAreaCode = languageAreaCodeDE;
                 break;
-
+                
             case "nl":
-                languageAreaCode = languageAreaCodeNL;
+                languageAreaCode = languageAreaCodeNL;                                           
                 break;
 
             case "eng":
@@ -1088,7 +1088,7 @@ export class AddressParser {
         const whiteList = "abcdefghijklmnopqrstuvwxyz".split("");
         let streetNames = streetNamesDE;
         let blackList = ["@", "mail", "www.", "https", "http"];
-        // deutsche Unternehmensformen
+        // German corporate forms
         let blackListCompanyTypeDE = [
             "einzelunternehmen",
             "gesellschaft mit beschränkter haftung",
@@ -1108,7 +1108,7 @@ export class AddressParser {
             "ug",
             "e.v.",
             "gemeinde"];
-        // englische Unternehmensformen
+        // English company forms
         const blackListCompanyTypeEN = [
             "sole proprietorship", "sole prop.",
             "limited liability company", "llc",
@@ -1124,7 +1124,7 @@ export class AddressParser {
             "non-profit association", "non-profit assoc.",
             "municipality", "muni"
         ];
-        // niederländische Unternehmensformen
+        // Dutch corporate forms
         const blackListCompanyTypeNL = [
             "eenmanszaak", "eenm.",
             "besloten vennootschap", "bv", "b.v.",
@@ -1147,7 +1147,7 @@ export class AddressParser {
         let fullStreetName = "";
         let fullStreetNameClear = "";
 
-        // Auswahl des passenden Arrays nach der erkannten Sprache
+        // Selecting the appropriate array according to the recognized language
         switch (this.language.languageName) {
             case "de":
                 streetNames = streetNamesDE;
@@ -1173,7 +1173,7 @@ export class AddressParser {
 
         words: for (let i = 0; i < inputLineWords.length; i++) {
 
-            // Checkt ob das aktuelle Wort einer Unternehmensform entspricht und diese überspringen
+            // Check whether the current word corresponds to a company form and skip it
             for (let index = 0; index < blackList.length; index++) {
                 const e = blackList[index];
 
@@ -1182,14 +1182,14 @@ export class AddressParser {
                 }
             }
 
-            // Zeile nach Keywords durchsuchen wie straße usw.
+            // Search row for keywords like street etc.
             for (let sNames = 0; sNames < streetNames.length; sNames++) {
                 // TODO malte fragen ob die Leerzeile weg kann
                 if (inputLineWords[i].includes(streetNames[sNames])) {
                     fullStreetName = inputLine.toLowerCase();
                     fullStreetNameClear = inputLine;
 
-                    // wenn zwei keywords in einer zeile vorkommen wird nur einer angerechnet
+                    // If two keywords appear in one line, only one will be counted
                     if (probability < 40) {
                         probability += 40;
                     }
@@ -1197,7 +1197,7 @@ export class AddressParser {
                     if (i + 1 < inputLineWords.length) {
                         let wordAfter = inputLineWords[i + 1].toLowerCase();
 
-                        // checkt ob nach der Straße eine Hausnummer kommt
+                        //checks whether there is a house number after the street
                         for (let b = 0; b < inputLineWords[i + 1].length; b++) {
 
                             if (!whiteList.includes(inputLineWords[i + 1][b])) {
@@ -1217,7 +1217,7 @@ export class AddressParser {
                                 probability += 10;
                             }
 
-                            // checkt, ob nach der Hausnummer ein Buchstaben Zusatz kommt
+                            // checks whether there is an additional letter after the house number
                             if (i + 2 < inputLineWords.length) {
                                 let word2After = inputLineWords[i + 2].toLowerCase();
 
@@ -1233,11 +1233,11 @@ export class AddressParser {
                             }
                         }
 
-                        // checkt den Fall, wenn der Nr. Zusatz nicht mit einem Leerzeichen von der Nr. getrennt ist
+                        // checks the case if the number addition is not separated from the number by a space
                         if (num == 1) {
                             probability += 30;
 
-                            // checkt, ob der letzte char Wert ein Buchstabe ist
+                            //checks whether the last char value is a letter
                             for (let alphabet = 0; alphabet < 26; alphabet++) {
 
                                 if (inputLineWords[i + 1][(inputLineWords[i + 1].length) - 1] == whiteList[alphabet]) {
@@ -1250,7 +1250,7 @@ export class AddressParser {
             }
         }
 
-        // überprüft den Fall, wenn die Adresse mit z.b. an der ... anfängt
+       //checks the case if the address with e.g. where... begins
         for (let p = 0; p < stringStreetBeginnings.length; p++) {
 
             if (inputLine.toLowerCase().includes(stringStreetBeginnings[p])) {
@@ -1261,15 +1261,15 @@ export class AddressParser {
 
                 words: for (let m = 0; m < inputLineWords.length; m++) {
 
-                    // wenn der Vergleich, ob ein Satz mit etwas startet dessen Keyword mehr als nur ein Wort lang ist
+                    // when comparing whether a sentence starts with something whose keyword is more than just one word long
                     if (matchingWords.length == 1) {
 
-                        // das Wort ermittlen, welches aus der Zeile mit dem Keyword matcht
+                        // Determine the word that matches the keyword from the line
                         if (!inputLineWords[m] == matchingWords[0]) {
                             continue words;
                         }
                     } else {
-                        // das Wort ermittlen, welches aus der Zeile mit dem Keyword matcht
+                        // Determine the word that matches the keyword from the line
                         if (!(
                             inputLineWords[m] == matchingWords[1]
                             && inputLineWords[m - 1] == matchingWords[0]
@@ -1281,7 +1281,7 @@ export class AddressParser {
                     if (m + 2 < inputLineWords.length) {
                         let word2After = inputLineWords[m + 2].toLowerCase();
 
-                        // checkt ob nach der Straße eine Hausnummer kommt
+                        // checks whether there is a house number after the street
                         for (let b = 0; b < inputLineWords[m + 2].length; b++) {
                             if (!whiteList.includes(inputLineWords[m + 2][b])) {
                                 num++;
@@ -1300,7 +1300,7 @@ export class AddressParser {
                                 probability += 15;
                             }
 
-                            // checkt, ob nach der Hausnummer ein Buchstaben Zusatz kommt
+                            // checks whether there is an additional letter after the house number
                             if (m + 3 < inputLineWords.length) {
                                 let word3After = inputLineWords[m + 3].toLowerCase();
 
@@ -1316,11 +1316,11 @@ export class AddressParser {
                             }
                         }
 
-                        // checkt den Fall, wenn der Nr. Zusatz nicht mit einem Leerzeichen von der Nr. getrennt ist
+                        // checks the case if the number addition is not separated from the number by a space
                         if (num == 1) {
                             probability += 35;
 
-                            // checkt, ob der letzte char Wert ein Buchstabe ist
+                            // checks whether the last char value is a letter
                             for (let alphabet = 0; alphabet < 26; alphabet++) {
 
                                 if (inputLineWords[m + 2][(inputLineWords[m + 2].length) - 1] == whiteList[alphabet]) {
