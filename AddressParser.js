@@ -399,7 +399,6 @@ export class AddressParser {
                 wordProb += 5;
             }
 
-            //TODO continue comments change to english
             //Checks whether the local domain is at least 2 characters long.
             if (dotHit.length > 1) {
                 if (dotHit[dotHit.length - 1] - atHit[0] < 3) {
@@ -1168,7 +1167,6 @@ export class AddressParser {
 
             // Search row for keywords like street etc.
             for (let sNames = 0; sNames < streetNames.length; sNames++) {
-                // TODO malte fragen ob die Leerzeile weg kann
                 if (inputLineWords[i].includes(streetNames[sNames])) {
                     fullStreetName = inputLine.toLowerCase();
                     fullStreetNameClear = inputLine;
