@@ -1005,7 +1005,7 @@ export class AddressParser {
                 tmpFullNum.length > 10
                 && tmpFullNum.length < 20
             ) {
-                probability += 30;
+                probability += 50;
             }
         }
 
