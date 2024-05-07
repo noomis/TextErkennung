@@ -1156,7 +1156,6 @@ export class AddressParser {
         }
 
         words: for (let i = 0; i < inputLineWords.length; i++) {
-
             // Check whether the current word corresponds to a company form and skip it
             for (let index = 0; index < blackList.length; index++) {
                 const e = blackList[index];
@@ -1182,7 +1181,6 @@ export class AddressParser {
 
                         //checks whether there is a house number after the street
                         for (let b = 0; b < inputLineWords[i + 1].length; b++) {
-
                             if (!whiteList.includes(inputLineWords[i + 1][b])) {
                                 num++;
                             }
@@ -1207,7 +1205,6 @@ export class AddressParser {
                                 if (word2After.length == 1) {
 
                                     for (let a = 0; a < 26; a++) {
-
                                         if (word2After == whiteList[a]) {
                                             probability += 5;
                                         }
@@ -1222,7 +1219,6 @@ export class AddressParser {
 
                             //checks whether the last char value is a letter
                             for (let alphabet = 0; alphabet < 26; alphabet++) {
-
                                 if (inputLineWords[i + 1][(inputLineWords[i + 1].length) - 1] == whiteList[alphabet]) {
                                     probability += 15;
                                 }
@@ -1235,7 +1231,6 @@ export class AddressParser {
 
        //checks the case if the address with e.g. where... begins
         for (let p = 0; p < stringStreetBeginnings.length; p++) {
-
             if (inputLine.toLowerCase().includes(stringStreetBeginnings[p])) {
                 fullStreetName = inputLine.toLowerCase();
                 fullStreetNameClear = inputLine;
@@ -1246,7 +1241,6 @@ export class AddressParser {
 
                     // when comparing whether a sentence starts with something whose keyword is more than just one word long
                     if (matchingWords.length == 1) {
-
                         // Determine the word that matches the keyword from the line
                         if (!inputLineWords[m] == matchingWords[0]) {
                             continue words;
@@ -1288,9 +1282,7 @@ export class AddressParser {
                                 let word3After = inputLineWords[m + 3].toLowerCase();
 
                                 if (word3After.length == 1) {
-
                                     for (let a = 0; a < 26; a++) {
-
                                         if (word3After == whiteList[a]) {
                                             probability += 5;
                                         }
@@ -1305,7 +1297,6 @@ export class AddressParser {
 
                             // checks whether the last char value is a letter
                             for (let alphabet = 0; alphabet < 26; alphabet++) {
-
                                 if (inputLineWords[m + 2][(inputLineWords[m + 2].length) - 1] == whiteList[alphabet]) {
                                     probability += 25;
                                 }
