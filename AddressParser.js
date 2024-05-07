@@ -892,8 +892,9 @@ export class AddressParser {
     checkPhone(inputLine) {
         let tempPhone = []
 
-        //check wether the Line is to short to contain a number
+        //check wether the Line is too short to contain a number
         if (inputLine.length < 10) {
+
             return tempPhone;
         }
 

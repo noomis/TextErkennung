@@ -1,6 +1,15 @@
+let instance;
+
 export class FetchData {
     fetchedPostalCodes = []; 
     fetchedCityNames = [];
+
+    constructor() {
+        if (instance) {
+          throw new Error("You can only create one instance!"); // Src: https://www.patterns.dev/vanilla/singleton-pattern/
+        }
+        instance = this;
+      }
 
     async fetchCityData() {
         let tempAllPostalCodes = [];
@@ -35,6 +44,5 @@ export class FetchData {
     setCityNames(_cityNames) {
         this.fetchedCityNames = this.fetchedCityNames.concat(_cityNames);
     }
-    
 }
 
