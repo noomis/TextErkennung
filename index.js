@@ -17,7 +17,6 @@ function printResult() {
     let language = languageChecker.parseLanguage(input);
     let outputPercentage = 50;
     let mainParser = new AddressParser(language, outputPercentage);
-    $("#probValue").text("Treffer Wahrscheinlichkeit: " + outputPercentage + "%");
 
     clearTimeout(timeoutId);
 
@@ -72,7 +71,7 @@ window.addEventListener("load", async () => {
     };
 });
 
-//Testimpressen 
+//testing imprints
 let i = 0;
 
 function randomImprint() {
