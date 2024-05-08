@@ -253,7 +253,6 @@ export class Address {
 
         // Return object with the highest probability
         array.forEach(element => {
-
             if (element.probability > highestPercentage.probability) {
                 highestPercentage = element;
             }
