@@ -2,21 +2,21 @@ import { Address } from "./Address.js";
 import { CheckResult } from "./CheckResult.js";
 
 export class AddressParser {
-    companyNamesCheck = []; 
-    streetsCheck = []; 
+    companyNamesCheck = [];
+    streetsCheck = [];
     postalCodeCheck = [];
-    citysCheck = []; 
+    citysCheck = [];
     homepageCheck = [];
-    w3wAddressCheck = []; 
+    w3wAddressCheck = [];
     emailsCheck = [];
     phoneNumbersCheck = [];
     faxNumbersCheck = [];
     contactPersonsCheck = [];
-    companyRegistrationNumberCheck = []; 
-    vatIdNumberCheck = []; 
-    taxNumberCheck = []; 
-    fetchedPostalCodes = []; 
-    fetchedCityNames = []; 
+    companyRegistrationNumberCheck = [];
+    vatIdNumberCheck = [];
+    taxNumberCheck = [];
+    fetchedPostalCodes = [];
+    fetchedCityNames = [];
     outputPercentage = 0;
     language = "";
 
